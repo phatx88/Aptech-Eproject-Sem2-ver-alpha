@@ -31,6 +31,10 @@ Route::get('/blog', function () {
     return view('pages.blog');
 });
 
+Route::get('/single-blog', function () {
+    return view('pages.single_blog');
+});
+
 Route::get('/contact', function () {
     return view('pages.contact');
 });
