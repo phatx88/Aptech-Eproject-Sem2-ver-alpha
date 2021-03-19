@@ -38,6 +38,8 @@
                             <a class="nav-item nav-link" id="order-history-tab" data-toggle="tab" href="#order-history"
                                 role="tab" aria-controls="order-history" aria-selected="false"><span class="lead"> Order
                                     History</span></a>
+                            <a class="nav-item nav-link" id="wish-list-tab" data-toggle="tab" href="#wish-list"
+                                role="tab" aria-controls="wish-list" aria-selected="false"><span class="lead"> WishList</span></a>
                             <a class="nav-item nav-link" id="edit-profile-tab" data-toggle="tab" href="#edit-profile"
                                 role="tab" aria-controls="edit-profile" aria-selected="false"><span class="lead"> Change
                                     Password</span></a>
@@ -152,7 +154,7 @@
 
                                         <div class="col-md-12">
                                             <div role="tablist">
-                                                <h5>ORDER 
+                                                <h5>ORDER
                                                     <a href="#order-detail" id="order-detail-tab" data-toggle="tab"
                                                         role="tab" aria-controls="order-detail" aria-selected="false">#2</a>
                                                 </h5>
@@ -160,7 +162,7 @@
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <span class="date">
-                                                        Created date: 02-12-2019 11:12:48 
+                                                        Created date: 02-12-2019 11:12:48
                                                     </span>
                                                     <br>
                                                     <span>
@@ -169,99 +171,104 @@
                                                 </div>
                                                 <div class="col-md-9">
                                                     <span>
-                                                     Ship To : {Shipping Name} <br>
-                                                     Phone : {Shipping Mobile} <br>
-                                                     Address : {Streat Address} , {City} , {District} , {Ward}<br> 
-                                                    </span>   
+                                                        Ship To : {Shipping Name} <br>
+                                                        Phone : {Shipping Mobile} <br>
+                                                        Address : {Streat Address} , {City} , {District} , {Ward}<br>
+                                                    </span>
                                                 </div>
                                             </div>
-                                         
+
                                             <hr>
                                             <div class="table-responsive-md">
                                                 <table class="table table-hover">
                                                     <thead class="thead-primary">
-                                                      <tr>
-                                                        <th scope="col" class="p-1">Item Feature</th>
-                                                        <th scope="col" class="p-1">Description</th>
-                                                        <th scope="col" class="p-1">Quantity</th>
-                                                        <th scope="col" class="p-1">Price</th>
-                                                      </tr>
+                                                        <tr>
+                                                            <th scope="col" class="p-1">Item Feature</th>
+                                                            <th scope="col" class="p-1">Description</th>
+                                                            <th scope="col" class="p-1">Quantity</th>
+                                                            <th scope="col" class="p-1">Price</th>
+                                                        </tr>
                                                     </thead>
-                                                    
+
                                                     <tbody>
                                                         {{-- FOREACH ORDER DETAIL HERE --}}
-                                                      <tr>
-                                                        <th scope="row" class="p-1">
-                                                            <img src="{{ asset('frontend/images/prod-1.jpg') }}" alt=""
-                                                        class="feature-img">
-                                                        </th>
-                                                        <td class="p-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita, fugit?</td>
-                                                        <td class="p-0 text-center">2</td>
-                                                        <td class="p-0 text-center">$60</td>
-                                                      </tr>
-                                                      {{-- FOREACH ORDER DETAIL HERE --}}
-                                                      <tr>
-                                                        <th scope="row" class="p-1">
-                                                            <img src="{{ asset('frontend/images/prod-2.jpg') }}" alt=""
-                                                        class="feature-img">
-                                                        </th>
-                                                        <td class="p-0">Lorem ipsum dolor sit amet consectetur adipisicing.</td>
-                                                        <td class="p-0 text-center">1</td>
-                                                        <td class="p-0 text-center">$40</td>
-                                                      </tr>
-                                                      {{-- FOREACH ORDER DETAIL HERE --}}
-                                                      <tr>
-                                                        <th scope="row" class="p-1">
-                                                            <img src="{{ asset('frontend/images/prod-3.jpg') }}" alt=""
-                                                        class="feature-img">
-                                                        </th>
-                                                        <td class="p-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam unde ea placeat.</td>
-                                                        <td class="p-0 text-center">1</td>
-                                                        <td class="p-0 text-center">$100</td>
-                                                      </tr>
+                                                        <tr>
+                                                            <th scope="row" class="p-1">
+                                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
+                                                                    alt="" class="feature-img">
+                                                            </th>
+                                                            <td class="p-0">Lorem, ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Expedita, fugit?</td>
+                                                            <td class="p-0 text-center">2</td>
+                                                            <td class="p-0 text-center">$60</td>
+                                                        </tr>
+                                                        {{-- FOREACH ORDER DETAIL HERE --}}
+                                                        <tr>
+                                                            <th scope="row" class="p-1">
+                                                                <img src="{{ asset('frontend/images/prod-2.jpg') }}"
+                                                                    alt="" class="feature-img">
+                                                            </th>
+                                                            <td class="p-0">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing.</td>
+                                                            <td class="p-0 text-center">1</td>
+                                                            <td class="p-0 text-center">$40</td>
+                                                        </tr>
+                                                        {{-- FOREACH ORDER DETAIL HERE --}}
+                                                        <tr>
+                                                            <th scope="row" class="p-1">
+                                                                <img src="{{ asset('frontend/images/prod-3.jpg') }}"
+                                                                    alt="" class="feature-img">
+                                                            </th>
+                                                            <td class="p-0">Lorem ipsum, dolor sit amet consectetur
+                                                                adipisicing elit. Quibusdam unde ea placeat.</td>
+                                                            <td class="p-0 text-center">1</td>
+                                                            <td class="p-0 text-center">$100</td>
+                                                        </tr>
 
-                                                      {{-- END FOREACH ORDER DETAIL  --}}
+                                                        {{-- END FOREACH ORDER DETAIL --}}
 
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1 border-0"></th>
-                                                        <td class="p-0 border-0 text-left">Payment Method : COD</td>
-                                                        <td class="p-0 text-left border-0">Purchase</td>
-                                                        <td class="p-0 text-center border-0">$200</td>
-                                                      </tr>
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1 border-0"></th>
-                                                        <td class="p-0 border-0"></td>
-                                                        <td class="p-0 text-left border-0">Shipping Fee</td>
-                                                        <td class="p-0 text-center border-0">$10</td>
-                                                      </tr>
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1"></th>
-                                                        <td class="p-0 text-left text-success">Limted Time : Free Shipping for New USER</td>
-                                                        <td class="p-0 text-left">Discount</td>
-                                                        <td class="p-0 text-center"><span class="text-success">-$10</span></td>
-                                                      </tr>
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1"></th>
-                                                        <td class="p-0"></td>
-                                                        <td class="p-0 text-left">Total</td>
-                                                        <td class="p-0 text-center">$200</td>
-                                                      </tr>
-                                
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1 border-0"></th>
+                                                            <td class="p-0 border-0 text-left">Payment Method : COD</td>
+                                                            <td class="p-0 text-left border-0">Subtotal</td>
+                                                            <td class="p-0 text-center border-0">$200</td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1 border-0"></th>
+                                                            <td class="p-0 border-0"></td>
+                                                            <td class="p-0 text-left border-0">Delivery</td>
+                                                            <td class="p-0 text-center border-0">$10</td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1"></th>
+                                                            <td class="p-0 text-left text-success">Limted Time : Free
+                                                                Shipping for New USER</td>
+                                                            <td class="p-0 text-left">Discount</td>
+                                                            <td class="p-0 text-center"><span
+                                                                    class="text-success">-$10</span></td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1"></th>
+                                                            <td class="p-0"></td>
+                                                            <td class="p-0 text-left">Total</td>
+                                                            <td class="p-0 text-center">$200</td>
+                                                        </tr>
+
                                                     </tbody>
 
-                                                    
-                                                  </table>
+
+                                                </table>
                                             </div>
-                                            
-                                            
-                                            
+
+
+
 
                                         </div>
 
                                         {{-- FOREACH ORDER 1 --}}
                                         <div class="col-md-12">
                                             <div role="tablist">
-                                                <h5>ORDER 
+                                                <h5>ORDER
                                                     <a href="#order-detail" id="order-detail-tab" data-toggle="tab"
                                                         role="tab" aria-controls="order-detail" aria-selected="false">#1</a>
                                                 </h5>
@@ -269,7 +276,7 @@
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <span class="date">
-                                                        Created date: 02-12-2019 11:12:48 
+                                                        Created date: 02-12-2019 11:12:48
                                                     </span>
                                                     <br>
                                                     <span>
@@ -278,98 +285,168 @@
                                                 </div>
                                                 <div class="col-md-9">
                                                     <span>
-                                                     Ship To : {Shipping Name} <br>
-                                                     Phone : {Shipping Mobile} <br>
-                                                     Address : {Streat Address} , {City} , {District} , {Ward}<br> 
-                                                    </span>   
+                                                        Ship To : {Shipping Name} <br>
+                                                        Phone : {Shipping Mobile} <br>
+                                                        Address : {Streat Address} , {City} , {District} , {Ward}<br>
+                                                    </span>
                                                 </div>
                                             </div>
-                                         
+
                                             <hr>
                                             <div class="table-responsive-md">
                                                 <table class="table table-hover">
                                                     <thead class="thead-primary">
-                                                      <tr>
-                                                        <th scope="col" class="p-1">Item Feature</th>
-                                                        <th scope="col" class="p-1">Description</th>
-                                                        <th scope="col" class="p-1">Quantity</th>
-                                                        <th scope="col" class="p-1">Price</th>
-                                                      </tr>
+                                                        <tr>
+                                                            <th scope="col" class="p-1">Item Feature</th>
+                                                            <th scope="col" class="p-1">Description</th>
+                                                            <th scope="col" class="p-1">Quantity</th>
+                                                            <th scope="col" class="p-1">Price</th>
+                                                        </tr>
                                                     </thead>
-                                                    
+
                                                     <tbody>
                                                         {{-- FOREACH ORDER DETAIL HERE --}}
-                                                      <tr>
-                                                        <th scope="row" class="p-1">
-                                                            <img src="{{ asset('frontend/images/prod-1.jpg') }}" alt=""
-                                                        class="feature-img">
-                                                        </th>
-                                                        <td class="p-0">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita, fugit?</td>
-                                                        <td class="p-0 text-center">2</td>
-                                                        <td class="p-0 text-center">$60</td>
-                                                      </tr>
-                                                      {{-- FOREACH ORDER DETAIL HERE --}}
-                                                      <tr>
-                                                        <th scope="row" class="p-1">
-                                                            <img src="{{ asset('frontend/images/prod-2.jpg') }}" alt=""
-                                                        class="feature-img">
-                                                        </th>
-                                                        <td class="p-0">Lorem ipsum dolor sit amet consectetur adipisicing.</td>
-                                                        <td class="p-0 text-center">1</td>
-                                                        <td class="p-0 text-center">$40</td>
-                                                      </tr>
-                                                      {{-- FOREACH ORDER DETAIL HERE --}}
-                                                      <tr>
-                                                        <th scope="row" class="p-1">
-                                                            <img src="{{ asset('frontend/images/prod-3.jpg') }}" alt=""
-                                                        class="feature-img">
-                                                        </th>
-                                                        <td class="p-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam unde ea placeat.</td>
-                                                        <td class="p-0 text-center">1</td>
-                                                        <td class="p-0 text-center">$100</td>
-                                                      </tr>
+                                                        <tr>
+                                                            <th scope="row" class="p-1">
+                                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
+                                                                    alt="" class="feature-img">
+                                                            </th>
+                                                            <td class="p-0">Lorem, ipsum dolor sit amet consectetur
+                                                                adipisicing elit. Expedita, fugit?</td>
+                                                            <td class="p-0 text-center">2</td>
+                                                            <td class="p-0 text-center">$60</td>
+                                                        </tr>
+                                                        {{-- FOREACH ORDER DETAIL HERE --}}
+                                                        <tr>
+                                                            <th scope="row" class="p-1">
+                                                                <img src="{{ asset('frontend/images/prod-2.jpg') }}"
+                                                                    alt="" class="feature-img">
+                                                            </th>
+                                                            <td class="p-0">Lorem ipsum dolor sit amet consectetur
+                                                                adipisicing.</td>
+                                                            <td class="p-0 text-center">1</td>
+                                                            <td class="p-0 text-center">$40</td>
+                                                        </tr>
+                                                        {{-- FOREACH ORDER DETAIL HERE --}}
+                                                        <tr>
+                                                            <th scope="row" class="p-1">
+                                                                <img src="{{ asset('frontend/images/prod-3.jpg') }}"
+                                                                    alt="" class="feature-img">
+                                                            </th>
+                                                            <td class="p-0">Lorem ipsum, dolor sit amet consectetur
+                                                                adipisicing elit. Quibusdam unde ea placeat.</td>
+                                                            <td class="p-0 text-center">1</td>
+                                                            <td class="p-0 text-center">$100</td>
+                                                        </tr>
 
-                                                      {{-- END FOREACH ORDER DETAIL  --}}
+                                                        {{-- END FOREACH ORDER DETAIL --}}
 
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1 border-0"></th>
-                                                        <td class="p-0 border-0 text-left">Payment Method : COD</td>
-                                                        <td class="p-0 text-left border-0">Purchase</td>
-                                                        <td class="p-0 text-center border-0">$200</td>
-                                                      </tr>
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1 border-0"></th>
-                                                        <td class="p-0 border-0"></td>
-                                                        <td class="p-0 text-left border-0">Shipping Fee</td>
-                                                        <td class="p-0 text-center border-0">$10</td>
-                                                      </tr>
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1"></th>
-                                                        <td class="p-0 text-left text-success">Limted Time : Free Shipping for New USER</td>
-                                                        <td class="p-0 text-left">Discount</td>
-                                                        <td class="p-0 text-center"><span class="text-success">-$10</span></td>
-                                                      </tr>
-                                                      <tr class="">
-                                                        <th scope="row" class="p-1"></th>
-                                                        <td class="p-0"></td>
-                                                        <td class="p-0 text-left">Total</td>
-                                                        <td class="p-0 text-center">$200</td>
-                                                      </tr>
-                                
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1 border-0"></th>
+                                                            <td class="p-0 border-0 text-left">Payment Method : COD</td>
+                                                            <td class="p-0 text-left border-0">Subtotal</td>
+                                                            <td class="p-0 text-center border-0">$200</td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1 border-0"></th>
+                                                            <td class="p-0 border-0"></td>
+                                                            <td class="p-0 text-left border-0">Delivery</td>
+                                                            <td class="p-0 text-center border-0">$10</td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1"></th>
+                                                            <td class="p-0 text-left text-success">Limted Time : Free
+                                                                Shipping for New USER</td>
+                                                            <td class="p-0 text-left">Discount</td>
+                                                            <td class="p-0 text-center"><span
+                                                                    class="text-success">-$10</span></td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1"></th>
+                                                            <td class="p-0"></td>
+                                                            <td class="p-0 text-left">Total</td>
+                                                            <td class="p-0 text-center">$200</td>
+                                                        </tr>
+
                                                     </tbody>
 
-                                                    
-                                                  </table>
-                                            </div>       
+
+                                                </table>
+                                            </div>
 
                                         </div>
                                     </div>
-                                    
-                                    {{-- END FOREACH ORDER  --}}
+
+                                    {{-- END FOREACH ORDER --}}
                                 </div>
                             </div>
                         </div>
                         {{-- ORDER HISTORY - TRACKING - END --}}
+
+                        {{-- TAB PANE - MY WISH LIST--}}
+                        <div class="tab-pane fade" id="wish-list" role="tabpanel" aria-labelledby="wish-list-tab">
+                            <div class="table-responsive-md">
+                                <table class="table table-hover">
+                                    <h3 class="mb-4 mt-4 billing-heading">My WishList</h3>
+                                    <thead class="thead-primary">
+                                        <tr>
+                                            <th scope="col" class="p-1">Item Feature</th>
+                                            <th scope="col" class="p-1">Description</th>
+                                            <th scope="col" class="p-1">Price</th>
+                                            <th scope="col" class="p-1">Availiability</th>
+                                            <th scope="col" class="p-1">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {{-- FOREACH HERE --}}
+                                        <tr>
+                                            <th scope="row" class="p-1">
+                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
+                                                    alt="" class="feature-img">
+                                            </th>
+                                            <td class="p-0">Lorem, ipsum dolor sit amet consectetur
+                                                adipisicing elit. Expedita, fugit?</td>
+                                            <td class="p-0 text-center">$60</td>
+                                            <td class="p-0 text-center">In Stock : 40</td>
+                                            <td class="p-0 text-center">
+                                                <button type="button" class="bg-warning" data-dismiss="alert" aria-label="">
+                                                    <span aria-hidden="true"><i class="fa fa-shopping-cart"></i></span>
+                                                </button>
+                                                <button type="button" class="bg-danger" data-dismiss="alert" aria-label="">
+                                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                                </button>
+                                                
+                                            </td>
+                                        </tr>
+                                        {{-- FOREACH HERE --}}
+                                        <tr>
+                                            <th scope="row" class="p-1">
+                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
+                                                    alt="" class="feature-img">
+                                            </th>
+                                            <td class="p-0">Lorem, ipsum dolor sit amet consectetur
+                                                adipisicing elit. Expedita, fugit?</td>
+                                            <td class="p-0 text-center">$60</td>
+                                            <td class="p-0 text-center">In Stock : 40</td>
+                                            <td class="p-0 text-center">
+                                                <button type="button" class="bg-warning" data-dismiss="alert" aria-label="">
+                                                    <span aria-hidden="true"><i class="fa fa-shopping-cart"></i></span>
+                                                </button>
+                                                <button type="button" class="bg-danger" data-dismiss="alert" aria-label="">
+                                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
+                                                </button>
+                                                
+                                            </td>
+                                        </tr>
+                                        {{-- END FOREACH--}}
+                                    </tbody>
+                                </table>
+                                <a href="http://localhost/LaravelTest/test/public/product" class="btn btn-primary py-3 px-4 pull-right">Continue Shopping</a>
+                            </div>
+                           
+                        </div>
+                        <!-- END -->
 
                         {{-- TAB PANE - CHANGE PASSWORD --}}
                         <div class="tab-pane fade" id="edit-profile" role="tabpanel" aria-labelledby="edit-profile-tab">
@@ -423,6 +500,8 @@
                             </form>
                         </div>
                         <!-- END -->
+
+                        
                     </div>
 
                 </div>
