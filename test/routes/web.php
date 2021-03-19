@@ -50,3 +50,7 @@ Route::get('/cart', function () {
 Route::get('/check-out', function () {
     return view('pages.checkout');
 });
+
+Route::get('/my-profile', function () {
+    return view('pages.user');
+});
