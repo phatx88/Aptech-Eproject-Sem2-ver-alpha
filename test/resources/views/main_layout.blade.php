@@ -99,6 +99,8 @@
                         <a class="dropdown-item" href="{{URL::to('single-blog')}}">Single Blog</a>
                         <a class="dropdown-item" href="{{URL::to('cart')}}">Cart</a>
                         <a class="dropdown-item" href="{{URL::to('check-out')}}">Checkout</a>
+                        <a class="dropdown-item" href="{{URL::to('my-profile')}}">User Account</a>
+                        
                     </div>
                 </li>
                 <li class="nav-item"><a href="{{URL::to('blog')}}" class="nav-link">Blog</a></li>
@@ -208,7 +210,7 @@
             <div class="form-group pb-3" style="position: relative;">
               <label for="l_password">Password</label>
               <input type="password" id="l_password" class="form-control mb-1" placeholder="" required>
-              <a href="#forgotPassword" style="display:block; position: absolute; right: 0;" title="Fill Email Field and Click it">
+              <a href="#forgotPassword" data-dismiss="modal" data-toggle="modal" style="display:block; position: absolute; right: 0;" title="">
                 Forgot Password?
               </a>
             </div>
@@ -227,7 +229,7 @@
       </div>
     </div>
   </div>
-  <!-- Registeration Modal -->
+  <!-- Register Modal -->
   <div class="modal fade" id="register">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content form-wrapper">
@@ -270,6 +272,30 @@
 
             <div class="form-group">
               <button class="btn btn-info form-control">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- forget password Modal --}}
+  <div class="modal fade" id="forgotPassword">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content form-wrapper">
+        <div class="close-box" data-dismiss="modal">
+          <i class="fa fa-times fa-2x"></i>
+        </div>
+        <div class="container-fluid mt-5">
+          <form action="" method="post" id="forgetPass">
+            <div class="form-group text-center heading-section">
+              <h2>Forget Password</h2>
+            </div>
+            <div class="form-group" style="position: relative;">
+              <label for="email-recover">Email</label>
+              <input type="email" id="email-recover" class="form-control mb-1" placeholder="Enter Your Email" required>              
+            </div>
+            <div class="form-group pt-2">
+              <button class="btn btn-info form-control">Submit</button>
             </div>
           </form>
         </div>

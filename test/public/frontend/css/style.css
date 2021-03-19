@@ -1454,19 +1454,19 @@ pre {
 .table-danger,
 .table-danger > th,
 .table-danger > td {
-  background-color: #f5c6cb; }
+  background-color: #dc3545; }
 
 .table-danger th,
 .table-danger td,
 .table-danger thead th,
 .table-danger tbody + tbody {
-  border-color: #ed969e; }
+  border-color: #dc3545; }
 
 .table-hover .table-danger:hover {
-  background-color: #f1b0b7; }
+  background-color: #dc3545; opacity: 0.9; }
   .table-hover .table-danger:hover > td,
   .table-hover .table-danger:hover > th {
-    background-color: #f1b0b7; }
+    background-color: #dc3545; opacity: 0.9;}
 
 .table-light,
 .table-light > th,
@@ -8935,6 +8935,9 @@ h1, h2, h3, h4, h5,
     background: #fff;
     border-bottom: 4px solid #f8f9fd;
     vertical-align: middle; }
+    .table tbody tr:hover th, .table tbody tr:hover td {
+      background: rgba(250, 240, 240, 0.1);
+       }
   .table tbody td.quantity {
     width: 10%; }
   .table tbody td .img {
@@ -9465,7 +9468,7 @@ textarea.form-control {
 .mfp-with-zoom .mfp-container,
 .mfp-with-zoom.mfp-bg {
   opacity: 0;
-  -webkit-backface-visibility: hidden;
+  /* -webkit-backface-visibility: hidden; */
   -webkit-transition: all 0.3s ease-out;
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
@@ -10248,4 +10251,10 @@ textarea.form-control {
     width: 150px;
     height: 150px;
     border-radius: 50%;
+  }
+
+  .feature-img {
+    width: 100px;
+    height: 100px;
+    display: block
   }
