@@ -39,7 +39,7 @@
                     </p>
                 </div>
                 <div class="reg">
-                    <p class="mb-0"><a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a></p>
+                    <p class="mb-0"><a  href="#register" class="btn-register mr-2" data-toggle="modal">Sign Up</a> <a href="#login" class="btn-login" data-toggle="modal">Log In</a></p>
                 </div>
             </div>
         </div>
@@ -96,6 +96,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
                         <a class="dropdown-item" href="{{URL::to('product')}}">Products</a>
                         <a class="dropdown-item" href="{{URL::to('single-product')}}">Single Product</a>
+                        <a class="dropdown-item" href="{{URL::to('single-blog')}}">Single Blog</a>
                         <a class="dropdown-item" href="{{URL::to('cart')}}">Cart</a>
                         <a class="dropdown-item" href="{{URL::to('check-out')}}">Checkout</a>
                     </div>
@@ -183,12 +184,106 @@
             </div>
         </div>
     </div>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="login">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content form-wrapper">
+        <div class="close-box" data-dismiss="modal">
+          <i class="fa fa-times fa-2x"></i>
+        </div>
+        <div class="container-fluid mt-5">
+          <form action="" method="post" id="LoginForm">
+            <div class="form-group text-center heading-section">
+              <h2>Login</h2>
+              <span>Not a member yet? <a href="#register" data-dismiss="modal" data-toggle="modal">Sign up here</a></span>           
+            </div>
+            <div class="form-group" style="position: relative;">
+              <label for="l_email">Email</label>
+              <input type="email" id="l_email" class="form-control mb-1" placeholder="" required>
+              
+              
+              
+            </div>
+            <div class="form-group pb-3" style="position: relative;">
+              <label for="l_password">Password</label>
+              <input type="password" id="l_password" class="form-control mb-1" placeholder="" required>
+              <a href="#forgotPassword" style="display:block; position: absolute; right: 0;" title="Fill Email Field and Click it">
+                Forgot Password?
+              </a>
+            </div>
+            <div class="form-group pt-2">
+              <button class="btn btn-info form-control">Login</button>
+            </div>
+            <div class="form-group text-center pt-2 social-login">
+              <h6>OR Continue with</h6>
+              <a href="#" class="google"> <i class="fa fa-google-plus fa-lg"></i> </a>
+              <a href="#" class="facebook"> <i class="fa fa-facebook fa-lg"></i> </a>
+              <a href="#" class="twitter"> <i class="fa fa-twitter fa-lg"></i> </a>
+              <a href="#" class="github"> <i class="fa fa-github fa-lg"></i> </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Registeration Modal -->
+  <div class="modal fade" id="register">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content form-wrapper">
+        <div class="close-box" data-dismiss="modal">
+          <i class="fa fa-times fa-2x"></i>
+        </div>
+        <div class="container-fluid mt-5">
+          <form action="#" method="post" id="RegisterationForm">
+            <div class="form-group text-center pb-2 heading-section">
+              <h2>Registration</h2>
+            </div>
+            <div class="form-row">
+              <div class="form-group col">
+                <label for="name">Name</label>
+                <input type="text" id="name" class="form-control" placeholder="" required>
+              </div>
+              <div class="form-group col" style="position:relative;">
+                <label for='photo_upload' style="display:block">Profile Picture</label>
+                <button type="button" class="btn btn-dark form-control" onclick="document.getElementById('photo_upload').click()" id="photo_btn">Select Image</button>
+                <input type="file" name="photo" id="photo_upload" accept="image/*" style="display:none;" required>
+              </div>
+            </div>
+            <div class="form-group" style="position:relative;">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control mb-1" placeholder="" required>
+              <a href="#" data-toggle="modal" data-target="#login" style="display:none; position: absolute; right: 0; font-size: 12px;">That's you? Login</a>
+             
+            </div>
+            <div class="form-row mb-1">
+              <div class="form-group col">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="" required>
+               
+              </div>
+              <div class="form-group col">
+                <label for="password_confirmation">Confirm Password</label>
+                <input type="password" id="password_confirmation" class="form-control" placeholder="" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-info form-control">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    
 </footer>
 
 
 
 <!-- loader -->
 <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
 
 
 <script src="{{asset('frontend/js/jquery.min.js')}}"></script>

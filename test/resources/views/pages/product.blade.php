@@ -18,7 +18,14 @@
                 <div class="col-md-9">
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
-                            <h4 class="product-select">Select Types of Products</h4>
+                            {{-- SEARCH BAR BEGIN --}}
+                            <form class="search">
+                                <div class="search__wrapper">
+                                  <input type="text" name="" placeholder="Select Types of Products" class="search__field">
+                                  <button type="submit" class="fa fa-search search__icon"></button>
+                                </div>
+                              </form>
+                              {{-- SEARCH BAR END --}}
                             <select class="selectpicker" >
                                 <option>Brandy</option>
                                 <option>Gin</option>
