@@ -54,3 +54,12 @@ Route::get('/check-out', function () {
 Route::get('/my-profile', function () {
     return view('pages.user');
 });
+
+//Admin
+Route::get('/admin-login', function () {
+    return view('admin.login');
+});
+
+Route::get('/admin-dashboard', function () {
+    return view('admin.dashboard');
+});
