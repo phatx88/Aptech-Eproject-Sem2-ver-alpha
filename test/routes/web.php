@@ -63,3 +63,11 @@ Route::get('/admin-login', function () {
 Route::get('/admin-dashboard', function () {
     return view('admin.dashboard');
 });
+
+Route::get('/order-list', function () {
+    return view('admin.order.list');
+});
+
+Route::get('/order-add', function () {
+    return view('admin.order.add');
+});
