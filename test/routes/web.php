@@ -71,3 +71,11 @@ Route::get('/order-list', function () {
 Route::get('/order-add', function () {
     return view('admin.order.add');
 });
+
+//customer
+Route::get('/customer-list', function () {
+    return view('admin.customer.list');
+});
+Route::get('/customer-add', function () {
+    return view('admin.customer.add');
+});

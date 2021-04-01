@@ -68,8 +68,8 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Khách hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/customer/list.html">Danh sách</a>
-               <a class="dropdown-item" href="../../pages/customer/add.html">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('customer-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::tO('customer-add')}}">Thêm</a>
             </div>
          </li>
          <li class="nav-item dropdown">
