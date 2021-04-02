@@ -114,3 +114,44 @@ Route::get('/category-list', function () {
 Route::get('/category-edit', function () {
     return view('admin.category.edit');
 });
+
+//staff
+Route::get('/staff-add', function () {
+    return view('admin.staff.add');
+});
+Route::get('/staff-list', function () {
+    return view('admin.staff.list');
+});
+Route::get('/staff-edit', function () {
+    return view('admin.staff.edit');
+});
+
+//promotion
+Route::get('/promotion-add', function () {
+    return view('admin.promotion.add');
+});
+Route::get('/promotion-list', function () {
+    return view('admin.promotion.list');
+});
+Route::get('/promotion-edit', function () {
+    return view('admin.promotion.edit');
+});
+
+//transport
+Route::get('/transport-add', function () {
+    return view('admin.transport.add');
+});
+Route::get('/transport-list', function () {
+    return view('admin.transport.list');
+});
+Route::get('/transport-edit', function () {
+    return view('admin.transport.edit');
+});
+
+//newsletter
+Route::get('/newsletter-list', function () {
+    return view('admin.newsletter.list');
+});
+Route::get('/newsletter-send', function () {
+    return view('admin.newsletter.send');
+});

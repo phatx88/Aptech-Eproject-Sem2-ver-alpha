@@ -85,22 +85,25 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-percentage"></i> <span>Khuyến mãi</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/promotion/list.html">Danh sách</a>
-               <a class="dropdown-item" href="../../pages/promotion/add.html">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('promotion-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('promotion-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('promotion-edit')}}">Chỉnh sửa</a>               
             </div>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Phí giao hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/transport/list.html">Danh sách</a>
-               <a class="dropdown-item" href="../../pages/transport/add.html">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('transport-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('transport-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Nhân viên</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/staff/list.html">Danh sách</a>
-               <a class="dropdown-item" href="../../pages/staff/add.html">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('staff-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('staff-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('staff-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -117,8 +120,8 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/newsletter/list.html">Danh sách</a>
-               <a class="dropdown-item" href="../../pages/newsletter/send.html">Gởi mail</a>
+               <a class="dropdown-item" href="{{URL::to('newsletter-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('newsletter-send')}}">Gởi mail</a>
             </div>
          </li>
       </ul>
