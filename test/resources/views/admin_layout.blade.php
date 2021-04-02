@@ -109,13 +109,13 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('permission-roles-list')}}">Danh sách vai trò</a>
-               <a class="dropdown-item" href="{{URL::to('permission-roles-add')}}">Thêm vai trò</a>
-               <a class="dropdown-item" href="{{URL::to('permission-roles-edit')}}">Sửa Vai Trò</a>
-               <a class="dropdown-item" href="{{URL::to('permission-actions-list')}}">Danh sách tác vụ</a>
-               <a class="dropdown-item" href="{{URL::to('permission-actions-edit')}}">Sửa tác vụ</a>
-               <a class="dropdown-item" href="{{URL::to('permission-role_action-list')}}">Danh Sách Phân Quyền</a>
-               <a class="dropdown-item" href="{{URL::to('permission-role_action-add')}}">Thêm Phân Quyền</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-list')}}">Roles List</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-add')}}">Roles Add</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-edit')}}">Roles Edit</a>
+               <a class="dropdown-item" href="{{URL::to('permission-actions-list')}}">Actions List</a>
+               <a class="dropdown-item" href="{{URL::to('permission-actions-edit')}}">Actions Edit</a>
+               <a class="dropdown-item" href="{{URL::to('permission-role_action-list')}}">Role-Action-List</a>
+               <a class="dropdown-item" href="{{URL::to('permission-role_action-add')}}">Role-Action-Add</a>
                
       
             </div>
