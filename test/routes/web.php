@@ -163,3 +163,32 @@ Route::get('/order_status-list', function () {
 Route::get('/order_status-edit', function () {
     return view('admin.order_status.edit');
 });
+
+// permission
+
+// roles 
+Route::get('/permission-roles-list', function () {
+    return view('admin.permission..roles.roles');
+});
+Route::get('/permission-roles-add', function () {
+    return view('admin.permission.roles.add_role');
+});
+Route::get('/permission-roles-edit', function () {
+    return view('admin.permission.roles.edit_role');
+});
+
+// actions 
+Route::get('/permission-actions-list', function () {
+    return view('admin.permission.action.actions');
+});
+Route::get('/permission-actions-edit', function () {
+    return view('admin.permission.action.edit_action');
+});
+
+// role_action 
+Route::get('/permission-role_action-list', function () {
+    return view('admin.permission.role_action.role_action');
+});
+Route::get('/permission-role_action-add', function () {
+    return view('admin.permission.role_action.add_role_action');
+});

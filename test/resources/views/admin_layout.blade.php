@@ -36,7 +36,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
          <li class="nav-item active">
-            <a class="nav-link" href="../../pages/dashboard/index.html"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
+            <a class="nav-link" href="{{ URL::TO('admin-dashboard') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>
@@ -109,9 +109,15 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/permission/roles.html">Danh sách vai trò</a>
-               <a class="dropdown-item" href="../../pages/permission/add_role.html">Thêm vai trò</a>
-               <a class="dropdown-item" href="../../pages/permission/actions.html">Danh sách tác vụ</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-list')}}">Danh sách vai trò</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-add')}}">Thêm vai trò</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-edit')}}">Sửa Vai Trò</a>
+               <a class="dropdown-item" href="{{URL::to('permission-actions-list')}}">Danh sách tác vụ</a>
+               <a class="dropdown-item" href="{{URL::to('permission-actions-edit')}}">Sửa tác vụ</a>
+               <a class="dropdown-item" href="{{URL::to('permission-role_action-list')}}">Danh Sách Phân Quyền</a>
+               <a class="dropdown-item" href="{{URL::to('permission-role_action-add')}}">Thêm Phân Quyền</a>
+               
+      
             </div>
          </li>
          <li class="nav-item">
