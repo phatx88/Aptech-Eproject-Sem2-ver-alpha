@@ -53,8 +53,4 @@
        </div>
     </footer>
  </div>
-<<<<<<< Updated upstream
-=======
- <!-- /.content-wrapper -->
->>>>>>> Stashed changes
 @endsection
