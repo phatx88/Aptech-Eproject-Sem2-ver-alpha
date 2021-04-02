@@ -79,3 +79,38 @@ Route::get('/customer-list', function () {
 Route::get('/customer-add', function () {
     return view('admin.customer.add');
 });
+Route::get('/customer-edit', function () {
+    return view('admin.customer.edit');
+});
+
+//product
+Route::get('/product-add', function () {
+    return view('admin.product.add');
+});
+Route::get('/product-list', function () {
+    return view('admin.product.list');
+});
+Route::get('/product-edit', function () {
+    return view('admin.product.edit');
+});
+
+//comment
+Route::get('/comment-list', function () {
+    return view('admin.comment.list');
+});
+
+//admin
+Route::get('/image-list', function () {
+    return view('admin.image.list');
+});
+
+//category
+Route::get('/category-add', function () {
+    return view('admin.category.add');
+});
+Route::get('/category-list', function () {
+    return view('admin.category.list');
+});
+Route::get('/category-edit', function () {
+    return view('admin.category.edit');
+});

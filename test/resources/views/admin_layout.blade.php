@@ -48,21 +48,22 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fab fa-product-hunt"></i> <span>Sản phẩm</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/product/list.html">Danh sách</a>
-               <a class="dropdown-item" href="../../pages/product/add.html">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('product-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('product-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('product-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-comments"></i> <span>Comment</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/comment/list.html">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('comment-list')}}">Danh sách</a>
             </div>
          </li>
   
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="far fa-image"></i> <span>Hình ảnh</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/image/list.html">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('image-list')}}">Danh sách</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -70,13 +71,15 @@
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{URL::to('customer-list')}}">Danh sách</a>
                <a class="dropdown-item" href="{{URL::tO('customer-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Danh mục</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/category/list.html">Danh sách</a>
-               <a class="dropdown-item" href="../../pages/category/add.html">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('category-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('category-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('category-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
