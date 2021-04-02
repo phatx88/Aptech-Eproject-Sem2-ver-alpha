@@ -155,3 +155,11 @@ Route::get('/newsletter-list', function () {
 Route::get('/newsletter-send', function () {
     return view('admin.newsletter.send');
 });
+
+// order_status
+Route::get('/order_status-list', function () {
+    return view('admin.order_status.list');
+});
+Route::get('/order_status-edit', function () {
+    return view('admin.order_status.edit');
+});
