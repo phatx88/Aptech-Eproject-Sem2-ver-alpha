@@ -2,7 +2,7 @@ body {
 	font-size:14px;
 }
 .navbar-nav .dropdown-menu {
-	background-color:#212529;
+	background-color:#fff;
 	border:none;
 }
 
@@ -13,7 +13,7 @@ body {
 
 .navbar-nav  .dropdown-menu .dropdown-item:hover {
 	/* color: rgba(255, 255, 255, 0.75); */
-	background-color:#f95c2e;
+	color:#f95c2e;
 }
 
 table th  {

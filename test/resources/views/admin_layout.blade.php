@@ -18,7 +18,7 @@
       <link href="{{asset('backend/css/admin.css')}}" rel="stylesheet">
    </head>
 <body id="page-top">
-   <nav class="navbar navbar-expand navbar bg static-top">
+   <nav class="navbar navbar-expand navbar bg static-top border-bottom">
       <a class="navbar-brand mr-1 text-dark" href="index.html">Mỹ Phẩm YouT</a>
       <button class="btn btn-link btn-sm text-dark order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
