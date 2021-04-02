@@ -4875,8 +4875,10 @@ input[type="button"].btn-block {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  /* border: 1px solid rgba(0, 0, 0, 0.125);*/
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 25px 0 rgb(13 26 53 / 10%);
+    border: 1px solid transparent;
 }
 
 .card > hr {
@@ -10580,6 +10582,9 @@ body {
   width: 100%;
   padding-top: 1rem;
   padding-bottom: 80px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #f3f7fd;
 }
 
 .scroll-to-top {
@@ -10628,7 +10633,7 @@ body {
 }
 
 .navbar-nav .nav-item.active .nav-link {
-  color: #fff;
+  color: #212529;
 }
 
 .navbar-nav .nav-item.dropdown .dropdown-toggle::after {
@@ -10670,7 +10675,8 @@ body {
 
 .sidebar {
   width: 90px !important;
-  background-color: #212529;
+  /* background-color: #212529; */
+  background-color: #fff;
   min-height: calc(100vh - 56px);
 }
 
@@ -10707,11 +10713,13 @@ body {
 }
 
 .sidebar .nav-item .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  /* color: rgba(255, 255, 255, 0.5); */
+  color: #212529;
 }
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
-  color: rgba(255, 255, 255, 0.75);
+  /* color: rgba(255, 255, 255, 0.75); */
+  color: #f95c2e;
 }
 
 .sidebar.toggled {

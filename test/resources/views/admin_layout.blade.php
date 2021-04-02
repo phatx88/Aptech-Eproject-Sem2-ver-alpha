@@ -18,17 +18,17 @@
       <link href="{{asset('backend/css/admin.css')}}" rel="stylesheet">
    </head>
 <body id="page-top">
-   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-      <a class="navbar-brand mr-1" href="index.html">Mỹ Phẩm YouT</a>
-      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+   <nav class="navbar navbar-expand navbar bg static-top">
+      <a class="navbar-brand mr-1 text-dark" href="index.html">Mỹ Phẩm YouT</a>
+      <button class="btn btn-link btn-sm text-dark order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
       </button>
       <!-- Navbar Search -->
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto">
-         <li class="nav-item no-arrow text-white">
+         <li class="nav-item no-arrow text-dark">
             <span >Chào Admin</span> |
-            <a class="text-white nounderline" href="#" data-toggle="modal" data-target="#logoutModal">Thoát</a>
+            <a class="text-dark nounderline" href="#" data-toggle="modal" data-target="#logoutModal">Thoát</a>
          </li>
       </ul>
    </nav>
