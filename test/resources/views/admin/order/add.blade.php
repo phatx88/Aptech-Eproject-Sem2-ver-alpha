@@ -8,6 +8,7 @@
              <a href="#">Quản lý</a>
           </li>
           <li class="breadcrumb-item active">Đơn hàng</li>
+          <li class="breadcrumb-item active">Thêm</li>
        </ol>
        <!-- /.row -->
        <form class="spacing" method="post" action="" enctype="multipart/form-data">

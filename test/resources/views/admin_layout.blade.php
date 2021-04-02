@@ -115,7 +115,10 @@
             </div>
          </li>
          <li class="nav-item">
-            <a class="nav-link" href="../../pages/order_status/list.html"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng</span></a>
+            <a class="nav-link" href="{{URL::to('order_status-list')}}"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng</span></a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="{{URL::to('order_status-edit')}}"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng (Sửa)</span></a>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
@@ -161,6 +164,15 @@
  <!-- Page level plugin JavaScript-->
  <script src="{{asset('backend/vendor/datatables/jquery.dataTables.js')}}"></script>
  <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
+ {{-- CKEDITOR  --}}
+ {{-- <script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
+ <script>
+   ClassicEditor
+       .create( document.querySelector( '#editor' ) )
+       .catch( error => {
+           console.error( error );
+       } );
+</script> --}}
  <!-- Custom scripts for all pages-->
  <script src="{{asset('backend/js/sb-admin.min.js')}}"></script>
  <!-- Demo scripts for this page-->
