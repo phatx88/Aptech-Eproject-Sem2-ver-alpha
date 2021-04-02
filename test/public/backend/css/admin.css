@@ -2,17 +2,18 @@ body {
 	font-size:14px;
 }
 .navbar-nav .dropdown-menu {
-	background-color:#212529;
+	background-color:#fff;
 	border:none;
 }
 
 .navbar-nav  .dropdown-menu .dropdown-item {
-	color: rgba(255, 255, 255, 0.5);
+	/* color: rgba(255, 255, 255, 0.5); */
+	color: #212529;
 }
 
 .navbar-nav  .dropdown-menu .dropdown-item:hover {
-	color: rgba(255, 255, 255, 0.75);
-	background-color:#212529;
+	/* color: rgba(255, 255, 255, 0.75); */
+	color:#f95c2e;
 }
 
 table th  {
@@ -57,8 +58,8 @@ table img {
 }
 
 .nav-item  .dropdown-menu  > .active {
-	background-color:#212529;
-	color:white;
+	color:#212529;
+	background-color:white;
 }
 
 .nounderline {
