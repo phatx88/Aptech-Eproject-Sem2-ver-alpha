@@ -36,7 +36,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
          <li class="nav-item active">
-            <a class="nav-link" href="../../pages/dashboard/index.html"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
+            <a class="nav-link" href="{{ URL::TO('admin-dashboard') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>
@@ -109,13 +109,22 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="../../pages/permission/roles.html">Danh sách vai trò</a>
-               <a class="dropdown-item" href="../../pages/permission/add_role.html">Thêm vai trò</a>
-               <a class="dropdown-item" href="../../pages/permission/actions.html">Danh sách tác vụ</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-list')}}">Roles List</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-add')}}">Roles Add</a>
+               <a class="dropdown-item" href="{{URL::to('permission-roles-edit')}}">Roles Edit</a>
+               <a class="dropdown-item" href="{{URL::to('permission-actions-list')}}">Actions List</a>
+               <a class="dropdown-item" href="{{URL::to('permission-actions-edit')}}">Actions Edit</a>
+               <a class="dropdown-item" href="{{URL::to('permission-role_action-list')}}">Role-Action-List</a>
+               <a class="dropdown-item" href="{{URL::to('permission-role_action-add')}}">Role-Action-Add</a>
+               
+      
             </div>
          </li>
          <li class="nav-item">
-            <a class="nav-link" href="../../pages/order_status/list.html"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng</span></a>
+            <a class="nav-link" href="{{URL::to('order_status-list')}}"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng</span></a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="{{URL::to('order_status-edit')}}"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng (Sửa)</span></a>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
@@ -161,6 +170,15 @@
  <!-- Page level plugin JavaScript-->
  <script src="{{asset('backend/vendor/datatables/jquery.dataTables.js')}}"></script>
  <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
+ {{-- CKEDITOR  --}}
+ {{-- <script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
+ <script>
+   ClassicEditor
+       .create( document.querySelector( '#editor' ) )
+       .catch( error => {
+           console.error( error );
+       } );
+</script> --}}
  <!-- Custom scripts for all pages-->
  <script src="{{asset('backend/js/sb-admin.min.js')}}"></script>
  <!-- Demo scripts for this page-->

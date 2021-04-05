@@ -61,7 +61,7 @@
        
 
     </div>
-    <script type="text/javascript" src="../../vendor/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
     <script>CKEDITOR.replace('description');</script>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
@@ -73,4 +73,5 @@
        </div>
     </footer>
  </div>
+ <!-- /.content-wrapper -->
 @endsection

@@ -8,6 +8,7 @@
                     <a href="#">Quản lý</a>
                 </li>
                 <li class="breadcrumb-item active">Đơn hàng</li>
+                <li class="breadcrumb-item active">Danh sách</li>
             </ol>
             <!-- DataTables Example -->
             <div class="action-bar">
