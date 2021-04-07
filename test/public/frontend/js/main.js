@@ -37,7 +37,7 @@
 			center: true,
 			loop: true,
 			autoplay: true,
-			autoplaySpeed: 2000,
+			autoplaySpeed: 3000,
 			items: 1,
 			margin: 30,
 			stagePadding: 0,

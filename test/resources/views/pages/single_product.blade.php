@@ -62,10 +62,6 @@
                     <p><a href="cart.html" class="btn btn-primary py-3 px-5 mr-2">Add to Cart</a><a href="cart.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
                 </div>
             </div>
-
-
-
-
             <div class="row mt-5">
                 <div class="col-md-12 nav-link-wrap">
                     <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -222,40 +218,72 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>            
             </div>
-        </div>
-    </section>
 
-    {{-- Related Products --}}
-
-    <section class="ftco-section testimony-section img"
-        style="background-image: url({{ asset('frontend/images/bg_4.jpg') }});">
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row justify-content-center mb-3">
-                <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-                    <h2 class="mb-3">Related Products</h2>
-                </div>
-            </div>
-            <div class="row ftco-animate">
+            <div class="row mt-5">
                 <div class="col-md-12">
+                    <h2 class="text-center mb-5">Related Product</h2>
                     <div class="carousel-testimony owl-carousel ftco-owl">
+                        <!-- Sản Phẩm Liên Quan  -->           
                         <div class="item">
-                            <div class="testimony-wrap py-4">
-                                <div class="icon d-flex align-items-center justify-content-center"><span
-                                        class="fa fa-quote-left"></div>
-                                <div class="text">
-                                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia
-                                        and Consonantia, there live the blind texts.</p>
-                                    <div class="d-flex align-items-center">
-                                        <div class="user-img"
-                                            style="background-image: url({{ asset('frontend/images/person_1.jpg') }})">
+                            <div class="d-flex">
+                                <div class="product ftco-animate">
+                                    <div class="img d-flex align-items-center justify-content-center" style="background-image: url(frontend/images/prod-2.jpg);">
+                                        <div class="desc">
+                                            <p class="meta-prod d-flex">
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
+                                            </p>
                                         </div>
-                                        <div class="pl-3">
-                                            <p class="name">Roger Scott</p>
-                                            <span class="position">Marketing Manager</span>
+                                    </div>
+                                    <div class="text text-center">
+                                        <span class="seller">Best Seller</span>
+                                        <span class="category">Gin</span>
+                                        <h2>Jim Beam Kentucky Straight</h2>
+                                        <span class="price">$69.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="d-flex">
+                                <div class="product ftco-animate">
+                                    <div class="img d-flex align-items-center justify-content-center" style="background-image: url(frontend/images/prod-4.jpg);">
+                                        <div class="desc">
+                                            <p class="meta-prod d-flex">
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
+                                            </p>
                                         </div>
+                                    </div>
+                                    <div class="text text-center">
+                                        <span class="category">Rum</span>
+                                        <h2>The Glenlivet</h2>
+                                        <span class="price">$69.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="d-flex">
+                                <div class="product ftco-animate">
+                                    <div class="img d-flex align-items-center justify-content-center" style="background-image: url(frontend/images/prod-3.jpg);">
+                                        <div class="desc">
+                                            <p class="meta-prod d-flex">
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
+                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="text text-center">
+                                        <span class="new">New Arrival</span>
+                                        <span class="category">Rum</span>
+                                        <h2>Citadelle</h2>
+                                        <span class="price">$69.00</span>
                                     </div>
                                 </div>
                             </div>
@@ -265,4 +293,8 @@
             </div>
         </div>
     </section>
+
+    {{-- Related Products --}}
+
+    
 @endsection
