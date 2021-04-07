@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +17,8 @@ Route::get('/', function () {
     return view('pages.home');
 });
 
-Route::get('/home', function () {
-    return view('pages.home');
-});
+Route::get('home',[HomeController::class,'index']);
+
 Route::get('/product', function () {
     return view('pages.product');
 });
@@ -166,7 +165,7 @@ Route::get('/order_status-edit', function () {
 
 // permission
 
-// roles 
+// roles
 Route::get('/permission-roles-list', function () {
     return view('admin.permission..roles.roles');
 });
@@ -177,7 +176,7 @@ Route::get('/permission-roles-edit', function () {
     return view('admin.permission.roles.edit_role');
 });
 
-// actions 
+// actions
 Route::get('/permission-actions-list', function () {
     return view('admin.permission.action.actions');
 });
@@ -185,7 +184,7 @@ Route::get('/permission-actions-edit', function () {
     return view('admin.permission.action.edit_action');
 });
 
-// role_action 
+// role_action
 Route::get('/permission-role_action-list', function () {
     return view('admin.permission.role_action.role_action');
 });
