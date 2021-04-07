@@ -1,6 +1,7 @@
 @extends('main_layout')
 @section('content')
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('frontend/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('public/frontend/images/bg_2.jpg');"
+    data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -22,12 +23,9 @@
                             <h3>Product Types</h3>
                             <ul class="p-0">
                                 <li><a href="#">All Types <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Brandy <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Gin <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Rum <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Tequila <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Vodka <span class="fa fa-chevron-right"></span></a></li>
-                                <li><a href="#">Whiskey <span class="fa fa-chevron-right"></span></a></li>
+                                @foreach($all_cate as $cate)
+                                <li><a href="{{ route('product.index',['id' => $cate->id])}}">{{ $cate->name }} <span class="fa fa-chevron-right"></span></a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -104,10 +102,12 @@
                         </div>
                     </div>
                     <div class="row">
+
                         @foreach ($products as $product)
                         <div class="col-md-4 d-flex">
                             <div class="product ftco-animate">
-                                <div class="img d-flex align-items-center justify-content-center" style="background-image: url(frontend/images/products/{{ $product->featured_image }});">
+                                <div class="img d-flex align-items-center justify-content-center" >
+                                    <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt="">
                                     <div class="desc">
                                         <p class="meta-prod d-flex">
                                             <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
@@ -116,6 +116,7 @@
                                         </p>
                                     </div>
                                 </div>
+
                                 <div class="text text-center">
 
                                     @if (date('Y',strtotime($product->created_date) )>=2020)
