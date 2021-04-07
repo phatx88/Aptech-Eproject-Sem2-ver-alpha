@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomeController;    //use
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('home',[HomeController::class,'index']);
 
-Route::get('/product', function () {
+Route::get('/product', function () {                //add
     return view('pages.product');
 });
 
