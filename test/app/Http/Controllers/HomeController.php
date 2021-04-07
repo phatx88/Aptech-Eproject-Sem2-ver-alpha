@@ -11,7 +11,8 @@ class HomeController extends Controller
     public function index(){
        $products = DB::table('view_product')
        ->join('brand', 'view_product.brand_id', '=', 'brand.id')
-       ->select('view_product.*', 'brand.name as brand_name')
+       ->join('category', 'view_product.category_id', '=', 'category.id')
+       ->select('view_product.*', 'brand.name as brand_name','category.name as category_name')
        ->get();
        return view('pages.home', ['products' => $products]);
     }
