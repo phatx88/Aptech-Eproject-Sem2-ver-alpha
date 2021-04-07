@@ -19,7 +19,7 @@
    </head>
 <body id="page-top">
    <nav class="navbar navbar-expand navbar bg static-top border-bottom">
-      <a class="navbar-brand mr-1 text-dark" href="index.html">Mỹ Phẩm YouT</a>
+      <a class="navbar-brand mr-1 text-dark" href="index.html">Liquor Store</a>
       <button class="btn btn-link btn-sm text-dark order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
       </button>
@@ -142,7 +142,7 @@
 </div>
 <!-- /#wrapper -->
 <!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
+<a class="scroll-to-top bg-primary" href="#page-top">
    <i class="fas fa-angle-up"></i>
    </a>
    <!-- Logout Modal-->
