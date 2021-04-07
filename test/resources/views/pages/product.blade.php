@@ -86,9 +86,9 @@
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                             {{-- SEARCH BAR BEGIN --}}
-                            <form class="search">
+                            <form action="{{ route('product.index') }}" method="GET" class="search">
                                 <div class="search__wrapper">
-                                  <input type="text" name="" placeholder="Select Types of Products" class="search__field">
+                                  <input type="text" name="search" placeholder="Select Types of Products" class="search__field">
                                   <button type="submit" class="fa fa-search search__icon"></button>
                                 </div>
                               </form>
