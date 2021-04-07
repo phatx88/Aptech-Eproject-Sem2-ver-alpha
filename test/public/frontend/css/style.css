@@ -4071,10 +4071,10 @@ input[type="button"].btn-block {
   */
 }
 
-.page-item:last-child .page-link {
-  /* border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;  */
-}
+/* .page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+} */
 
 .page-item.active .page-link {
   z-index: 1;
