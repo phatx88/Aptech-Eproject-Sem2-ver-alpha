@@ -1,6 +1,6 @@
 @extends('main_layout')
 @section('content')
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('public/frontend/images/bg_2.jpg');"
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');"
     data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
@@ -45,7 +45,7 @@
                     <div class="sidebar-box ftco-animate">
                         <h3>Recent Blog</h3>
                         <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4" style="background-image: url(frontend/images/image_1.jpg);"></a>
+                            <a class="blog-img mr-4" style="background-image: url({{ asset('frontend/images/image_1.jpg') }});"></a>
                             <div class="text">
                                 <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
                                 <div class="meta">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4" style="background-image: url(frontend/images/image_2.jpg);"></a>
+                            <a class="blog-img mr-4" style="background-image: url({{ asset('frontend/images/image_2.jpg') }});"></a>
                             <div class="text">
                                 <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
                                 <div class="meta">
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4" style="background-image: url(frontend/images/image_3.jpg);"></a>
+                            <a class="blog-img mr-4" style="background-image: url({{ asset('frontend/images/image_3.jpg') }});"></a>
                             <div class="text">
                                 <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
                                 <div class="meta">
@@ -106,8 +106,8 @@
                         @foreach ($products as $product)
                         <div class="col-md-4 d-flex">
                             <div class="product ftco-animate">
-                                <div class="img d-flex align-items-center justify-content-center" >
-                                    <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt="">
+                                <div class="img d-flex align-items-center justify-content-center"  style="background-image: url('{{ asset('frontend/images/products/'.$product->featured_image) }}');">
+                                    {{-- <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt=""> --}}
                                     <div class="desc">
                                         <p class="meta-prod d-flex">
                                             <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
