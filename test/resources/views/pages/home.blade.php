@@ -169,7 +169,7 @@
                                     {{-- {{ date('Y',strtotime($product->created_date) ) }} --}}
                                 @endif
 
-                                <span class="category">Brandy</span>
+                                <span class="category">{{ $product->category_name }}</span>
                                 <h2>{{ $product->brand_name }}</h2>
                                 <p class="mb-0">
                                     @if ($product->price != $product->sale_price)
