@@ -3472,7 +3472,8 @@ input[type="button"].btn-block {
 .dropdown-item:hover, .dropdown-item:focus {
   color: #16181b;
   text-decoration: none;
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
+  /* background-color: rgba(255,255,255,.1); */
 }
 
 .dropdown-item.active, .dropdown-item:active {
@@ -4417,7 +4418,7 @@ input[type="button"].btn-block {
 }
 
 .navbar {
-  position: relative;
+  position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4430,6 +4431,10 @@ input[type="button"].btn-block {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0.5rem 1rem;
+  width: 100%;
+  background-color: #fff;
+  z-index: 99;
+  border-bottom: 1px solid #343a40;
 }
 
 .navbar > .container,
@@ -4877,8 +4882,9 @@ input[type="button"].btn-block {
   background-clip: border-box;
   /* border: 1px solid rgba(0, 0, 0, 0.125);*/
     border-radius: 0.25rem;
-    box-shadow: 0 4px 25px 0 rgb(13 26 53 / 10%);
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
     border: 1px solid transparent;
+    /* border-top: 1px solid #b7472a; */
 }
 
 .card > hr {
@@ -10585,6 +10591,8 @@ body {
   padding-left: 1rem;
   padding-right: 1rem;
   background-color: #f3f7fd;
+  margin-top: 56px;
+  
 }
 
 .scroll-to-top {
@@ -10634,7 +10642,9 @@ body {
 }
 
 .navbar-nav .nav-item.active .nav-link {
-  color: #212529;
+  /* color: #212529; */
+  color: #fff;
+  /* color: rgba(255, 255, 255, 0.5); */
 }
 
 .navbar-nav .nav-item.dropdown .dropdown-toggle::after {
@@ -10676,9 +10686,11 @@ body {
 
 .sidebar {
   width: 90px !important;
-  /* background-color: #212529; */
-  background-color: #fff;
+  border-top: 1px solid #343a40;
+  background-color: #343a40;
+  /* background-color: #fff; */
   min-height: calc(100vh - 56px);
+  margin-top: 56px;
 }
 
 .sidebar .nav-item:last-child {
@@ -10715,12 +10727,14 @@ body {
 
 .sidebar .nav-item .nav-link {
   /* color: rgba(255, 255, 255, 0.5); */
-  color: #212529;
+  /* color: #212529; */
+  color: #fff;
 }
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
-  /* color: rgba(255, 255, 255, 0.75); */
-  color: #f95c2e;
+  color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255,255,255,.1);
+  /* color: #f95c2e; */
 }
 
 .sidebar.toggled {
