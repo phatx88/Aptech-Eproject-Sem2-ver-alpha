@@ -22,7 +22,6 @@
                         <div class="categories">
                             <h3>Product Types</h3>
                             <ul class="p-0">
-                                <li><a href="#">All Types <span class="fa fa-chevron-right"></span></a></li>
                                 @foreach($all_cate as $cate)
                                 <li><a href="{{ route('product.index',['id' => $cate->id])}}">{{ $cate->name }} <span class="fa fa-chevron-right"></span></a></li>
                                 @endforeach
