@@ -190,13 +190,13 @@
 	//Fixing modal open to add padding-right property to body
 	$(document).on('show.bs.modal', '.modal', function (e) {
 		e.stopPropagation();
-		$("body").css("padding-right","0");
-   });
-   
-   $(document).on('hide.bs.modal', '.modal', function (e) {
+		$("body").css("padding-right", "0");
+	});
+
+	$(document).on('hide.bs.modal', '.modal', function (e) {
 		e.stopPropagation();
-		$("body").css("padding-right","0");
-   });
+		$("body").css("padding-right", "0");
+	});
 
 
 	// magnific popup
@@ -233,5 +233,47 @@
 	$('[data-toggle="popover"]').popover()
 	$('[data-toggle="tooltip"]').tooltip()
 
+	var snapSlider = document.getElementById('slider-snap');
+
+	noUiSlider.create(snapSlider, {
+		start: [0, 1000],
+		snap: true,
+		connect: true,
+		range: {
+			'min': 0,
+			'10%': 50,
+			'20%': 100,
+			'30%': 150,
+			'40%': 500,
+			'50%': 700,
+			'75%': 850,
+			'max': 1000
+		},
+	});
+	
+	var snapValues = [
+		document.getElementById('slider-snap-value-lower'),
+		document.getElementById('slider-snap-value-upper')
+	];
+	
+	snapSlider.noUiSlider.on('update', function (values, handle) {
+		snapValues[handle].innerHTML = values[handle];
+	});
+
+	var inputFormat = [
+		document.getElementById('input-format-from'),
+		document.getElementById('input-format-to')
+	];
+
+	snapSlider.noUiSlider.on('update', function (values, handle) {
+    inputFormat[handle].value = values[handle];
+	});
+
+	inputFormat.addEventListener('change', function () {
+		snapSlider.noUiSlider.set(this.value);
+	});
+	
 })(jQuery);
+
+
 

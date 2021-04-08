@@ -10267,3 +10267,13 @@ textarea.form-control {
     height: 100px;
     display: block
   }
+
+  /* Overriding noUI css  */
+  .noUi-connect {
+    background-color: #b7472a;
+  }
+
+  .noUi-target {
+    width: 90%;
+    margin-left: 10px;
+  }
