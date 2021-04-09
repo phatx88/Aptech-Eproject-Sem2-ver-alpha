@@ -19,9 +19,9 @@
    </head>
 <body id="page-top">
    @include('admin.nav-bar')
-   
+
    <div id="wrapper">
-      
+
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
          <li class="nav-item active">
@@ -30,8 +30,8 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('order-list')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{URL::to('order-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{route('order.index')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('order.create')}}">Thêm</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -48,7 +48,7 @@
                <a class="dropdown-item" href="{{URL::to('comment-list')}}">Danh sách</a>
             </div>
          </li>
-  
+
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="far fa-image"></i> <span>Hình ảnh</span></a>
             <div class="dropdown-menu" aria-labelledby="">
@@ -76,7 +76,7 @@
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{URL::to('promotion-list')}}">Danh sách</a>
                <a class="dropdown-item" href="{{URL::to('promotion-add')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('promotion-edit')}}">Chỉnh sửa</a>               
+               <a class="dropdown-item" href="{{URL::to('promotion-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -105,8 +105,8 @@
                <a class="dropdown-item" href="{{URL::to('permission-actions-edit')}}">Actions Edit</a>
                <a class="dropdown-item" href="{{URL::to('permission-role_action-list')}}">Role-Action-List</a>
                <a class="dropdown-item" href="{{URL::to('permission-role_action-add')}}">Role-Action-Add</a>
-               
-      
+
+
             </div>
          </li>
          <li class="nav-item">

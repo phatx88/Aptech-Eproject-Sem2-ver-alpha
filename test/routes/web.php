@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Admin_OrderController;
 use App\Http\Controllers\HomeController;    //use
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +22,8 @@ Route::get('/', function () {
 
 Route::get('/home',[HomeController::class,'index']);
 
+//admin_order
+Route::resource('admin/order', Admin_OrderController::class);
 // Route::get('/product', function () {
 //     return view('pages.product');
 // });
@@ -65,13 +69,13 @@ Route::get('/admin-dashboard', function () {
     return view('admin.dashboard');
 });
 
-Route::get('/order-list', function () {
-    return view('admin.order.list');
-});
+// Route::get('/order-list', function () {
+//     return view('admin.order.list');
+// });
 
-Route::get('/order-add', function () {
-    return view('admin.order.add');
-});
+// Route::get('/order-add', function () {
+//     return view('admin.order.add');
+// });
 
 //customer
 Route::get('/customer-list', function () {
@@ -193,3 +197,5 @@ Route::get('/permission-role_action-list', function () {
 Route::get('/permission-role_action-add', function () {
     return view('admin.permission.role_action.add_role_action');
 });
+
+
