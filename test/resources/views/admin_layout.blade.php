@@ -158,6 +158,20 @@
  <!-- Page level plugin JavaScript-->
  <script src="{{asset('backend/vendor/datatables/jquery.dataTables.js')}}"></script>
  <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
+ {{-- DATA TABLE  --}}
+ <script>
+   $(function () {
+   //   $("#example1").DataTable();
+     $('#dataTable').DataTable({
+       "paging": true,
+       "lengthChange": true,
+       "searching": true,
+       "ordering": true,
+       "info": true,
+       "autoWidth": false,
+     });
+   });
+ </script>
  {{-- CKEDITOR  --}}
  {{-- <script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
  <script>
@@ -167,6 +181,7 @@
            console.error( error );
        } );
 </script> --}}
+
  <!-- Custom scripts for all pages-->
  <script src="{{asset('backend/js/sb-admin.min.js')}}"></script>
  <!-- Demo scripts for this page-->
