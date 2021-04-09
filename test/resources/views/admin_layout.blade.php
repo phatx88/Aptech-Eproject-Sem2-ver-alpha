@@ -37,9 +37,9 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fab fa-product-hunt"></i> <span>Sản phẩm</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('product-list')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{URL::to('product-add')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('product-edit')}}">Chỉnh sửa</a>
+               <a class="dropdown-item" href="{{ route('product.index') }}">Danh sách</a>
+               <a class="dropdown-item" href="{{ route('product.create') }}">Thêm</a>
+               <a class="dropdown-item" href="">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
