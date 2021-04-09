@@ -42,7 +42,7 @@
                               @foreach ($products as $product)
                               <tr>
                                  <td><input type="checkbox"></td>
-                                 <td>#{{ $product->id }}</td>
+                                 <td>{{ $product->id }}</td>
                                  <td>{{ $product->name }}</td>
                                   <td><img src="{{ asset('frontend/images/products/'.$product->featured_image) }}"></td>
                                  <td>${{ $product->price }}</td>

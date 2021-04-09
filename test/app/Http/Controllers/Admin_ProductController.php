@@ -15,7 +15,7 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::join('category', 'category.id' , '=' , 'view_product.category_id')->get();
+        $products = Product::get();
         return view('admin.product.list' , ['products' => $products]);
     }
 

@@ -57,14 +57,14 @@
                                     <td>{{ $order->created_date }}</td>
                                     <td>{{ $order->shipping_fullname }}</td>
                                     <td>{{ $order->customer->shipping_mobile }}</td>
-                                    <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>
-                                    <td>3,000,000 đ</td>
+                                    <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>   
+                                    <td>${{ $sum = $orderItems->where("order_id" , '=' , $order->id)->sum('total_price')}}</td>
+                                    {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
                                     <td>{{ $order->shipping_fee }}</td>
-                                    <td>3,050,000</td>
-                                    {{-- <td>{{ $order->OrderItem->total_price }}</td> --}}
+                                    <td>${{ $sum + $order->shipping_fee}}</td>
                                     <td>{{ $order->shipping_housenumber_street }}</td>
                                     <td>{{ $order->delivered_date }}</td>
-                                    <td>Nguyễn Văn T</td>
+                                    <td>{{ $order->staff->name ?? "" }}</td>
                                     <td> </td>
                                     <td> <input type="button" onclick="Edit('1');" value="Sửa"
                                             class="btn btn-warning btn-sm"></td>

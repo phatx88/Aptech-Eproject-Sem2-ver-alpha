@@ -16,14 +16,20 @@ class Admin_OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::join("customer", "customer.id", "=", "order.customer_id")
-        ->join("status", "status.id", "=", "order.order_status_id")
-        ->join("order_item", "order_item.order_id", "=", "order.id")
-        ->join("product", "product.id","=", "order_item.product_id")
-        ->select("order.*")->get();
-        // dd($orders);
 
-        return view('admin.order.list', ['orders'=>$orders]);
+        $orders = Order::get();
+        $orderItems = OrderItem::get();
+
+        // join("customer", "customer.id", "=", "order.customer_id")
+        // ->join("status", "status.id", "=", "order.order_status_id")
+        // ->join("staff" , 'order.staff_id', '=' , 'staff.id')
+        
+        // dd($orders);
+        
+        return view('admin.order.list', [
+            'orders'=>$orders,
+            'orderItems' => $orderItems,
+            ]);
     }
 
     /**
