@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\HomeController;    //use
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\Admin_ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,11 @@ Route::get('/home',[HomeController::class,'index']);
 // Route::get('/product', function () {
 //     return view('pages.product');
 // });
-Route::get('/product/{id?}', [ProductsController::class, 'index'])->name('product.index');
+Route::get('/product/{id?}', [ProductsController::class, 'index']);
+
+
+//BACK END 
+Route::resource('admin/product', Admin_ProductController::class);
 
 Route::get('/about', function () {
     return view('pages.about');
@@ -85,15 +90,15 @@ Route::get('/customer-edit', function () {
 });
 
 //product
-Route::get('/product-add', function () {
-    return view('admin.product.add');
-});
-Route::get('/product-list', function () {
-    return view('admin.product.list');
-});
-Route::get('/product-edit', function () {
-    return view('admin.product.edit');
-});
+// Route::get('/product-add', function () {
+//     return view('admin.product.add');
+// });
+// Route::get('/product-list', function () {
+//     return view('admin.product.list');
+// });
+// Route::get('/product-edit', function () {
+//     return view('admin.product.edit');
+// });
 
 //comment
 Route::get('/comment-list', function () {
