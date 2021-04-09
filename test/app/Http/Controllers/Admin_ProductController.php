@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Admin_ProductController extends Controller
 {
@@ -14,7 +15,8 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.product.list');
+        $products = Product::join('category', 'category.id' , '=' , 'view_product.category_id')->get();
+        return view('admin.product.list' , ['products' => $products]);
     }
 
     /**
@@ -24,7 +26,8 @@ class Admin_ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.product.add');
+        $categories = DB::table('category')->get();
+        return view('admin.product.add' , ['categories' => $categories]);
     }
 
     /**

@@ -10,7 +10,8 @@
                <li class="breadcrumb-item active">Sản phẩm</li>
             </ol>
             <!-- /form -->
-            <form method="post" action="" enctype="multipart/form-data">
+            <form method="POST" action="" enctype="multipart/form-data">
+               @csrf
                <div class="form-group row">
                   <label class="col-md-12 control-label" for="name">Tên </label>  
                   <div class="col-md-9 col-lg-6">
@@ -27,7 +28,7 @@
                <div class="form-group row">
                   <label class="col-md-12 control-label" for="inventory-number">Lượng tồn</label>  
                   <div class="col-md-9 col-lg-6">
-                     <input name="inventory-number" id="inventory-number" type="text" value="" class="form-control">			
+                     <input name="inventory_qty" id="inventory-number" type="text" value="" class="form-control">			
                   </div>
                </div>
                
@@ -67,7 +68,7 @@
                   <input type="submit" class="btn btn-primary btn-sm" value="Lưu" name="save">
                </div>
             </form>
-            <script type="text/javascript" src="../../vendor/ckeditor/ckeditor.js"></script>
+            <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
             <script>CKEDITOR.replace('description');</script>
             <!-- /form -->
             <!-- /.container-fluid -->
