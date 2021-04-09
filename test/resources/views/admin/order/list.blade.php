@@ -1,6 +1,9 @@
 @extends('admin_layout')
 @section('admin_content')
     <div id="content-wrapper">
+        {{-- @php
+            dd($orders);
+        @endphp --}}
         <div class="container-fluid">
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
@@ -43,46 +46,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($orders as $order)
                                 <tr>
                                     <td><input type="checkbox"></td>
-                                    <td>#112</td>
-                                    <td>Nguyễn Văn A</td>
-                                    <td>0932538468</td>
-                                    <td>nguyenvana@gmail.com</td>
-                                    <td>Đang xử lý</td>
-                                    <td>2019-03-10 15:35:59 </td>
-                                    <td>Nguyễn Thị C</td>
-                                    <td>0123456789</td>
-                                    <td>COD</td>
-                                    <td>2,000,000 đ</td>
-                                    <td>50,000 đ</td>
-                                    <td>2,050,000 đ</td>
-                                    <td>278 Hòa Bình, Hiệp Tân, Tân Phú, TP.HCM</td>
-                                    <td>2019-03-13</td>
-                                    <td>Nguyễn Hữu Lộc</td>
-                                    <td> <input type="button" onclick="Confirm('1');" value="Xác nhận"
-                                            class="btn btn-info btn-sm"></td>
-                                    <td> <input type="button" onclick="Edit('1');" value="Sửa"
-                                            class="btn btn-warning btn-sm"></td>
-                                    <td> <input type="button" onclick="DELETE('1');" value="Xóa"
-                                            class="btn btn-danger btn-sm"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>#113</td>
-                                    <td>Nguyễn Văn B</td>
-                                    <td>0932538468</td>
-                                    <td>nguyenvanb@gmail.com</td>
-                                    <td>Đang xử lý</td>
-                                    <td>2019-03-10 15:35:59 </td>
-                                    <td>Nguyễn Thị D</td>
-                                    <td>0123456789</td>
-                                    <td>Bank</td>
+                                    <td>{{ $order->id  }}</td>
+                                    <td>{{ $order->customer->name }}</td>
+                                    <td>{{ $order->shipping_mobile }}</td>
+                                    <td>{{ $order->customer->email}}</td>
+                                    <td>{{ $order->status->name }}</td>
+                                    <td>{{ $order->created_date }}</td>
+                                    <td>{{ $order->shipping_fullname }}</td>
+                                    <td>{{ $order->customer->shipping_mobile }}</td>
+                                    <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>
                                     <td>3,000,000 đ</td>
-                                    <td>50,000 đ</td>
-                                    <td>3,050,000 đ</td>
-                                    <td>278 Hòa Bình, Hiệp Tân, Tân Phú, TP.HCM</td>
-                                    <td>2019-03-13</td>
+                                    <td>{{ $order->shipping_fee }}</td>
+                                    <td>3,050,000</td>
+                                    {{-- <td>{{ $order->OrderItem->total_price }}</td> --}}
+                                    <td>{{ $order->shipping_housenumber_street }}</td>
+                                    <td>{{ $order->delivered_date }}</td>
                                     <td>Nguyễn Văn T</td>
                                     <td> </td>
                                     <td> <input type="button" onclick="Edit('1');" value="Sửa"
@@ -90,6 +71,8 @@
                                     <td> <input type="button" onclick="DELETE('1');" value="Xóa"
                                             class="btn btn-danger btn-sm"></td>
                                 </tr>
+                                @endforeach
+
                             </tbody>
 
 

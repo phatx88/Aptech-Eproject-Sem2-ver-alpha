@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\OrderItem;
 
 class Admin_OrderController extends Controller
 {
@@ -15,7 +16,14 @@ class Admin_OrderController extends Controller
      */
     public function index()
     {
-        return view('admin.order.list');
+        $orders = Order::join("customer", "customer.id", "=", "order.customer_id")
+        ->join("status", "status.id", "=", "order.order_status_id")
+        ->join("order_item", "order_item.order_id", "=", "order.id")
+        ->join("product", "product.id","=", "order_item.product_id")
+        ->select("order.*")->get();
+        // dd($orders);
+
+        return view('admin.order.list', ['orders'=>$orders]);
     }
 
     /**
