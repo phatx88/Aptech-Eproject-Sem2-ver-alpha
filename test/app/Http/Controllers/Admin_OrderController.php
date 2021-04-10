@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Ward;
+use App\Models\District;
+use App\Models\Province;
+use App\Models\Transport;
 
 class Admin_OrderController extends Controller
 {
@@ -19,6 +23,11 @@ class Admin_OrderController extends Controller
 
         $orders = Order::get();
         $orderItems = OrderItem::get();
+        $wards = Ward::get();
+        $districts = District::get();
+        $provinces = Province::get();
+        $transports = Transport::get();
+
 
         // join("customer", "customer.id", "=", "order.customer_id")
         // ->join("status", "status.id", "=", "order.order_status_id")
@@ -29,6 +38,10 @@ class Admin_OrderController extends Controller
         return view('admin.order.list', [
             'orders'=>$orders,
             'orderItems' => $orderItems,
+            'wards' => $wards,
+            'districts' => $districts,
+            'provinces' => $provinces,
+            'transports' => $transports,
             ]);
     }
 

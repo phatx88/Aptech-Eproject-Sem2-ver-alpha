@@ -10,5 +10,10 @@ class District extends Model
     use HasFactory;
 
     protected $table = 'district';
+    protected $primaryKey = "id";
     public $timestamps = false;
+
+    public function province() {
+        return $this->belongsTo(Province::class);
+    }
 }

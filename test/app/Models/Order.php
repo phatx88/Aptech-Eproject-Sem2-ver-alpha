@@ -12,7 +12,7 @@ class Order extends Model
     public $timestamps = false;
 
     public function customer(){
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id' , 'id');
     }
 
     public function status(){
@@ -23,8 +23,12 @@ class Order extends Model
         return $this->belongsTo(Staff::class, 'staff_id');
     }
 
-    public function order(){
-        return $this->belongsToMany(Product::class , 'order_item', 'order_id' , 'product_id');
+    public function ward(){
+        return $this->belongsTo(Ward::class , 'shipping_ward_id' , 'id');
+    }
+
+    public function product(){
+        return $this->belongsToMany(Product::class)->using(OrderItem::class);
     }
 
     public function orderItem() {

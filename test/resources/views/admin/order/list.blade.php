@@ -62,7 +62,9 @@
                                     {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
                                     <td>{{ $order->shipping_fee }}</td>
                                     <td>${{ $sum + $order->shipping_fee}}</td>
-                                    <td>{{ $order->shipping_housenumber_street }}</td>
+                                    <td>{{ $order->shipping_housenumber_street }},
+                                        {{ $order->ward->name }} , {{ $order->ward->district->name }} , {{ $order->ward->district->province->name }}.
+                                    </td>
                                     <td>{{ $order->delivered_date }}</td>
                                     <td>{{ $order->staff->name ?? "" }}</td>
                                     <td> </td>
@@ -74,7 +76,29 @@
                                 @endforeach
 
                             </tbody>
-
+                            <tfoot>
+                                <tr>
+                                    <th><input type="checkbox" onclick="checkAll(this)"></th>
+                                    <th>Mã</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Điện thoai</th>
+                                    <th>Email</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Ngày đặt hàng</th>
+                                    <th>Người nhận</th>
+                                    <th>Số điện thoại người nhận</th>
+                                    <th>Hình thức thanh toán</th>
+                                    <th>Tạm tính</th>
+                                    <th>Phí giao hàng</th>
+                                    <th>Tổng cộng</th>
+                                    <th>Địa chỉ giao hàng</th>
+                                    <th>Ngày giao</th>
+                                    <th>Nhân viên phụ trách</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
 
                         </table>
                     </div>

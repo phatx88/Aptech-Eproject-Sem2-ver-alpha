@@ -10,5 +10,10 @@ class Ward extends Model
     use HasFactory;
 
     protected $table = 'ward';
+    protected $primaryKey = "id";
     public $timestamps = false;
+
+    public function district() {
+        return $this->belongsTo(District::class);
+    }
 }

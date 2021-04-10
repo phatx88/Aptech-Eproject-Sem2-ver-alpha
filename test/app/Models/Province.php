@@ -11,4 +11,8 @@ class Province extends Model
 
     protected $table = 'province';
     public $timestamps = false;
+
+    public function transport() {
+        return $this->belongsTo(Transport::class);
+    }
 }
