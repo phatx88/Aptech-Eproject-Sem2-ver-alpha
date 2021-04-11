@@ -11,16 +11,12 @@ class Order extends Model
     protected $table = 'order';
     public $timestamps = false;
 
-    public function customer(){
-        return $this->belongsTo(Customer::class, 'customer_id' , 'id');
+    public function user(){
+        return $this->belongsTo(User::class, 'customer_id' , 'id');
     }
 
     public function status(){
         return $this->belongsTo(ShippingStatus::class, 'order_status_id');
-    }
-
-    public function staff(){
-        return $this->belongsTo(Staff::class, 'staff_id');
     }
 
     public function ward(){

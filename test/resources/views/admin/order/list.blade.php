@@ -50,14 +50,14 @@
                                 <tr>
                                     <td><input type="checkbox"></td>
                                     <td>{{ $order->id  }}</td>
-                                    <td>{{ $order->customer->name }}</td>
-                                    <td>{{ $order->shipping_mobile }}</td>
-                                    <td>{{ $order->customer->email}}</td>
+                                    <td>{{ $order->user->name }}</td>
+                                    <td>{{ $order->user->mobile }}</td>
+                                    <td>{{ $order->user->email}}</td>
                                     <td>{{ $order->status->name }}</td>
                                     <td>{{ $order->created_date }}</td>
                                     <td>{{ $order->shipping_fullname }}</td>
-                                    <td>{{ $order->customer->shipping_mobile }}</td>
-                                    <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>   
+                                    <td>{{ $order->shipping_mobile }}</td>
+                                    <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>
                                     <td>${{ $sum = $orderItems->where("order_id" , '=' , $order->id)->sum('total_price')}}</td>
                                     {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
                                     <td>{{ $order->shipping_fee }}</td>
@@ -66,7 +66,7 @@
                                         {{ $order->ward->name }} , {{ $order->ward->district->name }} , {{ $order->ward->district->province->name }}.
                                     </td>
                                     <td>{{ $order->delivered_date }}</td>
-                                    <td>{{ $order->staff->name ?? "" }}</td>
+                                    <td></td>
                                     <td> </td>
                                     <td> <input type="button" onclick="Edit('1');" value="Sửa"
                                             class="btn btn-warning btn-sm"></td>

@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin_OrderController;
-use App\Http\Controllers\HomeController;    //use
+use App\Http\Controllers\User_HomeController;    //use
+use App\Http\Controllers\UserAccountController;    //use
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\Admin_ProductController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ Route::get('/', function () {
     return redirect('/home');
 });
 
-Route::get('/home',[HomeController::class,'index']);
+//Route::get('/home',[User_HomeController::class,'index']);
 
 //admin_order
 Route::resource('admin/order', Admin_OrderController::class);
@@ -31,7 +32,7 @@ Route::resource('admin/order', Admin_OrderController::class);
 Route::get('/product/{id?}', [ProductsController::class, 'index']);
 
 
-//BACK END 
+//BACK END
 Route::resource('admin/product', Admin_ProductController::class);
 
 Route::get('/about', function () {
@@ -61,10 +62,6 @@ Route::get('/check-out', function () {
     return view('pages.checkout');
 });
 
-Route::get('/my-profile', function () {
-    return view('pages.user');
-});
-
 //Admin
 Route::get('/admin-login', function () {
     return view('admin.login');
@@ -92,17 +89,6 @@ Route::get('/customer-add', function () {
 Route::get('/customer-edit', function () {
     return view('admin.customer.edit');
 });
-
-//product
-// Route::get('/product-add', function () {
-//     return view('admin.product.add');
-// });
-// Route::get('/product-list', function () {
-//     return view('admin.product.list');
-// });
-// Route::get('/product-edit', function () {
-//     return view('admin.product.edit');
-// });
 
 //comment
 Route::get('/comment-list', function () {
@@ -204,3 +190,10 @@ Route::get('/permission-role_action-add', function () {
 });
 
 
+
+Auth::routes(['verify' => true]);
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [User_HomeController::class, 'index'])->name('home');
+
+Route::resource('/home/user/account', UserAccountController::class);

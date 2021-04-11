@@ -29,7 +29,7 @@
                     <a href="#"><span class="fa fa-paper-plane mr-1"></span> youremail@email.com</a>
                 </p>
             </div>
-            <div class="col-md-6 d-flex justify-content-md-end">
+            <div class="col-md-6 d-flex justify-content-md-end align-items-center">
                 <div class="social-media mr-4">
                     <p class="mb-0 d-flex">
                         <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
@@ -38,8 +38,32 @@
                         <a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
                     </p>
                 </div>
-                <div class="reg">
-                    <p class="mb-0"><a  href="#register" class="btn-register mr-2" data-toggle="modal">Sign Up</a> <a href="#login" class="btn-login" data-toggle="modal">Log In</a></p>
+                <div class="reg text-white">
+
+                    @guest
+                        @if (Route::has('login'))
+                                <a  href="#register" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                        @endif
+
+                        @if (Route::has('register'))
+                                <a href="#login" class="btn-login text-white" data-toggle="modal">Log In</a>
+                        @endif
+                    @else
+                            {{--User drop down menu --}}
+                            <a href="{{ route('account.index') }}" class="text-white mr-2">
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            {{--User drop down menu --}}
+                            <a href="{{ route('logout') }} " class="text-white"
+                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+
+                    @endguest
                 </div>
             </div>
         </div>
@@ -50,12 +74,12 @@
     <div class="container">
         <a class="navbar-brand" href="{{URL::to('home')}}">Liquor <span>store</span></a>
         {{-- Shopping cart drop down --}}
-        <div class="order-lg-last btn-group">   
+        <div class="order-lg-last btn-group">
             <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="flaticon-shopping-bag"></span>
                 <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
             </a>
-             
+
              <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-item d-flex align-items-start" href="#">
                   <div class="img" style="background-image: url({{asset('frontend/images/prod-1.jpg')}});"></div>
@@ -101,11 +125,11 @@
         {{-- Shopping cart drop down --}}
         </div>
         {{-- Wishlist drop down --}}
-        <div class="order-lg-last btn-group"> 
+        <div class="order-lg-last btn-group">
             <a href="#cart-drop" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="flaticon-heart"></span>
               <div class="d-flex justify-content-center align-items-center"><small>4</small></div>
-          </a>       
+          </a>
             <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-item d-flex align-items-start" href="#">
                   <div class="img" style="background-image: url({{asset('frontend/images/prod-3.jpg')}});"></div>
@@ -159,7 +183,7 @@
                   View All
                   <span class="ion-ios-arrow-round-forward"></span>
               </a>
-          </div>        
+          </div>
         </div>
         {{-- Wishlist drop down --}}
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,8 +202,8 @@
                         <a class="dropdown-item" href="{{URL::to('single-blog')}}">Single Blog</a>
                         <a class="dropdown-item" href="{{URL::to('cart')}}">Cart</a>
                         <a class="dropdown-item" href="{{URL::to('check-out')}}">Checkout</a>
-                        <a class="dropdown-item" href="{{URL::to('my-profile')}}">User Account</a>
-                        
+                        <a class="dropdown-item" href="{{route('account.index')}}">User Account</a>
+
                     </div>
                 </li>
                 <li class="nav-item"><a href="{{URL::to('blog')}}" class="nav-link">Blog</a></li>
@@ -274,27 +298,51 @@
           <i class="fa fa-times fa-2x"></i>
         </div>
         <div class="container-fluid mt-5">
-          <form action="" method="post" id="LoginForm">
-            <div class="form-group text-center heading-section">
+            <form method="POST" action="{{ route('login') }}" id="loginForm">
+                @csrf
+
+                <div class="form-group text-center heading-section">
               <h2>Login</h2>
-              <span>Not a member yet? <a href="#register" data-dismiss="modal" data-toggle="modal">Sign up here</a></span>           
+              <span>Not a member yet? <a href="#register" data-dismiss="modal" data-toggle="modal">Sign up here</a></span>
             </div>
             <div class="form-group" style="position: relative;">
-              <label for="l_email">Email</label>
-              <input type="email" id="l_email" class="form-control mb-1" placeholder="" required>
-              
-              
-              
+              <label for="email">{{ __('E-Mail Address') }}</label>
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                @enderror
             </div>
             <div class="form-group pb-3" style="position: relative;">
-              <label for="l_password">Password</label>
-              <input type="password" id="l_password" class="form-control mb-1" placeholder="" required>
+              <label for="password">{{ __('Password') }}</label>
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                @enderror
               <a href="#forgotPassword" data-dismiss="modal" data-toggle="modal" style="display:block; position: absolute; right: 0;" title="">
                 Forgot Password?
               </a>
             </div>
+                <div class="form-group pb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                        <label class="form-check-label" for="remember">
+                            {{ __('Keep Me Logged In') }}
+                        </label>
+                    </div>
+                </div>
             <div class="form-group pt-2">
-              <button class="btn btn-info form-control">Login</button>
+              <button class="btn btn-info form-control">{{ __('Login') }}</button>
+                @if (Route::has('password.request'))
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                        {{ __('Forgot Your Password?') }}
+                    </a>
+                @endif
             </div>
             <div class="form-group text-center pt-2 social-login">
               <h6>OR Continue with</h6>
@@ -316,41 +364,54 @@
           <i class="fa fa-times fa-2x"></i>
         </div>
         <div class="container-fluid mt-5">
-          <form action="#" method="post" id="RegisterationForm">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
             <div class="form-group text-center pb-2 heading-section">
               <h2>Registration</h2>
             </div>
             <div class="form-row">
               <div class="form-group col">
-                <label for="name">Name</label>
-                <input type="text" id="name" class="form-control" placeholder="" required>
-              </div>
-              <div class="form-group col" style="position:relative;">
-                <label for='photo_upload' style="display:block">Profile Picture</label>
-                <button type="button" class="btn btn-dark form-control" onclick="document.getElementById('photo_upload').click()" id="photo_btn">Select Image</button>
-                <input type="file" name="photo" id="photo_upload" accept="image/*" style="display:none;" required>
+                <label for="name">{{ __('Name') }}</label>
+                  <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                  @error('name')
+                  <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                  @enderror
               </div>
             </div>
             <div class="form-group" style="position:relative;">
-              <label for="email">Email</label>
-              <input type="email" id="email" class="form-control mb-1" placeholder="" required>
-              <a href="#" data-toggle="modal" data-target="#login" style="display:none; position: absolute; right: 0; font-size: 12px;">That's you? Login</a>
-             
+              <label for="email">{{ __('E-Mail Address') }}</label>
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login" style="display: block; position: absolute; right: 0; font-size: 12px;">That's you? Login</a>
+
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                @enderror
+
             </div>
             <div class="form-row mb-1">
               <div class="form-group col">
-                <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="" required>
-               
+                <label for="password">{{ __('Password') }}</label>
+                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                  @error('password')
+                  <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                  @enderror
               </div>
               <div class="form-group col">
-                <label for="password_confirmation">Confirm Password</label>
-                <input type="password" id="password_confirmation" class="form-control" placeholder="" required>
+                <label for="password-confirm">{{ __('Confirm Password') }}</label>
+                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
               </div>
             </div>
 
             <div class="form-group">
-              <button class="btn btn-info form-control">Register</button>
+              <button class="btn btn-info form-control">{{ __('Register') }}</button>
             </div>
           </form>
         </div>
@@ -371,7 +432,7 @@
             </div>
             <div class="form-group" style="position: relative;">
               <label for="email-recover">Email</label>
-              <input type="email" id="email-recover" class="form-control mb-1" placeholder="Enter Your Email" required>              
+              <input type="email" id="email-recover" class="form-control mb-1" placeholder="Enter Your Email" required>
             </div>
             <div class="form-group pt-2">
               <button class="btn btn-info form-control">Submit</button>
@@ -381,7 +442,7 @@
       </div>
     </div>
   </div>
-    
+
 </footer>
 
 
