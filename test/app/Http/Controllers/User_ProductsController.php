@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 
-class ProductsController extends Controller
+class User_ProductsController extends Controller
 {
     public function index($id = null){
         $all_cate = DB::table('category')->get();

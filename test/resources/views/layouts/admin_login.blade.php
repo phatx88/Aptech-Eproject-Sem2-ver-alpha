@@ -17,8 +17,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('backend/css/sb-admin.css') }}" rel="stylesheet">
     <link href="{{ asset('backend/css/admin.css') }}" rel="stylesheet">
-    <!-- admin_login css-->
-<link rel="stylesheet" type="text/css" href="{{ asset('backend/css/signin.css') }}">
+
+
 </head>
 
 
@@ -52,6 +52,5 @@
 <!-- Demo scripts for this page-->
 <script src="{{ asset('backend/js/demo/datatables-demo.js') }}"></script>
 <script src="{{ asset('backend/js/admin.js') }}"></script>
-</body>
 
 </html>

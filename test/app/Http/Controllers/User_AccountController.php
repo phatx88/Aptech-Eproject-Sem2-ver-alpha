@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UserAccountController extends Controller
+class User_AccountController extends Controller
 {
     /**
      * Contruct of the resource. Checking Credentials
@@ -16,7 +16,7 @@ class UserAccountController extends Controller
         $this->middleware(['auth' , 'verified']);
     }
 
-    
+
     /**
      * Display a listing of the resource.
      *

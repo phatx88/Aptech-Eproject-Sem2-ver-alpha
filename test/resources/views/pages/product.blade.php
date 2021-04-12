@@ -25,7 +25,7 @@
                             <h3>Product Types</h3>
                             <ul class="p-0">
                                 @foreach ($all_cate as $cate)
-                                    <li><a href="{{ route('product.index', ['id' => $cate->id]) }}">{{ $cate->name }}
+                                    <li><a href="{{ route('home.products.index', ['id' => $cate->id]) }}">{{ $cate->name }}
                                             <span class="fa fa-chevron-right"></span></a></li>
                                 @endforeach
                             </ul>

@@ -1,6 +1,8 @@
 @extends('layouts.admin_login')
 
 @section('content')
+<body>
+    <link rel="stylesheet" href="{{ asset('backend/css/auth.css') }}">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -29,7 +31,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="">
                                     {{ __('Confirm Password') }}
                                 </button>
 
@@ -46,4 +48,5 @@
         </div>
     </div>
 </div>
+</body>
 @endsection

@@ -1,39 +1,66 @@
 <?php
 
+// BE CONTROLLER
 use App\Http\Controllers\Admin_OrderController;
-use App\Http\Controllers\User_HomeController;    //use
-use App\Http\Controllers\UserAccountController;    //use
-use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\Admin_ProductController;
+
+// FE CONTROLLER 
+use App\Http\Controllers\User_HomeController;    //use
+use App\Http\Controllers\User_AccountController;    //use
+use App\Http\Controllers\User_ProductsController;
+
+// OTHERS
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| Luật Chung:
+|
+| 1) URL tên FE bắt đầu là home rồi level xuống, thí dụ home/products hoặc home/products/detail 
+| 
+| 2) Route phải có tên và nên được đặt tên dựa theo thanh truyền URL. 
+|    (ví dụ tren url home/user thì nên để tên là home.user.'tên hàm' của lớp đó)
+|
+| 3) Bên Admin phải có prefix là 'admin', còn bên Customer(User) thì phải có prefix là 'home'
+|
+| 4) Tên của Controller phải có User_ hoặc Admin_ để phân biệt bên BE và FE
+|
 |
 */
 
+
+// AUTHENTICATE
 Route::get('/', function () {
     return redirect('/home');
 });
 
-//Route::get('/home',[User_HomeController::class,'index']);
+Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
 
-//admin_order
-Route::resource('admin/order', Admin_OrderController::class);
-// Route::get('/product', function () {
-//     return view('pages.product');
-// });
-Route::get('/product/{id?}', [ProductsController::class, 'index']);
+//FRONT END
+
+Route::resource('/home/user/account', User_AccountController::class); //trả về User Acccount trên trang Home
+
+Route::get('/home', [User_HomeController::class, 'index'])
+->name('home'); //trả về trang home có list item đầy đủ
+
+Route::get('/home/products/{id?}', [User_ProductsController::class, 'index'])
+->name('home.products.index'); //Show chi tiết sản phẩm bên trang products của home
+
 
 
 //BACK END
-Route::resource('admin/product', Admin_ProductController::class);
+
+Route::resource('admin/product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+
+Route::resource('admin/order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+
+
+
+//URL TRẢ VỀ VIEW -> Cho development thôi
 
 Route::get('/about', function () {
     return view('pages.about');
@@ -62,22 +89,13 @@ Route::get('/check-out', function () {
     return view('pages.checkout');
 });
 
-//Admin
-Route::get('/admin-login', function () {
-    return view('admin.login');
-});
 
-Route::get('/admin-dashboard', function () {
+
+// Dashboard
+Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
 });
 
-// Route::get('/order-list', function () {
-//     return view('admin.order.list');
-// });
-
-// Route::get('/order-add', function () {
-//     return view('admin.order.add');
-// });
 
 //customer
 Route::get('/customer-list', function () {
@@ -191,9 +209,3 @@ Route::get('/permission-role_action-add', function () {
 
 
 
-Auth::routes(['verify' => true]);
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/home', [User_HomeController::class, 'index'])->name('home');
-
-Route::resource('/home/user/account', UserAccountController::class);
