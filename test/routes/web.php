@@ -41,21 +41,23 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
 
-//FRONT END
-
 Route::resource('/home/user/account', User_AccountController::class); //trả về User Acccount trên trang Home
 
-Route::get('/home', [User_HomeController::class, 'index'])
-->name('home'); //trả về trang home có list item đầy đủ
 
-Route::get('/home/products/{id?}', [User_ProductsController::class, 'index'])
-->name('home.products.index'); //Show chi tiết sản phẩm bên trang products của home
+//FRONT END
 
+Route::prefix('home')->name('home.')->group(function () {
+    Route::get('/', [User_HomeController::class, 'index'])
+        ->name('index'); //trả về trang home có list item đầy đủ
+
+    Route::get('products/{id?}', [User_ProductsController::class, 'index'])
+        ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
+});
 
 //BACK END
 
-Route::prefix('admin')->name('admin.')->middleware('checkRoles:staff')->group(function() { 
-    Route::resource('product', Admin_ProductController::class);//Thêm sửa xóa trang products bên Admin
+Route::prefix('admin')->name('admin.')->middleware('checkRoles:staff')->group(function () {
+    Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
 });
@@ -208,6 +210,3 @@ Route::get('/permission-role_action-list', function () {
 Route::get('/permission-role_action-add', function () {
     return view('admin.permission.role_action.add_role_action');
 });
-
-
-

@@ -110,7 +110,7 @@
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                             {{-- SEARCH BAR BEGIN --}}
-                            <form action="{{ route('product.index') }}" method="GET" class="search">
+                            <form action="{{ route('home.products.index') }}" method="GET" class="search">
                                 <div class="search__wrapper">
                                     <input type="text" name="search" placeholder="Select Types of Products"
                                         class="search__field">
