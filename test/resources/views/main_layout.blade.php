@@ -538,7 +538,27 @@
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    {{-- <script type="text/javascript">
+    $(document).ready(function(){
+        $('.search_price').click(function(){
+            var price_to = $('.price_to').val();
+            var price_from = $('.price_from').val();
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url : '{{url('home/products/search_price')}}',
+                method: 'POST',
+                data: {
+                    price_to:price_to,
+                    price_from:price_from,
+                    _token:_token
+                },
+                success:function(data){
 
+                }
+            });
+        });
+    });
+    </script> --}}
 </body>
 
 </html>

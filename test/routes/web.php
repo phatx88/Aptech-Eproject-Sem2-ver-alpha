@@ -52,6 +52,7 @@ Route::prefix('home')->name('home.')->group(function () {
 
     Route::get('products/{id?}', [User_ProductsController::class, 'index'])
         ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
+    Route::post('products/search_price', [User_ProductsController::class, 'search_price']);
 });
 
 //BACK END
@@ -210,3 +211,5 @@ Route::get('/permission-role_action-list', function () {
 Route::get('/permission-role_action-add', function () {
     return view('admin.permission.role_action.add_role_action');
 });
+
+
