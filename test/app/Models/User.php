@@ -43,4 +43,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role() {
+        $role = [0 => "user", 1 => "staff"];
+        return $role[$this->is_staff];
+    }
+
+    public function hasRole($role) {
+        if ($this->role() == $role) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -11,7 +11,7 @@
                </ol>
                <!-- DataTables Example -->
                <div class="action-bar">
-                  <a href="{{ route('product.create') }}" class="btn btn-primary btn-sm">Add</a>
+                  <a href="{{ route('admin.product.create') }}" class="btn btn-primary btn-sm">Add</a>
                   <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
                </div>
                <div class="card mb-3">
@@ -55,7 +55,7 @@
                                  <td>{{ $product->created_date }}</td>
                                  <td><a href="../../pages/comment/list.html">Đánh giá</a></td>
                                  <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
-                                 <td><a href="{{ route('product.edit' , ['product' => $product->id]) }}"  class="btn btn-warning btn-sm">Edit</a></td>
+                                 <td><a href="{{ route('admin.product.edit' , ['product' => $product->id]) }}"  class="btn btn-warning btn-sm">Edit</a></td>
                                  <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
                               </tr>
                               @endforeach                             

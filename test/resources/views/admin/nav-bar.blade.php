@@ -7,8 +7,33 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto">
        <li class="nav-item no-arrow text-dark">
-          <span >Chào Admin</span> |
-          <a class="text-dark nounderline" href="#" data-toggle="modal" data-target="#logoutModal">Thoát</a>
+         <div class="">
+
+            @guest
+                @if (Route::has('login'))
+                    <a href="#register" class="btn-register mr-2 text-dark" data-toggle="modal">Sign Up</a>
+                @endif
+
+                @if (Route::has('register'))
+                    <a href="#login" class="btn-login text-dark" data-toggle="modal">Log In</a>
+                @endif
+            @else
+                {{-- User drop down menu --}}
+                <a href="{{ route('account.index') }}" class="text-dark mr-2">
+                    {{ Auth::user()->name }}
+                </a>
+
+                {{-- User drop down menu --}}
+                <a href="{{ route('logout') }} " class="text-dark"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+
+            @endguest
+        </div>
        </li>
     </ul>
  </nav>

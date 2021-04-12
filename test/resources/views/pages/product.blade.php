@@ -48,17 +48,19 @@
 
                     <div class="sidebar-box ftco-animate">
                         <div class="categories">
-                            <h3>Price Range</h3>   
+                            <h3>Price Range</h3>
                             <div id="slider-snap">
                             </div>
                             <br>
                             <span class="">Value : </span><span class="price from" id="slider-snap-value-lower"></span> - <span class="price to" id="slider-snap-value-upper"></span>
-                            <form action="" id="price-search">
-                                <input type="hidden" id="input-format-from" name="price-from" value="">            
-                                <input type="hidden" id="input-format-to" name="price-to" value=""> 
-                            </form>                     
+                            <form action="{{ url('home/products/search_price') }}" id="price-search" method="POST">
+                                @csrf
+                                <input type="hidden" class="price_from" id="input-format-from" name="price_from" value="">
+                                <input type="hidden" class="price_to" id="input-format-to" name="price_to" value="">
+                                <input type="submit" value="search" class="search_price">
+                            </form>
                         </div>
-                                      
+
                     </div>
 
                     {{-- Slider --}}
@@ -110,7 +112,7 @@
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                             {{-- SEARCH BAR BEGIN --}}
-                            <form action="{{ route('product.index') }}" method="GET" class="search">
+                            <form action="{{ route('home.products.index') }}" method="GET" class="search">
                                 <div class="search__wrapper">
                                     <input type="text" name="search" placeholder="Select Types of Products"
                                         class="search__field">
