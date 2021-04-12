@@ -4,7 +4,7 @@
 use App\Http\Controllers\Admin_OrderController;
 use App\Http\Controllers\Admin_ProductController;
 
-// FE CONTROLLER 
+// FE CONTROLLER
 use App\Http\Controllers\User_HomeController;    //use
 use App\Http\Controllers\User_AccountController;    //use
 use App\Http\Controllers\User_ProductsController;
@@ -21,9 +21,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 | Luật Chung:
 |
-| 1) URL tên FE bắt đầu là home rồi level xuống, thí dụ home/products hoặc home/products/detail 
-| 
-| 2) Route phải có tên và nên được đặt tên dựa theo thanh truyền URL. 
+| 1) URL tên FE bắt đầu là home rồi level xuống, thí dụ home/products hoặc home/products/detail
+|
+| 2) Route phải có tên và nên được đặt tên dựa theo thanh truyền URL.
 |    (ví dụ tren url home/user thì nên để tên là home.user.'tên hàm' của lớp đó)
 |
 | 3) Bên Admin phải có prefix là 'admin', còn bên Customer(User) thì phải có prefix là 'home'
@@ -56,7 +56,7 @@ Route::prefix('home')->name('home.')->group(function () {
 
 //BACK END
 
-Route::prefix('admin')->name('admin.')->middleware('checkRoles:staff')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
