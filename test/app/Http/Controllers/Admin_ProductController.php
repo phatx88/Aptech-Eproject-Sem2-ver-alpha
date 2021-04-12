@@ -49,7 +49,7 @@ class Admin_ProductController extends Controller
             }
             $imageName = $file->getClientOriginalExtension();
             $file->move(public_path('frontend\images\products'), $imageName);
-        }        
+        }
         else{
             $imageName = null;
     }
@@ -76,7 +76,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Products $product)
     {
         //
     }
@@ -87,7 +87,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Products $product)
     {
         //
     }
@@ -99,7 +99,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Products $product)
     {
         //
     }
@@ -110,7 +110,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Products $product)
     {
         //
     }

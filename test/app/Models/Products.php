@@ -10,7 +10,7 @@ class Products extends Model
     use HasFactory;
 
     protected $table = 'product';
-    
+
     public $timestamps = false;
     public function category()
     {
