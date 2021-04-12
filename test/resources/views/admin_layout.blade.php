@@ -30,15 +30,15 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('order.index')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{route('order.create')}}">Thêm</a>
+               <a class="dropdown-item" href="{{route('admin.order.index')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('admin.order.create')}}">Thêm</a>
             </div>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fab fa-product-hunt"></i> <span>Sản phẩm</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('product.index') }}">Danh sách</a>
-               <a class="dropdown-item" href="{{ route('product.create') }}">Thêm</a>
+               <a class="dropdown-item" href="{{ route('admin.product.index') }}">Danh sách</a>
+               <a class="dropdown-item" href="{{ route('admin.product.create') }}">Thêm</a>
                <a class="dropdown-item" href="">Chỉnh sửa</a>
             </div>
          </li>

@@ -11,6 +11,7 @@ use App\Http\Controllers\User_ProductsController;
 
 // OTHERS
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -51,12 +52,13 @@ Route::get('/home/products/{id?}', [User_ProductsController::class, 'index'])
 ->name('home.products.index'); //Show chi tiết sản phẩm bên trang products của home
 
 
-
 //BACK END
 
-Route::resource('admin/product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+Route::prefix('admin')->name('admin.')->middleware('checkRoles:staff')->group(function() { 
+    Route::resource('product', Admin_ProductController::class);//Thêm sửa xóa trang products bên Admin
 
-Route::resource('admin/order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+    Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+});
 
 
 
