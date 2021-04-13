@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/nouislider.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
 </head>
 
 <body>
@@ -82,58 +83,46 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
+            <?php
+                $count_items = 0;
+                if(session()->get('cart')){
+                    foreach(session()->get('cart') as $key => $cart_item){
+                        $count_items++;
+                    }
+                }
+
+                ?>
             <a class="navbar-brand" href="{{ URL::to('home') }}">Liquor <span>store</span></a>
             {{-- Shopping cart drop down --}}
+
             <div class="order-lg-last btn-group">
                 <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <span class="flaticon-shopping-bag"></span>
-                    <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
+                    <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>{{ $count_items }}</small></div>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
+                    @if(session()->get('cart'))
+                    @foreach (session()->get('cart') as $key => $cart)
                     <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-1.jpg') }});">
+
+                        <div class="img" style="background-image: url({{ asset('frontend/images/products/'.$cart['product_image']) }});">
                         </div>
                         <div class="text pl-3">
-                            <h4>Bacardi 151</h4>
-                            <p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-                                    01</span></p>
+                            <h4>{{ $cart['product_name'] }}</h4>
+                            <p class="mb-0"><a href="#" class=" ">{{ $cart['product_price'] }}</a><span class="quantity ml-3">Quantity:
+                                    {{ $cart['product_quantity'] }}</span></p>
                         </div>
                         <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button type="button" data-id_delete="{{ $cart['product_id'] }}" class="close delete-cart-product" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
                             </button>
+
                         </div>
                     </div>
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-2.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Jim Beam Kentucky Straight</h4>
-                            <p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-                                    02</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-3.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Citadelle</h4>
-                            <p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-                                    01</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
+                    @endif
                     <a class="dropdown-item text-center btn-link d-block w-100" href="{{ URL::to('cart') }}">
                         View All
                         <span class="ion-ios-arrow-round-forward"></span>
@@ -538,6 +527,8 @@
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
+
     {{-- <script type="text/javascript">
     $(document).ready(function(){
         $('.search_price').click(function(){
@@ -559,6 +550,89 @@
         });
     });
     </script> --}}
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $(".add-to-cart").click(function(){
+                var id = $(this).data('id_product');
+                var product_name = $('.product_name_cart_'+id).val();
+                var product_price = $('.product_price_cart_'+id).val();
+                var product_quantity = $('.product_quantity_cart_'+id).val();
+                var product_image = $('.product_image_cart_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/add-to-cart')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        product_name:product_name,
+                        product_price:product_price,
+                        product_quantity:product_quantity,
+                        product_image:product_image,
+                        _token:_token
+                    },
+                    success:function(data){
+                        $('#count_items_cart').html(data);
+                        swal({
+                            title: "Đã thêm sản phẩm vào giỏ hàng",
+                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                            showCancelButton: true,
+                            cancelButtonText: "Xem tiếp",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Đi đến giỏ hàng",
+                            closeOnConfirm: false,
+
+                        },
+                        function() {
+                            window.location.href = "{{url('/cart')}}";
+                        });
+
+                    }
+                });
+
+            });
+
+            //quantity
+            $(document).on('blur', '.quantity_cart_edit', function(){
+                var id = $(this).data('quantity');
+                var quantity = $('#quantity_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/update-cart-quantity')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        quantity:quantity,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+
+        });
+
+            //delete cart product
+
+            $('.delete-cart-product').click(function(){
+                var id = $(this).data('id_delete');
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/delete-cart-product')}}',
+                    method: "POST",
+                    data: {
+                        id:id,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+    </script>
+
 </body>
 
 </html>

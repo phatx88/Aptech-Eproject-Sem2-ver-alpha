@@ -53,11 +53,11 @@
                             </div>
                             <br>
                             <span class="">Value : </span><span class="price from" id="slider-snap-value-lower"></span> - <span class="price to" id="slider-snap-value-upper"></span>
-                            <form action="{{ url('home/products/search_price') }}" id="price-search" method="POST">
+                            <form action="{{ url('home/products/search_price') }}" id="price-search" method="POST" style="text-align: center;">
                                 @csrf
                                 <input type="hidden" class="price_from" id="input-format-from" name="price_from" value="">
                                 <input type="hidden" class="price_to" id="input-format-to" name="price_to" value="">
-                                <input type="submit" value="search" class="search_price">
+                                <input  type="submit" value="Search" class="btn btn-primary search_price">
                             </form>
                         </div>
 
@@ -134,21 +134,33 @@
 
                         @foreach ($products as $product)
                             <div class="col-md-4 d-flex">
+
                                 <div class="product ftco-animate">
-                                    <div class="img d-flex align-items-center justify-content-center"
-                                        style="background-image: url('{{ asset('frontend/images/products/' . $product->featured_image) }}');">
-                                        {{-- <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt=""> --}}
-                                        <div class="desc">
-                                            <p class="meta-prod d-flex">
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span
-                                                        class="flaticon-shopping-bag"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span
-                                                        class="flaticon-heart"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span
-                                                        class="flaticon-visibility"></span></a>
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <form>
+                                        @csrf
+                                        <input type="hidden" class="product_name_cart_{{ $product->id }}" value="{{ $product->name }}">
+                                        @if($product->price != $product->sale_price)
+                                        <input type="hidden" class="product_price_cart_{{ $product->id }}" value="{{ $product->sale_price }}">
+                                        @else
+                                        <input type="hidden" class="product_price_cart_{{ $product->id }}" value="{{ $product->price }}">
+                                        @endif
+                                        <input type="hidden" class="product_quantity_cart_{{ $product->id }}" value="1">
+                                        <input type="hidden" class="product_image_cart_{{ $product->id }}" value="{{ $product->featured_image }}">
+                                        <div class="img d-flex align-items-center justify-content-center"
+                                            style="background-image: url('{{ asset('frontend/images/products/' . $product->featured_image) }}');">
+                                            {{-- <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt=""> --}}
+                                            <div class="desc">
+                                                <p class="meta-prod d-flex">
+                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center add-to-cart"><span
+                                                            class="flaticon-shopping-bag"></span></a>
+                                                    <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                                            class="flaticon-heart"></span></a>
+                                                    <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                                            class="flaticon-visibility"></span></a>
+                                                </p>
+                                            </div>
+
+                                 </div>
 
                                     <div class="text text-center">
 
@@ -161,7 +173,7 @@
 
                                         @endif
                                         <span class="category">{{ $product->category_name }}</span>
-                                        <h2>{{ $product->brand_name }}</h2>
+                                        <h2>{{ $product->name }}</h2>
                                         <p class="mb-0">
 
                                             @if ($product->price != $product->sale_price)
@@ -170,8 +182,10 @@
                                             <span class="price">${{ $product->sale_price }}</span>
                                         </p>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
+
                         @endforeach
 
 
