@@ -52,11 +52,11 @@
 
                         @guest
                             @if (Route::has('login'))
-                                <a href="#register" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                                <a href="#registerForm" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
                             @endif
 
                             @if (Route::has('register'))
-                                <a href="#login" class="btn-login text-white" data-toggle="modal">Log In</a>
+                                <a href="#loginModal" class="btn-login text-white" data-toggle="modal">Log In</a>
                             @endif
                         @else
                             {{-- User drop down menu --}}
@@ -329,8 +329,9 @@
         </div>
 
         <!-- Login Modal -->
-        <div class="modal fade" id="login">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" class="modal-dialog" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
                         <i class="fa fa-times fa-2x"></i>
@@ -340,7 +341,7 @@
                             @csrf
 
                             <div class="form-group text-center heading-section">
-                                <h2>Login</h2>
+                                <h2 id="loginModal">{{ __('Login') }}</h2>
                                 <span>Not a member yet? <a href="#register" data-dismiss="modal"
                                         data-toggle="modal">Sign up here</a></span>
                             </div>
@@ -400,18 +401,20 @@
                 </div>
             </div>
         </div>
+        
         <!-- Register Modal -->
-        <div class="modal fade" id="register">
+        {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
                         <i class="fa fa-times fa-2x"></i>
                     </div>
                     <div class="container-fluid mt-5">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" id="registerForm">
                             @csrf
                             <div class="form-group text-center pb-2 heading-section">
-                                <h2>Registration</h2>
+                                <h2 id="registerModal">{{ __('Register') }}</h2>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
@@ -431,7 +434,7 @@
                                 <label for="email">{{ __('E-Mail Address') }}</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required autocomplete="email">
-                                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login"
+                                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal"
                                     style="display: block; position: absolute; right: 0; font-size: 12px;">That's you?
                                     Login</a>
 
@@ -459,6 +462,75 @@
                                     <label for="password-confirm">{{ __('Confirm Password') }}</label>
                                     <input id="password-confirm" type="password" class="form-control"
                                         name="password_confirmation" required autocomplete="new-password">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-info form-control">{{ __('Register') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
+        {{-- AJAX test  --}}
+        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content form-wrapper">
+                    <div class="close-box" data-dismiss="modal">
+                        <i class="fa fa-times fa-2x"></i>
+                    </div>
+                    <div class="container-fluid mt-5">
+                        <form method="POST" url="{{ route('register') }}" id="registerForm">
+                            @csrf
+                            <div class="form-group text-center pb-2 heading-section">
+                                <h2 id="registerModal">{{ __('Register') }}</h2>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="nameInput" >{{ __('Name') }}</label>
+
+                            <div >
+                                <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
+
+                                <span class="invalid-feedback" role="alert" id="nameError">
+                                    <strong></strong>
+                                </span>
+                            </div>
+                                    </div>
+                            </div>
+                            <div class="form-group" style="position:relative;">
+                                <label for="emailInput">{{ __('E-Mail Address') }}</label>
+
+                        <div >
+                            <input id="emailInput" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                            <span class="invalid-feedback" role="alert" id="emailError">
+                                <strong></strong>
+                            </span>
+                        </div>
+
+                            </div>
+                            <div class="form-row mb-1">
+                                <div class="form-group col">
+                                    <label for="passwordInput">{{ __('Password') }}</label>
+
+                                    <div >
+                                        <input id="passwordInput" type="password" class="form-control" name="password" required autocomplete="new-password">
+            
+                                        <span class="invalid-feedback" role="alert" id="passwordError">
+                                            <strong></strong>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="password-confirm" >{{ __('Confirm Password') }}</label>
+
+                        <div >
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        </div>
                                 </div>
                             </div>
 
@@ -538,6 +610,53 @@
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+
+    {{-- Forcing the login/register modal to stay open --}}
+    @if ($errors->has('email') || $errors->has('password'))
+        <script>
+            $(function() {
+                //Make Login Modal to stay open
+                $('#loginModal').modal({
+                    show: true
+                });
+            });
+
+        </script>
+    @endif
+    <script>
+        $(function() {
+            //Using Ajax on Registering Form 
+            $('#registerForm').submit(function(e) {
+                e.preventDefault();
+                let formData = $(this).serializeArray();
+                $(".invalid-feedback").children("strong").text("");         
+                $("#registerForm input").removeClass("is-invalid");
+                $.ajax({
+                    type: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('register') }}",
+                    data: formData,
+                    success: () => window.location.assign("{{ route('login') }}"),
+                    error: (response) => {
+                        if (response.status === 422) {
+                            let errors = response.responseJSON.errors;
+                            Object.keys(errors).forEach(function(key) {
+                                $("#" + key + "Input").addClass("is-invalid");
+                                $("#" + key + "Error").children("strong").text(
+                                    errors[key][0]);
+                            });
+                        } else {
+                            window.location.reload();
+                        }
+                    }
+                })
+            });
+        });
+
+    </script>
+
     {{-- <script type="text/javascript">
     $(document).ready(function(){
         $('.search_price').click(function(){
