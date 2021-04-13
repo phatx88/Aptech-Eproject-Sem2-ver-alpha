@@ -115,7 +115,7 @@
                             <form action="#" class="search-form w-75 m-auto">
                                 <div class="form-group">
                                   <span class="fa fa-search"></span>
-                                  <input type="text" class="form-control" name="search"  placeholder="Type a keyword and hit enter"  value="{{ $search }}">
+                                  <input type="text" class="form-control" style="font-size: 1.2rem;" name="search"  placeholder="Type a keyword and hit enter"  value="{{ $search }}">
                                 </div>
                               </form>
                             {{-- SEARCH BAR END --}}
