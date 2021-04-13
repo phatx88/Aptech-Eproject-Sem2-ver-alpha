@@ -347,7 +347,7 @@
 
                             <div class="form-group text-center heading-section">
                                 <h2 id="loginModal">{{ __('Login') }}</h2>
-                                <span>Not a member yet? <a href="#register" data-dismiss="modal"
+                                <span>Not a member yet? <a href="#registerForm" data-dismiss="modal"
                                         data-toggle="modal">Sign up here</a></span>
                             </div>
                             <div class="form-group" style="position: relative;">
@@ -388,11 +388,6 @@
                             </div>
                             <div class="form-group pt-2">
                                 <button class="btn btn-info form-control">{{ __('Login') }}</button>
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
                             </div>
                             <div class="form-group text-center pt-2 social-login">
                                 <h6>OR Continue with</h6>
@@ -616,19 +611,9 @@
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     
-    {{-- Forcing the forget password modal to stay open --}}
-    @if ($errors->has('email') && session('status'))
-    <script>
-        $(function() {
-            //Make Login Modal to stay open
-            $('#forgotPassword').modal({
-                show: true
-            });
-        });
-
-    </script> 
+   
     {{-- Forcing the login modal to stay open --}}
-    @elseif ($errors->has('email') || $errors->has('password'))
+    @if ($errors->has('email') || $errors->has('password'))
         <script>
             $(function() {
                 //Make Login Modal to stay open
@@ -641,7 +626,7 @@
     @endif
 
     {{-- Forcing the forget password modal to stay open --}}
-    @if ($errors->has('email') && session('status'))
+    {{-- @if ($errors->has('email') && session('status'))
     <script>
         $(function() {
             //Make Login Modal to stay open
@@ -651,7 +636,7 @@
         });
 
     </script>
-    @endif
+    @endif --}}
 
     {{-- Using Ajax on Registering Form  --}}
     {{-- <script>

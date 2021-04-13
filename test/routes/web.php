@@ -64,6 +64,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkR
 });
 
 
+// ROUTE TEST 
+Route::get('/test', function () {
+    return view('auth.verify');
+});
+
 
 //URL TRẢ VỀ VIEW -> Cho development thôi
 
