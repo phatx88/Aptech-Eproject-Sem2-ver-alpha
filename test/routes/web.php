@@ -55,22 +55,24 @@ Route::post('/update-cart-quantity',[User_CartController::class, 'update_cart_qu
 Route::post('/delete-cart-product', [User_CartController::class, 'delete_cart_product']);
 
 Route::prefix('home')->name('home.')->group(function () {
+     //trả về trang home có list item đầy đủ
     Route::get('/', [User_HomeController::class, 'index'])
-        ->name('index'); //trả về trang home có list item đầy đủ
+        ->name('index');
 
-    Route::get('products/{id?}', [User_ProductsController::class, 'index'])
-        ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
-    Route::post('products/search_price', [User_ProductsController::class, 'search_price']);
+    //Show chi tiết sản phẩm bên trang products của home
+    Route::get('products/{id?}{price_from?}{price_to?}{search?}', [User_ProductsController::class, 'index'])
+        ->name('products.index'); 
+
 });
 
 //BACK END
 
 //Có VErify
-Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-    Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
+//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
-    Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
-});
+//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+// });
 
 //Không Verify
 Route::prefix('admin')->name('admin.')->group(function () {

@@ -53,10 +53,10 @@
                             </div>
                             <br>
                             <span class="">Value : </span><span class="price from" id="slider-snap-value-lower"></span> - <span class="price to" id="slider-snap-value-upper"></span>
-                            <form action="{{ url('home/products/search_price') }}" id="price-search" method="POST" style="text-align: center;">
-                                @csrf
-                                <input type="hidden" class="price_from" id="input-format-from" name="price_from" value="">
-                                <input type="hidden" class="price_to" id="input-format-to" name="price_to" value="">
+                            <form action="{{ url('home/products/') }}" id="price-search" method="GET" style="text-align: center;">
+                                {{-- @csrf --}}
+                                <input type="hidden" class="price_from" id="input-format-from" name="price_from" value="{{ $price_from ?? 0  }}">
+                                <input type="hidden" class="price_to" id="input-format-to" name="price_to" value="{{ $price_to ?? 1000 }}">
                                 <input  type="submit" value="Search" class="btn btn-primary search_price">
                             </form>
                         </div>
@@ -112,22 +112,21 @@
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                             {{-- SEARCH BAR BEGIN --}}
-                            <form action="{{ route('home.products.index') }}" method="GET" class="search">
-                                <div class="search__wrapper">
-                                    <input type="text" name="search" placeholder="Select Types of Products"
-                                        class="search__field">
-                                    <button type="submit" class="fa fa-search search__icon"></button>
+                            <form action="#" class="search-form w-75 m-auto">
+                                <div class="form-group">
+                                  <span class="fa fa-search"></span>
+                                  <input type="text" class="form-control" name="search"  placeholder="Type a keyword and hit enter"  value="{{ $search }}">
                                 </div>
-                            </form>
+                              </form>
                             {{-- SEARCH BAR END --}}
-                            <select class="selectpicker">
-                                <option>Brandy</option>
-                                <option>Gin</option>
-                                <option>Rum</option>
-                                <option>Tequila</option>
-                                <option>Vodka</option>
-                                <option>Whiskey</option>
-                            </select>
+                            <div class="form-group">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select name="" id="" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="">Ascending</option>
+                                    <option value="">Descending</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -194,7 +193,7 @@
                         <div class="col text-center">
                             <div class="block-27">
                                 <ul>
-                                    <li>{{ $products->links() }}</li>
+                                    <li>{{ $products->appends(request()->input())->links() }}</li>
                                 </ul>
                             </div>
                         </div>

@@ -234,19 +234,23 @@
 	$('[data-toggle="tooltip"]').tooltip()
 
 	var snapSlider = document.getElementById('slider-snap');
+	var slideStart = document.getElementById('input-format-from').value;
+	var slideTo = document.getElementById('input-format-to').value;
 
 	noUiSlider.create(snapSlider, {
-		start: [0, 1000],
+		start: [slideStart, slideTo],
 		snap: true,
 		connect: true,
 		range: {
 			'min': 0,
-			'10%': 50,
-			'20%': 100,
-			'30%': 150,
-			'40%': 500,
-			'50%': 700,
-			'75%': 850,
+			'10%': 100,
+			'20%': 200,
+			'30%': 300,
+			'40%': 400,
+			'50%': 500,
+			'65%': 650,
+			'75%': 750,
+			'85%': 850,
 			'max': 1000
 		},
 	});
