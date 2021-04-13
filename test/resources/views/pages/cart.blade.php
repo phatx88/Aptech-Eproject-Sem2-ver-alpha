@@ -182,8 +182,79 @@
                     </table>
                 </div>
             </div>
-            <div class="row justify-content-end">
-                <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+            <div class="row align-items-center">
+                <div class="col-lg-7 col-md-6 mt-5 cart-wrap ftco-animate">
+                    <div class="cart-total mb-3">
+                        <h3>Estimated Shipping Cost</h3>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="country">City</label> 
+                            </div>
+                             <div class="col-8">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select name="" id="" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
+                                    <option value="">Select City/Province</option>
+                                    <option value="">Italy</option>
+                                    <option value="">Philippines</option>
+                                    <option value="">South Korea</option>
+                                    <option value="">Hongkong</option>
+                                    <option value="">Japan</option>
+                                </select>
+                            </div>                                                                 
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="country">District</label> 
+                            </div>
+                             <div class="col-8">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select name="" id="" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
+                                    <option value="">Select District</option>
+                                    <option value="">Italy</option>
+                                    <option value="">Philippines</option>
+                                    <option value="">South Korea</option>
+                                    <option value="">Hongkong</option>
+                                    <option value="">Japan</option>
+                                </select>
+                            </div>                                                                 
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="country">Ward</label> 
+                            </div>
+                             <div class="col-8">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select name="" id="" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
+                                    <option value="">Select Ward</option>
+                                    <option value="">Italy</option>
+                                    <option value="">Philippines</option>
+                                    <option value="">South Korea</option>
+                                    <option value="">Hongkong</option>
+                                    <option value="">Japan</option>
+                                </select>
+                            </div>                                                                 
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="country">Coupon & Discount</label> 
+                            </div>
+                             <div class="col-8">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <input type="text" placeholder="Enter Code" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
+                            </div>                                                                 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Get Quotes</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Continue</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
                     <div class="cart-total mb-3">
                         <h3>Cart Totals</h3>
                         <p class="d-flex">
@@ -198,7 +269,7 @@
                             <span>Discount</span>
                             <span>$3.00</span>
                         </p>
-                        <hr>
+                        <hr class="mt-5">
                         <p class="d-flex total-price">
                             <span>Total</span>
                             <span>$17.60</span>
