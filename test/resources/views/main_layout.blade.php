@@ -57,23 +57,28 @@
 
                             @if (Route::has('register'))
                                 <a href="#loginModal" class="btn-login text-white" data-toggle="modal">Log In</a>
-                            @endif
-                        @else
-                            {{-- User drop down menu --}}
-                            <a href="{{ route('account.index') }}" class="text-white mr-2">
+                            @endif                     
+                        @endguest
+                        @auth
+                            @if (Auth::user()->hasVerifiedEmail())
+                                 {{-- User drop down menu --}}
+                             <a href="{{ route('account.index') }}" class="text-white mr-2">
                                 {{ Auth::user()->name }}
                             </a>
+          
+                            @else 
+                            <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
+                            @endif
 
                             {{-- User drop down menu --}}
                             <a href="{{ route('logout') }} " class="text-white"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-
-                        @endguest
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -403,7 +408,7 @@
         </div>
         
         <!-- Register Modal -->
-        {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
@@ -472,10 +477,10 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         {{-- AJAX test  --}}
-        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+        {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
@@ -541,7 +546,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{-- forget password Modal --}}
         <div class="modal fade" id="forgotPassword">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -610,9 +615,20 @@
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    
+    {{-- Forcing the forget password modal to stay open --}}
+    @if ($errors->has('email') && session('status'))
+    <script>
+        $(function() {
+            //Make Login Modal to stay open
+            $('#forgotPassword').modal({
+                show: true
+            });
+        });
 
-    {{-- Forcing the login/register modal to stay open --}}
-    @if ($errors->has('email') || $errors->has('password'))
+    </script> 
+    {{-- Forcing the login modal to stay open --}}
+    @elseif ($errors->has('email') || $errors->has('password'))
         <script>
             $(function() {
                 //Make Login Modal to stay open
@@ -623,9 +639,23 @@
 
         </script>
     @endif
+
+    {{-- Forcing the forget password modal to stay open --}}
+    @if ($errors->has('email') && session('status'))
     <script>
         $(function() {
-            //Using Ajax on Registering Form 
+            //Make Login Modal to stay open
+            $('#forgotPassword').modal({
+                show: true
+            });
+        });
+
+    </script>
+    @endif
+
+    {{-- Using Ajax on Registering Form  --}}
+    {{-- <script>
+        $(function() {        
             $('#registerForm').submit(function(e) {
                 e.preventDefault();
                 let formData = $(this).serializeArray();
@@ -638,7 +668,7 @@
                     },
                     url: "{{ route('register') }}",
                     data: formData,
-                    success: () => window.location.assign("{{ route('login') }}"),
+                    success: (response) => window.location.assign("{{ route('login') }}"),
                     error: (response) => {
                         if (response.status === 422) {
                             let errors = response.responseJSON.errors;
@@ -655,7 +685,7 @@
             });
         });
 
-    </script>
+    </script> --}}
 
     {{-- <script type="text/javascript">
     $(document).ready(function(){
