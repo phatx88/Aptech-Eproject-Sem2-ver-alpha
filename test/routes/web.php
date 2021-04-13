@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\User_HomeController;    //use
 use App\Http\Controllers\User_AccountController;    //use
 use App\Http\Controllers\User_ProductsController;
-
+use App\Http\Controllers\User_CartController;
 // OTHERS
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +45,14 @@ Route::resource('/home/user/account', User_AccountController::class); //tráº£ vá
 
 
 //FRONT END
+//Add Product to cart
+Route::post('/add-to-cart',[User_CartController::class, 'add_to_cart']);
+
+Route::get('/cart',[User_CartController::class, 'view_cart']);
+
+Route::post('/update-cart-quantity',[User_CartController::class, 'update_cart_quantity']);
+
+Route::post('/delete-cart-product', [User_CartController::class, 'delete_cart_product']);
 
 Route::prefix('home')->name('home.')->group(function () {
     Route::get('/', [User_HomeController::class, 'index'])
@@ -97,10 +105,6 @@ Route::get('/contact', function () {
 
 Route::get('/single-product', function () {
     return view('pages.single_product');
-});
-
-Route::get('/cart', function () {
-    return view('pages.cart');
 });
 
 Route::get('/check-out', function () {
@@ -224,5 +228,6 @@ Route::get('/permission-role_action-list', function () {
 Route::get('/permission-role_action-add', function () {
     return view('admin.permission.role_action.add_role_action');
 });
+
 
 

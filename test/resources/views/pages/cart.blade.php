@@ -29,36 +29,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="alert" role="alert">
-                            <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-1.jpg);"></div>
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td>$44.99</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">
-                                </div>
-                            </td>
-                            <td>$89.98</td>
-                            <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
-                        </tr>
-
+                        @if(Session('cart'))
+                        @php
+                            $subtotal = 0;
+                        @endphp
+                        @foreach(Session('cart') as $key => $cart)
                         <tr class="alert" role="alert">
                             <td>
                                 <label class="checkbox-wrap checkbox-primary">
@@ -67,128 +42,58 @@
                                 </label>
                             </td>
                             <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-2.jpg);"></div>
+                                <div class="img" style="background-image: url('{{ asset('frontend/images/products/' . $cart['product_image']) }}');"></div>
                             </td>
                             <td>
                                 <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td>$30.99</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
-                            <td>$30.99</td>
-                            <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr class="alert" role="alert">
-                            <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-3.jpg);"></div>
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
+                                    <span>{{ $cart['product_name'] }}</span>
                                     <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
                                 </div>
                             </td>
                             <td>$35.50</td>
                             <td class="quantity">
                                 <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                    <form>
+                                        @csrf
+                                    <input type="number" name="quantity[{{ $cart['product_id'] }}]" class="quantity form-control input-number quantity_cart_edit" data-quantity="{{ $cart['product_id'] }}" data-quantity_value="{{ $cart['product_quantity'] }}" id="quantity_{{ $cart['product_id'] }}" value="{{ $cart['product_quantity'] }}" min="1" max="100">
+                                </form>
                                 </div>
                             </td>
-                            <td>$35.50</td>
+                            <?php
+                                $total = $cart['product_quantity'] * $cart['product_price'];
+                            ?>
+                            <td>${{ $total }}</td>
                             <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <button type="button" data-id_delete="{{ $cart['product_id'] }}" class="close delete-cart-product" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                 </button>
                             </td>
                         </tr>
-
+                        @php
+                            $subtotal += $total;
+                        @endphp
+                        @endforeach
+                        @else
                         <tr class="alert" role="alert">
-                            <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-4.jpg);"></div>
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td>$76.99</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
-                            <td>$76.99</td>
-                            <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
+                            <td colspan="7" style="text-align: center;"><?php
+                                echo "Quý khách làm ơn thêm giỏ hàng nhé!!!";
+                            ?></td>
                         </tr>
+                        @endif
 
-                        <tr class="alert" role="alert">
-                            <td class="border-bottom-0">
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td class="border-bottom-0">
-                                <div class="img" style="background-image: url(frontend/images/prod-5.jpg);"></div>
-                            </td>
-                            <td class="border-bottom-0">
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td class="border-bottom-0">$40.00</td>
-                            <td class="quantity border-bottom-0">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
-                            <td class="border-bottom-0">$40.00</td>
-                            <td class="border-bottom-0">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
             </div>
+            @if(Session('cart'))
             <div class="row justify-content-end">
                 <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
                     <div class="cart-total mb-3">
                         <h3>Cart Totals</h3>
                         <p class="d-flex">
                             <span>Subtotal</span>
-                            <span>$20.60</span>
+                            <span>${{ $subtotal }}</span>
                         </p>
                         <p class="d-flex">
                             <span>Delivery</span>
@@ -207,6 +112,7 @@
                     <p class="text-center"><a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
                 </div>
             </div>
+            @endif
         </div>
     </section>
 @endsection
