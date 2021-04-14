@@ -112,7 +112,7 @@
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
                             {{-- SEARCH BAR BEGIN --}}
-                            <form action="#" class="search-form w-75 m-auto">
+                            <form action="{{ url('home/products/') }}" class="search-form w-75 m-auto">
                                 <div class="form-group">
                                   <span class="fa fa-search"></span>
                                   <input type="text" class="form-control" style="font-size: 1.2rem;" name="search"  placeholder="Type a keyword and hit enter"  value="{{ $search }}">

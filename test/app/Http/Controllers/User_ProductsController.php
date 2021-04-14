@@ -23,6 +23,7 @@ class User_ProductsController extends Controller
             ->join('category', 'view_product.category_id', '=', 'category.id')
             ->select('view_product.*', 'brand.name as brand_name','category.name as category_name')
             ->where('category_id', $cate_id)
+            ->where('hidden' , false)
             ->paginate(9);
         }
         // SEARCH by Price Range 
@@ -32,19 +33,26 @@ class User_ProductsController extends Controller
             ->join('category', 'view_product.category_id', '=', 'category.id')
             ->select('view_product.*', 'brand.name as brand_name','category.name as category_name')
             ->WhereBetween('price', [$price_from, $price_to])
+            ->where('hidden' , false)
             ->paginate(9);
         } 
 
         // SEARCH ALL OR BY NAME 
         else {
-            $products = DB::table('view_product')
-            ->join('brand', 'view_product.brand_id', '=', 'brand.id')
-            ->join('category', 'view_product.category_id', '=', 'category.id')
-            ->select('view_product.*', 'brand.name as brand_name','category.name as category_name')
-            ->where("brand.name", "LIKE", "%$search%")
-            ->orWhere("category.name", "LIKE", "%$search%")
-            ->orWhere("view_product.name", "LIKE", "%$search%")
-            ->paginate(9);
+
+            $products = DB::table(function($query){
+                return $query
+                ->select('*')
+                ->from('view_product')
+                ->where('hidden' , false);                
+            }, 'view_product')
+                    ->join('brand', 'view_product.brand_id', '=', 'brand.id')
+                   ->join('category', 'view_product.category_id', '=', 'category.id')
+                   ->select('view_product.*', 'brand.name as brand_name','category.name as category_name')
+                   ->orwhere("brand.name", "LIKE", "%$search%")
+                   ->orWhere("category.name", "LIKE", "%$search%")
+                   ->orWhere("view_product.name", "LIKE", "%$search%")
+                   ->paginate(9);
         }  
         
         //Get all category id
