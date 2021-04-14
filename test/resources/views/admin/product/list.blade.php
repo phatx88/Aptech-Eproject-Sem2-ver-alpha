@@ -21,38 +21,44 @@
                            <thead>
                               <tr>
                                  <th><input type="checkbox" onclick="checkAll(this)"></th>
-                                 <th>Mã</th>
-                                 <th style="width:50px">Tên </th>
-								         <th>Hình ảnh</th>
-                                 <th>Giá bán lẻ</th>
-                                 <th>% giảm giá</th>
-                                 <th>Giá bán thực tế</th>
-                                 <th>Lượng tồn</th>
-                                 <th>Đánh giá</th>
-                                 <th>Nội bật</th>
-                                 <th>Danh mục</th>
-                                 <th>Ngày tạo</th>
+                                 <th>ID</th>
+                                 <th style="width:50px">Name </th>
+								         <th>Featured Image</th>
+                                 <th>Price</th>
+                                 <th>% Discount</th>
+                                 <th>Discout Date From</th>
+                                 <th>Discout Date To</th>
+                                 <th>Sale Price</th>
+                                 <th>Quantity</th>
+                                 <th>Category</th>
+                                 <th>Brand</th>
+                                 <th>Description</th>
+                                 <th>Created Date</th>
+                                 <th>Featured</th>
                                  <th></th>
                                  <th></th>
                                  <th></th>
                                  <th></th>
                               </tr>
                            </thead>
-                           <tbody>
+                           <tbody style="text-overflow: ellipsis">
                               @foreach ($products as $product)
-                              <tr>
+                              <tr style="text-overflow: ellipsis">
                                  <td><input type="checkbox"></td>
                                  <td>{{ $product->id }}</td>
                                  <td>{{ $product->name }}</td>
-                                  <td><img src="{{ asset('frontend/images/products/'.$product->featured_image) }}"></td>
+                                 <td><img src="{{ asset('frontend/images/products/'.$product->featured_image) }}"></td>
                                  <td>${{ $product->price }}</td>
-                                 <td>{{ $product->discount_percentage }}%</td>
-                                 <td>${{ $product->sale_price }}</td>
+                                 <td>{{ $product->discount_percentage == 0 ? 'N/A' : $product->discount_percentage.'%'}}</td>
+                                 <td>{{ $product->discount_from_date == 0 ? 'N/A': $product->discount_from_date }}</td>
+                                 <td>{{ $product->discount_to_date == 0 ? 'N/A': $product->discount_to_date }}</td>
+                                 <td>${{ round($product->price * (100 - $product->discount_percentage) /100 , 2) }}</td>
                                  <td>{{ $product->inventory_qty }}</td>
-                                 <td>{{ $product->star }}</td>
-                                 <td>{{ $product->featured == 1 ? "Yes" : "No" }}</td>
                                  <td>{{ $product->category->name }}</td>
-                                 <td>{{ $product->created_date }}</td>
+                                 <td>{{ $product->brand->name }}</td>
+                                 <td><a href="">Show</a></td>
+                                 <td></td>
+                                 <td></td>
                                  <td><a href="../../pages/comment/list.html">Đánh giá</a></td>
                                  <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
                                  <td><a href="{{ route('admin.product.edit' , ['product' => $product->id]) }}"  class="btn btn-warning btn-sm">Edit</a></td>
