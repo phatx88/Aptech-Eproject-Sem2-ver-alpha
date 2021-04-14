@@ -1,6 +1,6 @@
 @extends('main_layout')
 @section('content')
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('frontend/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');"
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -13,53 +13,49 @@
     </section>
 
     <section class="ftco-section">
+        <form action="">
+            @csrf
+        @foreach ($product as $key => $val)
+        <input type="hidden" class="product_name_cart_{{ $val->id }}" value="{{ $val->name }}">
+        @if($val->price != $val->sale_price)
+        <input type="hidden" class="product_price_cart_{{ $val->id }}" value="{{ $val->sale_price }}">
+        @else
+        <input type="hidden" class="product_price_cart_{{ $val->id }}" value="{{ $val->price }}">
+        @endif
+        <input type="hidden" class="product_image_cart_{{ $val->id }}" value="{{ $val->featured_image }}">
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 mb-5 ftco-animate">
-                    <a href="images/prod-1.jpg" class="image-popup prod-img-bg"><img src="frontend/images/prod-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+                    <a href="{{ asset('frontend/images/products/'.$val->featured_image) }}" class="image-popup prod-img-bg"><img src="{{ asset('frontend/images/products/'.$val->featured_image) }}" class="img-fluid" alt="Colorlib Template"></a>
                 </div>
                 <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                    <h3>Bacardi 151 Degree</h3>
-                    <div class="rating d-flex">
-                        <p class="text-left mr-4">
-                            <a href="#" class="mr-2">5.0</a>
-                            <a href="#"><span class="fa fa-star"></span></a>
-                            <a href="#"><span class="fa fa-star"></span></a>
-                            <a href="#"><span class="fa fa-star"></span></a>
-                            <a href="#"><span class="fa fa-star"></span></a>
-                            <a href="#"><span class="fa fa-star"></span></a>
-                        </p>
-                        <p class="text-left mr-4">
-                            <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
-                        </p>
-                        <p class="text-left">
-                            <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
-                        </p>
-                    </div>
-                    <p class="price"><span>$120.00</span></p>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                    <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.
+                    <h3>{{ $val->name  }}</h3>
+
+                    <p class="price"><span>$
+                        @if($val->price != $val->sale_price)
+                            {{ $val->sale_price }}
+                        @else
+                            {{ $val->price }}
+                        @endif
+                    </span></p>
+                    <p>
+                        {{ $val->description }}
                     </p>
                     <div class="row mt-4">
                         <div class="input-group col-md-6 d-flex mb-3">
-	             	<span class="input-group-btn mr-2">
-	                	<button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
-	                   <i class="fa fa-minus"></i>
-	                	</button>
-	            		</span>
-                            <input type="text" id="quantity" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                            <span class="input-group-btn ml-2">
-	                	<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-	                     <i class="fa fa-plus"></i>
-	                 </button>
-	             	</span>
+                            <input type="number" id="quantity" name="quantity" class="quantity form-control input-number product_quantity_cart_{{ $val->id }}" value="1" min="1" max="100">
                         </div>
                         <div class="w-100"></div>
                         <div class="col-md-12">
-                            <p style="color: #000;">80 piece available</p>
+                            <p style="color: #000;">{{ $val->inventory_qty }} piece available</p>
                         </div>
                     </div>
-                    <p><a href="cart.html" class="btn btn-primary py-3 px-5 mr-2">Add to Cart</a><a href="cart.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
+                    @if($val->inventory_qty == 0)
+                    <p><a type="button"  class="btn btn-primary py-3 px-5 mr-2" disabled>Add to Cart</a></p>
+                    @else
+                    <p><a type="button" data-id_product_details="{{ $val->id }}"  class="btn btn-primary py-3 px-5 mr-2 add-to-cart-details">Add to Cart</a></p>
+                    @endif
                 </div>
             </div>
             <div class="row mt-5">
@@ -79,8 +75,8 @@
 
                         <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
                             <div class="p-4">
-                                <h3 class="mb-4">Bacardi 151 Degree</h3>
-                                <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
+                                <h3 class="mb-4">{{ $val->name }}</h3>
+                                <p>{{ $val->description }}</p>
                             </div>
                         </div>
 
@@ -114,47 +110,7 @@
                                             <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
                                         </div>
                                     </div>
-                                    <div class="review">
-                                        <div class="user-img" style="background-image: url(frontend/images/person_2.jpg)"></div>
-                                        <div class="desc">
-                                            <h4>
-                                                <span class="text-left">Jacob Webb</span>
-                                                <span class="text-right">25 April 2020</span>
-                                            </h4>
-                                            <p class="star">
-								   				<span>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-							   					</span>
-                                                <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                            </p>
-                                            <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                        </div>
-                                    </div>
-                                    <div class="review">
-                                        <div class="user-img" style="background-image: url(frontend/images/person_3.jpg)"></div>
-                                        <div class="desc">
-                                            <h4>
-                                                <span class="text-left">Jacob Webb</span>
-                                                <span class="text-right">25 April 2020</span>
-                                            </h4>
-                                            <p class="star">
-								   				<span>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-								   					<i class="fa fa-star"></i>
-							   					</span>
-                                                <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
-                                            </p>
-                                            <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-4">
                                     <div class="rating-wrap">
                                         <h3 class="mb-4">Give a Review</h3>
@@ -218,77 +174,53 @@
                             </div>
                         </div>
                     </div>
-                </div>            
+                </div>
             </div>
+        </div>
+        @endforeach
 
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2 class="text-center mb-5">Related Product</h2>
-                    <div class="carousel-testimony owl-carousel ftco-owl">
-                        <!-- Sản Phẩm Liên Quan  -->           
-                        <div class="item">
-                            <div class="d-flex">
-                                <div class="product ftco-animate">
-                                    <div class="img d-flex align-items-center justify-content-center" style="background-image: url(frontend/images/prod-2.jpg);">
-                                        <div class="desc">
-                                            <p class="meta-prod d-flex">
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="text text-center">
-                                        <span class="seller">Best Seller</span>
-                                        <span class="category">Gin</span>
-                                        <h2>Jim Beam Kentucky Straight</h2>
-                                        <span class="price">$69.00</span>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h2 class="text-center mb-5">Related Product</h2>
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <!-- Sản Phẩm Liên Quan  -->
+                    @foreach($related_product as $key => $re_product)
+                    <div class="item">
+                        <div class="d-flex">
+                            <div class="product ftco-animate">
+                                <div class="img d-flex align-items-center justify-content-center" style="background-image: url({{ asset('frontend/images/products/'.$re_product->featured_image) }});">
+                                    <div class="desc">
+                                        <p class="meta-prod d-flex">
+                                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
+                                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
+                                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="d-flex">
-                                <div class="product ftco-animate">
-                                    <div class="img d-flex align-items-center justify-content-center" style="background-image: url(frontend/images/prod-4.jpg);">
-                                        <div class="desc">
-                                            <p class="meta-prod d-flex">
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="text text-center">
-                                        <span class="category">Rum</span>
-                                        <h2>The Glenlivet</h2>
-                                        <span class="price">$69.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="d-flex">
-                                <div class="product ftco-animate">
-                                    <div class="img d-flex align-items-center justify-content-center" style="background-image: url(frontend/images/prod-3.jpg);">
-                                        <div class="desc">
-                                            <p class="meta-prod d-flex">
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                                                <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="text text-center">
+                                <div class="text text-center">
+                                    @if (date('Y', strtotime($re_product->created_date)) >= 2020)
                                         <span class="new">New Arrival</span>
-                                        <span class="category">Rum</span>
-                                        <h2>Citadelle</h2>
-                                        <span class="price">$69.00</span>
-                                    </div>
+                                    @elseif ($re_product->featured)
+                                        <span class="seller">Best Seller</span>
+                                    @elseif ($re_product->price!=$re_product->sale_price)
+                                        <span class="sale">Sale</span>
+                                    @endif
+
+                                    <span class="category">{{$re_product->category->name }}</span>
+                                    <h2>Jim Beam Kentucky Straight</h2>
+                                    <span class="price">$
+                                        @if($re_product->price != $re_product->sale_price)
+                                            {{ $re_product->sale_price }}
+                                        @else
+                                            {{ $re_product->price }}
+                                        @endif
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @endforeach
+                </form>
                 </div>
             </div>
         </div>
@@ -296,5 +228,5 @@
 
     {{-- Related Products --}}
 
-    
+
 @endsection

@@ -107,7 +107,6 @@
                 {{-- SIDE BAR --}}
 
                 {{-- MAIN CONTAIN --}}
-
                 <div class="col-md-9">
                     <div class="row mb-4">
                         <div class="col-md-12 d-flex justify-content-between align-items-center">
@@ -151,11 +150,17 @@
                                             {{-- <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt=""> --}}
                                             <div class="desc">
                                                 <p class="meta-prod d-flex">
-                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center add-to-cart"><span
+                                                    @if($product->inventory_qty == 0)
+                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center"><span
                                                             class="flaticon-shopping-bag"></span></a>
+                                                    @else
+                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center add-to-cart"><span
+                                                        class="flaticon-shopping-bag"></span></a>
+                                                    @endif
                                                     <a href="#" class="d-flex align-items-center justify-content-center"><span
                                                             class="flaticon-heart"></span></a>
-                                                    <a href="#" class="d-flex align-items-center justify-content-center"><span
+
+                                                    <a href="{{ url('home/single-product/'.$product->id) }}" class="d-flex align-items-center justify-content-center"><span
                                                             class="flaticon-visibility"></span></a>
                                                 </p>
                                             </div>
@@ -181,6 +186,7 @@
                                             @endif
                                             <span class="price">${{ $product->sale_price }}</span>
                                         </p>
+                                        <p>Available:  {{ $product->inventory_qty }}</p>
                                     </div>
                                     </form>
                                 </div>

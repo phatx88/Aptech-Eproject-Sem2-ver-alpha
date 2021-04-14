@@ -45,7 +45,10 @@ Route::resource('/home/user/account', User_AccountController::class); //trả v�
 
 
 //FRONT END
+
 //Add Product to cart
+Route::post('check/coupon', [User_CartController::class, 'check_coupon']);
+
 Route::post('/add-to-cart',[User_CartController::class, 'add_to_cart']);
 
 Route::get('/cart',[User_CartController::class, 'view_cart']);
@@ -60,7 +63,12 @@ Route::prefix('home')->name('home.')->group(function () {
 
     Route::get('products/{id?}', [User_ProductsController::class, 'index'])
         ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
-    Route::post('products/search_price', [User_ProductsController::class, 'search_price']);
+
+    Route::post('products/search_price', [User_ProductsController::class, 'search_price'])
+    ->name('products.search_price');
+
+    Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
+    ->name('single_product');
 });
 
 //BACK END
@@ -90,9 +98,7 @@ Route::get('/contact', function () {
     return view('pages.contact');
 });
 
-Route::get('/single-product', function () {
-    return view('pages.single_product');
-});
+
 
 Route::get('/check-out', function () {
     return view('pages.checkout');

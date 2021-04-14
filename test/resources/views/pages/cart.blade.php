@@ -50,7 +50,7 @@
                                     <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
                                 </div>
                             </td>
-                            <td>$35.50</td>
+                            <td>${{ $cart['product_price'] }}</td>
                             <td class="quantity">
                                 <div class="input-group">
                                     <form>
@@ -88,8 +88,58 @@
             </div>
             @if(Session('cart'))
             <div class="row justify-content-end">
+                <div class="col col-lg-7 col-md-8 mt-7 cart-wrap ftco-animate">
+                    <div class="cart-total mb-3">
+                        <h3>Estimated Shipping Cost</h3>
+                        <p class="d-flex">
+                            <span>City</span>
+                            <select class="form-control input-sm m-bot15 choose city" name="city" id="city">
+                                <option value="0">--Chọn Thành phố---</option>
+                                {{-- @foreach($city as $key => $ci)
+                                <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                                @endforeach --}}
+                            </select>
+                        </p>
+                        <p class="d-flex">
+                            <span>District</span>
+                            <select class="form-control input-sm m-bot15 choose province" name="province" id="province">
+                                <option value="">--Chọn quận huyện---</option>
+                            </select>
+                        </p>
+                        <p class="d-flex">
+                            <span>Ward</span>
+                            <select class="form-control input-sm m-bot15  ward" name="ward" id="ward">
+                                <option value="">--Chọn xã phường---</option>
+
+                            </select>
+                        </p>
+                        <p>
+
+                            <a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Check Shipping fee</a>
+                            </p>
+                        <hr>
+                        <p class="d-flex">
+                            <span>Counpon & Discount</span>
+                            <form action="{{ url('check/coupon') }}" method="POST">
+                                @csrf
+
+                            <input type="text" name="coupon_code" class="form-control" placeholder="Enter your code">
+                            <input type="submit" value="Check Coupon" class="btn btn-primary py-3 px-4">
+
+                            </form>
+                        </p>
+                    </div>
+
+
+                </div>
                 <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
                     <div class="cart-total mb-3">
+                        @php
+                             $realtotal = 0;
+                             $coupon_fee = 0;
+
+
+                        @endphp
                         <h3>Cart Totals</h3>
                         <p class="d-flex">
                             <span>Subtotal</span>
@@ -99,14 +149,30 @@
                             <span>Delivery</span>
                             <span>$0.00</span>
                         </p>
+                        @if(Session('coupon'))
+                        @foreach(Session('coupon') as $key => $cou)
+                        @php $coupon_fee = $cou->number @endphp
                         <p class="d-flex">
                             <span>Discount</span>
-                            <span>$3.00</span>
+                            <span>${{ $cou->number }}</span>
                         </p>
+                        @endforeach
+                        @endif
                         <hr>
+
                         <p class="d-flex total-price">
                             <span>Total</span>
-                            <span>$17.60</span>
+                            <span>
+                                <?php
+                                    if($coupon_fee > 0){
+                                        $realtotal = $subtotal - $coupon_fee;
+                                        echo $realtotal;
+                                    }else{
+                                        $realtotal = $subtotal;
+                                        echo $realtotal;
+                                    }
+                                    ?>
+                            </span>
                         </p>
                     </div>
                     <p class="text-center"><a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>

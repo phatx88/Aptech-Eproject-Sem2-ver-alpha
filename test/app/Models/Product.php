@@ -10,7 +10,7 @@ class Product extends Model
     use HasFactory;
 
     protected $table = 'view_product';
-    
+
     public $timestamps = false;
 
     public function category()
