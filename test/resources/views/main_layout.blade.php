@@ -527,28 +527,82 @@
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
-
-    {{-- <script type="text/javascript">
-    $(document).ready(function(){
-        $('.search_price').click(function(){
-            var price_to = $('.price_to').val();
-            var price_from = $('.price_from').val();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url : '{{url('home/products/search_price')}}',
-                method: 'POST',
-                data: {
-                    price_to:price_to,
-                    price_from:price_from,
-                    _token:_token
-                },
-                success:function(data){
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check-shipping-fee').click(function(){
+                var province_id = $('#province').val();
+                var district_id = $('#district').val();
+                var ward_id = $('#ward').val();
+                var _token = $('input[name="_token"]').val();
+                if(province_id == '' && district_id == '' && ward_id == ''){
+                    // swal("Fail!", "You must fill all!", "error");
+                }else{
+                    $.ajax({
+                        url: '{{url('calculate-fee')}}',
+                        method: 'POST',
+                        data: {
+                            province_id: province_id,
+                            district_id: district_id,
+                            ward_id: ward_id,
+                            _token: _token
+                        },
+                        success: function (data) {
+                           location.reload();
+                        }
+                    });
                 }
             });
         });
-    });
-    </script> --}}
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.choose').on('change', function(){
+                var action = $(this).attr('id');
+                var ma_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+                // alert(action);
+                // alert(ma_id);
+                if(action == 'province'){
+                    result = 'district';
+                }else if(action == 'district'){
+                    result = 'ward';
+                }
+                $.ajax({
+                    url : '{{url('select-delivery')}}',
+                    method: 'POST',
+                    data: {
+                        action:action,
+                        ma_id:ma_id,
+                        _token:_token
+                    },
+                    success:function (data){
+                        $('#' + result).html(data);
+                    }
+                });
+             });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check_coupon').click(function(){
+                var coupon_code = $('.counpon_code_cart').val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('check/coupon')}}',
+                    method: "POST",
+                    data:{
+                        coupon_code:coupon_code,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
     <script type="text/javascript">
          $(document).ready(function(){
             $('.add-to-cart-details').click(function(){

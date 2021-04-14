@@ -45,7 +45,10 @@ Route::resource('/home/user/account', User_AccountController::class); //tráº£ vá
 
 
 //FRONT END
+// Select CITY - DISTRICT - WARD -> FEE
+Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
 
+Route::post('calculate-fee',[User_CartController::class, 'calculate_fee']);
 //Add Product to cart
 Route::post('check/coupon', [User_CartController::class, 'check_coupon']);
 
