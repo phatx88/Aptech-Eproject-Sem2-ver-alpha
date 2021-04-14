@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
 class Admin_BrandController extends Controller
@@ -14,7 +15,10 @@ class Admin_BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::get();
+        return view('admin.brand.list',[
+            'brands' => $brands
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class Admin_BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.brand.add');
     }
 
     /**
@@ -55,9 +59,11 @@ class Admin_BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Brand $brand)
     {
-        //
+        return view('admin.brand.edit',[
+            'brand' => $brand
+        ]);
     }
 
     /**

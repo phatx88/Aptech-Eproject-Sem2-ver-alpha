@@ -1,8 +1,11 @@
 <?php
 
 // BE CONTROLLER
+
+use App\Http\Controllers\Admin_CategoryController;
 use App\Http\Controllers\Admin_OrderController;
 use App\Http\Controllers\Admin_ProductController;
+use App\Http\Controllers\Admin_BrandController;
 
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;    //use
@@ -61,7 +64,7 @@ Route::prefix('home')->name('home.')->group(function () {
 
     //Show chi tiết sản phẩm bên trang products của home
     Route::get('products/{id?}{price_from?}{price_to?}{search?}', [User_ProductsController::class, 'index'])
-        ->name('products.index'); 
+        ->name('products.index');
 
 });
 
@@ -79,10 +82,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+    Route::resource('category', Admin_CategoryController::class);
+    Route::resource('brand', Admin_BrandController::class);
 });
 
 
-// ROUTE TEST 
+// ROUTE TEST
 Route::get('/test', function () {
     return view('auth.verify');
 });
@@ -143,15 +148,16 @@ Route::get('/image-list', function () {
 });
 
 //category
-Route::get('/category-add', function () {
-    return view('admin.category.add');
-});
-Route::get('/category-list', function () {
-    return view('admin.category.list');
-});
-Route::get('/category-edit', function () {
-    return view('admin.category.edit');
-});
+// Route::get('/category-add', function () {
+//     return view('admin.category.add');
+// });
+// Route::get('/category-list', function () {
+//     return view('admin.category.list');
+// });
+// Route::get('/category-edit', function () {
+//     return view('admin.category.edit');
+// });
+
 
 //staff
 Route::get('/staff-add', function () {

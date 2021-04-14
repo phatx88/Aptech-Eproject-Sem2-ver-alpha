@@ -12,10 +12,10 @@
        <!-- /form -->
        <form method="post" action="" enctype="multipart/form-data">
           <div class="form-group row">
-             <label class="col-md-12 control-label" for="name">Tên</label>  
+             <label class="col-md-12 control-label" for="name">CategoryName</label>
              <div class="col-md-9 col-lg-6">
                 <input type="hidden" name="id" value="1" class="form-control">
-                <input name="name" id="name" type="text" value="Kem Chống Nắng" class="form-control">                       
+                <input name="name" id="name" type="text" value="{{ $category->name }}" class="form-control">
              </div>
           </div>
           <div class="form-action">
