@@ -48,53 +48,6 @@ a {
 	margin: 15px 0;
 }
 
-.social-container,
-.social-container-signup {
-	margin: 20px 0;
-}
-
-
-.social-container a {
-    border: 1px solid #FF4B2B;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
-	background-color: #FF4B2B;
-    color: white;
-}
-
-.social-container a:hover {
-    color: #FF4B2B;
-    background-color: white;
-    text-decoration: none;
-	transition-duration: 500ms;
-}
-
-.social-container-signup a {
-    border: 1px solid #FF4B2B;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 5px;
-    height: 40px;
-    width: 40px;
-	color: #FF4B2B;
-    background-color: white;
-}
-
-.social-container-signup a:hover {
-    color: #fff;
-	border: 1px solid #fff;
-	background-color: #FF4B2B;
-    text-decoration: none;
-	transition-duration: 500ms;
-}
-
 button {
 	border-radius: 20px;
 	border: 1px solid #FF4B2B;
@@ -138,10 +91,6 @@ input {
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
-}
-
-input[type=checkbox] {
-	width: auto;
 }
 
 .container {
@@ -265,14 +214,3 @@ input[type=checkbox] {
 .container.right-panel-active .overlay-right {
 	transform: translateX(20%);
 }
-
-ul {
-    text-indent: unset;
-    margin: 0px;
-    text-align: left;
-}
-
-li {
-    font-size: 0.9rem;
-}
-

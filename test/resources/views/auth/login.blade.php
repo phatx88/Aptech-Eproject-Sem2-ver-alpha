@@ -5,43 +5,18 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/signin.css') }}">
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('password.email') }}">
                     @csrf
-                    <h1>Register</h1>
-                    <span class="float-left">Enter Name, Email & Password</span>
-                    <input id="name" type="text" placeholder="Name"
-                        class="form-control bg-light @error('name') is-invalid @enderror" name="name"
-                        value="{{ old('name') }}" required autocomplete="name" autofocus title="Enter Name">
+                    <h1>Password Reset</h1>
+                    <span>Reset by email</span>
+                    <input id="email" type="email" placeholder="Confirm Email" class="form-control @error('email') is-invalid @enderror" name="email"
+                        value="{{ old('email') }}" required autocomplete="email" autofocus>
 
-                    {{-- @error('name')
+                    @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror --}}
-
-                    <input id="email" type="email" placeholder="Email"
-                        class="form-control bg-light @error('email') is-invalid @enderror" name="email"
-                        value="{{ old('email') }}" required autocomplete="email" title="Enter Email">
-
-                    {{-- @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror --}}
-
-                    <input id="password" type="password" placeholder="Password"
-                        class="form-control bg-light @error('password') is-invalid @enderror" name="password" required
-                        autocomplete="new-password" title="Enter Password">
-
-                    {{-- @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror --}}
-
-                    <input id="password-confirm" type="password" placeholder="Confirm Password"
-                        class="form-control bg-light" name="password_confirmation" required autocomplete="new-password"
-                        title="Enter Confirm Password">
+                    @enderror
                     <button type="submit">
                         {{ __('Submit') }}
                     </button>
@@ -51,32 +26,25 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <h1>Sign in</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <span>or use your account</span>
-                    <input id="email" type="email" placeholder="Email"
-                        class="form-control bg-light @error('email') is-invalid @enderror" name="email"
-                        value="{{ old('email') }}" required autocomplete="email" autofocus title="Enter Email">
-                    {{-- @error('email')
+                    <input id="email" type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror"
+                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror --}}
+                    @enderror
 
 
 
-                    <input id="password" type="password" placeholder="Password"
-                        class="form-control bg-light @error('password') is-invalid @enderror" name="password" required
-                        autocomplete="current-password" title="Enter Password">
+                    <input id="password" type="password" placeholder="Enter Password"
+                        class="form-control @error('password') is-invalid @enderror" name="password" required
+                        autocomplete="current-password">
 
-                    {{-- @error('password')
+                    @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror --}}
+                    @enderror
 
 
                     <div class="">
@@ -87,49 +55,26 @@
                     <button type="submit">
                         {{ __('Submit') }}
                     </button>
-
                 </form>
             </div>
             <div class="overlay-container">
                 <div class="overlay">
                     <div class="overlay-panel overlay-left">
-                        @if ($errors->any())
-                            <h1>Something Wrong!!!</h1>
-                            <ul class="my-2">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <h1>Welcome!</h1>
-                            <div class="social-container-signup">
-                                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                            <p class="mt-0">Sign up using your social media account or register your email</p>
-                        @endif
-                        <button class="ghost" id="signIn"> <i class="fa fa-caret-left"></i> Sign In</button>
-
+                        <h1>Please Sign In!</h1>
+                        <p>please login using email and password</p>
+                        <button class="ghost" id="signIn">Sign In</button>
                     </div>
-                    <div class="overlay-panel overlay-right">
-                        @if ($errors->any())
-                            <h1>Something Wrong!!!</h1>
-                            <ul class="my-2">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                            @if (Route::has('password.request'))
-                                <p><a class="text-white" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a></p>
-                            @endif
+                    <div class="overlay-panel overlay-right">                                     
+                        @if (session('status'))
+                        <h1>Recover Email Sent</h1>
+                        <p>
+                            {{ session('status') }}
+                        </p>
                         @else
-                            <h1>Register</h1>
-                            <p>Press Below</p>
-                        @endif
-                        <button class="ghost" id="signUp">New User <i class="fa fa-caret-right"></i></button>
+                        <h1>Welcome, User!</h1>    
+                        <p>Click here if you forgot password</p>
+                        @endif                   
+                        <button class="ghost" id="signUp">Recover</button>
                     </div>
                 </div>
             </div>
