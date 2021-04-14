@@ -472,7 +472,7 @@
                         <i class="fa fa-times fa-2x"></i>
                     </div>
                     <div class="container-fluid mt-5">
-                        <form method="POST" url="{{ route('register') }}" id="registerForm">
+                        <form method="POST" id="registerForm">
                             @csrf
                             <div class="form-group text-center pb-2 heading-section">
                                 <h2 id="registerModal">{{ __('Register') }}</h2>
@@ -745,7 +745,8 @@
                     },
                     url: "{{ route('register') }}",
                     data: formData,
-                    success: (response) => window.location.assign("{{ route('login') }}"),
+                    dataType : 'JSON',
+                    success: () => window.location.assign("{{ route('login') }}"),
                     error: (response) => {
                         if (response.status === 422) {
                             let errors = response.responseJSON.errors;
