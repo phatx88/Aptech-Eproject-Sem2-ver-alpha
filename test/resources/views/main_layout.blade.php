@@ -54,29 +54,28 @@
 
                         @guest
                             @if (Route::has('login'))
-                                <a href="#registerForm" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                                <a href="#register" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
                             @endif
 
                             @if (Route::has('register'))
-                                <a href="#loginModal" class="btn-login text-white" data-toggle="modal">Log In</a>
-                            @endif                     
-                        @endguest
-                        @auth
-                            @if (Auth::user()->hasVerifiedEmail())
-                                 {{-- User drop down menu --}}
-                             <a href="{{ route('account.index') }}" class="text-white mr-2">
+                                <a href="#login" class="btn-login text-white" data-toggle="modal">Log In</a>
+                            @endif
+                        @else
+                            {{-- User drop down menu --}}
+                            <a href="{{ route('account.index') }}" class="text-white mr-2">
                                 {{ Auth::user()->name }}
                             </a>
 
                             {{-- User drop down menu --}}
                             <a href="{{ route('logout') }} " class="text-white"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-                        @endauth
+
+                        @endguest
                     </div>
                 </div>
             </div>
@@ -331,8 +330,8 @@
                             @csrf
 
                             <div class="form-group text-center heading-section">
-                                <h2 id="loginModal">{{ __('Login') }}</h2>
-                                <span>Not a member yet? <a href="#registerForm" data-dismiss="modal"
+                                <h2>Login</h2>
+                                <span>Not a member yet? <a href="#register" data-dismiss="modal"
                                         data-toggle="modal">Sign up here</a></span>
                             </div>
                             <div class="form-group" style="position: relative;">
@@ -373,6 +372,11 @@
                             </div>
                             <div class="form-group pt-2">
                                 <button class="btn btn-info form-control">{{ __('Login') }}</button>
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
                             <div class="form-group text-center pt-2 social-login">
                                 <h6>OR Continue with</h6>
@@ -388,18 +392,17 @@
         </div> --}}
         
         <!-- Register Modal -->
-        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
-            aria-hidden="true">
+        <div class="modal fade" id="register">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
                         <i class="fa fa-times fa-2x"></i>
                     </div>
                     <div class="container-fluid mt-5">
-                        <form method="POST" action="{{ route('register') }}" id="registerForm">
+                        <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="form-group text-center pb-2 heading-section">
-                                <h2 id="registerModal">{{ __('Register') }}</h2>
+                                <h2>Registration</h2>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
@@ -419,7 +422,7 @@
                                 <label for="email">{{ __('E-Mail Address') }}</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required autocomplete="email">
-                                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal"
+                                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login"
                                     style="display: block; position: absolute; right: 0; font-size: 12px;">That's you?
                                     Login</a>
 
@@ -460,7 +463,7 @@
         </div>
 
         {{-- AJAX test  --}}
-        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+        {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
@@ -526,7 +529,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{-- forget password Modal --}}
         <div class="modal fade" id="forgotPassword">
             <div class="modal-dialog modal-dialog-centered" role="document">

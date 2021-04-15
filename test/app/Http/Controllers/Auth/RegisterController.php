@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Validator;
 class RegisterController extends Controller
 {
     protected $pattern = [
-        'name' => 'bail|required|regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+$/i|max:255',
-        'email' => 'bail|required|email|unique:users|max:255',
-        'password' => 'bail|required|min:8|required_with:password_confirmation|same:password_confirmation',
-        'password_confirmation' => 'bail|required|min:8',
+        'name' => 'required|regex:/^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s]+$/i|max:255',
+        'email' => 'required|email|unique:users|max:255',
+        'password' => 'required|min:8|required_with:password_confirmation|same:password_confirmation',
+        'password_confirmation' => 'required|min:8',
     ];
 
     protected $messenger = [
