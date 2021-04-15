@@ -72,11 +72,8 @@ Route::prefix('home')->name('home.')->group(function () {
 
     Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
-<<<<<<< HEAD
 
 
-=======
->>>>>>> parent of 6e077c9 (Merge branch 'main' into Thinh_Lon)
 });
 
 //BACK END

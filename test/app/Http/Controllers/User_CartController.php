@@ -28,10 +28,7 @@ class User_CartController extends Controller
         $product_id = $data['id'];
         $cart = Session('cart');
 
-<<<<<<< HEAD
         // var_dump($cart); exit;
-=======
->>>>>>> parent of abaaf0f (Thinh)
         if($qty >= $data['product_quantity']){
             if($cart != null) {
                 $is_available = 0;

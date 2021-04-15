@@ -172,7 +172,7 @@
                         @php $coupon_fee = $cou->number @endphp
                             <p class="d-flex">
                                 <span>Discount</span>
-                                <span>{{ $coupon_fee }}</span>
+                                <span>${{ $coupon_fee }}</span>
                             </p>
                         @endforeach
                         @endif
