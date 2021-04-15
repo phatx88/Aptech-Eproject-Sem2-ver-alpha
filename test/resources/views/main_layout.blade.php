@@ -27,7 +27,6 @@
 
 
 <body>
-
     <div class="wrap">
         <div class="container">
             <div class="row">
@@ -613,9 +612,13 @@
                 var district_id = $('#district').val();
                 var ward_id = $('#ward').val();
                 var _token = $('input[name="_token"]').val();
+                // alert(province_id);
+                // alert(district_id);
+                // alert(ward_id);
                 if(province_id == '' && district_id == '' && ward_id == ''){
-                    // swal("Fail!", "You must fill all!", "error");
-                }else{
+               // error meesage
+                }
+                else{
                     $.ajax({
                         url: '{{url('calculate-fee')}}',
                         method: 'POST',

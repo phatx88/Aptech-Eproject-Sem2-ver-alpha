@@ -162,12 +162,13 @@ class User_CartController extends Controller
 
     public function calculate_fee(Request $request){
         $data = $request->all();
+
         $transport = Transport::where('province_id', $data['province_id'])->get();
         $output = '';
-        $session_fee = session()->get('fee');
-        if(isset($session_fee)){
-            session()->put('fee','');
-        }
+        // $session_fee = session()->get('fee');
+        // if(isset($session_fee)){
+        //     session()->put('fee','');
+        // }
         if($transport){
             if($transport->count() == 1){
                 session()->put('fee', $transport);
