@@ -21,20 +21,35 @@
                    <thead>
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
-                         <th >BrandName</th>
+                         <th >Coupon</th>
                          <th>
+                             ID
                          </th>
                          <th>
+                             Name
                          </th>
+                         <th>
+                            Code
+                        </th>
+                        <th>
+                            Time
+                        </th>
+                        <th>
+                            cpn_condition
+                        </th>
+                        <th>
+                            number
+                        </th>
                       </tr>
                    </thead>
                    <tbody>
-                       @foreach ($brands as $brand)
+                       @foreach ($coupons as $coupon)
                        <tr>
                         <td><input type="checkbox"></td>
-                        <td >{{ $brand->name }}</td>
-                        <td><a href="{{ route('admin.brand.edit', ['brand'=>$brand->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Edit</a></td>
-                        <td><a href="{{ route('admin.brand.', ['brand'=>$brand->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</a></td>
+                        <td >{{ $coupon->name }}</td>
+                        <td >{{ $coupon->id }}</td>
+                        <td><a href="{{ route('admin.coupon.edit', ['coupon'=>$coupon->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td><a href="{{ route('admin.coupon.', ['coupon'=>$coupon->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</a></td>
                         {{-- <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td> --}}
                     </tr>
                        @endforeach

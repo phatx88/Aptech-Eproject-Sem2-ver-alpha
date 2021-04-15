@@ -12,14 +12,13 @@
        <!-- /form -->
        <form method="post" action="" enctype="multipart/form-data">
           <div class="form-group row">
-             <label class="col-md-12 control-label" for="name">CategoryName</label>
+             <label class="col-md-12 control-label" for="name">Coupon</label>
              <div class="col-md-9 col-lg-6">
-                <input type="hidden" name="id" value="1" class="form-control">
-                <input name="name" id="name" type="text" value="{{ $category->name }}" class="form-control">
+                <input name="name" id="name" type="text" value="" class="form-control">
              </div>
           </div>
           <div class="form-action">
-             <input type="submit" class="btn btn-primary btn-sm" value="Cập nhật" name="update">
+             <input type="submit" class="btn btn-primary btn-sm" value="Lưu" name="save">
           </div>
        </form>
        <!-- /form -->

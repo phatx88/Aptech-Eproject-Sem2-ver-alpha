@@ -21,7 +21,7 @@
                    <thead>
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
-                         <th >Tên</th>
+                         <th >CategoryName</th>
                          <th>
                          </th>
                          <th>
@@ -29,42 +29,14 @@
                       </tr>
                    </thead>
                    <tbody>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td >Kem Chống Nắng</td>
-                         <td > <input type="button" onclick="Edit('1');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td >Kem Dưỡng Da</td>
-                         <td > <input type="button" onclick="Edit('2');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td ><input type="button" onclick="Delete('2');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td >Kem Trị Mụn</td>
-                         <td > <input type="button" onclick="Edit('3');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td ><input type="button" onclick="Delete('3');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td >Kem Trị Thâm Nám</td>
-                         <td > <input type="button" onclick="Edit('4');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td ><input type="button" onclick="Delete('4');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td >Sữa Rửa Mặt</td>
-                         <td > <input type="button" onclick="Edit('5');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td ><input type="button" onclick="Delete('5');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td >Sữa Tắm</td>
-                         <td > <input type="button" onclick="Edit('6');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td ><input type="button" onclick="Delete('6');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
+                       @foreach ($categories as $category)
+                       <tr>
+                        <td><input type="checkbox"></td>
+                        <td >{{ $category->name }}</td>
+                        <td><a href="{{ route('admin.category.edit', ['category'=>$category->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
+                    </tr>
+                       @endforeach
                    </tbody>
                 </table>
              </div>

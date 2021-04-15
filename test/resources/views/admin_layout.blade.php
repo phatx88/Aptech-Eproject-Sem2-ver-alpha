@@ -8,7 +8,7 @@
       <meta name="author" content="">
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
-      
+
       <title>Tổng quan</title>
       <!-- Create favicon -->
       <link rel="shortcut icon" type="image/x-icon" href="{{asset('backend/images/logo.jpg')}}" />
@@ -69,9 +69,25 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Danh mục</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('category-list')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{URL::to('category-add')}}">Thêm</a>
+               <a class="dropdown-item" href="{{route('admin.category.index')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('admin.category.create')}}">Thêm</a>
                <a class="dropdown-item" href="{{URL::to('category-edit')}}">Chỉnh sửa</a>
+            </div>
+         </li>
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Brand</span></a>
+            <div class="dropdown-menu" aria-labelledby="">
+               <a class="dropdown-item" href="{{route('admin.brand.index')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('admin.brand.create')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('brand-edit')}}">Chỉnh sửa</a>
+            </div>
+         </li>
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Coupon</span></a>
+            <div class="dropdown-menu" aria-labelledby="">
+               <a class="dropdown-item" href="{{route('admin.coupon.index')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('admin.coupon.create')}}">Thêm</a>
+               <a class="dropdown-item" href="{{URL::to('brand-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
