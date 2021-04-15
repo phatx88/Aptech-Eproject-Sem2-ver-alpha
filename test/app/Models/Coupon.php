@@ -10,6 +10,7 @@ class Coupon extends Model
     use HasFactory;
     protected $table = 'coupon';
     public $timestamps = false;
+    protected $primaryKey = 'id';
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -18,5 +19,5 @@ class Coupon extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
-    protected $primaryKey = 'id';
+    
 }

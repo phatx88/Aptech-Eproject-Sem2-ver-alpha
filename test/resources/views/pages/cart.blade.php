@@ -170,10 +170,10 @@
                         @if(Session('coupon'))
                         @foreach(Session('coupon') as $key => $cou)
                         @php $coupon_fee = $cou->number @endphp
-                            <p class="d-flex">
-                                <span>Discount</span>
-                                <span>{{ $coupon_fee }}</span>
-                            </p>
+                        <p class="d-flex">
+                            <span>Discount</span>
+                            <span>{{ $coupon_fee }}</span>
+                        </p>
                         @endforeach
                         @endif
                         <hr>
@@ -182,7 +182,7 @@
                             <span>Total</span>
                             <span>
                                 <?php
-                                    $realtotal = $subtotal + $shipping_fee - $coupon_fee;
+                                   $realtotal = $subtotal - $shipping_fee + $coupon_fee;
                                     echo $realtotal;
                                     ?>
                             </span>

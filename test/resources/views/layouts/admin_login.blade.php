@@ -16,8 +16,8 @@
     <link href="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{ asset('backend/css/sb-admin.css') }}" rel="stylesheet">
-    <link href="{{ asset('backend/css/admin.css') }}" rel="stylesheet">
-
+    {{-- <link href="{{ asset('backend/css/admin.css') }}" rel="stylesheet"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/signin.css') }}">
 
 </head>
 

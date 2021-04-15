@@ -54,28 +54,34 @@
 
                         @guest
                             @if (Route::has('login'))
-                                <a href="#register" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                                <a href="#registerForm" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                    
                             @endif
 
                             @if (Route::has('register'))
-                                <a href="#login" class="btn-login text-white" data-toggle="modal">Log In</a>
-                            @endif
-                        @else
-                            {{-- User drop down menu --}}
-                            <a href="{{ route('account.index') }}" class="text-white mr-2">
+                                <a href="#loginModal" class="btn-login text-white" data-toggle="modal">Log In</a>
+                            @endif                     
+                        @endguest
+                        @auth
+                            @if (Auth::user()->hasVerifiedEmail())
+                                 {{-- User drop down menu --}}
+                             <a href="{{ route('account.index') }}" class="text-white mr-2">
                                 {{ Auth::user()->name }}
                             </a>
+          
+                            @else 
+                            <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
+                            @endif
 
                             {{-- User drop down menu --}}
-                            <a href="{{ route('logout') }} " class="text-white"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                            <a href="" class="text-white"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-
-                        @endguest
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -318,7 +324,7 @@
         </div>
 
         <!-- Login Modal -->
-        {{-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" class="modal-dialog" role="document">
                 <div class="modal-content form-wrapper">
@@ -389,10 +395,10 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
         
         <!-- Register Modal -->
-        <div class="modal fade" id="register">
+        <div class="modal fade" id="registerForm">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
@@ -599,6 +605,7 @@
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
+    <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.check-shipping-fee').click(function(){
@@ -798,66 +805,18 @@
             });
     </script>
     
-     {{-- Forcing the login modal to stay open --}}
+
+    {{-- Make Login Modal to stay open --}}
     @if ($errors->has('email') || $errors->has('password'))
-        <script>
-            $(function() {
-                //Make Login Modal to stay open
-                $('#loginModal').modal({
-                    show: true
-                });
-            });
-
-        </script>
-    @endif
-
-    {{-- Forcing the forget password modal to stay open --}}
-    {{-- @if ($errors->has('email') && session('status'))
     <script>
         $(function() {
-            //Make Login Modal to stay open
-            $('#forgotPassword').modal({
+            $('#loginModal').modal({
                 show: true
             });
         });
 
     </script>
-    @endif --}}
-
-    {{-- Using Ajax on Registering Form  --}}
-    {{-- <script>
-        $(function() {        
-            $('#registerForm').submit(function(e) {
-                e.preventDefault();
-                let formData = $(this).serializeArray();
-                $(".invalid-feedback").children("strong").text("");         
-                $("#registerForm input").removeClass("is-invalid");
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('register') }}",
-                    data: formData,
-                    dataType : 'JSON',
-                    success: () => window.location.assign("{{ route('login') }}"),
-                    error: (response) => {
-                        if (response.status === 422) {
-                            let errors = response.responseJSON.errors;
-                            Object.keys(errors).forEach(function(key) {
-                                $("#" + key + "Input").addClass("is-invalid");
-                                $("#" + key + "Error").children("strong").text(
-                                    errors[key][0]);
-                            });
-                        } else {
-                            window.location.reload();
-                        }
-                    }
-                })
-            });
-        });
-
-    </script> --}}
+@endif
 
 </body>
 

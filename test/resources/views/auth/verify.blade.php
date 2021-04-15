@@ -4,10 +4,9 @@
 
     <body>
         <link rel="stylesheet" href="{{ asset('backend/css/auth.css') }}">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
+        <div class="container" style="min-height: 0px; padding: 0px">
+       
+
                         <div class="card">
                             <div class="card-header">
                                 <h2>
@@ -38,9 +37,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                
+           
         </div>
     </body>
 

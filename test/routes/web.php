@@ -93,6 +93,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
 });
 
+// ROUTE TEST 
+Route::get('/test', function () {
+    return view('auth.verify');
+});
 
 
 //URL TRẢ VỀ VIEW -> Cho development thôi
