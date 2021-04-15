@@ -54,12 +54,12 @@
                         @guest
                             @if (Route::has('login'))
                                 <a href="#registerForm" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
-                    
+
                             @endif
 
                             @if (Route::has('register'))
                                 <a href="#loginModal" class="btn-login text-white" data-toggle="modal">Log In</a>
-                            @endif                     
+                            @endif
                         @endguest
                         @auth
                             @if (Auth::user()->hasVerifiedEmail())
@@ -67,8 +67,8 @@
                              <a href="{{ route('account.index') }}" class="text-white mr-2">
                                 {{ Auth::user()->name }}
                             </a>
-          
-                            @else 
+
+                            @else
                             <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
                             @endif
 
@@ -89,53 +89,19 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <?php
-                $count_items = 0;
-                if(session()->get('cart')){
-                    foreach(session()->get('cart') as $key => $cart_item){
-                        $count_items++;
-                    }
-                }
 
-                ?>
             <a class="navbar-brand" href="{{ URL::to('home') }}">Liquor <span>store</span></a>
             {{-- Shopping cart drop down --}}
 
+
             <div class="order-lg-last btn-group">
-                <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="flaticon-shopping-bag"></span>
-                    <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>{{ $count_items }}</small></div>
-                </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
-                    @if(session()->get('cart'))
-                    @foreach (session()->get('cart') as $key => $cart)
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-
-                        <div class="img" style="background-image: url({{ asset('frontend/images/products/'.$cart['product_image']) }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>{{ $cart['product_name'] }}</h4>
-                            <p class="mb-0"><a href="#" class=" ">{{ $cart['product_price'] }}</a><span class="quantity ml-3">Quantity:
-                                    {{ $cart['product_quantity'] }}</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" data-id_delete="{{ $cart['product_id'] }}" class="close delete-cart-product" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-
-                        </div>
-                    </div>
-                    @endforeach
-                    @endif
-                    <a class="dropdown-item text-center btn-link d-block w-100" href="{{ URL::to('cart') }}">
-                        View All
-                        <span class="ion-ios-arrow-round-forward"></span>
-                    </a>
-                </div>
-                {{-- Shopping cart drop down --}}
+                <form action="">
+                    @csrf
+                    <div id="roll-button"></div>
+                </form>
             </div>
+
             {{-- Wishlist drop down --}}
             <div class="order-lg-last btn-group">
                 <a href="#cart-drop" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
@@ -395,7 +361,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Register Modal -->
         <div class="modal fade" id="registerForm">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -512,7 +478,7 @@
 
                                     <div >
                                         <input id="passwordInput" type="password" class="form-control" name="password" required autocomplete="new-password">
-            
+
                                         <span class="invalid-feedback" role="alert" id="passwordError">
                                             <strong></strong>
                                         </span>
@@ -605,6 +571,21 @@
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
     <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: '{{url('roll-button')}}',
+                method: "POST",
+                data:{
+                _token:_token
+                },
+                success: function (data){
+                    $('#roll-button').html(data);
+                }
+            });
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.check-shipping-fee').click(function(){
@@ -706,7 +687,7 @@
                         _token:_token
                     },
                     success:function(data){
-                        $('#count_items_cart').html(data);
+                        $('#roll-button').html(data);
                         swal({
                             title: "Đã thêm sản phẩm vào giỏ hàng",
                             text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
@@ -748,7 +729,7 @@
                         _token:_token
                     },
                     success:function(data){
-                        $('#count_items_cart').html(data);
+                        $('#roll-button').html(data);
                         swal({
                             title: "Đã thêm sản phẩm vào giỏ hàng",
                             text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
@@ -788,9 +769,9 @@
             });
 
         });
-
+    </script>
             //delete cart product
-
+    <script type="text/javascript">
             $('.delete-cart-product').click(function(){
                 var id = $(this).data('id_delete');
                 var _token = $('input[name="_token"]').val();
@@ -807,7 +788,7 @@
                 });
             });
     </script>
-    
+
 
     {{-- Make Login Modal to stay open --}}
     @if ($errors->has('email') || $errors->has('password'))
