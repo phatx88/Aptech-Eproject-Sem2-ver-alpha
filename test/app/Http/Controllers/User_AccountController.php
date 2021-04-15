@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Province;
 
 class User_AccountController extends Controller
 {
@@ -13,6 +19,7 @@ class User_AccountController extends Controller
      */
     public function __construct()
     {
+       
         $this->middleware(['auth' , 'verified']);
     }
 
@@ -24,7 +31,9 @@ class User_AccountController extends Controller
      */
     public function index()
     {
-        return view('pages.user');
+        $user = Auth::user();
+        $province = Province::orderby('id', 'ASC')->get();
+        return view('pages.user' , ['user' => $user])->with(compact('province'));
     }
 
     /**

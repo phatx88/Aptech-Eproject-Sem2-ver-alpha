@@ -51,19 +51,14 @@ data-stellar-background-ratio="0.5">
                         <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
                             aria-labelledby="nav-profile-tab">
 
-                            <form action="#" class="billing-form">
+                            <form action="#" class="billing-form" method="POST">
+                                @csrf
                                 <h3 class="mb-4 mt-4 billing-heading">Contact Info</h3>
                                 <div class="row align-items-end">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="firstname">Firt Name</label>
-                                            <input type="text" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="lastname">Last Name</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <label for="firstname">Full Name</label>
+                                            <input type="text" class="form-control" placeholder="" value="{{ $user->name }}">
                                         </div>
                                     </div>
 
@@ -71,13 +66,13 @@ data-stellar-background-ratio="0.5">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="phone">Phone</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input type="text" class="form-control" placeholder="Enter Your Phone #" value="{{  $user->mobile }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="emailaddress">Email Address</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input type="text" class="form-control" placeholder="" value="{{ $user->email }}">
                                         </div>
                                     </div>
                                     <h3 class="mb-4 mt-4 billing-heading">Default Address</h3>
@@ -87,39 +82,50 @@ data-stellar-background-ratio="0.5">
                                             <div class="form-group">
                                                 <label for="streetaddress">Street Address</label>
                                                 <input type="text" class="form-control"
-                                                    placeholder="House number and street name">
+                                                    placeholder="Enter Your Street Number" value="{{ $user->housenumber_street }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w-100"></div>
-                                    <div class="col-md-6"> <label for="city">City</label>
-                                        <div class="select-wrap">
+                                    <div class="col-md-6"> <label for="province">City/Province</label>
+                                        <div class="form-group">
                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                            <select name="" id="" class="form-control">
-                                                <option value="">France</option>
-                                                <option value="">Italy</option>
-                                                <option value="">Philippines</option>
-                                                <option value="">South Korea</option>
-                                                <option value="">Hongkong</option>
-                                                <option value="">Japan</option>
+                                            <select class="form-control choose province" name="province" id="province" >
+                                                @if ($user->ward_id != null)
+                                                <option value="{{ $user->ward->district->province->id }}">--{{ $user->ward->district->province->name }}---</option>
+                                                @else
+                                                <option value="">--Chọn Thành phố---</option>
+                                                @endif
+                                                @foreach($province as $key => $pvin)
+                                                <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
+                                                @endforeach
+                                               
                                             </select>
                                         </div>
-
                                     </div>
-                                    <div class="col-md-6">
-
+                                  <div class="col-md-6">
                                     </div>
                                     <div class="w-100"></div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6"><label for="district">District</label>
                                         <div class="form-group">
-                                            <label for="district">District</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select class="form-control choose district" name="district" id="district">
+                                                @if ($user->ward_id != null)
+                                                <option value="{{ $user->ward->district->id }}">--{{ $user->ward->district->name }}---</option>
+                                                @endif
+                                                <option value="">--Chọn quận huyện---</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6"><label for="ward">Ward</label>
                                         <div class="form-group">
-                                            <label for="ward">Ward</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select class="form-control ward" name="ward" id="ward">
+                                                @if ($user->ward_id != null)
+                                                <option value="{{ $user->ward_id }}">--{{ $user->ward->name }}---</option>
+                                                @endif
+                                                <option value="">--Chọn xã phường---</option>
+                                            </select>
                                         </div>
                                     </div>
 

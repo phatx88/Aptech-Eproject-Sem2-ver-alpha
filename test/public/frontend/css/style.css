@@ -9091,15 +9091,15 @@ h1, h2, h3, h4, h5,
     appearance: none; }
 
 .billing-form .form-control {
-  font-weight: 300;
+  font-weight: 500;
   border: transparent !important;
   border: 1px solid rgba(0, 0, 0, 0.1) !important;
   height: 58px !important;
   padding-left: 15px;
   padding-right: 15px;
   background: transparent !important;
-  color: rgba(0, 0, 0, 0.4) !important;
-  font-size: 14px;
+  color: rgba(0, 0, 0, 0.8) !important;
+  font-size: 20px;
   border-radius: 0px;
   -webkit-box-shadow: none !important;
   box-shadow: none !important; }

@@ -659,6 +659,7 @@
                         _token:_token
                     },
                     success:function (data){
+                        // alert (result);
                         $('#' + result).html(data);
                     }
                 });

@@ -100,9 +100,6 @@
                                 @foreach($province as $key => $pvin)
                                 <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
                                 @endforeach
-                                {{-- @foreach($city as $key => $ci)
-                                <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
-                                @endforeach --}}
                             </select>
                         </p>
                         <p class="d-flex">
@@ -119,7 +116,6 @@
                             </select>
                         </p>
                         <p>
-
                             <a type="button" class="btn btn-primary py-3 px-4 check-shipping-fee">Check Shipping fee</a>
                             </p>
                         </form>
