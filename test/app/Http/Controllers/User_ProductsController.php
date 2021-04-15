@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use App\Models\Product;
+<<<<<<< Updated upstream
 use App\Models\Coupon;
+=======
+>>>>>>> Stashed changes
 class User_ProductsController extends Controller
 {
     public function index($id = null){
@@ -59,5 +62,8 @@ class User_ProductsController extends Controller
         ->with('product', $product)
         ->with('related_product', $related_product);
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 }

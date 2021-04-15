@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+<<<<<<< Updated upstream
 use App\Models\Coupon;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Province;
@@ -12,6 +13,8 @@ use App\Models\District;
 use App\Models\Ward;
 use App\Models\Transport;
 
+=======
+>>>>>>> Stashed changes
 use Session;
 session_start();
 
@@ -27,7 +30,11 @@ class User_CartController extends Controller
         }
         $product_id = $data['id'];
         $cart = Session('cart');
+<<<<<<< Updated upstream
 
+=======
+        // var_dump($cart); exit;
+>>>>>>> Stashed changes
         if($qty >= $data['product_quantity']){
             if($cart != null) {
                 $is_available = 0;

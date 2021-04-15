@@ -46,8 +46,8 @@
                             </td>
                             <td>
                                 <div class="email">
-                                    <span>{{ $cart['product_name'] }}</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
+                                    <h3><span style="color: black;">{{ $cart['product_name'] }}</span></h3>
+                                    {{-- <span>Fugiat voluptates quasi nemo, ipsa perferendis</span> --}}
                                 </div>
                             </td>
                             <td>${{ $cart['product_price'] }}</td>

@@ -553,6 +553,7 @@
                 }
             });
         });
+<<<<<<< Updated upstream
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -583,7 +584,52 @@
              });
         });
     </script>
+=======
+    });
+    </script> --}}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.add-to-cart-details').click(function(){
+                var id = $(this).data('id_product_details');
+                var product_name = $('.product_name_cart_'+id).val();
+                var product_price = $('.product_price_cart_'+id).val();
+                var product_quantity = $('.product_quantity_cart_'+id).val();
+                var product_image = $('.product_image_cart_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/add-to-cart')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        product_name:product_name,
+                        product_price:product_price,
+                        product_quantity:product_quantity,
+                        product_image:product_image,
+                        _token:_token
+                    },
+                    success:function(data){
+                        $('#count_items_cart').html(data);
+                        swal({
+                            title: "Đã thêm sản phẩm vào giỏ hàng",
+                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                            showCancelButton: true,
+                            cancelButtonText: "Xem tiếp",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Đi đến giỏ hàng",
+                            closeOnConfirm: false,
+>>>>>>> Stashed changes
 
+                        },
+                        function() {
+                            window.location.href = "{{url('/cart')}}";
+                        });
+
+                    }
+                });
+
+            });
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('.check_coupon').click(function(){
