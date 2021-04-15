@@ -29,36 +29,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="alert" role="alert">
-                            <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox" checked>
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-1.jpg);"></div>
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td>$44.99</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">
-                                </div>
-                            </td>
-                            <td>$89.98</td>
-                            <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
-                        </tr>
-
+                        @if(Session('cart'))
+                        @php
+                            $subtotal = 0;
+                        @endphp
+                        @foreach(Session('cart') as $key => $cart)
                         <tr class="alert" role="alert">
                             <td>
                                 <label class="checkbox-wrap checkbox-primary">
@@ -67,217 +42,161 @@
                                 </label>
                             </td>
                             <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-2.jpg);"></div>
+                                <div class="img" style="background-image: url('{{ asset('frontend/images/products/' . $cart['product_image']) }}');"></div>
                             </td>
                             <td>
                                 <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
+                                    <span>{{ $cart['product_name'] }}</span>
                                     <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
                                 </div>
                             </td>
-                            <td>$30.99</td>
+                            <td>${{ $cart['product_price'] }}</td>
                             <td class="quantity">
                                 <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+                                    <form>
+                                        @csrf
+                                    <input type="number" name="quantity[{{ $cart['product_id'] }}]" class="quantity form-control input-number quantity_cart_edit" data-quantity="{{ $cart['product_id'] }}" data-quantity_value="{{ $cart['product_quantity'] }}" id="quantity_{{ $cart['product_id'] }}" value="{{ $cart['product_quantity'] }}" min="1" max="100">
+                                </form>
                                 </div>
                             </td>
-                            <td>$30.99</td>
+                            <?php
+                                $total = $cart['product_quantity'] * $cart['product_price'];
+                            ?>
+                            <td>${{ $total }}</td>
                             <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <button type="button" data-id_delete="{{ $cart['product_id'] }}" class="close delete-cart-product" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                 </button>
                             </td>
                         </tr>
-
+                        @php
+                            $subtotal += $total;
+                        @endphp
+                        @endforeach
+                        @else
                         <tr class="alert" role="alert">
-                            <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-3.jpg);"></div>
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td>$35.50</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
-                            <td>$35.50</td>
-                            <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
+                            <td colspan="7" style="text-align: center;"><?php
+                                echo "Quý khách làm ơn thêm giỏ hàng nhé!!!";
+                            ?></td>
                         </tr>
+                        @endif
 
-                        <tr class="alert" role="alert">
-                            <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="img" style="background-image: url(frontend/images/prod-4.jpg);"></div>
-                            </td>
-                            <td>
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td>$76.99</td>
-                            <td class="quantity">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
-                            <td>$76.99</td>
-                            <td>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
-                        </tr>
 
-                        <tr class="alert" role="alert">
-                            <td class="border-bottom-0">
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
-                            <td class="border-bottom-0">
-                                <div class="img" style="background-image: url(frontend/images/prod-5.jpg);"></div>
-                            </td>
-                            <td class="border-bottom-0">
-                                <div class="email">
-                                    <span>Jim Beam Kentucky Straight</span>
-                                    <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
-                                </div>
-                            </td>
-                            <td class="border-bottom-0">$40.00</td>
-                            <td class="quantity border-bottom-0">
-                                <div class="input-group">
-                                    <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                </div>
-                            </td>
-                            <td class="border-bottom-0">$40.00</td>
-                            <td class="border-bottom-0">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                </button>
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="row align-items-center">
-                <div class="col-lg-7 col-md-6 mt-5 cart-wrap ftco-animate">
-                    <div class="cart-total mb-3">
+            </div>     
+            @if(Session('cart'))
+            <div class="row justify-content-end">
+                <div class="col col-lg-7 col-md-8 mt-7 cart-wrap ftco-animate">
+                    <div class="cart-total mb-3" >
                         <h3>Estimated Shipping Cost</h3>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="country">City</label> 
-                            </div>
-                             <div class="col-8">
-                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="" id="" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
-                                    <option value="">Select City/Province</option>
-                                    <option value="">Italy</option>
-                                    <option value="">Philippines</option>
-                                    <option value="">South Korea</option>
-                                    <option value="">Hongkong</option>
-                                    <option value="">Japan</option>
-                                </select>
-                            </div>                                                                 
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="country">District</label> 
-                            </div>
-                             <div class="col-8">
-                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="" id="" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
-                                    <option value="">Select District</option>
-                                    <option value="">Italy</option>
-                                    <option value="">Philippines</option>
-                                    <option value="">South Korea</option>
-                                    <option value="">Hongkong</option>
-                                    <option value="">Japan</option>
-                                </select>
-                            </div>                                                                 
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="country">Ward</label> 
-                            </div>
-                             <div class="col-8">
-                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="" id="" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
-                                    <option value="">Select Ward</option>
-                                    <option value="">Italy</option>
-                                    <option value="">Philippines</option>
-                                    <option value="">South Korea</option>
-                                    <option value="">Hongkong</option>
-                                    <option value="">Japan</option>
-                                </select>
-                            </div>                                                                 
-                        </div>
+                        <form method="POST">
+                           @csrf
+                        <p class="d-flex">
+                            <span>City</span>
+                            <select class="form-control input-sm m-bot15 choose province" name="province" id="province" >
+                                <option value="">--Chọn Thành phố---</option>
+                                @foreach($province as $key => $pvin)
+                                <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
+                                @endforeach
+                                {{-- @foreach($city as $key => $ci)
+                                <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                                @endforeach --}}
+                            </select>
+                        </p>
+                        <p class="d-flex">
+                            <span>District</span>
+                            <select class="form-control input-sm m-bot15 choose district" name="district" id="district">
+                                <option value="">--Chọn quận huyện---</option>
+                            </select>
+                        </p>
+                        <p class="d-flex">
+                            <span>Ward</span>
+                            <select class="form-control input-sm m-bot15 ward" name="ward" id="ward">
+                                <option value="">--Chọn xã phường---</option>
+
+                            </select>
+                        </p>
+                        <p>
+
+                            <a type="button" class="btn btn-primary py-3 px-4 check-shipping-fee">Check Shipping fee</a>
+                            </p>
+                        </form>
                         <hr>
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="country">Coupon & Discount</label> 
-                            </div>
-                             <div class="col-8">
-                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <input type="text" placeholder="Enter Code" class="form-control w-75 mb-2" style="height: 36px !important; font-size: 1rem">
-                            </div>                                                                 
-                        </div>
+                        <p class="d-flex">
+                            <span>Counpon & Discount</span>
+                            <form>
+                                @csrf
+
+                            <input type="text" name="coupon_code" class="form-control counpon_code_cart" placeholder="Enter your code">
+                            <input type="button" value="Check Coupon" class="btn btn-primary py-3 px-4 check_coupon">
+
+                            </form>
+                            <?php
+                            if(Session('message')){
+                                echo Session('message');
+                                Session::put('message', '');
+                            }
+
+                            ?>
+                        </p>
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Get Quotes</a>
-                        </div>
-                        <div class="col-6">
-                            <a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Continue</a>
-                        </div>
-                    </div>
+
+
                 </div>
-                <div class="col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+                <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+
                     <div class="cart-total mb-3">
+                        @php
+                            $realtotal = 0;
+                            $coupon_fee = 0;
+                            $shipping_fee = 0;
+
+                        @endphp
                         <h3>Cart Totals</h3>
                         <p class="d-flex">
                             <span>Subtotal</span>
-                            <span>$20.60</span>
+                            <span>${{ $subtotal }}</span>
                         </p>
+                        @if(Session('fee'))
+                        @foreach(Session('fee') as $key => $fee)
+                        @php $shipping_fee = $fee->price /10000; @endphp
                         <p class="d-flex">
                             <span>Delivery</span>
-                            <span>$0.00</span>
+                            <span>${{ $shipping_fee }}</span>
                         </p>
+                        @endforeach
+                        @endif
+                        @if(Session('coupon'))
+                        @foreach(Session('coupon') as $key => $cou)
+                        @php $coupon_fee = $cou->number @endphp
                         <p class="d-flex">
                             <span>Discount</span>
-                            <span>$3.00</span>
+                            <span>{{ $coupon_fee }}</span>
                         </p>
+
+                        
+
+                        @endforeach
+                        @endif
                         <hr class="mt-5">
+
+
                         <p class="d-flex total-price">
                             <span>Total</span>
-                            <span>$17.60</span>
+                            <span>
+                                <?php
+                                   $realtotal = $subtotal - $shipping_fee + $coupon_fee;
+                                    echo $realtotal;
+                                    ?>
+                            </span>
                         </p>
                     </div>
                     <p class="text-center"><a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
                 </div>
             </div>
+            @endif
         </div>
     </section>
 @endsection

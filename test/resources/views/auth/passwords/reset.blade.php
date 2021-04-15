@@ -1,16 +1,22 @@
 @extends('layouts.admin_login')
 
 @section('content')
+<style>
+    .row {
+        width: 750px;
+    }
+
+</style>
 <body>
-    <link rel="stylesheet" href="{{ asset('backend/css/auth.css') }}">
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+
+    {{-- <link rel="stylesheet" href="{{ asset('backend/css/auth.css') }}"> --}}
+    <div class="container" style="min-height: 0px; padding: 0px">
+
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
+                    <form method="POST" action="{{ route('password.update') }}" style="padding: 0px">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
@@ -52,7 +58,7 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="m-auto">
                                 <button type="submit" class="">
                                     {{ __('Reset Password') }}
                                 </button>
@@ -61,8 +67,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
+
 </div>
 </body>
 @endsection

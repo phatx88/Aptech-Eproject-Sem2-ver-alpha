@@ -22,10 +22,11 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/nouislider.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
 </head>
 
-<body>
 
+<body>
     <div class="wrap">
         <div class="container">
             <div class="row">
@@ -52,28 +53,34 @@
 
                         @guest
                             @if (Route::has('login'))
-                                <a href="#register" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                                <a href="#registerForm" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                    
                             @endif
 
                             @if (Route::has('register'))
-                                <a href="#login" class="btn-login text-white" data-toggle="modal">Log In</a>
-                            @endif
-                        @else
-                            {{-- User drop down menu --}}
-                            <a href="{{ route('account.index') }}" class="text-white mr-2">
+                                <a href="#loginModal" class="btn-login text-white" data-toggle="modal">Log In</a>
+                            @endif                     
+                        @endguest
+                        @auth
+                            @if (Auth::user()->hasVerifiedEmail())
+                                 {{-- User drop down menu --}}
+                             <a href="{{ route('account.index') }}" class="text-white mr-2">
                                 {{ Auth::user()->name }}
                             </a>
+          
+                            @else 
+                            <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
+                            @endif
 
                             {{-- User drop down menu --}}
-                            <a href="{{ route('logout') }} " class="text-white"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                            <a href="" class="text-white"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
-
-                        @endguest
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -82,58 +89,46 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
+            <?php
+                $count_items = 0;
+                if(session()->get('cart')){
+                    foreach(session()->get('cart') as $key => $cart_item){
+                        $count_items++;
+                    }
+                }
+
+                ?>
             <a class="navbar-brand" href="{{ URL::to('home') }}">Liquor <span>store</span></a>
             {{-- Shopping cart drop down --}}
+
             <div class="order-lg-last btn-group">
                 <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <span class="flaticon-shopping-bag"></span>
-                    <div class="d-flex justify-content-center align-items-center"><small>3</small></div>
+                    <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>{{ $count_items }}</small></div>
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
+                    @if(session()->get('cart'))
+                    @foreach (session()->get('cart') as $key => $cart)
                     <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-1.jpg') }});">
+
+                        <div class="img" style="background-image: url({{ asset('frontend/images/products/'.$cart['product_image']) }});">
                         </div>
                         <div class="text pl-3">
-                            <h4>Bacardi 151</h4>
-                            <p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">Quantity:
-                                    01</span></p>
+                            <h4>{{ $cart['product_name'] }}</h4>
+                            <p class="mb-0"><a href="#" class=" ">{{ $cart['product_price'] }}</a><span class="quantity ml-3">Quantity:
+                                    {{ $cart['product_quantity'] }}</span></p>
                         </div>
                         <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button type="button" data-id_delete="{{ $cart['product_id'] }}" class="close delete-cart-product" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
                             </button>
+
                         </div>
                     </div>
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-2.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Jim Beam Kentucky Straight</h4>
-                            <p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">Quantity:
-                                    02</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-3.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Citadelle</h4>
-                            <p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">Quantity:
-                                    01</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
+                    @endforeach
+                    @endif
                     <a class="dropdown-item text-center btn-link d-block w-100" href="{{ URL::to('cart') }}">
                         View All
                         <span class="ion-ios-arrow-round-forward"></span>
@@ -226,7 +221,6 @@
                             aria-haspopup="true" aria-expanded="false">Products</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="{{ route('home.products.index') }}">Products</a>
-                            <a class="dropdown-item" href="{{ URL::to('single-product') }}">Single Product</a>
                             <a class="dropdown-item" href="{{ URL::to('single-blog') }}">Single Blog</a>
                             <a class="dropdown-item" href="{{ URL::to('cart') }}">Cart</a>
                             <a class="dropdown-item" href="{{ URL::to('check-out') }}">Checkout</a>
@@ -329,8 +323,9 @@
         </div>
 
         <!-- Login Modal -->
-        <div class="modal fade" id="login">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" class="modal-dialog" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
                         <i class="fa fa-times fa-2x"></i>
@@ -400,8 +395,9 @@
                 </div>
             </div>
         </div>
+        
         <!-- Register Modal -->
-        <div class="modal fade" id="register">
+        <div class="modal fade" id="registerForm">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
@@ -470,6 +466,75 @@
                 </div>
             </div>
         </div>
+
+        {{-- AJAX test  --}}
+        {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content form-wrapper">
+                    <div class="close-box" data-dismiss="modal">
+                        <i class="fa fa-times fa-2x"></i>
+                    </div>
+                    <div class="container-fluid mt-5">
+                        <form method="POST" id="registerForm">
+                            @csrf
+                            <div class="form-group text-center pb-2 heading-section">
+                                <h2 id="registerModal">{{ __('Register') }}</h2>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col">
+                                    <label for="nameInput" >{{ __('Name') }}</label>
+
+                            <div >
+                                <input id="nameInput" type="text" class="form-control" name="name" value="{{ old('name') }}"  autocomplete="name" autofocus>
+
+                                <span class="invalid-feedback" role="alert" id="nameError">
+                                    <strong></strong>
+                                </span>
+                            </div>
+                                    </div>
+                            </div>
+                            <div class="form-group" style="position:relative;">
+                                <label for="emailInput">{{ __('E-Mail Address') }}</label>
+
+                        <div >
+                            <input id="emailInput" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                            <span class="invalid-feedback" role="alert" id="emailError">
+                                <strong></strong>
+                            </span>
+                        </div>
+
+                            </div>
+                            <div class="form-row mb-1">
+                                <div class="form-group col">
+                                    <label for="passwordInput">{{ __('Password') }}</label>
+
+                                    <div >
+                                        <input id="passwordInput" type="password" class="form-control" name="password" required autocomplete="new-password">
+            
+                                        <span class="invalid-feedback" role="alert" id="passwordError">
+                                            <strong></strong>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="password-confirm" >{{ __('Confirm Password') }}</label>
+
+                        <div >
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button class="btn btn-info form-control">{{ __('Register') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
         {{-- forget password Modal --}}
         <div class="modal fade" id="forgotPassword">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -538,6 +603,223 @@
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
+    <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check-shipping-fee').click(function(){
+                var province_id = $('#province').val();
+                var district_id = $('#district').val();
+                var ward_id = $('#ward').val();
+                var _token = $('input[name="_token"]').val();
+                // alert(province_id);
+                // alert(district_id);
+                // alert(ward_id);
+                if(province_id == '' && district_id == '' && ward_id == ''){
+               // error meesage
+                }
+                else{
+                    $.ajax({
+                        url: '{{url('calculate-fee')}}',
+                        method: 'POST',
+                        data: {
+                            province_id: province_id,
+                            district_id: district_id,
+                            ward_id: ward_id,
+                            _token: _token
+                        },
+                        success: function (data) {
+                           location.reload();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.choose').on('change', function(){
+                var action = $(this).attr('id');
+                var ma_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+                // alert(action);
+                // alert(ma_id);
+                if(action == 'province'){
+                    result = 'district';
+                }else if(action == 'district'){
+                    result = 'ward';
+                }
+                $.ajax({
+                    url : '{{url('select-delivery')}}',
+                    method: 'POST',
+                    data: {
+                        action:action,
+                        ma_id:ma_id,
+                        _token:_token
+                    },
+                    success:function (data){
+                        $('#' + result).html(data);
+                    }
+                });
+             });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check_coupon').click(function(){
+                var coupon_code = $('.counpon_code_cart').val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('check/coupon')}}',
+                    method: "POST",
+                    data:{
+                        coupon_code:coupon_code,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $('.add-to-cart-details').click(function(){
+                var id = $(this).data('id_product_details');
+                var product_name = $('.product_name_cart_'+id).val();
+                var product_price = $('.product_price_cart_'+id).val();
+                var product_quantity = $('.product_quantity_cart_'+id).val();
+                var product_image = $('.product_image_cart_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/add-to-cart')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        product_name:product_name,
+                        product_price:product_price,
+                        product_quantity:product_quantity,
+                        product_image:product_image,
+                        _token:_token
+                    },
+                    success:function(data){
+                        $('#count_items_cart').html(data);
+                        swal({
+                            title: "Đã thêm sản phẩm vào giỏ hàng",
+                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                            showCancelButton: true,
+                            cancelButtonText: "Xem tiếp",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Đi đến giỏ hàng",
+                            closeOnConfirm: false,
+
+                        },
+                        function() {
+                            window.location.href = "{{url('/cart')}}";
+                        });
+
+                    }
+                });
+            });
+         });
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $(".add-to-cart").click(function(){
+                var id = $(this).data('id_product');
+                var product_name = $('.product_name_cart_'+id).val();
+                var product_price = $('.product_price_cart_'+id).val();
+                var product_quantity = $('.product_quantity_cart_'+id).val();
+                var product_image = $('.product_image_cart_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/add-to-cart')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        product_name:product_name,
+                        product_price:product_price,
+                        product_quantity:product_quantity,
+                        product_image:product_image,
+                        _token:_token
+                    },
+                    success:function(data){
+                        $('#count_items_cart').html(data);
+                        swal({
+                            title: "Đã thêm sản phẩm vào giỏ hàng",
+                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                            showCancelButton: true,
+                            cancelButtonText: "Xem tiếp",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Đi đến giỏ hàng",
+                            closeOnConfirm: false,
+
+                        },
+                        function() {
+                            window.location.href = "{{url('/cart')}}";
+                        });
+
+                    }
+                });
+
+            });
+
+            //quantity
+            $(document).on('blur', '.quantity_cart_edit', function(){
+                var id = $(this).data('quantity');
+                var quantity = $('#quantity_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/update-cart-quantity')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        quantity:quantity,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+
+        });
+
+            //delete cart product
+
+            $('.delete-cart-product').click(function(){
+                var id = $(this).data('id_delete');
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/delete-cart-product')}}',
+                    method: "POST",
+                    data: {
+                        id:id,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+    </script>
+    
+
+    {{-- Make Login Modal to stay open --}}
+    @if ($errors->has('email') || $errors->has('password'))
+    <script>
+        $(function() {
+            $('#loginModal').modal({
+                show: true
+            });
+        });
+
+    </script>
+@endif
 
 </body>
 

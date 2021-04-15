@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\User_HomeController;    //use
 use App\Http\Controllers\User_AccountController;    //use
 use App\Http\Controllers\User_ProductsController;
-
+use App\Http\Controllers\User_CartController;
 // OTHERS
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -45,23 +45,58 @@ Route::resource('/home/user/account', User_AccountController::class); //trả v�
 
 
 //FRONT END
+// Select CITY - DISTRICT - WARD -> FEE
+Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
+
+Route::post('calculate-fee',[User_CartController::class, 'calculate_fee']);
+//Add Product to cart
+Route::post('check/coupon', [User_CartController::class, 'check_coupon']);
+
+Route::post('/add-to-cart',[User_CartController::class, 'add_to_cart']);
+
+Route::get('/cart',[User_CartController::class, 'view_cart']);
+
+Route::post('/update-cart-quantity',[User_CartController::class, 'update_cart_quantity']);
+
+Route::post('/delete-cart-product', [User_CartController::class, 'delete_cart_product']);
 
 Route::prefix('home')->name('home.')->group(function () {
+     //trả về trang home có list item đầy đủ
     Route::get('/', [User_HomeController::class, 'index'])
-        ->name('index'); //trả về trang home có list item đầy đủ
+        ->name('index');
 
+    //Show chi tiết sản phẩm bên trang products của home
     Route::get('products/{id?}', [User_ProductsController::class, 'index'])
-        ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
+    ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
+
+    Route::post('products/search_price', [User_ProductsController::class, 'search_price'])
+    ->name('products.search_price');
+
+    Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
+    ->name('single_product');
 });
 
 //BACK END
 
-Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
+//Có VErify
+// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
+//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+
+//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+// });
+
+
+// KO Verify
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
 });
 
+// ROUTE TEST 
+Route::get('/test', function () {
+    return view('auth.verify');
+});
 
 
 //URL TRẢ VỀ VIEW -> Cho development thôi
@@ -81,13 +116,7 @@ Route::get('/contact', function () {
     return view('pages.contact');
 });
 
-Route::get('/single-product', function () {
-    return view('pages.single_product');
-});
 
-Route::get('/cart', function () {
-    return view('pages.cart');
-});
 
 Route::get('/check-out', function () {
     return view('pages.checkout');
@@ -210,3 +239,6 @@ Route::get('/permission-role_action-list', function () {
 Route::get('/permission-role_action-add', function () {
     return view('admin.permission.role_action.add_role_action');
 });
+
+
+
