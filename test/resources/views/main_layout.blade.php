@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
 </head>
 
+
 <body>
 
     <div class="wrap">
@@ -323,7 +324,7 @@
         </div>
 
         <!-- Login Modal -->
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
+        {{-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" class="modal-dialog" role="document">
                 <div class="modal-content form-wrapper">
@@ -389,7 +390,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         
         <!-- Register Modal -->
         <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
@@ -464,7 +465,7 @@
         </div>
 
         {{-- AJAX test  --}}
-        {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
@@ -530,7 +531,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
         {{-- forget password Modal --}}
         <div class="modal fade" id="forgotPassword">
             <div class="modal-dialog modal-dialog-centered" role="document">

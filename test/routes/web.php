@@ -60,7 +60,7 @@ Route::prefix('home')->name('home.')->group(function () {
         ->name('index');
 
     //Show chi tiết sản phẩm bên trang products của home
-    Route::get('products/{id?}{price_from?}{price_to?}{search?}', [User_ProductsController::class, 'index'])
+    Route::get('products/{id?}', [User_ProductsController::class, 'index'])
         ->name('products.index'); 
 
 });
