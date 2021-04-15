@@ -136,7 +136,23 @@
 <a class="scroll-to-top bg-primary" href="#page-top">
    <i class="fas fa-angle-up"></i>
    </a>
-
+   <!-- Logout Modal-->
+   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Bạn muốn thoát?</h5>
+               <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">×</span>
+               </button>
+            </div>
+            <div class="modal-footer">
+               <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+               <a class="btn btn-primary" href="login.html">Thoát</a>
+            </div>
+         </div>
+      </div>
+   </div>
  <!-- Bootstrap core JavaScript-->
  <script src="{{asset('backend/vendor/jquery/jquery.min.js')}}"></script>
  <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -145,12 +161,34 @@
  <!-- Page level plugin JavaScript-->
  <script src="{{asset('backend/vendor/datatables/jquery.dataTables.js')}}"></script>
  <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
- <script src="https://cdn.datatables.net/plug-ins/1.10.24/dataRender/ellipsis.js"></script>
+ {{-- DATA TABLE  --}}
+ <script>
+   $(function () {
+   //   $("#example1").DataTable();
+     $('#dataTable').DataTable({
+       "paging": true,
+       "lengthChange": true,
+       "searching": true,
+       "ordering": true,
+       "info": true,
+       "autoWidth": false,
+     });
+   });
+ </script>
+ {{-- CKEDITOR  --}}
+ {{-- <script src="https://cdn.ckeditor.com/ckeditor5/27.0.0/classic/ckeditor.js"></script>
+ <script>
+   ClassicEditor
+       .create( document.querySelector( '#editor' ) )
+       .catch( error => {
+           console.error( error );
+       } );
+</script> --}}
+
  <!-- Custom scripts for all pages-->
  <script src="{{asset('backend/js/sb-admin.min.js')}}"></script>
  <!-- Demo scripts for this page-->
  <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
  <script src="{{asset('backend/js/admin.js')}}"></script>
- @yield('scripts')
 </body>
 </html>

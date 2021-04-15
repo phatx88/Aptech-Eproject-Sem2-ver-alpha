@@ -45,11 +45,14 @@ Route::resource('/home/user/account', User_AccountController::class); //trả v�
 
 
 //FRONT END
+<<<<<<< Updated upstream
 // Select CITY - DISTRICT - WARD -> FEE
 Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
 
 Route::post('calculate-fee',[User_CartController::class, 'calculate_fee']);
+=======
 
+>>>>>>> Stashed changes
 //Add Product to cart
 Route::post('check/coupon', [User_CartController::class, 'check_coupon']);
 
@@ -62,11 +65,9 @@ Route::post('/update-cart-quantity',[User_CartController::class, 'update_cart_qu
 Route::post('/delete-cart-product', [User_CartController::class, 'delete_cart_product']);
 
 Route::prefix('home')->name('home.')->group(function () {
-     //trả về trang home có list item đầy đủ
     Route::get('/', [User_HomeController::class, 'index'])
-        ->name('index');
+        ->name('index'); //trả về trang home có list item đầy đủ
 
-    //Show chi tiết sản phẩm bên trang products của home
     Route::get('products/{id?}', [User_ProductsController::class, 'index'])
         ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
 
@@ -75,18 +76,20 @@ Route::prefix('home')->name('home.')->group(function () {
 
     Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 6e077c9 (Merge branch 'main' into Thinh_Lon)
 });
 
 //BACK END
 
-//Có VErify
-// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
+    Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
-//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
-// });
+    Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+});
 
 
 

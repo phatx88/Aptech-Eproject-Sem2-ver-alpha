@@ -8657,30 +8657,13 @@ h1, h2, h3, h4, h5,
   .product .text {
     padding: 20px;
     position: relative; }
-    .product .text .sale {
+    .product .text .sale, .product .text .seller, .product .text .new {
       position: absolute;
       top: 0;
-      left: 82px;
-      width: 80px;
+      left: 4px;
       font-size: 12px;
       padding: 0 10px;
       color: #fff; }
-      .product .text .seller {
-        position: absolute;
-        top: 0;
-        left: 4px;
-        width: 80px;
-        font-size: 12px;
-        padding: 0 10px;
-        color: #fff; }
-        .product .text .new {
-          position: absolute;
-          top: 0;
-          left: 162px;
-          /* width: 83px; */
-          font-size: 12px;
-          padding: 0 10px;
-          color: #fff; }
     .product .text .sale {
       background: #b7472a; }
     .product .text .seller {

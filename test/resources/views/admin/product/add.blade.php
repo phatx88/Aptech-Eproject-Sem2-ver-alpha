@@ -68,15 +68,18 @@
                   <input type="submit" class="btn btn-primary btn-sm" value="Lưu" name="save">
                </div>
             </form>
-            @section('scripts')
             <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
             <script>CKEDITOR.replace('description');</script>
-            @endsection
-            
             <!-- /form -->
             <!-- /.container-fluid -->
             <!-- Sticky Footer -->
-            @include('admin.footer')
+            <footer class="sticky-footer">
+               <div class="container my-auto">
+                  <div class="copyright text-center my-auto">
+                     <span>Copyright © Thầy Lộc 2017</span>
+                  </div>
+               </div>
+            </footer>
          </div>
          <!-- /.content-wrapper -->
       </div>
