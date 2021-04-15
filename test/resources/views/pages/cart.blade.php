@@ -85,7 +85,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>     
             @if(Session('cart'))
             <div class="row justify-content-end">
                 <div class="col col-lg-7 col-md-8 mt-7 cart-wrap ftco-animate">
@@ -146,6 +146,7 @@
 
                 </div>
                 <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+
                     <div class="cart-total mb-3">
                         @php
                             $realtotal = 0;
@@ -174,9 +175,13 @@
                             <span>Discount</span>
                             <span>{{ $coupon_fee }}</span>
                         </p>
+
+                        
+
                         @endforeach
                         @endif
-                        <hr>
+                        <hr class="mt-5">
+
 
                         <p class="d-flex total-price">
                             <span>Total</span>
