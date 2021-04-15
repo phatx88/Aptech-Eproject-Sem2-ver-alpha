@@ -50,7 +50,7 @@
                                     <span>Fugiat voluptates quasi nemo, ipsa perferendis</span>
                                 </div>
                             </td>
-                            <td>$35.50</td>
+                            <td>${{ $cart['product_price'] }}</td>
                             <td class="quantity">
                                 <div class="input-group">
                                     <form>
@@ -88,25 +88,104 @@
             </div>
             @if(Session('cart'))
             <div class="row justify-content-end">
+                <div class="col col-lg-7 col-md-8 mt-7 cart-wrap ftco-animate">
+                    <div class="cart-total mb-3" >
+                        <h3>Estimated Shipping Cost</h3>
+                        <form method="POST">
+                           @csrf
+                        <p class="d-flex">
+                            <span>City</span>
+                            <select class="form-control input-sm m-bot15 choose province" name="province" id="province" >
+                                <option value="">--Chọn Thành phố---</option>
+                                @foreach($province as $key => $pvin)
+                                <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
+                                @endforeach
+                                {{-- @foreach($city as $key => $ci)
+                                <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                                @endforeach --}}
+                            </select>
+                        </p>
+                        <p class="d-flex">
+                            <span>District</span>
+                            <select class="form-control input-sm m-bot15 choose district" name="district" id="district">
+                                <option value="">--Chọn quận huyện---</option>
+                            </select>
+                        </p>
+                        <p class="d-flex">
+                            <span>Ward</span>
+                            <select class="form-control input-sm m-bot15 ward" name="ward" id="ward">
+                                <option value="">--Chọn xã phường---</option>
+
+                            </select>
+                        </p>
+                        <p>
+
+                            <a type="button" class="btn btn-primary py-3 px-4 check-shipping-fee">Check Shipping fee</a>
+                            </p>
+                        </form>
+                        <hr>
+                        <p class="d-flex">
+                            <span>Counpon & Discount</span>
+                            <form>
+                                @csrf
+
+                            <input type="text" name="coupon_code" class="form-control counpon_code_cart" placeholder="Enter your code">
+                            <input type="button" value="Check Coupon" class="btn btn-primary py-3 px-4 check_coupon">
+
+                            </form>
+                            <?php
+                            if(Session('message')){
+                                echo Session('message');
+                                Session::put('message', '');
+                            }
+
+                            ?>
+                        </p>
+                    </div>
+
+
+                </div>
                 <div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
                     <div class="cart-total mb-3">
+                        @php
+                            $realtotal = 0;
+                            $coupon_fee = 0;
+                            $shipping_fee = 0;
+
+                        @endphp
                         <h3>Cart Totals</h3>
                         <p class="d-flex">
                             <span>Subtotal</span>
                             <span>${{ $subtotal }}</span>
                         </p>
+                        @if(Session('fee'))
+                        @foreach(Session('fee') as $key => $fee)
+                        @php $shipping_fee = $fee->price /10000; @endphp
                         <p class="d-flex">
                             <span>Delivery</span>
-                            <span>$0.00</span>
+                            <span>${{ $shipping_fee }}</span>
                         </p>
-                        <p class="d-flex">
-                            <span>Discount</span>
-                            <span>$3.00</span>
-                        </p>
+                        @endforeach
+                        @endif
+                        @if(Session('coupon'))
+                        @foreach(Session('coupon') as $key => $cou)
+                        @php $coupon_fee = $cou->number @endphp
+                            <p class="d-flex">
+                                <span>Discount</span>
+                                <span>{{ $coupon_fee }}</span>
+                            </p>
+                        @endforeach
+                        @endif
                         <hr>
+
                         <p class="d-flex total-price">
                             <span>Total</span>
-                            <span>$17.60</span>
+                            <span>
+                                <?php
+                                    $realtotal = $subtotal + $shipping_fee - $coupon_fee;
+                                    echo $realtotal;
+                                    ?>
+                            </span>
                         </p>
                     </div>
                     <p class="text-center"><a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>

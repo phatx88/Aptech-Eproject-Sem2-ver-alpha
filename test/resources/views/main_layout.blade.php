@@ -67,10 +67,6 @@
                              <a href="{{ route('account.index') }}" class="text-white mr-2">
                                 {{ Auth::user()->name }}
                             </a>
-          
-                            @else 
-                            <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
-                            @endif
 
                             {{-- User drop down menu --}}
                             <a href="{{ route('logout') }} " class="text-white"
@@ -221,7 +217,6 @@
                             aria-haspopup="true" aria-expanded="false">Products</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="{{ route('home.products.index') }}">Products</a>
-                            <a class="dropdown-item" href="{{ URL::to('single-product') }}">Single Product</a>
                             <a class="dropdown-item" href="{{ URL::to('single-blog') }}">Single Blog</a>
                             <a class="dropdown-item" href="{{ URL::to('cart') }}">Cart</a>
                             <a class="dropdown-item" href="{{ URL::to('check-out') }}">Checkout</a>
@@ -601,28 +596,123 @@
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
-    {{-- <script type="text/javascript">
-    $(document).ready(function(){
-        $('.search_price').click(function(){
-            var price_to = $('.price_to').val();
-            var price_from = $('.price_from').val();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url : '{{url('home/products/search_price')}}',
-                method: 'POST',
-                data: {
-                    price_to:price_to,
-                    price_from:price_from,
-                    _token:_token
-                },
-                success:function(data){
-
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check-shipping-fee').click(function(){
+                var province_id = $('#province').val();
+                var district_id = $('#district').val();
+                var ward_id = $('#ward').val();
+                var _token = $('input[name="_token"]').val();
+                if(province_id == '' && district_id == '' && ward_id == ''){
+                    // swal("Fail!", "You must fill all!", "error");
+                }else{
+                    $.ajax({
+                        url: '{{url('calculate-fee')}}',
+                        method: 'POST',
+                        data: {
+                            province_id: province_id,
+                            district_id: district_id,
+                            ward_id: ward_id,
+                            _token: _token
+                        },
+                        success: function (data) {
+                           location.reload();
+                        }
+                    });
                 }
             });
         });
-    });
-    </script> --}}
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.choose').on('change', function(){
+                var action = $(this).attr('id');
+                var ma_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+                // alert(action);
+                // alert(ma_id);
+                if(action == 'province'){
+                    result = 'district';
+                }else if(action == 'district'){
+                    result = 'ward';
+                }
+                $.ajax({
+                    url : '{{url('select-delivery')}}',
+                    method: 'POST',
+                    data: {
+                        action:action,
+                        ma_id:ma_id,
+                        _token:_token
+                    },
+                    success:function (data){
+                        $('#' + result).html(data);
+                    }
+                });
+             });
+        });
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check_coupon').click(function(){
+                var coupon_code = $('.counpon_code_cart').val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('check/coupon')}}',
+                    method: "POST",
+                    data:{
+                        coupon_code:coupon_code,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $('.add-to-cart-details').click(function(){
+                var id = $(this).data('id_product_details');
+                var product_name = $('.product_name_cart_'+id).val();
+                var product_price = $('.product_price_cart_'+id).val();
+                var product_quantity = $('.product_quantity_cart_'+id).val();
+                var product_image = $('.product_image_cart_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/add-to-cart')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        product_name:product_name,
+                        product_price:product_price,
+                        product_quantity:product_quantity,
+                        product_image:product_image,
+                        _token:_token
+                    },
+                    success:function(data){
+                        $('#count_items_cart').html(data);
+                        swal({
+                            title: "Đã thêm sản phẩm vào giỏ hàng",
+                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                            showCancelButton: true,
+                            cancelButtonText: "Xem tiếp",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Đi đến giỏ hàng",
+                            closeOnConfirm: false,
+
+                        },
+                        function() {
+                            window.location.href = "{{url('/cart')}}";
+                        });
+
+                    }
+                });
+            });
+         });
+    </script>
     <script type="text/javascript">
 
         $(document).ready(function(){

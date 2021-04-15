@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Coupon extends Model
 {
     use HasFactory;
-
-    protected $table = 'view_product';
-
+    protected $table = 'coupon';
     public $timestamps = false;
-
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -21,4 +18,5 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
+    protected $primaryKey = 'id';
 }
