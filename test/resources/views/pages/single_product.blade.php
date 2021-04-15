@@ -14,7 +14,6 @@
 
     <section class="ftco-section">
         <form action="">
-<<<<<<< Updated upstream
             @csrf
         @foreach ($product as $key => $val)
         <input type="hidden" class="product_name_cart_{{ $val->id }}" value="{{ $val->name }}">
@@ -24,13 +23,6 @@
         <input type="hidden" class="product_price_cart_{{ $val->id }}" value="{{ $val->price }}">
         @endif
         <input type="hidden" class="product_image_cart_{{ $val->id }}" value="{{ $val->featured_image }}">
-=======
-        @foreach ($product as $key => $val)
-            @csrf
-            <input type="hidden" class="product_image_cart_{{ $val->id }}" value="{{ $val->featured_image }}">
-            <input type="hidden" class="product_price_cart_{{ $val->id }}" value="{{ $val->sale_price }}">
-            <input type="hidden" class="product_name_cart_{{ $val->id }}" value="{{ $val->name }}">
->>>>>>> Stashed changes
 
         <div class="container">
             <div class="row">
@@ -62,11 +54,7 @@
                     @if($val->inventory_qty == 0)
                     <p><a type="button"  class="btn btn-primary py-3 px-5 mr-2" disabled>Add to Cart</a></p>
                     @else
-<<<<<<< Updated upstream
                     <p><a type="button" data-id_product_details="{{ $val->id }}"  class="btn btn-primary py-3 px-5 mr-2 add-to-cart-details">Add to Cart</a></p>
-=======
-                    <p><a type="button" data-id_product_details="{{ $val->id }}" class="btn btn-primary py-3 px-5 mr-2 add-to-cart-details">Add to Cart</a></p>
->>>>>>> Stashed changes
                     @endif
                 </div>
             </div>
@@ -190,11 +178,7 @@
             </div>
         </div>
         @endforeach
-<<<<<<< Updated upstream
 
-=======
-    </form>
->>>>>>> Stashed changes
         <div class="row mt-5">
             <div class="col-md-12">
                 <h2 class="text-center mb-5">Related Product</h2>
@@ -236,11 +220,7 @@
                         </div>
                     </div>
                     @endforeach
-<<<<<<< Updated upstream
                 </form>
-=======
-
->>>>>>> Stashed changes
                 </div>
             </div>
         </div>
