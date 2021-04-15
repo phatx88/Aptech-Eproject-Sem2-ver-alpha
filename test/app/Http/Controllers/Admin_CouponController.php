@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use Illuminate\Http\Request;
+use App\Models\Coupon;
 
-class Admin_BrandController extends Controller
+class Admin_CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class Admin_BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::get();
-        return view('admin.brand.list',[
-            'brands' => $brands
+        $coupons = Coupon::get();
+        return view('admin.coupon.list',[
+            'coupons' => $coupons
         ]);
     }
 
@@ -28,7 +28,7 @@ class Admin_BrandController extends Controller
      */
     public function create()
     {
-        return view('admin.brand.add');
+        return view('admin.coupon.add');
     }
 
     /**
@@ -39,10 +39,13 @@ class Admin_BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $brand = new Brand();
-        $brand->name = $request->name;
-        $brand->save();
-        return redirect()->action([Admin_BrandController::class,'list']);
+        $coupon = new Coupon();
+        $coupon->name = $request->name;
+        $coupon->code = $request->code;
+        $coupon->time = now();
+        $coupon->cpn_condition = $request->cpn_condition;
+        $coupon->number = $request->number;
+        return redirect()->action([Admin_CouponController::class,'index']);
     }
 
     /**
@@ -62,11 +65,11 @@ class Admin_BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brand $brand)
+    public function edit(Coupon $coupon)
     {
-        return view('admin.brand.edit',[
-            'brand' => $brand
-        ]);
+       return view('admin.coupon.edit',[
+            'coupon' => $coupon
+       ]) ;
     }
 
     /**

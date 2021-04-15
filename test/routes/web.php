@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin_CategoryController;
 use App\Http\Controllers\Admin_OrderController;
 use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\Admin_BrandController;
-
+use App\Http\Controllers\Admin_CouponController;
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;    //use
 use App\Http\Controllers\User_AccountController;    //use
@@ -84,6 +84,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
+    Route::resource('coupon', Admin_CouponController::class);
 });
 
 
