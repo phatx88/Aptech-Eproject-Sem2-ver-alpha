@@ -27,7 +27,7 @@ class User_CartController extends Controller
         }
         $product_id = $data['id'];
         $cart = Session('cart');
-
+        $output = '';
         if($qty >= $data['product_quantity']){
             if($cart != null) {
                 $is_available = 0;
@@ -63,10 +63,39 @@ class User_CartController extends Controller
             foreach(session()->get('cart') as $key => $val){
                 $count_items++;
             }
-            echo $count_items;
-        }
-    }
+            $output .= '
+                <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="flaticon-shopping-bag"></span>
+                    <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>'.$count_items.'</small></div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+            ';
+            foreach(session()->get('cart') as $key => $cart){
+                $output .= '
+                        <div class="dropdown-item d-flex align-items-start" href="#">
+                        <div class="img" style="background-image: url('. asset('frontend/images/products/'.$cart['product_image']) .');">
+                        </div>
 
+                        <div class="text pl-3">
+                            <h4>'.$cart['product_name'] .'</h4>
+                                <p class="mb-0"><a href="#" class=" ">$'. $cart['product_price'] * $cart['product_quantity'] .'</a>
+                                    <span class="quantity ml-3">Quantity: '. $cart['product_quantity'] .'</span>
+                                </p>
+                        </div>
+                    </div>
+
+                ';
+            }
+            $output .='
+                        <a class="dropdown-item text-center btn-link d-block w-100" href="'. url('cart').'">
+                        View All
+                        <span class="ion-ios-arrow-round-forward"></span>
+                    </a>
+                </div>
+            ';
+        }
+        echo $output;
+    }
     public function view_cart(){
         $province = Province::orderby('id', 'ASC')->get();
         return view('pages/cart')->with(compact('province'));
@@ -178,5 +207,64 @@ class User_CartController extends Controller
         }
         session()->save();
 
+    }
+
+    public function roll_button(Request $request){
+        $session_cart = session()->get('cart');
+        $output = '';
+        $token = csrf_token();
+        if(!isset($session_cart)){
+            $output .= '
+                    <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <span class="flaticon-shopping-bag"></span>
+                        <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>0</small></div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-item d-flex align-items-start" href="#">
+                        <a class="dropdown-item text-center btn-link d-block w-100" href="'. url('cart').'">
+                            View All
+                            <span class="ion-ios-arrow-round-forward"></span>
+                        </a>
+                    </div>
+                    </div>
+            ';
+        }else{
+            $count_items = 0;
+            foreach(session()->get('cart') as $key => $val){
+                $count_items++;
+            }
+            $output .= '
+                <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="flaticon-shopping-bag"></span>
+                    <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>'.$count_items.'</small></div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+            ';
+            foreach(session()->get('cart') as $key => $cart){
+                $output .= '
+                    <div class="dropdown-item d-flex align-items-start" href="#">
+                        <div class="img" style="background-image: url('. asset('frontend/images/products/'.$cart['product_image']) .');">
+                        </div>
+
+                        <div class="text pl-3">
+                            <h4>'.$cart['product_name'] .'</h4>
+                                <p class="mb-0"><a href="#" class=" ">$'. $cart['product_price'] * $cart['product_quantity'] .'</a>
+                                    <span class="quantity ml-3">Quantity: '. $cart['product_quantity'] .'</span>
+                                </p>
+                        </div>
+                    </div>
+                ';
+            }
+            $output .='
+                        <a class="dropdown-item text-center btn-link d-block w-100" href="'. url('cart').'">
+                        View All
+                        <span class="ion-ios-arrow-round-forward"></span>
+                    </a>
+                </div>
+
+            ';
+        }
+        echo $output;
     }
 }

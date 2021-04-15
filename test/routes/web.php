@@ -53,6 +53,8 @@ Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
 
 Route::post('calculate-fee',[User_CartController::class, 'calculate_fee']);
 //Add Product to cart
+Route::post('roll-button', [User_CartController::class, 'roll_button']);
+
 Route::post('check/coupon', [User_CartController::class, 'check_coupon']);
 
 Route::post('/add-to-cart',[User_CartController::class, 'add_to_cart']);
