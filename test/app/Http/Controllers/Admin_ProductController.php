@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Products;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +54,7 @@ class Admin_ProductController extends Controller
         }
         else{
             $imageName = null;
-    }
+        }
         $product= new Products();
         $product->sku = '';
         $product->discount_percentage = 0;
@@ -70,7 +70,7 @@ class Admin_ProductController extends Controller
         $product->description = $request->description;
         $product->save();
         return redirect()->action([Admin_ProductController::class,'index']);
-}
+    }
 
     /**
      * Display the specified resource.
@@ -86,10 +86,10 @@ class Admin_ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Products $product)
+    public function edit(Product $product)
     {
         //
     }

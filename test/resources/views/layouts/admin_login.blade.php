@@ -14,7 +14,10 @@
     <link href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <!-- Page level plugin CSS-->
     <link href="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}">
+    <!-- Custom styles for this template-->
+    <link href="{{ asset('backend/css/sb-admin.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('backend/css/admin.css') }}" rel="stylesheet"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/signin.css') }}">
 
 </head>
 
@@ -46,5 +49,8 @@
 <script src="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.js') }}"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('backend/js/sb-admin.min.js') }}"></script>
+<!-- Demo scripts for this page-->
+<script src="{{ asset('backend/js/demo/datatables-demo.js') }}"></script>
+<script src="{{ asset('backend/js/admin.js') }}"></script>
 
 </html>

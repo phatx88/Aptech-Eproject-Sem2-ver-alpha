@@ -97,6 +97,9 @@
                             </div>
                         </div>
                     </form><!-- END -->
+
+
+
                     <div class="row mt-5 pt-3 d-flex">
                         <div class="col-md-6 d-flex">
                             <div class="cart-detail cart-total p-3 p-md-4">

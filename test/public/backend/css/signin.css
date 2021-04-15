@@ -48,7 +48,7 @@ a {
 	margin: 15px 0;
 }
 
-.social-container,
++.social-container,
 .social-container-signup {
 	margin: 20px 0;
 }
@@ -60,7 +60,7 @@ a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0 5px;
+    margin: 5px 5px;
     height: 40px;
     width: 40px;
 	background-color: #FF4B2B;
@@ -80,7 +80,7 @@ a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0 5px;
+    margin: 5px 5px;
     height: 40px;
     width: 40px;
 	color: #FF4B2B;
@@ -94,6 +94,14 @@ a {
     text-decoration: none;
 	transition-duration: 500ms;
 }
+
+
+input[type=checkbox] {
+	width: auto;
+}
+
+
+
 
 button {
 	border-radius: 20px;
@@ -138,10 +146,6 @@ input {
 	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
-}
-
-input[type=checkbox] {
-	width: auto;
 }
 
 .container {
@@ -276,3 +280,10 @@ li {
     font-size: 0.9rem;
 }
 
+.card-header {
+	background: #FF4B2B;
+}
+
+.card {
+	border: 1px solid #FF4B2B;
+}

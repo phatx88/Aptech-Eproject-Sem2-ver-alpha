@@ -25,8 +25,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
 </head>
 
-<body>
 
+<body>
     <div class="wrap">
         <div class="container">
             <div class="row">
@@ -54,6 +54,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <a href="#registerForm" class="btn-register mr-2 text-white" data-toggle="modal">Sign Up</a>
+                    
                             @endif
 
                             @if (Route::has('register'))
@@ -72,7 +73,7 @@
                             @endif
 
                             {{-- User drop down menu --}}
-                            <a href="{{ route('logout') }} " class="text-white"
+                            <a href="" class="text-white"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                             </a>
@@ -220,7 +221,6 @@
                             aria-haspopup="true" aria-expanded="false">Products</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="{{ route('home.products.index') }}">Products</a>
-                            <a class="dropdown-item" href="{{ URL::to('single-product') }}">Single Product</a>
                             <a class="dropdown-item" href="{{ URL::to('single-blog') }}">Single Blog</a>
                             <a class="dropdown-item" href="{{ URL::to('cart') }}">Cart</a>
                             <a class="dropdown-item" href="{{ URL::to('check-out') }}">Checkout</a>
@@ -335,8 +335,8 @@
                             @csrf
 
                             <div class="form-group text-center heading-section">
-                                <h2 id="loginModal">{{ __('Login') }}</h2>
-                                <span>Not a member yet? <a href="#registerForm" data-dismiss="modal"
+                                <h2>Login</h2>
+                                <span>Not a member yet? <a href="#register" data-dismiss="modal"
                                         data-toggle="modal">Sign up here</a></span>
                             </div>
                             <div class="form-group" style="position: relative;">
@@ -377,6 +377,11 @@
                             </div>
                             <div class="form-group pt-2">
                                 <button class="btn btn-info form-control">{{ __('Login') }}</button>
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
                             <div class="form-group text-center pt-2 social-login">
                                 <h6>OR Continue with</h6>
@@ -392,18 +397,17 @@
         </div>
         
         <!-- Register Modal -->
-        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
-            aria-hidden="true">
+        <div class="modal fade" id="registerForm">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
                         <i class="fa fa-times fa-2x"></i>
                     </div>
                     <div class="container-fluid mt-5">
-                        <form method="POST" action="{{ route('register') }}" id="registerForm">
+                        <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="form-group text-center pb-2 heading-section">
-                                <h2 id="registerModal">{{ __('Register') }}</h2>
+                                <h2>Registration</h2>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
@@ -423,7 +427,7 @@
                                 <label for="email">{{ __('E-Mail Address') }}</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required autocomplete="email">
-                                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#loginModal"
+                                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login"
                                     style="display: block; position: absolute; right: 0; font-size: 12px;">That's you?
                                     Login</a>
 
@@ -600,28 +604,128 @@
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
-    {{-- <script type="text/javascript">
-    $(document).ready(function(){
-        $('.search_price').click(function(){
-            var price_to = $('.price_to').val();
-            var price_from = $('.price_from').val();
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url : '{{url('home/products/search_price')}}',
-                method: 'POST',
-                data: {
-                    price_to:price_to,
-                    price_from:price_from,
-                    _token:_token
-                },
-                success:function(data){
-
+    <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check-shipping-fee').click(function(){
+                var province_id = $('#province').val();
+                var district_id = $('#district').val();
+                var ward_id = $('#ward').val();
+                var _token = $('input[name="_token"]').val();
+                // alert(province_id);
+                // alert(district_id);
+                // alert(ward_id);
+                if(province_id == '' && district_id == '' && ward_id == ''){
+               // error meesage
+                }
+                else{
+                    $.ajax({
+                        url: '{{url('calculate-fee')}}',
+                        method: 'POST',
+                        data: {
+                            province_id: province_id,
+                            district_id: district_id,
+                            ward_id: ward_id,
+                            _token: _token
+                        },
+                        success: function (data) {
+                           location.reload();
+                        }
+                    });
                 }
             });
         });
-    });
-    </script> --}}
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.choose').on('change', function(){
+                var action = $(this).attr('id');
+                var ma_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+                // alert(action);
+                // alert(ma_id);
+                if(action == 'province'){
+                    result = 'district';
+                }else if(action == 'district'){
+                    result = 'ward';
+                }
+                $.ajax({
+                    url : '{{url('select-delivery')}}',
+                    method: 'POST',
+                    data: {
+                        action:action,
+                        ma_id:ma_id,
+                        _token:_token
+                    },
+                    success:function (data){
+                        $('#' + result).html(data);
+                    }
+                });
+             });
+        });
+    </script>
 
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.check_coupon').click(function(){
+                var coupon_code = $('.counpon_code_cart').val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('check/coupon')}}',
+                    method: "POST",
+                    data:{
+                        coupon_code:coupon_code,
+                        _token:_token
+                    },
+                    success:function(data){
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $('.add-to-cart-details').click(function(){
+                var id = $(this).data('id_product_details');
+                var product_name = $('.product_name_cart_'+id).val();
+                var product_price = $('.product_price_cart_'+id).val();
+                var product_quantity = $('.product_quantity_cart_'+id).val();
+                var product_image = $('.product_image_cart_'+id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{url('/add-to-cart')}}',
+                    method: "POST",
+                    data:{
+                        id:id,
+                        product_name:product_name,
+                        product_price:product_price,
+                        product_quantity:product_quantity,
+                        product_image:product_image,
+                        _token:_token
+                    },
+                    success:function(data){
+                        $('#count_items_cart').html(data);
+                        swal({
+                            title: "Đã thêm sản phẩm vào giỏ hàng",
+                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
+                            showCancelButton: true,
+                            cancelButtonText: "Xem tiếp",
+                            confirmButtonClass: "btn-success",
+                            confirmButtonText: "Đi đến giỏ hàng",
+                            closeOnConfirm: false,
+
+                        },
+                        function() {
+                            window.location.href = "{{url('/cart')}}";
+                        });
+
+                    }
+                });
+            });
+         });
+    </script>
     <script type="text/javascript">
 
         $(document).ready(function(){
@@ -704,66 +808,18 @@
             });
     </script>
     
-     {{-- Forcing the login modal to stay open --}}
+
+    {{-- Make Login Modal to stay open --}}
     @if ($errors->has('email') || $errors->has('password'))
-        <script>
-            $(function() {
-                //Make Login Modal to stay open
-                $('#loginModal').modal({
-                    show: true
-                });
-            });
-
-        </script>
-    @endif
-
-    {{-- Forcing the forget password modal to stay open --}}
-    {{-- @if ($errors->has('email') && session('status'))
     <script>
         $(function() {
-            //Make Login Modal to stay open
-            $('#forgotPassword').modal({
+            $('#loginModal').modal({
                 show: true
             });
         });
 
     </script>
-    @endif --}}
-
-    {{-- Using Ajax on Registering Form  --}}
-    {{-- <script>
-        $(function() {        
-            $('#registerForm').submit(function(e) {
-                e.preventDefault();
-                let formData = $(this).serializeArray();
-                $(".invalid-feedback").children("strong").text("");         
-                $("#registerForm input").removeClass("is-invalid");
-                $.ajax({
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('register') }}",
-                    data: formData,
-                    dataType : 'JSON',
-                    success: () => window.location.assign("{{ route('login') }}"),
-                    error: (response) => {
-                        if (response.status === 422) {
-                            let errors = response.responseJSON.errors;
-                            Object.keys(errors).forEach(function(key) {
-                                $("#" + key + "Input").addClass("is-invalid");
-                                $("#" + key + "Error").children("strong").text(
-                                    errors[key][0]);
-                            });
-                        } else {
-                            window.location.reload();
-                        }
-                    }
-                })
-            });
-        });
-
-    </script> --}}
+@endif
 
 </body>
 

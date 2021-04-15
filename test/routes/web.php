@@ -48,7 +48,13 @@ Route::resource('/home/user/account', User_AccountController::class); //trả v�
 
 
 //FRONT END
+// Select CITY - DISTRICT - WARD -> FEE
+Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
+
+Route::post('calculate-fee',[User_CartController::class, 'calculate_fee']);
 //Add Product to cart
+Route::post('check/coupon', [User_CartController::class, 'check_coupon']);
+
 Route::post('/add-to-cart',[User_CartController::class, 'add_to_cart']);
 
 Route::get('/cart',[User_CartController::class, 'view_cart']);
@@ -63,9 +69,14 @@ Route::prefix('home')->name('home.')->group(function () {
         ->name('index');
 
     //Show chi tiết sản phẩm bên trang products của home
-    Route::get('products/{id?}{price_from?}{price_to?}{search?}', [User_ProductsController::class, 'index'])
-        ->name('products.index');
+    Route::get('products/{id?}', [User_ProductsController::class, 'index'])
+    ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
 
+    Route::post('products/search_price', [User_ProductsController::class, 'search_price'])
+    ->name('products.search_price');
+
+    Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
+    ->name('single_product');
 });
 
 //BACK END
@@ -77,7 +88,8 @@ Route::prefix('home')->name('home.')->group(function () {
 //     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
 // });
 
-//Không Verify
+
+// KO Verify
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
@@ -86,7 +98,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
 });
-
 
 // ROUTE TEST
 Route::get('/test', function () {
@@ -111,9 +122,7 @@ Route::get('/contact', function () {
     return view('pages.contact');
 });
 
-Route::get('/single-product', function () {
-    return view('pages.single_product');
-});
+
 
 Route::get('/check-out', function () {
     return view('pages.checkout');
