@@ -158,15 +158,14 @@
                             </div>
                             <div class="text text-center">
 
-                                @if (date('Y',strtotime($product->created_date) )>=2020)
-                                <span class="new">New Arrival</span>
-
-                                @elseif ($product->featured)
+                                @if (strtotime($product->created_date) >= strtotime('-30 days'))
+                                    <span class="new">New Arrival</span>
+                                @endif
+                                @if ($product->featured)
                                     <span class="seller">Best Seller</span>
-
-                                @elseif ($product->price != $product->sale_price)
-                                <span class="sale">Sale</span>
-                                    {{-- {{ date('Y',strtotime($product->created_date) ) }} --}}
+                                @endif
+                                @if ($product->price != $product->sale_price)
+                                    <span class="sale">Sale</span>
                                 @endif
 
                                 <span class="category">{{ $product->category_name }}</span>
