@@ -86,7 +86,7 @@ Route::prefix('home')->name('home.')->group(function () {
 // });
 
 
-//Không Verify
+// KO Verify
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 
