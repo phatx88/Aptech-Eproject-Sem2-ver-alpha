@@ -121,8 +121,5 @@ class User_ProductsController extends Controller
         ->with('product', $product)
         ->with('related_product', $related_product);
     }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 }
