@@ -19,14 +19,24 @@ data-stellar-background-ratio="0.5">
     <section class="ftco-section account-info">
         <div class="container">
             <div class="row">
-                <img src="{{ asset('frontend/images/avatar.jpg') }}" alt="Avatar" class="avatar">
+                @if ($user->profile_pic != null)
+                <img src="{{ asset('frontend/images/profile'.$user->profile_pic) }}" alt="Avatar" class="avatar">
+                @else
+                <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="avatar">
+                @endif
+            </div>
+            <form action="{{ route('account.upload') }}" method="POST" id="avatar_upload" enctype="multipart/form-data">
+                @csrf
+            <div class="text-center m-auto">
+                <label for="profile_pic" style="cursor: pointer">Change <i class="fa fa-upload" aria-hidden="true">
+                    </i> </label>
+                <input type="file" class="center-block file-upload d-none" id="profile_pic" name="profile_pic" onchange="this.form.submit()">
             </div>
             <div class="text-center m-auto">
-                <label for="user-image" style="cursor: pointer">Change <i class="fa fa-upload" aria-hidden="true">
-                    </i> </label>
-                <input type="file" class="center-block file-upload d-none" id="user-image">
-            </div>
-            <h3 class="text-center">Welcome (USER)</h3>
+                @include('errors.message')            
+            </div> 
+            </form>
+            <h3 class="text-center">Welcome {{ $user->name }}</h3>
             {{-- <hr class="mt-5 mb-0"> --}}
             <div class="row mt-5">
                 <div class="col-12 ">
@@ -72,7 +82,7 @@ data-stellar-background-ratio="0.5">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="emailaddress">Email Address</label>
-                                            <input type="text" class="form-control" placeholder="" value="{{ $user->email }}">
+                                            <input type="text" class="form-control" placeholder="" value="{{ $user->email }} readonly">
                                         </div>
                                     </div>
                                     <h3 class="mb-4 mt-4 billing-heading">Default Address</h3>

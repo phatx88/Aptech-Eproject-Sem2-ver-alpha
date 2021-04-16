@@ -36,69 +36,33 @@ class User_AccountController extends Controller
         return view('pages.user' , ['user' => $user])->with(compact('province'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function upload(Request $request)
+    {   
+        $user = $request->user();
+        if ($request->hasFile('image')) 
+        {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            if ($extension != 'jpg' && $extension != 'png' && $extension != 'jpeg') 
+            {
+                return redirect()->back()->with('error' , "Only accept Image with extension jpg, png, jpeg");
+            }
+            $imageName = $file->getClientOriginalName();
+            //trỏ tới public 
+            $file = $file->move(public_path('frontend\images\profile'), $imageName);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            //delete old-pic
+            $oldFile = public_path('img\products\\'.$user->profile_pic);
+            File::delete($oldFile);
+        } 
+        else 
+        {
+            $imageName = null;
+        }
+        $user->profile_pic = $imageName;
+        $user->save();
+        return redirect()->route('account.index')->with('success' , "Product uploaded successfully");
+    }   
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
