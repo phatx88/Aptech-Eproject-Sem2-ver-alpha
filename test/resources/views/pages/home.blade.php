@@ -140,51 +140,81 @@
                 </div>
             </div>
             <div class="row">
+
                 @foreach ($products as $product)
-                    <div class="col-md-3 d-flex">
+                    <div class="col-md-4 d-flex">
+
                         <div class="product ftco-animate">
-                            <div class="img d-flex align-items-center justify-content-center"
-                                style="background-image: url({{ asset("frontend/images/products/$product->featured_image") }});">
-                                <div class="desc">
-                                    <p class="meta-prod d-flex">
-                                        <a href="#" class="d-flex align-items-center justify-content-center"><span
-                                                class="flaticon-shopping-bag"></span></a>
-                                        <a href="#" class="d-flex align-items-center justify-content-center"><span
-                                                class="flaticon-heart"></span></a>
-                                        <a href="#" class="d-flex align-items-center justify-content-center"><span
-                                                class="flaticon-visibility"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="text text-center">
-
-                                @if (strtotime($product->created_date) >= strtotime('-30 days'))
-                                    <span class="new">New Arrival</span>
-                                @endif
-                                @if ($product->featured)
-                                    <span class="seller">Best Seller</span>
-                                @endif
+                            <form>
+                                @csrf
+                                <input type="hidden" class="product_name_cart_{{ $product->id }}"
+                                    value="{{ $product->name }}">
                                 @if ($product->price != $product->sale_price)
-                                    <span class="sale">Sale</span>
+                                    <input type="hidden" class="product_price_cart_{{ $product->id }}"
+                                        value="{{ $product->sale_price }}">
+                                @else
+                                    <input type="hidden" class="product_price_cart_{{ $product->id }}"
+                                        value="{{ $product->price }}">
                                 @endif
+                                <input type="hidden" class="product_quantity_cart_{{ $product->id }}" value="1">
+                                <input type="hidden" class="product_image_cart_{{ $product->id }}"
+                                    value="{{ $product->featured_image }}">
+                                <div class="img d-flex align-items-center justify-content-center"
+                                    style="background-image: url('{{ asset('frontend/images/products/' . $product->featured_image) }}');">
+                                    {{-- <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt=""> --}}
+                                    <div class="desc">
+                                        <p class="meta-prod d-flex">
+                                            @if($product->inventory_qty == 0)
+                                            <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center" onclick="notyf.error('Currently Out of Stock');"><span
+                                                    class="flaticon-shopping-bag"></span></a>
+                                            @else
+                                            <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center add-to-cart"><span
+                                                class="flaticon-shopping-bag"></span></a>
+                                            @endif
+                                            <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-heart"></span></a>
 
-                                <span class="category">{{ $product->category_name }}</span>
-                                <h2>{{ $product->brand_name }}</h2>
-                                <p class="mb-0">
-                                    @if ($product->price != $product->sale_price)
-                                        <span class="price price-sale">${{ $product->price }}</span>
+                                            <a href="{{ url('home/single-product/'.$product->id) }}" class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-visibility"></span></a>
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="text text-center">
+
+                                    @if (strtotime($product->created_date) >= strtotime('-30 days') )
+                                        <span class="new">New Arrival</span>
                                     @endif
+                                    @if ($product->featured)
+                                        <span class="seller">Best Seller</span>
+                                    @endif
+                                    @if ($product->price != $product->sale_price)
+                                        <span class="sale">Sale</span>
+                                    @endif
+                                    <span class="category">{{ $product->category_name }}</span>
+                                    <h5>{{ $product->name }}</h5>
+                                    <p class="mb-0">
+
+                                        @if ($product->price != $product->sale_price)
+                                            <span class="price price-sale">${{ $product->price }}</span>
+                                        @endif
 
                                     <span class="price">${{ $product->sale_price }}</span>
                                 </p>
+                                <p>Available:  {{ $product->inventory_qty }}</p>
                             </div>
+                            </form>
                         </div>
                     </div>
+
                 @endforeach
+
+
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <a href="{{ URL::to('product ') }}" class="btn btn-primary d-block">View All Products <span
+                    <a href="{{ URL::to('home/products') }}" class="btn btn-primary d-block">View All Products <span
                             class="fa fa-long-arrow-right"></span></a>
                 </div>
             </div>

@@ -178,7 +178,7 @@
                             <span>Total</span>
                             <span>
                                 <?php
-                                   $realtotal = $subtotal - $shipping_fee + $coupon_fee;
+                                   $realtotal = $subtotal + $shipping_fee - $coupon_fee;
                                     echo $realtotal;
                                     ?>
                             </span>
