@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     @if($val->inventory_qty == 0)
-                    <p><a type="button"  class="btn btn-primary py-3 px-5 mr-2" disabled>Add to Cart</a></p>
+                    <p><a type="button"  class="btn btn-primary py-3 px-5 mr-2" disabled onclick="notyf.error('Sorry, Out of Stock');">Add to Cart</a></p>
                     @else
                     <p><a type="button" data-id_product_details="{{ $val->id }}"  class="btn btn-primary py-3 px-5 mr-2 add-to-cart-details">Add to Cart</a></p>
                     @endif

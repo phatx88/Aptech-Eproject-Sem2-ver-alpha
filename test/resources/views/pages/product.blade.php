@@ -164,7 +164,7 @@
                                             <div class="desc">
                                                 <p class="meta-prod d-flex">
                                                     @if($product->inventory_qty == 0)
-                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center"><span
+                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center" onclick="notyf.error('Currently Out of Stock');"><span
                                                             class="flaticon-shopping-bag"></span></a>
                                                     @else
                                                     <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center add-to-cart"><span
