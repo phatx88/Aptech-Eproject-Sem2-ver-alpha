@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
 
-class Admin_CategoryController extends Controller
+class User_CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,7 @@ class Admin_CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::get();
-        return view('admin.category.list',[
-            'categories' => $categories
-        ]);
+        //
     }
 
     /**
@@ -28,7 +24,7 @@ class Admin_CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.add');
+        //
     }
 
     /**
@@ -39,10 +35,7 @@ class Admin_CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = new Category();
-        $category->name = $request->name;
-        $category->save();
-        return redirect()->action([Admin_CategoryController::class,'index']);
+        //
     }
 
     /**
@@ -62,12 +55,9 @@ class Admin_CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-
-        return view('admin.category.edit',[
-            'category' => $category
-        ]);
+        //
     }
 
     /**
@@ -90,7 +80,6 @@ class Admin_CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::find($id)->delete();
-        return redirect()->action([Admin_CategoryController::class,'index']);
+        //
     }
 }

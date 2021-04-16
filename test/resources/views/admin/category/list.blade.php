@@ -33,8 +33,12 @@
                        <tr>
                         <td><input type="checkbox"></td>
                         <td >{{ $category->name }}</td>
+                        <td></td>
                         <td><a href="{{ route('admin.category.edit', ['category'=>$category->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Edit</a></td>
-                        <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
+                        <form action="{{ route('admin.category.destroy', ['category'=>$category->id]) }}" method="POST">
+                            @csrf @method('delete')
+                            <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</button></td>
+                        </form>
                     </tr>
                        @endforeach
                    </tbody>
