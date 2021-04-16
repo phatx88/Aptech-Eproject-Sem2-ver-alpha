@@ -64,6 +64,7 @@ data-stellar-background-ratio="0.5">
                             <form action="#" class="billing-form" method="POST">
                                 @csrf
                                 <h3 class="mb-4 mt-4 billing-heading">Contact Info</h3>
+                                @include('errors.error')
                                 <div class="row align-items-end">
                                     <div class="col-md-6">
                                         <div class="form-group">

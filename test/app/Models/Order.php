@@ -20,7 +20,7 @@ class Order extends Model
     }
 
     public function ward(){
-        return $this->belongsTo(Ward::class , 'shipping_ward_id' , 'id');
+        return $this->belongsTo(Ward::class, 'shipping_ward_id' , 'id');
     }
 
     public function product(){

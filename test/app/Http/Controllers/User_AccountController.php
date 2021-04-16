@@ -39,27 +39,24 @@ class User_AccountController extends Controller
 
     public function upload(Request $request)
     {   
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
         $user = $request->user();
-        if ($request->hasFile('image')) 
-        {
-            $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            if ($extension != 'jpg' && $extension != 'png' && $extension != 'jpeg') 
-            {
-                return redirect()->back()->with('error' , "Only accept Image with extension jpg, png, jpeg");
-            }
-            $imageName = $file->getClientOriginalName();
-            //trỏ tới public 
-            $file = $file->move(public_path('frontend\images\profile'), $imageName);
 
-            //delete old-pic
-            $oldFile = public_path('img\products\\'.$user->profile_pic);
-            File::delete($oldFile);
-        } 
-        else 
-        {
-            $imageName = null;
-        }
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $imageName = $file->getClientOriginalName();
+        //trỏ tới public 
+        $file = $file->move(public_path('frontend\images\profile'), $imageName);
+
+        //delete old-pic
+        $oldFile = public_path('frontend\images\profile\\'.$user->profile_pic);
+        File::delete($oldFile);
+
+        $imageName = null;
+       
         $user->profile_pic = $imageName;
         $user->save();
         return redirect()->route('account.index')->with('success' , "Product uploaded successfully");
