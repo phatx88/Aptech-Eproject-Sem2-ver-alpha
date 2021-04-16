@@ -76,13 +76,12 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('products/{id?}', [User_ProductsController::class, 'index'])
     ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
 
-    Route::post('products/search_price', [User_ProductsController::class, 'search_price'])
-    ->name('products.search_price');
-
+    
     Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
 });
 
+Route::get('home/find', [User_ProductsController::class, 'find']);
 //BACK END
 
 //Có VErify

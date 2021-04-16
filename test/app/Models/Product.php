@@ -13,6 +13,10 @@ class Product extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');

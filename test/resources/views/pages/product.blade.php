@@ -121,8 +121,10 @@
                             <form action="{{ url('home/products/') }}" class="search-form w-75 m-auto">
                                 <div class="form-group">
                                     <span class="fa fa-search"></span>
-                                    <input type="text" class="form-control" style="font-size: 1.2rem;" name="search"
-                                        placeholder="Type a keyword and hit enter" value="{{ $search }}">
+                                    <input type="text" class="typeahead form-control" style="font-size: 1.2rem;"
+                                        name="search" placeholder="Type a keyword and hit enter"
+                                        value="{{ $search }}">
+
                                 </div>
                             </form>
                             {{-- SEARCH BAR END --}}
@@ -163,17 +165,24 @@
                                             {{-- <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt=""> --}}
                                             <div class="desc">
                                                 <p class="meta-prod d-flex">
-                                                    @if($product->inventory_qty == 0)
-                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center" onclick="notyf.error('Currently Out of Stock');"><span
-                                                            class="flaticon-shopping-bag"></span></a>
+                                                    @if ($product->inventory_qty == 0)
+                                                        <a type="button" style="cursor: pointer;"
+                                                            data-id_product="{{ $product->id }}"
+                                                            class="d-flex align-items-center justify-content-center"
+                                                            onclick="notyf.error('Currently Out of Stock');"><span
+                                                                class="flaticon-shopping-bag"></span></a>
                                                     @else
-                                                    <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center add-to-cart"><span
-                                                        class="flaticon-shopping-bag"></span></a>
+                                                        <a type="button" style="cursor: pointer;"
+                                                            data-id_product="{{ $product->id }}"
+                                                            class="d-flex align-items-center justify-content-center add-to-cart"><span
+                                                                class="flaticon-shopping-bag"></span></a>
                                                     @endif
-                                                    <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                                    <a href="#"
+                                                        class="d-flex align-items-center justify-content-center"><span
                                                             class="flaticon-heart"></span></a>
 
-                                                    <a href="{{ url('home/single-product/'.$product->id) }}" class="d-flex align-items-center justify-content-center"><span
+                                                    <a href="{{ url('home/single-product/' . $product->id) }}"
+                                                        class="d-flex align-items-center justify-content-center"><span
                                                             class="flaticon-visibility"></span></a>
                                                 </p>
                                             </div>
@@ -182,7 +191,7 @@
 
                                         <div class="text text-center">
 
-                                            @if (strtotime($product->created_date) >= strtotime('-30 days') )
+                                            @if (strtotime($product->created_date) >= strtotime('-30 days'))
                                                 <span class="new">New Arrival</span>
                                             @endif
                                             @if ($product->featured)
@@ -198,11 +207,11 @@
                                                 @if ($product->price != $product->sale_price)
                                                     <span class="price price-sale">${{ $product->price }}</span>
                                                 @endif
-                                            
-                                            <span class="price">${{ $product->sale_price }}</span>
-                                        </p>
-                                        <p>Available:  {{ $product->inventory_qty }}</p>
-                                    </div>
+
+                                                <span class="price">${{ $product->sale_price }}</span>
+                                            </p>
+                                            <p>Available: {{ $product->inventory_qty }}</p>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -228,4 +237,20 @@
         </div>
     </section>
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        var path = "find";
+        $('input.typeahead').typeahead({
+            source: function(query, process) {
+                return $.get(path, {
+                    query: query
+                }, function(data) {
+                    return process(data);
+                });
+            }
+        });
+
+    </script>
 @endsection
