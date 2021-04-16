@@ -42,12 +42,12 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody style="text-overflow: ellipsis">
+                            <tbody >
                                 @php
                                     $count = 0;
                                 @endphp
                                 @foreach ($products as $product)
-                                    <tr style="text-overflow: ellipsis">
+                                    <tr>
                                         <td><input type="checkbox" {{ $product->hidden == false ? 'checked' : "" }}></td>
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->name }}</td>

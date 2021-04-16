@@ -63,7 +63,7 @@
                                     <td>{{ $order->shipping_fee }}</td>
                                     <td>${{ $sum + $order->shipping_fee}}</td>
                                     <td>{{ $order->shipping_housenumber_street }},
-                                        {{ $order->ward->name }} , {{ $order->ward->district->name }} , {{ $order->ward->district->province->name }}.
+                                        {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}.
                                     </td>
                                     <td>{{ $order->delivered_date }}</td>
                                     <td></td>

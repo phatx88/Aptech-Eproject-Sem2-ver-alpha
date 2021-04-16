@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Coupon;
 
-class Admin_CouponController extends Controller
+class User_CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +14,7 @@ class Admin_CouponController extends Controller
      */
     public function index()
     {
-        $coupons = Coupon::get();
-        return view('admin.coupon.list',[
-            'coupons' => $coupons
-        ]);
+        //
     }
 
     /**
@@ -28,7 +24,7 @@ class Admin_CouponController extends Controller
      */
     public function create()
     {
-        return view('admin.coupon.add');
+        //
     }
 
     /**
@@ -39,14 +35,7 @@ class Admin_CouponController extends Controller
      */
     public function store(Request $request)
     {
-        $coupon = new Coupon();
-        $coupon->name = $request->name;
-        $coupon->code = $request->code;
-        $coupon->time = $request->time;
-        $coupon->cpn_condition = $request->cpn_condition;
-        $coupon->number = $request->number;
-        $coupon->save();
-        return redirect()->action([Admin_CouponController::class,'index']);
+        //
     }
 
     /**
@@ -66,11 +55,9 @@ class Admin_CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coupon $coupon)
+    public function edit($id)
     {
-       return view('admin.coupon.edit',[
-            'coupon' => $coupon
-       ]) ;
+        //
     }
 
     /**
@@ -93,7 +80,6 @@ class Admin_CouponController extends Controller
      */
     public function destroy($id)
     {
-        Coupon::find($id)->delete();
-        return redirect()->action([Admin_CouponController::class,'index']);
+        //
     }
 }

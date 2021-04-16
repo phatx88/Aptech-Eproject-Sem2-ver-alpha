@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/nouislider.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
 
 
@@ -63,19 +64,19 @@
                         @endguest
                         @auth
                             @if (Auth::user()->hasVerifiedEmail())
-                                 {{-- User drop down menu --}}
-                             <a href="{{ route('account.index') }}" class="text-white mr-2">
-                                {{ Auth::user()->name }}
-                            </a>
+                                {{-- User drop down menu --}}
+                                <a href="{{ route('account.index') }}" class="text-white mr-2">
+                                    {{ Auth::user()->name }}
+                                </a>
 
                             @else
-                            <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
+                                <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
                             @endif
 
                             {{-- User drop down menu --}}
                             <a href="" class="text-white"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
@@ -433,7 +434,7 @@
             </div>
         </div>
 
-        {{-- AJAX test  --}}
+        {{-- AJAX test --}}
         {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -542,7 +543,7 @@
 
     </footer>
 
-
+    
 
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
@@ -568,27 +569,59 @@
     </script>
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
-    <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
     <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="{{ asset('frontend/js/main.js') }}"></script>
+    @yield('scripts')
+    {{-- Toast Notification Custom --}}
+    <script>
+        const notyf = new Notyf({
+            duration: 3000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+            types: [{
+                    type: 'warning',
+                    background: 'orange',
+                    duration: 2000,
+                    icon: {
+                        className: 'material-icons',
+                        tagName: 'i',
+                        text: 'warning'
+                    }
+                },
+                {
+                    type: 'error',
+                    background: 'indianred',
+                    duration: 2000,
+                    dismissible: true
+                }
+            ]
+        });
+
+    </script>
+    {{-- Toast Notification Custom --}}
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             var _token = $('input[name="_token"]').val();
             $.ajax({
-                url: '{{url('roll-button')}}',
+                url: '{{ url('roll-button') }}',
                 method: "POST",
-                data:{
-                _token:_token
+                data: {
+                    _token: _token
                 },
-                success: function (data){
+                success: function(data) {
                     $('#roll-button').html(data);
                 }
             });
         });
+
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('.check-shipping-fee').click(function(){
+        $(document).ready(function() {
+            $('.check-shipping-fee').click(function() {
                 var province_id = $('#province').val();
                 var district_id = $('#district').val();
                 var ward_id = $('#ward').val();
@@ -596,12 +629,11 @@
                 // alert(province_id);
                 // alert(district_id);
                 // alert(ward_id);
-                if(province_id == '' && district_id == '' && ward_id == ''){
-               // error meesage
-                }
-                else{
+                if (province_id == '' && district_id == '' && ward_id == '') {
+                    notyf.error('Select shipping destination first');
+                } else {
                     $.ajax({
-                        url: '{{url('calculate-fee')}}',
+                        url: '{{ url('calculate-fee') }}',
                         method: 'POST',
                         data: {
                             province_id: province_id,
@@ -609,198 +641,180 @@
                             ward_id: ward_id,
                             _token: _token
                         },
-                        success: function (data) {
-                           location.reload();
+                        success: function(data) {
+                            location.reload();
                         }
                     });
                 }
             });
         });
+
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('.choose').on('change', function(){
+        $(document).ready(function() {
+            $('.choose').on('change', function() {
                 var action = $(this).attr('id');
                 var ma_id = $(this).val();
                 var _token = $('input[name="_token"]').val();
                 var result = '';
                 // alert(action);
                 // alert(ma_id);
-                if(action == 'province'){
+                if (action == 'province') {
                     result = 'district';
-                }else if(action == 'district'){
+                } else if (action == 'district') {
                     result = 'ward';
                 }
                 $.ajax({
-                    url : '{{url('select-delivery')}}',
+                    url: '{{ url('select-delivery') }}',
                     method: 'POST',
                     data: {
-                        action:action,
-                        ma_id:ma_id,
-                        _token:_token
+                        action: action,
+                        ma_id: ma_id,
+                        _token: _token
                     },
-                    success:function (data){
+                    success: function(data) {
+                        // alert (result);
                         $('#' + result).html(data);
                     }
                 });
-             });
+            });
         });
+
     </script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('.check_coupon').click(function(){
+        $(document).ready(function() {
+            $('.check_coupon').click(function() {
                 var coupon_code = $('.counpon_code_cart').val();
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: '{{url('check/coupon')}}',
+                    url: '{{ url('check/coupon') }}',
                     method: "POST",
-                    data:{
-                        coupon_code:coupon_code,
-                        _token:_token
+                    data: {
+                        coupon_code: coupon_code,
+                        _token: _token
                     },
-                    success:function(data){
+                    success: function(data) {
                         location.reload();
                     }
                 });
             });
         });
+
     </script>
     <script type="text/javascript">
-         $(document).ready(function(){
-            $('.add-to-cart-details').click(function(){
+        $(document).ready(function() {
+            $('.add-to-cart-details').click(function() {
                 var id = $(this).data('id_product_details');
-                var product_name = $('.product_name_cart_'+id).val();
-                var product_price = $('.product_price_cart_'+id).val();
-                var product_quantity = $('.product_quantity_cart_'+id).val();
-                var product_image = $('.product_image_cart_'+id).val();
+                var product_name = $('.product_name_cart_' + id).val();
+                var product_price = $('.product_price_cart_' + id).val();
+                var product_quantity = $('.product_quantity_cart_' + id).val();
+                var product_image = $('.product_image_cart_' + id).val();
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: '{{url('/add-to-cart')}}',
+                    url: '{{ url('/add-to-cart') }}',
                     method: "POST",
-                    data:{
-                        id:id,
-                        product_name:product_name,
-                        product_price:product_price,
-                        product_quantity:product_quantity,
-                        product_image:product_image,
-                        _token:_token
+                    data: {
+                        id: id,
+                        product_name: product_name,
+                        product_price: product_price,
+                        product_quantity: product_quantity,
+                        product_image: product_image,
+                        _token: _token
                     },
-                    success:function(data){
+                    success: function(data) {
                         $('#roll-button').html(data);
-                        swal({
-                            title: "Đã thêm sản phẩm vào giỏ hàng",
-                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
-                            showCancelButton: true,
-                            cancelButtonText: "Xem tiếp",
-                            confirmButtonClass: "btn-success",
-                            confirmButtonText: "Đi đến giỏ hàng",
-                            closeOnConfirm: false,
-
-                        },
-                        function() {
-                            window.location.href = "{{url('/cart')}}";
-                        });
+                        notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
+                    
 
                     }
                 });
             });
-         });
+        });
+
     </script>
     <script type="text/javascript">
-
-        $(document).ready(function(){
-            $(".add-to-cart").click(function(){
+        $(document).ready(function() {
+            $(".add-to-cart").click(function() {
                 var id = $(this).data('id_product');
-                var product_name = $('.product_name_cart_'+id).val();
-                var product_price = $('.product_price_cart_'+id).val();
-                var product_quantity = $('.product_quantity_cart_'+id).val();
-                var product_image = $('.product_image_cart_'+id).val();
+                var product_name = $('.product_name_cart_' + id).val();
+                var product_price = $('.product_price_cart_' + id).val();
+                var product_quantity = $('.product_quantity_cart_' + id).val();
+                var product_image = $('.product_image_cart_' + id).val();
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: '{{url('/add-to-cart')}}',
+                    url: '{{ url('/add-to-cart') }}',
                     method: "POST",
-                    data:{
-                        id:id,
-                        product_name:product_name,
-                        product_price:product_price,
-                        product_quantity:product_quantity,
-                        product_image:product_image,
-                        _token:_token
+                    data: {
+                        id: id,
+                        product_name: product_name,
+                        product_price: product_price,
+                        product_quantity: product_quantity,
+                        product_image: product_image,
+                        _token: _token
                     },
-                    success:function(data){
+                    success: function(data) {
                         $('#roll-button').html(data);
-                        swal({
-                            title: "Đã thêm sản phẩm vào giỏ hàng",
-                            text: "Bạn có thể mua hàng tiếp hoặc tới giỏ hàng để tiến hành thanh toán",
-                            showCancelButton: true,
-                            cancelButtonText: "Xem tiếp",
-                            confirmButtonClass: "btn-success",
-                            confirmButtonText: "Đi đến giỏ hàng",
-                            closeOnConfirm: false,
-
-                        },
-                        function() {
-                            window.location.href = "{{url('/cart')}}";
-                        });
-
+                        notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
                     }
                 });
 
             });
 
             //quantity
-            $(document).on('blur', '.quantity_cart_edit', function(){
+            $(document).on('blur', '.quantity_cart_edit', function() {
                 var id = $(this).data('quantity');
-                var quantity = $('#quantity_'+id).val();
+                var quantity = $('#quantity_' + id).val();
                 var _token = $('input[name="_token"]').val();
                 $.ajax({
-                    url: '{{url('/update-cart-quantity')}}',
+                    url: '{{ url('/update-cart-quantity') }}',
                     method: "POST",
-                    data:{
-                        id:id,
-                        quantity:quantity,
-                        _token:_token
+                    data: {
+                        id: id,
+                        quantity: quantity,
+                        _token: _token
                     },
-                    success:function(data){
+                    success: function(data) {
                         location.reload();
                     }
                 });
             });
 
         });
+
     </script>
-            //delete cart product
+    {{-- delete cart product --}}
     <script type="text/javascript">
-            $('.delete-cart-product').click(function(){
-                var id = $(this).data('id_delete');
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url: '{{url('/delete-cart-product')}}',
-                    method: "POST",
-                    data: {
-                        id:id,
-                        _token:_token
-                    },
-                    success:function(data){
-                        location.reload();
-                    }
-                });
+        $('.delete-cart-product').click(function() {
+            var id = $(this).data('id_delete');
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: '{{ url('/delete-cart-product') }}',
+                method: "POST",
+                data: {
+                    id: id,
+                    _token: _token
+                },
+                success: function(data) {
+                    location.reload();
+                }
             });
+        });
+
     </script>
 
 
     {{-- Make Login Modal to stay open --}}
     @if ($errors->has('email') || $errors->has('password'))
-    <script>
-        $(function() {
-            $('#loginModal').modal({
-                show: true
+        <script>
+            $(function() {
+                $('#loginModal').modal({
+                    show: true
+                });
             });
-        });
 
-    </script>
-@endif
+        </script>
+    @endif
 
 </body>
 

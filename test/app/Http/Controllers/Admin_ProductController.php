@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -89,7 +89,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Products  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Products $product)
     {
         //
     }
@@ -109,7 +109,7 @@ class Admin_ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Product  $products
      * @return \Illuminate\Http\Response
      */
     public function destroy(Products $product)

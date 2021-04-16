@@ -1,8 +1,8 @@
 @extends('main_layout')
 @section('content')
 
-<section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');"
-data-stellar-background-ratio="0.5">
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');"
+        data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
             <div class="row no-gutters slider-text align-items-end justify-content-center">
@@ -19,14 +19,23 @@ data-stellar-background-ratio="0.5">
     <section class="ftco-section account-info">
         <div class="container">
             <div class="row">
-                <img src="{{ asset('frontend/images/avatar.jpg') }}" alt="Avatar" class="avatar">
+                @if ($user->profile_pic != null)
+                    <img src="{{ asset('frontend/images/profile/' . $user->profile_pic) }}" alt="Avatar" class="avatar">
+                @else
+                    <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="avatar">
+                @endif
             </div>
-            <div class="text-center m-auto">
-                <label for="user-image" style="cursor: pointer">Change <i class="fa fa-upload" aria-hidden="true">
-                    </i> </label>
-                <input type="file" class="center-block file-upload d-none" id="user-image">
-            </div>
-            <h3 class="text-center">Welcome (USER)</h3>
+            <form action="{{ route('account.upload') }}" method="POST" id="avatar_upload" enctype="multipart/form-data">
+                @csrf
+                <div class="text-center m-auto">
+                    <label for="profile_pic" style="cursor: pointer">Change <i class="fa fa-upload" aria-hidden="true">
+                        </i> </label>
+                    <input type="file" class="center-block file-upload d-none" id="profile_pic" name="image"
+                        onchange="this.form.submit()">
+                </div>
+                  
+            </form>
+            <h3 class="text-center">Welcome {{ $user->name }}</h3>
             {{-- <hr class="mt-5 mb-0"> --}}
             <div class="row mt-5">
                 <div class="col-12 ">
@@ -38,8 +47,8 @@ data-stellar-background-ratio="0.5">
                             <a class="nav-item nav-link" id="order-history-tab" data-toggle="tab" href="#order-history"
                                 role="tab" aria-controls="order-history" aria-selected="false"><span class="lead"> Order
                                     History</span></a>
-                            <a class="nav-item nav-link" id="wish-list-tab" data-toggle="tab" href="#wish-list"
-                                role="tab" aria-controls="wish-list" aria-selected="false"><span class="lead"> WishList</span></a>
+                            <a class="nav-item nav-link" id="wish-list-tab" data-toggle="tab" href="#wish-list" role="tab"
+                                aria-controls="wish-list" aria-selected="false"><span class="lead"> WishList</span></a>
                             <a class="nav-item nav-link" id="edit-profile-tab" data-toggle="tab" href="#edit-profile"
                                 role="tab" aria-controls="edit-profile" aria-selected="false"><span class="lead"> Change
                                     Password</span></a>
@@ -51,19 +60,17 @@ data-stellar-background-ratio="0.5">
                         <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
                             aria-labelledby="nav-profile-tab">
 
-                            <form action="#" class="billing-form">
+                            <form action="{{ route('account.update') }}" class="billing-form" method="POST">
+                                @csrf
                                 <h3 class="mb-4 mt-4 billing-heading">Contact Info</h3>
+                                @include('errors.error') 
+                                @include('errors.message')                       
                                 <div class="row align-items-end">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="firstname">Firt Name</label>
-                                            <input type="text" class="form-control" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="lastname">Last Name</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <label for="firstname">Full Name</label>
+                                            <input type="text" class="form-control" placeholder="" name="name"
+                                                value="{{ $user->name }}">
                                         </div>
                                     </div>
 
@@ -71,13 +78,15 @@ data-stellar-background-ratio="0.5">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="phone">Phone</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input type="text" class="form-control" placeholder="Enter Your Phone #"
+                                                name="mobile" value="{{ $user->mobile }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="emailaddress">Email Address</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <input type="text" class="form-control" placeholder="" name="email"
+                                                value="{{ $user->email }}" readonly>
                                         </div>
                                     </div>
                                     <h3 class="mb-4 mt-4 billing-heading">Default Address</h3>
@@ -87,39 +96,54 @@ data-stellar-background-ratio="0.5">
                                             <div class="form-group">
                                                 <label for="streetaddress">Street Address</label>
                                                 <input type="text" class="form-control"
-                                                    placeholder="House number and street name">
+                                                    placeholder="Enter Your Street Number" name="housenumber_street"
+                                                    value="{{ $user->housenumber_street }}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w-100"></div>
-                                    <div class="col-md-6"> <label for="city">City</label>
-                                        <div class="select-wrap">
+                                    <div class="col-md-6"> <label for="province">City/Province</label>
+                                        <div class="form-group">
                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                            <select name="" id="" class="form-control">
-                                                <option value="">France</option>
-                                                <option value="">Italy</option>
-                                                <option value="">Philippines</option>
-                                                <option value="">South Korea</option>
-                                                <option value="">Hongkong</option>
-                                                <option value="">Japan</option>
+                                            <select class="form-control choose province" name="province" id="province">
+                                                @if ($user->ward_id != null)
+                                                    <option value="{{ $user->ward->district->province->id }}">
+                                                        {{ $user->ward->district->province->name }}</option>
+                                                @else
+                                                    <option value="">--Chọn Thành phố---</option>
+                                                @endif
+                                                @foreach ($province as $key => $pvin)
+                                                    <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
+                                                @endforeach
+
                                             </select>
                                         </div>
-
                                     </div>
                                     <div class="col-md-6">
-
                                     </div>
                                     <div class="w-100"></div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6"><label for="district">District</label>
                                         <div class="form-group">
-                                            <label for="district">District</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select class="form-control choose district" name="district" id="district">
+                                                @if ($user->ward_id != null)
+                                                    <option value="{{ $user->ward->district->id }}">
+                                                        {{ $user->ward->district->name }}</option>
+                                                @endif
+                                                <option value="">--Chọn quận huyện---</option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6"><label for="ward">Ward</label>
                                         <div class="form-group">
-                                            <label for="ward">Ward</label>
-                                            <input type="text" class="form-control" placeholder="">
+                                            <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                            <select class="form-control ward" name="ward" id="ward">
+                                                @if ($user->ward_id != null)
+                                                    <option value="{{ $user->ward_id }}">{{ $user->ward->name }}
+                                                    </option>
+                                                @endif
+                                                <option value="">--Chọn xã phường---</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -127,10 +151,8 @@ data-stellar-background-ratio="0.5">
                                     <div class="col-md-12">
                                         <div class="form-group mt-4">
                                             <div class="radio">
-                                                <button class="btn btn-primary mr-3" type="submit" name="updateinfo"> Update
+                                                <button class="btn btn-primary mr-3" type="submit" id="updateinfo"> Update
                                                 </button>
-                                                <button class="btn btn-danger mr-3" type="reset" name="updateinfo">
-                                                    Reset</button>
                                             </div>
                                         </div>
                                     </div>
@@ -383,7 +405,7 @@ data-stellar-background-ratio="0.5">
                         </div>
                         {{-- ORDER HISTORY - TRACKING - END --}}
 
-                        {{-- TAB PANE - MY WISH LIST--}}
+                        {{-- TAB PANE - MY WISH LIST --}}
                         <div class="tab-pane fade" id="wish-list" role="tabpanel" aria-labelledby="wish-list-tab">
                             <div class="table-responsive-md">
                                 <table class="table table-hover">
@@ -402,8 +424,8 @@ data-stellar-background-ratio="0.5">
                                         {{-- FOREACH HERE --}}
                                         <tr>
                                             <th scope="row" class="p-1">
-                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
-                                                    alt="" class="feature-img">
+                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}" alt=""
+                                                    class="feature-img">
                                             </th>
                                             <td class="p-0">Lorem, ipsum dolor sit amet consectetur
                                                 adipisicing elit. Expedita, fugit?</td>
@@ -416,14 +438,14 @@ data-stellar-background-ratio="0.5">
                                                 <button type="button" class="bg-danger" data-dismiss="alert" aria-label="">
                                                     <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                                 </button>
-                                                
+
                                             </td>
                                         </tr>
                                         {{-- FOREACH HERE --}}
                                         <tr>
                                             <th scope="row" class="p-1">
-                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
-                                                    alt="" class="feature-img">
+                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}" alt=""
+                                                    class="feature-img">
                                             </th>
                                             <td class="p-0">Lorem, ipsum dolor sit amet consectetur
                                                 adipisicing elit. Expedita, fugit?</td>
@@ -436,15 +458,16 @@ data-stellar-background-ratio="0.5">
                                                 <button type="button" class="bg-danger" data-dismiss="alert" aria-label="">
                                                     <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                                 </button>
-                                                
+
                                             </td>
                                         </tr>
-                                        {{-- END FOREACH--}}
+                                        {{-- END FOREACH --}}
                                     </tbody>
                                 </table>
-                                <a href="http://localhost/LaravelTest/test/public/product" class="btn btn-primary py-3 px-4 pull-right">Continue Shopping</a>
+                                <a href="http://localhost/LaravelTest/test/public/product"
+                                    class="btn btn-primary py-3 px-4 pull-right">Continue Shopping</a>
                             </div>
-                           
+
                         </div>
                         <!-- END -->
 
@@ -501,7 +524,7 @@ data-stellar-background-ratio="0.5">
                         </div>
                         <!-- END -->
 
-                        
+
                     </div>
 
                 </div>
@@ -512,4 +535,31 @@ data-stellar-background-ratio="0.5">
 
     </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+
+            $('#updateinfo').click(function(e) {
+                e.preventDefault();
+                var form = $(this).parents('form');
+                swal({
+                    title: "Are you sure?",
+                    text: "Your Current Profile Info Will Be Lost!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirm!",
+                    closeOnConfirm: false
+                }, function(isConfirm) {
+                    if (isConfirm) form.submit();
+                });
+
+            });
+
+
+        });
+
+    </script>
 @endsection

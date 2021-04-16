@@ -39,7 +39,10 @@ class Admin_CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->name;
+        $category->save();
+        return redirect()->action([Admin_CategoryController::class,'index']);
     }
 
     /**
@@ -87,6 +90,7 @@ class Admin_CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::find($id)->delete();
+        return redirect()->action([Admin_CategoryController::class,'index']);
     }
 }

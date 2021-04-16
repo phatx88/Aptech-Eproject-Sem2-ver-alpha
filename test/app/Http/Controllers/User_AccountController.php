@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+
+use App\Models\User;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Province;
 
 class User_AccountController extends Controller
 {
@@ -13,6 +20,7 @@ class User_AccountController extends Controller
      */
     public function __construct()
     {
+       
         $this->middleware(['auth' , 'verified']);
     }
 
@@ -24,72 +32,52 @@ class User_AccountController extends Controller
      */
     public function index()
     {
-        return view('pages.user');
+        $user = Auth::user();
+        $province = Province::orderby('id', 'ASC')->get();
+        return view('pages.user' , ['user' => $user])->with(compact('province'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function upload(Request $request)
+    {   
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        
+        $user = $request->user();
+
+        $file = $request->file('image');
+        $imageName = $file->getClientOriginalName();
+        $imageName = uniqid().$imageName;
+        //trỏ tới public 
+        $file = $file->move(public_path('frontend\images\profile'), $imageName);
+
+        //delete old-pic
+        $oldFile = public_path('frontend\images\profile\\'.$user->profile_pic);
+        File::delete($oldFile);
+       
+        $user->profile_pic = $imageName;
+        $user->save();
+        return redirect()->route('account.index')->with('success' , "Profile Avater Updated!");
+    }   
+
+    public function update(Request $request) {
+        $request->validate([
+            'name' => 'max:255',
+            'mobile' => 'numeric|min:11',
+            'housenumber_street' => 'max:255',
+            'ward' => 'integer',
+        ]);
+        
+        $user = $request->user();
+
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->housenumber_street = $request->housenumber_street;
+        $user->ward_id = $request->ward;
+
+        $user->save();
+        return redirect()->route('account.index')->with('success' , "Profile Updated!");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -10,7 +10,8 @@
           <li class="breadcrumb-item active">Danh mục</li>
        </ol>
        <!-- /form -->
-       <form method="post" action="" enctype="multipart/form-data">
+       <form method="post" action="{{ route('admin.category.store') }}" enctype="multipart/form-data">
+        @csrf
           <div class="form-group row">
              <label class="col-md-12 control-label" for="name">CategoryName</label>
              <div class="col-md-9 col-lg-6">

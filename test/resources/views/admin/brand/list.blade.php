@@ -22,19 +22,22 @@
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
                          <th >BrandName</th>
-                         <th>
-                         </th>
-                         <th>
-                         </th>
+                         <th></th>
+                         <th></th>
+                         <th></th>
                       </tr>
                    </thead>
                    <tbody>
                        @foreach ($brands as $brand)
-                       <tr>
+                    <tr>
                         <td><input type="checkbox"></td>
                         <td >{{ $brand->name }}</td>
+                        <td></td>
                         <td><a href="{{ route('admin.brand.edit', ['brand'=>$brand->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Edit</a></td>
-                        <td><a href="{{ route('admin.brand.', ['brand'=>$brand->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</a></td>
+                        <form action="{{ route('admin.brand.destroy', ['brand'=>$brand->id]) }}" method="POST">
+                            @csrf @method('delete')
+                            <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</button></td>
+                        </form>
                         {{-- <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td> --}}
                     </tr>
                        @endforeach

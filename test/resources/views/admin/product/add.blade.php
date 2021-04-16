@@ -13,27 +13,27 @@
             <form method="POST" action="" enctype="multipart/form-data">
                @csrf
                <div class="form-group row">
-                  <label class="col-md-12 control-label" for="name">Tên </label>  
+                  <label class="col-md-12 control-label" for="name">Tên </label>
                   <div class="col-md-9 col-lg-6">
-                     <input name="name" id="name" type="text" value="" class="form-control">								
+                     <input name="name" id="name" type="text" value="" class="form-control">
                   </div>
                </div>
                <div class="form-group row">
-                  <label class="col-md-12 control-label" for="wholesale-price">Giá bán lẻ </label>  
+                  <label class="col-md-12 control-label" for="wholesale-price">Giá bán lẻ </label>
                   <div class="col-md-9 col-lg-6">
-                     <input name="wholesale-price" id="wholesale-price" type="text" value="" class="form-control">	
+                     <input name="wholesale-price" id="wholesale-price" type="text" value="" class="form-control">
                   </div>
                </div>
-               
+
                <div class="form-group row">
-                  <label class="col-md-12 control-label" for="inventory-number">Lượng tồn</label>  
+                  <label class="col-md-12 control-label" for="inventory-number">Lượng tồn</label>
                   <div class="col-md-9 col-lg-6">
-                     <input name="inventory_qty" id="inventory-number" type="text" value="" class="form-control">			
+                     <input name="inventory_qty" id="inventory-number" type="text" value="" class="form-control">
                   </div>
                </div>
-               
+
                <div class="form-group row">
-                  <label class="col-md-12 control-label" for="category">Danh mục </label>  
+                  <label class="col-md-12 control-label" for="category">Danh mục </label>
                   <div class="col-md-9 col-lg-6">
                      <select name="category" id="category" class="form-control">
                         <option value="Kem Chống Nắng">Kem Chống Nắng</option>
@@ -46,7 +46,7 @@
                   </div>
                </div>
                <div class="form-group row">
-                  <label class="col-md-12 control-label">Nổi bật</label>  
+                  <label class="col-md-12 control-label">Nổi bật</label>
                   <div class="col-md-9 col-lg-6">
                      <input type="checkbox" value="1">
                   </div>
@@ -54,15 +54,15 @@
                <div class="form-group row">
                   <label class="col-md-12 control-label" for="image">Hình ảnh </label>
                   <div class="col-md-9 col-lg-6">
-                     <input type="file" name="image" id="image">              
+                     <input type="file" name="image" id="image">
                   </div>
                </div>
                <div class="form-group row">
-                  <label class="col-md-12 control-label" for="description">Mô tả</label>  
+                  <label class="col-md-12 control-label" for="description">Mô tả</label>
                   <div class="col-md-12">
                      <textarea name="description" id="description" rows="10" cols="80"></textarea>
                   </div>
-                  
+
                </div>
                <div class="form-action">
                   <input type="submit" class="btn btn-primary btn-sm" value="Lưu" name="save">
@@ -72,7 +72,7 @@
             <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
             <script>CKEDITOR.replace('description');</script>
             @endsection
-            
+
             <!-- /form -->
             <!-- /.container-fluid -->
             <!-- Sticky Footer -->

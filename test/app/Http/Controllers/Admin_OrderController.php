@@ -28,10 +28,10 @@ class Admin_OrderController extends Controller
 
         $orders = Order::get();
         $orderItems = OrderItem::get();
-        $wards = Ward::get();
-        $districts = District::get();
-        $provinces = Province::get();
-        $transports = Transport::get();
+        // $wards = Ward::get();
+        // $districts = District::get();
+        // $provinces = Province::get();
+        // $transports = Transport::get();
 
 
         // join("customer", "customer.id", "=", "order.customer_id")
@@ -43,10 +43,10 @@ class Admin_OrderController extends Controller
         return view('admin.order.list', [
             'orders'=>$orders,
             'orderItems' => $orderItems,
-            'wards' => $wards,
-            'districts' => $districts,
-            'provinces' => $provinces,
-            'transports' => $transports,
+            // 'wards' => $wards,
+            // 'districts' => $districts,
+            // 'provinces' => $provinces,
+            // 'transports' => $transports,
             ]);
     }
 
