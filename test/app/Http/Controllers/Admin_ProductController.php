@@ -17,7 +17,7 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Products::get();
         return view('admin.product.list' , ['products' => $products]);
     }
 
@@ -55,7 +55,7 @@ class Admin_ProductController extends Controller
         else{
             $imageName = null;
         }
-        $product= new Product();
+        $product= new Products();
         $product->sku = '';
         $product->discount_percentage = 0;
         $product->discount_from_date = '2020-01-01';
@@ -78,7 +78,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Products $product)
     {
         //
     }
@@ -89,7 +89,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Products  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Products $product)
     {
         //
     }
@@ -101,7 +101,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Products $product)
     {
         //
     }
@@ -109,10 +109,10 @@ class Admin_ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Product  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Products $product)
     {
         //
     }
