@@ -21,3 +21,10 @@
     </div>
 </div>
 @endsection
+<a class="blog-img mr-4" style="background-image: url({{ asset('frontend/images/image_2.jpg') }});"></a>
+
+<div class="img" style="background-image: url({{ asset('frontend/images/products')}});">
+                                </div>
+
+<div class="img" style="background-image: url({{ asset('frontend/images/products/'. '.$cart['product_image']).' )}};">
+                                </div>
