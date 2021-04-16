@@ -20,7 +20,7 @@ data-stellar-background-ratio="0.5">
         <div class="container">
             <div class="row">
                 @if ($user->profile_pic != null)
-                <img src="{{ asset('frontend/images/profile'.$user->profile_pic) }}" alt="Avatar" class="avatar">
+                <img src="{{ asset('frontend/images/profile/'.$user->profile_pic) }}" alt="Avatar" class="avatar">
                 @else
                 <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="avatar">
                 @endif
@@ -30,7 +30,7 @@ data-stellar-background-ratio="0.5">
             <div class="text-center m-auto">
                 <label for="profile_pic" style="cursor: pointer">Change <i class="fa fa-upload" aria-hidden="true">
                     </i> </label>
-                <input type="file" class="center-block file-upload d-none" id="profile_pic" name="profile_pic" onchange="this.form.submit()">
+                <input type="file" class="center-block file-upload d-none" id="profile_pic" name="image" onchange="this.form.submit()">
             </div>
             <div class="text-center m-auto">
                 @include('errors.message')            

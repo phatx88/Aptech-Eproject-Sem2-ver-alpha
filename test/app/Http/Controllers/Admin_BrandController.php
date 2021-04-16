@@ -42,7 +42,7 @@ class Admin_BrandController extends Controller
         $brand = new Brand();
         $brand->name = $request->name;
         $brand->save();
-        return redirect()->action([Admin_BrandController::class,'list']);
+        return redirect()->action([Admin_BrandController::class,'index']);
     }
 
     /**

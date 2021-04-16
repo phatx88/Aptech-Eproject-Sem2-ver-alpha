@@ -22,10 +22,9 @@
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
                          <th >BrandName</th>
-                         <th>
-                         </th>
-                         <th>
-                         </th>
+                         <th></th>
+                         <th></th>
+                         <th></th>
                       </tr>
                    </thead>
                    <tbody>
@@ -33,8 +32,9 @@
                        <tr>
                         <td><input type="checkbox"></td>
                         <td >{{ $brand->name }}</td>
+                        <td></td>
                         <td><a href="{{ route('admin.brand.edit', ['brand'=>$brand->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Edit</a></td>
-                        <td><a href="{{ route('admin.brand.', ['brand'=>$brand->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</a></td>
+                        <td><a href="{{ route('admin.brand.destroy', ['brand'=>$brand->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</a></td>
                         {{-- <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td> --}}
                     </tr>
                        @endforeach
