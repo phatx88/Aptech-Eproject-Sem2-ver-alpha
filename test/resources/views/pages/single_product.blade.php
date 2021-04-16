@@ -188,14 +188,38 @@
                     <div class="item">
                         <div class="d-flex">
                             <div class="product ftco-animate">
+                                <form action="">
+                                    @csrf
+                                    <input type="hidden" class="product_name_cart_{{ $re_product->id }}"
+                                            value="{{ $re_product->name }}">
+                                        @if ($re_product->price != $re_product->sale_price)
+                                            <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
+                                                value="{{ $re_product->sale_price }}">
+                                        @else
+                                            <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
+                                                value="{{ $re_product->price }}">
+                                        @endif
+                                        <input type="hidden" class="product_quantity_cart_{{ $re_product->id }}" value="1">
+                                        <input type="hidden" class="product_image_cart_{{ $re_product->id }}"
+                                            value="{{ $re_product->featured_image }}">
                                 <div class="img d-flex align-items-center justify-content-center" style="background-image: url({{ asset('frontend/images/products/'.$re_product->featured_image) }});">
                                     <div class="desc">
                                         <p class="meta-prod d-flex">
-                                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
-                                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-heart"></span></a>
-                                            <a href="#" class="d-flex align-items-center justify-content-center"><span class="flaticon-visibility"></span></a>
+                                            @if($re_product->inventory_qty == 0)
+                                            <a type="button" style="cursor: pointer;" data-id_product="{{ $re_product->id }}" class="d-flex align-items-center justify-content-center" onclick="notyf.error('Currently Out of Stock');"><span
+                                                    class="flaticon-shopping-bag"></span></a>
+                                            @else
+                                            <a type="button" style="cursor: pointer;" data-id_product="{{ $re_product->id }}" class="d-flex align-items-center justify-content-center add-to-cart-related"><span
+                                                class="flaticon-shopping-bag"></span></a>
+                                            @endif
+                                            <a href="#" class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-heart"></span></a>
+
+                                            <a href="{{ url('home/single-product/'.$re_product->id) }}" class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-visibility"></span></a>
                                         </p>
                                     </div>
+
                                 </div>
                                 <div class="text text-center">
                                     @if (date('Y', strtotime($re_product->created_date)) >= 2020)
@@ -216,6 +240,7 @@
                                         @endif
                                     </span>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -543,7 +543,7 @@
 
     </footer>
 
-    
+
 
     <!-- loader -->
     <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
@@ -725,13 +725,41 @@
                     success: function(data) {
                         $('#roll-button').html(data);
                         notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
-                    
+
 
                     }
                 });
             });
         });
 
+    </script>
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $(".add-to-cart-related").click(function(){
+                var id = $(this).data("id_product");
+                var product_name = $('.product_name_cart_' + id).val();
+                var product_price = $('.product_price_cart_' + id).val();
+                var product_quantity = $('.product_quantity_cart_' + id).val();
+                var product_image = $('.product_image_cart_' + id).val();
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{ url('/add-to-cart') }}',
+                    method: "POST",
+                    data: {
+                        id: id,
+                        product_name: product_name,
+                        product_price: product_price,
+                        product_quantity: product_quantity,
+                        product_image: product_image,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#roll-button').html(data);
+                        notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
+                    }
+                });
+            });
+         });
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
