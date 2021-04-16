@@ -198,7 +198,7 @@
                                                 @if ($product->price != $product->sale_price)
                                                     <span class="price price-sale">${{ $product->price }}</span>
                                                 @endif
-                                            
+
                                             <span class="price">${{ $product->sale_price }}</span>
                                         </p>
                                         <p>Available:  {{ $product->inventory_qty }}</p>
