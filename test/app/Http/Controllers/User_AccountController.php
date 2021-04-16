@@ -46,8 +46,8 @@ class User_AccountController extends Controller
         $user = $request->user();
 
         $file = $request->file('image');
-        $extension = $file->getClientOriginalExtension();
         $imageName = $file->getClientOriginalName();
+        $imageName = uniqid().$imageName;
         //trỏ tới public 
         $file = $file->move(public_path('frontend\images\profile'), $imageName);
 
@@ -59,8 +59,27 @@ class User_AccountController extends Controller
        
         $user->profile_pic = $imageName;
         $user->save();
-        return redirect()->route('account.index')->with('success' , "Product uploaded successfully");
+        return redirect()->route('account.index')->with('success' , "Profile Avater Updated!");
     }   
+
+    public function update(Request $request) {
+        $request->validate([
+            'name' => 'max:255',
+            'mobile' => 'max:255',
+            'housenumber_street' => 'max:255',
+            'ward_id' => 'integer',
+        ]);
+        
+        $user = $request->user();
+
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->housenumber_street = $request->housenumber_street;
+        $user->ward_id = $request->ward_id;
+
+        $user->save();
+        return redirect()->route('account.index')->with('success' , "Profile Updated!");
+    }
 
 
 }

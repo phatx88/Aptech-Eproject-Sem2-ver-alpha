@@ -569,10 +569,11 @@
     </script>
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
-    <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
     <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="{{ asset('frontend/js/main.js') }}"></script>
+    @yield('scripts')
     {{-- Toast Notification Custom --}}
     <script>
         const notyf = new Notyf({

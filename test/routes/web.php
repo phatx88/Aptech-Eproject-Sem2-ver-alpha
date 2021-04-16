@@ -45,7 +45,8 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
 
 Route::get('/home/user/account', [User_AccountController::class , 'index'])->name('account.index'); //trả về User Acccount trên trang Home
-Route::post('/home/user/account', [User_AccountController::class , 'upload'])->name('account.upload'); //trả về User Acccount trên trang Home
+Route::post('/home/user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); //trả về User Acccount trên trang Home
+Route::post('/home/user/account/update', [User_AccountController::class , 'update'])->name('account.update'); //trả về User Acccount trên trang Home
 
 
 //FRONT END
