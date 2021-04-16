@@ -42,9 +42,10 @@ class Admin_CouponController extends Controller
         $coupon = new Coupon();
         $coupon->name = $request->name;
         $coupon->code = $request->code;
-        $coupon->time = now();
+        $coupon->time = $request->time;
         $coupon->cpn_condition = $request->cpn_condition;
         $coupon->number = $request->number;
+        $coupon->save();
         return redirect()->action([Admin_CouponController::class,'index']);
     }
 
@@ -92,6 +93,7 @@ class Admin_CouponController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Coupon::find($id)->delete();
+        return redirect()->action([Admin_CouponController::class,'index']);
     }
 }

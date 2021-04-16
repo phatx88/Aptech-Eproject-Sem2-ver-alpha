@@ -17,7 +17,7 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        $products = Products::get();
+        $products = Product::get();
         return view('admin.product.list' , ['products' => $products]);
     }
 
@@ -55,7 +55,7 @@ class Admin_ProductController extends Controller
         else{
             $imageName = null;
         }
-        $product= new Products();
+        $product= new Product();
         $product->sku = '';
         $product->discount_percentage = 0;
         $product->discount_from_date = '2020-01-01';
@@ -78,7 +78,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Products $product)
+    public function show(Product $product)
     {
         //
     }
@@ -101,7 +101,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products $product)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -112,7 +112,7 @@ class Admin_ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $product)
+    public function destroy(Product $product)
     {
         //
     }

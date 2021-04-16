@@ -21,7 +21,7 @@
                    <thead>
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
-                         <th >Coupon</th>
+
                          <th>
                              ID
                          </th>
@@ -46,10 +46,17 @@
                        @foreach ($coupons as $coupon)
                        <tr>
                         <td><input type="checkbox"></td>
-                        <td >{{ $coupon->name }}</td>
                         <td >{{ $coupon->id }}</td>
+                        <td >{{ $coupon->name }}</td>
+                        <td >{{ $coupon->code }}</td>
+                        <td >{{ $coupon->time }}</td>
+                        <td >{{ $coupon->cpn_condition }}</td>
+                        <td >{{ $coupon->number }}</td>
                         <td><a href="{{ route('admin.coupon.edit', ['coupon'=>$coupon->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Edit</a></td>
-                        <td><a href="{{ route('admin.coupon.', ['coupon'=>$coupon->id]) }}" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</a></td>
+                        <form action="{{ route('admin.coupon.destroy', ['coupon'=>$coupon->id]) }}" method="POST">
+                            @csrf @method('delete')
+                            <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-warning btn-sm">Delete</button></td>
+                        </form>
                         {{-- <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td> --}}
                     </tr>
                        @endforeach
