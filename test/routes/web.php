@@ -81,7 +81,7 @@ Route::prefix('home')->name('home.')->group(function () {
     ->name('single_product');
 });
 
-Route::get('home/find', [User_ProductsController::class, 'find']);
+Route::get('find', [User_ProductsController::class, 'find'])->name('find');
 //BACK END
 
 //Có VErify

@@ -142,7 +142,7 @@
             <div class="row">
 
                 @foreach ($products as $product)
-                    <div class="col-md-4 d-flex">
+                    <div class="col-md-3 d-flex">
 
                         <div class="product ftco-animate">
                             <form>

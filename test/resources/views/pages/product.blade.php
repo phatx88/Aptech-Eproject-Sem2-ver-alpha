@@ -241,7 +241,7 @@
 
 @section('scripts')
     <script type="text/javascript">
-        var path = "find";
+        var path = "{{ route('find') }}";
         $('input.typeahead').typeahead({
             source: function(query, process) {
                 return $.get(path, {
