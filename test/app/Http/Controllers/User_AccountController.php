@@ -54,8 +54,6 @@ class User_AccountController extends Controller
         //delete old-pic
         $oldFile = public_path('frontend\images\profile\\'.$user->profile_pic);
         File::delete($oldFile);
-
-        $imageName = null;
        
         $user->profile_pic = $imageName;
         $user->save();
@@ -65,9 +63,9 @@ class User_AccountController extends Controller
     public function update(Request $request) {
         $request->validate([
             'name' => 'max:255',
-            'mobile' => 'max:255',
+            'mobile' => 'numeric|min:11',
             'housenumber_street' => 'max:255',
-            'ward_id' => 'integer',
+            'ward' => 'integer',
         ]);
         
         $user = $request->user();
@@ -75,7 +73,7 @@ class User_AccountController extends Controller
         $user->name = $request->name;
         $user->mobile = $request->mobile;
         $user->housenumber_street = $request->housenumber_street;
-        $user->ward_id = $request->ward_id;
+        $user->ward_id = $request->ward;
 
         $user->save();
         return redirect()->route('account.index')->with('success' , "Profile Updated!");

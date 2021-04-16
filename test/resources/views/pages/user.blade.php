@@ -108,7 +108,7 @@
                                             <select class="form-control choose province" name="province" id="province">
                                                 @if ($user->ward_id != null)
                                                     <option value="{{ $user->ward->district->province->id }}">
-                                                        --{{ $user->ward->district->province->name }}---</option>
+                                                        {{ $user->ward->district->province->name }}</option>
                                                 @else
                                                     <option value="">--Chọn Thành phố---</option>
                                                 @endif
@@ -128,7 +128,7 @@
                                             <select class="form-control choose district" name="district" id="district">
                                                 @if ($user->ward_id != null)
                                                     <option value="{{ $user->ward->district->id }}">
-                                                        --{{ $user->ward->district->name }}---</option>
+                                                        {{ $user->ward->district->name }}</option>
                                                 @endif
                                                 <option value="">--Chọn quận huyện---</option>
                                             </select>
@@ -139,7 +139,7 @@
                                             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                             <select class="form-control ward" name="ward" id="ward">
                                                 @if ($user->ward_id != null)
-                                                    <option value="{{ $user->ward_id }}">--{{ $user->ward->name }}---
+                                                    <option value="{{ $user->ward_id }}">{{ $user->ward->name }}
                                                     </option>
                                                 @endif
                                                 <option value="">--Chọn xã phường---</option>
