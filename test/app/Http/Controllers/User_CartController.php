@@ -83,7 +83,7 @@ class User_CartController extends Controller
                                 </p>
                         </div>
                         <div class="pt-3">
-                            <button type="button" class="close delete-cart-product" data-dismiss="alert" aria-label="Close" data-id_delete="'.$cart['product_id'].'">
+                            <button type="button" class="close delete-cart-product-button" data-dismiss="alert" aria-label="Close" data-id_delete="'.$cart['product_id'].'">
                                 <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
                             </button>
                         </div>
@@ -259,7 +259,7 @@ class User_CartController extends Controller
                                 </p>
                         </div>
                         <div class="pt-3">
-                            <button type="button" class="close delete-cart-product" data-dismiss="alert" aria-label="Close" data-id_delete="'.$cart['product_id'].'">
+                            <button type="button" class="close delete-cart-product-button" data-dismiss="alert" aria-label="Close" data-id_delete="'.$cart['product_id'].'">
                                 <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
                             </button>
                         </div>

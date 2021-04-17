@@ -95,11 +95,13 @@
             {{-- Shopping cart drop down --}}
 
 
-            <div class="order-lg-last btn-group">
+            <div class="order-lg-last btn-group"  id="roll-button">
 
                 <form action="">
                     @csrf
-                    <div id="roll-button"></div>
+                    <div id="roll-button">
+
+                    </div>
                 </form>
             </div>
 
@@ -610,17 +612,20 @@
     {{-- Toast Notification Custom --}}
     <script type="text/javascript">
         $(document).ready(function() {
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url: '{{ url('roll-button') }}',
-                method: "POST",
-                data: {
-                    _token: _token
-                },
-                success: function(data) {
-                    $('#roll-button').html(data);
-                }
-            });
+            fetch_btn();
+            function fetch_btn(){
+                    var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: '{{ url('roll-button') }}',
+                    method: "POST",
+                    data: {
+                        _token: _token
+                    },
+                    success: function(data) {
+                        $('#roll-button').html(data);
+                    }
+                });
+            }
         });
 
     </script>
@@ -835,7 +840,27 @@
         });
 
     </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#roll-button').on('click','.delete-cart-product-button',function() {
+            var id = $(this).data('id_delete');
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: '{{ url('/delete-cart-product') }}',
+                method: "POST",
+               data: {
+                   id: id,
+                    _token: _token
+               },
+               success: function(data) {
+                    // location.reload();
 
+               }
+             });
+        });
+        });
+
+    </script>
 
 
     {{-- Make Login Modal to stay open --}}
