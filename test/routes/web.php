@@ -67,6 +67,9 @@ Route::post('/update-cart-quantity',[User_CartController::class, 'update_cart_qu
 
 Route::post('/delete-cart-product', [User_CartController::class, 'delete_cart_product']);
 
+//route for autocompleted saerch bar
+Route::get('find', [User_ProductsController::class, 'find'])->name('find');
+
 Route::prefix('home')->name('home.')->group(function () {
      //trả về trang home có list item đầy đủ
     Route::get('/', [User_HomeController::class, 'index'])
@@ -81,7 +84,7 @@ Route::prefix('home')->name('home.')->group(function () {
     ->name('single_product');
 });
 
-Route::get('find', [User_ProductsController::class, 'find'])->name('find');
+
 //BACK END
 
 //Có VErify

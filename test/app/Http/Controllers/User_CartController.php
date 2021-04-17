@@ -177,17 +177,18 @@ class User_CartController extends Controller
 
                 $select_district = District::where('province_id', $id)
                 ->orderby('id', 'ASC')->get();
-                $output .= '<option value="" style="text-align: center;">---chọn quận huyện---</option>';
+                $output .= '<option value="" style="text-align: center;">--Chọn quận huyện--</option>';
                 foreach ($select_district as $key =>  $district){
-                    $output .= '<option value="'.$district->id.'">'.$district->name.'</option>';
+                    $output .= '<option value="'.$district->id.'">'.str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $district->name).'</option>';
                 }
+                
             }else if($data['action'] == "district"){
 
                 $select_ward = Ward::where('district_id', $id)
                 ->orderby('id', 'ASC')->get();
-                $output .= '<option value="">---chọn xã phường---</option>';
+                $output .= '<option value="">--Chọn xã phường--</option>';
                 foreach($select_ward as $ward){
-                    $output .= '<option value="'.$ward->id.'">'.$ward->name.'</option>';
+                    $output .= '<option value="'.$ward->id.'">'.str_replace(['Xã' , 'Phường', 'Thị trấn' ], ['','', ''], $ward->name).'</option>';
                 }
             }
         }

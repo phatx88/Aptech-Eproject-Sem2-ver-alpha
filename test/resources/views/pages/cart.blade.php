@@ -98,7 +98,7 @@
                             <select class="form-control input-sm m-bot15 choose province" name="province" id="province" >
                                 <option value="">--Chọn Thành phố---</option>
                                 @foreach($province as $key => $pvin)
-                                <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
+                                <option value="{{ $pvin->id }}">{{ str_replace(['Thành phố' , 'Tỉnh'], '', $pvin->name) }}</option>
                                 @endforeach
                             </select>
                         </p>
@@ -156,7 +156,7 @@
                         </p>
                         @if(Session('fee'))
                         @foreach(Session('fee') as $key => $fee)
-                        @php $shipping_fee = $fee->price /10000; @endphp
+                        @php $shipping_fee = $fee->price @endphp
                         <p class="d-flex">
                             <span>Delivery</span>
                             <span>${{ $shipping_fee }}</span>
