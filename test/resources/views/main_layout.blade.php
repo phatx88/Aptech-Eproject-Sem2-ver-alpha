@@ -572,8 +572,11 @@
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
     <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
     <!-- Bootstrap 4 Typeahead -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+    {{-- End  Bootstrap 4 Typeahead--}}
+
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     @yield('scripts')
     {{-- Toast Notification Custom --}}
@@ -832,6 +835,7 @@
         });
 
     </script>
+
 
 
     {{-- Make Login Modal to stay open --}}

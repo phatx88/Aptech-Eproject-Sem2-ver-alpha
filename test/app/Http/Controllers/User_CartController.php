@@ -82,6 +82,11 @@ class User_CartController extends Controller
                                     <span class="quantity ml-3">Quantity: '. $cart['product_quantity'] .'</span>
                                 </p>
                         </div>
+                        <div class="pt-3">
+                            <button type="button" class="close delete-cart-product" data-dismiss="alert" aria-label="Close" data-id_delete="'.$cart['product_id'].'">
+                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
+                            </button>
+                        </div>
                     </div>
 
                 ';
@@ -252,6 +257,11 @@ class User_CartController extends Controller
                                 <p class="mb-0"><a href="#" class=" ">$'. $cart['product_price'] * $cart['product_quantity'] .'</a>
                                     <span class="quantity ml-3">Quantity: '. $cart['product_quantity'] .'</span>
                                 </p>
+                        </div>
+                        <div class="pt-3">
+                            <button type="button" class="close delete-cart-product" data-dismiss="alert" aria-label="Close" data-id_delete="'.$cart['product_id'].'">
+                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
+                            </button>
                         </div>
                     </div>
                 ';
