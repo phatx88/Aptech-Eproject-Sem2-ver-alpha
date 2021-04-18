@@ -2,3 +2,6 @@
 test/.env
 test/.env
 .env
+test/.eslintrc.json
+test/package-lock.json
+test/package.json
