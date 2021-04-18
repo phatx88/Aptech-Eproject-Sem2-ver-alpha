@@ -33,7 +33,7 @@
                     <input type="file" class="center-block file-upload d-none" id="profile_pic" name="image"
                         onchange="this.form.submit()">
                 </div>
-                  
+
             </form>
             <h3 class="text-center">Welcome {{ $user->name }}</h3>
             {{-- <hr class="mt-5 mb-0"> --}}
@@ -44,7 +44,7 @@
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
                                 role="tab" aria-controls="nav-profile" aria-selected="false"><span class="lead">
                                     Profile</span> </a>
-                            <a class="nav-item nav-link" id="order-history-tab" data-toggle="tab" href="#order-history"
+                            <a class="nav-item nav-link active show" id="order-history-tab" data-toggle="tab" href="#order-history"
                                 role="tab" aria-controls="order-history" aria-selected="false"><span class="lead"> Order
                                     History</span></a>
                             <a class="nav-item nav-link" id="wish-list-tab" data-toggle="tab" href="#wish-list" role="tab"
@@ -63,8 +63,8 @@
                             <form action="{{ route('account.update') }}" class="billing-form" method="POST">
                                 @csrf
                                 <h3 class="mb-4 mt-4 billing-heading">Contact Info</h3>
-                                @include('errors.error') 
-                                @include('errors.message')                       
+                                @include('errors.error')
+                                @include('errors.message')
                                 <div class="row align-items-end">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -162,7 +162,7 @@
                         <!-- TAB PANE - USER INFO - END -->
 
                         {{-- TAB PANE - ORDER HISTORY - TRACKING --}}
-                        <div class="tab-pane fade" id="order-history" role="tabpanel" aria-labelledby="order-history-tab">
+                        <div class="tab-pane fade show active" id="order-history" role="tabpanel" aria-labelledby="order-history-tab">
                             <div class="row">
                                 <div class="col-6">
                                     <h3 class="mb-4 mt-4 billing-heading">My Orders</h3>

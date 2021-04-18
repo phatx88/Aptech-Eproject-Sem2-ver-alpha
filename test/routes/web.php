@@ -49,7 +49,8 @@ Route::get('/home/user/account', [User_AccountController::class , 'index'])->nam
 Route::post('/home/user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); //trả về User Acccount trên trang Home
 Route::post('/home/user/account/update', [User_AccountController::class , 'update'])->name('account.update'); //trả về User Acccount trên trang Home
 
-
+//Check-Out-Button
+Route::post('/check-out-shopping', [User_CheckOutController::class, 'check_out_shopping']);
 //FRONT END
 // Select CITY - DISTRICT - WARD -> FEE
 Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
@@ -86,7 +87,7 @@ Route::prefix('home')->name('home.')->group(function () {
 });
 
 
-// CHECK OUT 
+// CHECK OUT
 Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('checkout.index'); //Về Trang Check Out
 
 

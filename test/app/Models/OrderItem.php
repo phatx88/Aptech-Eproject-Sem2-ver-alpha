@@ -11,6 +11,9 @@ class OrderItem extends Pivot
     use HasFactory;
     protected $table = 'order_item';
     public $timestamps = false;
+    // protected $fillable = [
+    //     'product_id', 'order_id', 'qty', 'unit_price', 'total_price'
+    // ];
     public function product(){
         return $this->belongsTo(Product::class , 'product_id');
     }

@@ -10,7 +10,9 @@ class Order extends Model
     use HasFactory;
     protected $table = 'order';
     public $timestamps = false;
-
+    // protected $fillable = [
+    //     'customer_id', 'shipping_fullname', 'shipping_email', 'shipping_mobile', 'payment_method','coupon_id','shipping_housenumber_street','shipping_ward_id','shipping_fee'
+    // ];
     public function user(){
         return $this->belongsTo(User::class, 'customer_id' , 'id');
     }
