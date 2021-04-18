@@ -12,6 +12,7 @@ use App\Http\Controllers\User_HomeController;    //use
 use App\Http\Controllers\User_AccountController;    //use
 use App\Http\Controllers\User_ProductsController;
 use App\Http\Controllers\User_CartController;
+use App\Http\Controllers\User_CheckOutController;
 // OTHERS
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +84,10 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
 });
+
+
+// CHECK OUT 
+Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('checkout.index'); //Về Trang Check Out
 
 
 //BACK END

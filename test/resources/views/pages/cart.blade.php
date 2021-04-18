@@ -20,7 +20,6 @@
                         <thead class="thead-primary">
                         <tr>
                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
                             <th>Product</th>
                             <th>Price</th>
                             <th>Quantity</th>
@@ -35,12 +34,6 @@
                         @endphp
                         @foreach(Session('cart') as $key => $cart)
                         <tr class="alert" role="alert">
-                            <td>
-                                <label class="checkbox-wrap checkbox-primary">
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </td>
                             <td>
                                 <div class="img" style="background-image: url('{{ asset('frontend/images/products/' . $cart['product_image']) }}');"></div>
                             </td>
@@ -71,6 +64,7 @@
                         </tr>
                         @php
                             $subtotal += $total;
+                            Session::put('subtotal', $subtotal);
                         @endphp
                         @endforeach
                         @else
@@ -179,12 +173,12 @@
                             <span>
                                 <?php
                                    $realtotal = $subtotal + $shipping_fee - $coupon_fee;
-                                    echo $realtotal;
+                                    echo "$".$realtotal;
                                     ?>
                             </span>
                         </p>
                     </div>
-                    <p class="text-center"><a href="{{URL::to('check-out')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+                    <p class="text-center"><a href="{{route('checkout.index')}}" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
                 </div>
             </div>
             @endif

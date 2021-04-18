@@ -192,7 +192,7 @@
                             <a class="dropdown-item" href="{{ route('home.products.index') }}">Products</a>
                             <a class="dropdown-item" href="{{ URL::to('single-blog') }}">Single Blog</a>
                             <a class="dropdown-item" href="{{ URL::to('cart') }}">Cart</a>
-                            <a class="dropdown-item" href="{{ URL::to('check-out') }}">Checkout</a>
+                            <a class="dropdown-item" href="{{ route('checkout.index') }}">Checkout</a>
                             <a class="dropdown-item" href="{{ route('account.index') }}">User Account</a>
 
                         </div>
