@@ -79,7 +79,7 @@ Route::prefix('home')->name('home.')->group(function () {
     Route::get('products/{id?}', [User_ProductsController::class, 'index'])
     ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
 
-    
+
     Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
 });
@@ -109,6 +109,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/test', function () {
     return view('auth.verify');
 });
+
+
 
 
 //URL TRẢ VỀ VIEW -> Cho development thôi
