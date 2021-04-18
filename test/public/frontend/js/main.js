@@ -276,7 +276,6 @@
     snapSlider.noUiSlider.set(this.value);
   });
 
+
+
 })(jQuery);
-
-
-
