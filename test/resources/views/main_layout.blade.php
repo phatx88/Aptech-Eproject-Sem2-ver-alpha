@@ -13,19 +13,18 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="{{ asset('frontend/css/animate.css') }}">
-
     <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/nouislider.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="{{ asset('frontend/css/star-rating-svg.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+    
 </head>
-
 
 <body>
     <div class="wrap">
@@ -305,7 +304,7 @@
 
                             <div class="form-group text-center heading-section">
                                 <h2>Login</h2>
-                                <span>Not a member yet? <a href="#register" data-dismiss="modal"
+                                <span>Not a member yet? <a href="#registerForm" data-dismiss="modal"
                                         data-toggle="modal">Sign up here</a></span>
                             </div>
                             <div class="form-group" style="position: relative;">
@@ -365,79 +364,8 @@
             </div>
         </div>
 
-        <!-- Register Modal -->
-        <div class="modal fade" id="registerForm">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content form-wrapper">
-                    <div class="close-box" data-dismiss="modal">
-                        <i class="fa fa-times fa-2x"></i>
-                    </div>
-                    <div class="container-fluid mt-5">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            <div class="form-group text-center pb-2 heading-section">
-                                <h2>Registration</h2>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col">
-                                    <label for="name">{{ __('Name') }}</label>
-                                    <input id="name" type="text"
-                                        class="form-control @error('name') is-invalid @enderror" name="name"
-                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="form-group" style="position:relative;">
-                                <label for="email">{{ __('E-Mail Address') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email">
-                                <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login"
-                                    style="display: block; position: absolute; right: 0; font-size: 12px;">That's you?
-                                    Login</a>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
-                            </div>
-                            <div class="form-row mb-1">
-                                <div class="form-group col">
-                                    <label for="password">{{ __('Password') }}</label>
-                                    <input id="password" type="password"
-                                        class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
-
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group col">
-                                    <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                                    <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <button class="btn btn-info form-control">{{ __('Register') }}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- AJAX test --}}
-        {{-- <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+        {{-- AJAX Validation Register --}}
+        <div class="modal fade" id="registerForm" tabindex="-1" role="dialog" aria-labelledby="registerModal"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
@@ -445,7 +373,7 @@
                         <i class="fa fa-times fa-2x"></i>
                     </div>
                     <div class="container-fluid mt-5">
-                        <form method="POST" id="registerForm">
+                        <form data-action="{{ route('register') }}" method="POST" id="fromRegister">
                             @csrf
                             <div class="form-group text-center pb-2 heading-section">
                                 <h2 id="registerModal">{{ __('Register') }}</h2>
@@ -497,13 +425,13 @@
                             </div>
 
                             <div class="form-group">
-                                <button class="btn btn-info form-control">{{ __('Register') }}</button>
+                                <button id="submitRegistration" class="btn btn-info form-control">{{ __('Register') }}</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
         {{-- forget password Modal --}}
         <div class="modal fade" id="forgotPassword">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -572,10 +500,10 @@
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
-    <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
     <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
     </script>
+    <script src="{{ asset('frontend/js/jquery.star-rating-svg.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
     @yield('scripts')

@@ -11,4 +11,9 @@ class Comment extends Model
     protected $table = 'Comment';
     public $timestamps = false;
 
+    public function product()
+    {
+        return $this->belongsTo(Products::class, 'product_id');
+    }
+
 }

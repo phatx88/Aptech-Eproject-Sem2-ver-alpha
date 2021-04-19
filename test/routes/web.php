@@ -38,9 +38,13 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 
 
-// AUTHENTICATE
+// Trả về Trang ban đầu
 Route::get('/', function () {
     return redirect('/home');
+});
+
+Route::get('/admin', function () {
+    return redirect('/admin/product');
 });
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
@@ -56,6 +60,7 @@ Route::post('/check-out-shopping', [User_CheckOutController::class, 'check_out_s
 Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
 
 Route::post('calculate-fee',[User_CartController::class, 'calculate_fee']);
+
 //Add Product to cart
 Route::post('roll-button', [User_CartController::class, 'roll_button']);
 
@@ -69,7 +74,7 @@ Route::post('/update-cart-quantity',[User_CartController::class, 'update_cart_qu
 
 Route::post('/delete-cart-product', [User_CartController::class, 'delete_cart_product']);
 
-//route for autocompleted saerch bar
+//route for autocompleted search bar
 Route::get('find', [User_ProductsController::class, 'find'])->name('find');
 
 Route::prefix('home')->name('home.')->group(function () {
@@ -84,6 +89,9 @@ Route::prefix('home')->name('home.')->group(function () {
 
     Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
+
+    Route::post('single-product/{id}/post', [User_ProductsController::class, 'postComment'])
+    ->name('post');
 });
 
 
@@ -93,23 +101,24 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 
 //BACK END
 
-//Có VErify
-// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
-
-//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
-// });
-
-
-// KO Verify
-Route::prefix('admin')->name('admin.')->group(function () {
+// Có VErify
+Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
-
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
 });
+
+
+// KO Verify
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+//     Route::resource('category', Admin_CategoryController::class);
+//     Route::resource('brand', Admin_BrandController::class);
+//     Route::resource('coupon', Admin_CouponController::class);
+// });
 
 // ROUTE TEST
 Route::get('/test', function () {

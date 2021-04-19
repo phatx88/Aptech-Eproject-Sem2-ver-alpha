@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;
-
+use Validator;
 use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Coupon;
 use App\Models\User;
+use App\Models\Comment;
+use Exception;
 
 class User_ProductsController extends Controller
 {
@@ -121,8 +123,10 @@ class User_ProductsController extends Controller
 
     public function single_product($id)
     {
-        // dd($id);
+        $comments = Comment::where('product_id', $id)->orderby('created_date', 'DESC')->paginate(5);
         $product = Product::where('id', $id)->get();
+        // dd($product);
+        
         $category_id = 0;
         foreach ($product as $key => $value) {
             $category_id = $value->category_id;
@@ -132,6 +136,54 @@ class User_ProductsController extends Controller
 
         return view('pages.single_product')
             ->with('product', $product)
-            ->with('related_product', $related_product);
+            ->with('related_product', $related_product)
+            ->with('comments', $comments);
+    }
+
+    public function postComment(Request $request, $id) 
+    {
+        $validator = Validator::make($request->all(), [
+            'star' => 'required',
+            'fullname' => 'required',
+            'email' => 'required',
+            'description' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json($validator->errors()->all() , 400);
+        } 
+        else
+        {
+            try {
+                // Save Comment to Data 
+            $comment = new Comment;
+            $comment->product_id = $id;
+            $comment->star = $request->star;
+            $comment->email = $request->email;
+            $comment->fullname = $request->fullname;
+            $comment->description = $request->description;
+            $comment->save();
+
+            } catch (Exception $e) {
+
+                return response()->json([$e->getMessage()], 400);
+            }
+        }
+        
+        $comments = Comment::where('product_id', $id)->orderby('created_date', 'DESC')->paginate(5);
+        $data = [];
+        foreach ($comments as $comment) :
+            $data[] = [
+                'id' => $comment->id ,
+                'fullname' => $comment->fullname,
+                'email' => $comment->email,
+                'star' => $comment->star,
+                'description' => $comment->description,
+                'created_date' => $comment->created_date
+            ];
+        endforeach;
+        // dd ($data);
+        echo json_encode($data);
+
     }
 }

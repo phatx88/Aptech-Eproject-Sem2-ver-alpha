@@ -55,6 +55,15 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+
+    //Customer function to route user with 'admin' role
+    protected function redirecTo() {
+        if (auth()->user()->is_staff == 1) {
+            return '/admin';
+        }
+        return '/home';
+    }
+
     /**
      * Create a new controller instance.
      *
