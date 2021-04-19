@@ -28,25 +28,10 @@ class Admin_OrderController extends Controller
 
         $orders = Order::get();
         $orderItems = OrderItem::get();
-        // $wards = Ward::get();
-        // $districts = District::get();
-        // $provinces = Province::get();
-        // $transports = Transport::get();
-
-
-        // join("customer", "customer.id", "=", "order.customer_id")
-        // ->join("status", "status.id", "=", "order.order_status_id")
-        // ->join("staff" , 'order.staff_id', '=' , 'staff.id')
-        
-        // dd($orders);
         
         return view('admin.order.list', [
             'orders'=>$orders,
             'orderItems' => $orderItems,
-            // 'wards' => $wards,
-            // 'districts' => $districts,
-            // 'provinces' => $provinces,
-            // 'transports' => $transports,
             ]);
     }
 

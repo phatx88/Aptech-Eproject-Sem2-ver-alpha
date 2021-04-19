@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Order extends Model
 {
@@ -25,12 +26,13 @@ class Order extends Model
         return $this->belongsTo(Ward::class, 'shipping_ward_id' , 'id');
     }
 
-    public function product(){
-        return $this->belongsToMany(Product::class)->using(OrderItem::class);
+    public function product(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class , 'order_item' , 'order_id' , 'product_id');
     }
 
-    public function orderItem() {
-        return $this->hasMany(OrderItem::class , 'product_id', 'order_id');
-    }
+    // public function orderItem() {
+    //     return $this->hasMany(OrderItem::class , 'product_id', 'order_id');
+    // }
 
 }

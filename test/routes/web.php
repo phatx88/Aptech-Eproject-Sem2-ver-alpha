@@ -56,6 +56,7 @@ Route::post('/check-out-shopping', [User_CheckOutController::class, 'check_out_s
 Route::post('select-delivery',[User_CartController::class, 'select_delivery']);
 
 Route::post('calculate-fee',[User_CartController::class, 'calculate_fee']);
+
 //Add Product to cart
 Route::post('roll-button', [User_CartController::class, 'roll_button']);
 
@@ -69,7 +70,7 @@ Route::post('/update-cart-quantity',[User_CartController::class, 'update_cart_qu
 
 Route::post('/delete-cart-product', [User_CartController::class, 'delete_cart_product']);
 
-//route for autocompleted saerch bar
+//route for autocompleted search bar
 Route::get('find', [User_ProductsController::class, 'find'])->name('find');
 
 Route::prefix('home')->name('home.')->group(function () {
@@ -84,6 +85,9 @@ Route::prefix('home')->name('home.')->group(function () {
 
     Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
+
+    Route::post('single-product/{id}/post', [User_ProductsController::class, 'postComment'])
+    ->name('post');
 });
 
 

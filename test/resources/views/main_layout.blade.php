@@ -13,19 +13,18 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="{{ asset('frontend/css/animate.css') }}">
-
     <link rel="stylesheet" href="{{ asset('frontend/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/nouislider.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="{{ asset('frontend/css/star-rating-svg.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+    
 </head>
-
 
 <body>
     <div class="wrap">
@@ -576,6 +575,7 @@
     <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
     </script>
+    <script src="{{ asset('frontend/js/jquery.star-rating-svg.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
     @yield('scripts')

@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\Brand;
 use App\Models\Coupon;
 use App\Models\User;
+use App\Models\Comment;
 
 class User_ProductsController extends Controller
 {
@@ -121,8 +122,10 @@ class User_ProductsController extends Controller
 
     public function single_product($id)
     {
-        // dd($id);
+        $comments = Comment::where('product_id', $id)->orderby('created_date', 'DESC')->paginate(5);
         $product = Product::where('id', $id)->get();
+        // dd($product);
+        
         $category_id = 0;
         foreach ($product as $key => $value) {
             $category_id = $value->category_id;
@@ -132,6 +135,27 @@ class User_ProductsController extends Controller
 
         return view('pages.single_product')
             ->with('product', $product)
-            ->with('related_product', $related_product);
+            ->with('related_product', $related_product)
+            ->with('comments', $comments);
+    }
+
+    public function postComment(Request $request, $id) 
+    {
+        $request->validate([
+            'star' => 'required',
+            'fullname' => 'required',
+            'email' => 'required',
+            'description' => 'required',
+        ]);
+
+        $comment = new Comment;
+        $comment->product_id = $id;
+        $comment->star = $request->star;
+        $comment->email = $request->email;
+        $comment->fullname = $request->fullname;
+        $comment->description = $request->description;
+        $comment->save();
+        return redirect()->action([User_ProductsController::class, 'single_product'] , ['id' => $id]);
+
     }
 }

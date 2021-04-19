@@ -44,7 +44,11 @@
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
                                 role="tab" aria-controls="nav-profile" aria-selected="false"><span class="lead">
                                     Profile</span> </a>
+<<<<<<< Updated upstream
                             <a class="nav-item nav-link active show" id="order-history-tab" data-toggle="tab" href="#order-history"
+=======
+                            <a class="nav-item nav-link active" id="order-history-tab" data-toggle="tab" href="#order-history"
+>>>>>>> Stashed changes
                                 role="tab" aria-controls="order-history" aria-selected="false"><span class="lead"> Order
                                     History</span></a>
                             <a class="nav-item nav-link" id="wish-list-tab" data-toggle="tab" href="#wish-list" role="tab"
@@ -57,7 +61,7 @@
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 
                         {{-- TAB PANE - USER INFO --}}
-                        <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                             aria-labelledby="nav-profile-tab">
 
                             <form action="{{ route('account.update') }}" class="billing-form" method="POST">
@@ -162,7 +166,11 @@
                         <!-- TAB PANE - USER INFO - END -->
 
                         {{-- TAB PANE - ORDER HISTORY - TRACKING --}}
+<<<<<<< Updated upstream
                         <div class="tab-pane fade show active" id="order-history" role="tabpanel" aria-labelledby="order-history-tab">
+=======
+                        <div class="tab-pane fade show active" id="order-history" role="tabpanel" aria-labelledby="order-history-tab" >
+>>>>>>> Stashed changes
                             <div class="row">
                                 <div class="col-6">
                                     <h3 class="mb-4 mt-4 billing-heading">My Orders</h3>
