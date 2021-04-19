@@ -28,7 +28,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
          <li class="nav-item active">
-            <a class="nav-link" href="{{ URL::TO('admin-dashboard') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
+            <a class="nav-link" href="{{ route('admin.dashboard.index') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
          </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>

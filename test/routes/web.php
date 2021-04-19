@@ -1,15 +1,15 @@
 <?php
 
 // BE CONTROLLER
-
+use App\Http\Controllers\Admin_DashboardController;
 use App\Http\Controllers\Admin_CategoryController;
 use App\Http\Controllers\Admin_OrderController;
 use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\Admin_BrandController;
 use App\Http\Controllers\Admin_CouponController;
 // FE CONTROLLER
-use App\Http\Controllers\User_HomeController;    //use
-use App\Http\Controllers\User_AccountController;    //use
+use App\Http\Controllers\User_HomeController;    
+use App\Http\Controllers\User_AccountController;    
 use App\Http\Controllers\User_ProductsController;
 use App\Http\Controllers\User_CartController;
 use App\Http\Controllers\User_CheckOutController;
@@ -44,7 +44,7 @@ Route::get('/', function () {
 });
 
 Route::get('/admin', function () {
-    return redirect('/admin/product');
+    return redirect('/admin/dashboard');
 });
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
@@ -102,23 +102,24 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 //BACK END
 
 // Có VErify
-Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-    Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
-    Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
-    Route::resource('category', Admin_CategoryController::class);
-    Route::resource('brand', Admin_BrandController::class);
-    Route::resource('coupon', Admin_CouponController::class);
-});
-
-
-// KO Verify
-// Route::prefix('admin')->name('admin.')->group(function () {
+// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
 //     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
 //     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
 //     Route::resource('category', Admin_CategoryController::class);
 //     Route::resource('brand', Admin_BrandController::class);
 //     Route::resource('coupon', Admin_CouponController::class);
 // });
+
+
+// KO Verify
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('dashboard' , Admin_DashboardController::class);
+    Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+    Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+    Route::resource('category', Admin_CategoryController::class);
+    Route::resource('brand', Admin_BrandController::class);
+    Route::resource('coupon', Admin_CouponController::class);
+});
 
 // ROUTE TEST
 Route::get('/test', function () {
@@ -152,13 +153,6 @@ Route::get('/check-out', function () {
 });
 
 
-
-// Dashboard
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-});
-
-
 //customer
 Route::get('/customer-list', function () {
     return view('admin.customer.list');
@@ -179,18 +173,6 @@ Route::get('/comment-list', function () {
 Route::get('/image-list', function () {
     return view('admin.image.list');
 });
-
-//category
-// Route::get('/category-add', function () {
-//     return view('admin.category.add');
-// });
-// Route::get('/category-list', function () {
-//     return view('admin.category.list');
-// });
-// Route::get('/category-edit', function () {
-//     return view('admin.category.edit');
-// });
-
 
 //staff
 Route::get('/staff-add', function () {

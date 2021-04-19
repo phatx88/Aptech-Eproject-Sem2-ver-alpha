@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Ward;
-use App\Models\District;
-use App\Models\Province;
-use App\Models\Transport;
 
-class Admin_OrderController extends Controller
+class Admin_DashboardController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +19,7 @@ class Admin_OrderController extends Controller
         $orders = Order::orderby('id' , 'DESC')->get();
         $orderItems = OrderItem::get();
         
-        return view('admin.order.list', [
+        return view('admin.dashboard', [
             'orders'=>$orders,
             'orderItems' => $orderItems,
             ]);
@@ -38,7 +32,7 @@ class Admin_OrderController extends Controller
      */
     public function create()
     {
-        return view('admin.order.add');
+        //
     }
 
     /**
@@ -55,10 +49,10 @@ class Admin_OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
         //
     }
@@ -66,10 +60,10 @@ class Admin_OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
         //
     }
@@ -78,10 +72,10 @@ class Admin_OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -89,10 +83,10 @@ class Admin_OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Order  $order
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy($id)
     {
         //
     }
