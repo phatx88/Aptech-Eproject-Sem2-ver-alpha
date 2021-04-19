@@ -571,7 +571,6 @@
     <script src="{{ asset('frontend/js/google-map.js') }}"></script>
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
-    <script src="{{ asset('frontend/js/login-register-ajax.js') }}"></script>
     <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
     </script>

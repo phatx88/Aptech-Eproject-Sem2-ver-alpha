@@ -69,203 +69,202 @@
                             @endif
                         </div>
                     </div>
-         </form>
-                    <div class="row mt-5">
-                        <div class="col-md-12 nav-link-wrap">
-                            <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist"
-                                aria-orientation="vertical">
-                                <a class="nav-link ftco-animate active mr-lg-1" id="v-pills-1-tab" data-toggle="pill"
-                                    href="#v-pills-1" role="tab" aria-controls="v-pills-1"
-                                    aria-selected="true">Description</a>
+        </form>
+        <div class="row mt-5">
+            <div class="col-md-12 nav-link-wrap">
+                <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link ftco-animate active mr-lg-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1"
+                        role="tab" aria-controls="v-pills-1" aria-selected="true">Description</a>
 
-                                <a class="nav-link ftco-animate mr-lg-1" id="v-pills-2-tab" data-toggle="pill"
-                                    href="#v-pills-2" role="tab" aria-controls="v-pills-2"
-                                    aria-selected="false">Manufacturer</a>
+                    <a class="nav-link ftco-animate mr-lg-1" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2"
+                        role="tab" aria-controls="v-pills-2" aria-selected="false">Manufacturer</a>
 
-                                <a class="nav-link ftco-animate" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3"
-                                    role="tab" aria-controls="v-pills-3" aria-selected="false">Reviews</a>
+                    <a class="nav-link ftco-animate" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab"
+                        aria-controls="v-pills-3" aria-selected="false">Reviews</a>
 
-                            </div>
+                </div>
+            </div>
+            <div class="col-md-12 tab-wrap">
+
+                <div class="tab-content bg-light" id="v-pills-tabContent">
+
+                    <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+                        <div class="p-4">
+                            <h3 class="mb-4">{{ $val->name }}</h3>
+                            <p>{{ $val->description }}</p>
                         </div>
-                        <div class="col-md-12 tab-wrap">
+                    </div>
 
-                            <div class="tab-content bg-light" id="v-pills-tabContent">
+                    <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-day-2-tab">
+                        <div class="p-4">
+                            <h3 class="mb-4">Manufactured By Liquor Store</h3>
+                            <p>On her way she met a copy. The copy warned the Little Blind Text, that where it
+                                came from it would have been rewritten a thousand times and everything that was
+                                left from its origin would be the word "and" and the Little Blind Text should
+                                turn around and return to its own, safe country. But nothing the copy said could
+                                convince her and so it didn’t take long until a few insidious Copy Writers
+                                ambushed her, made her drunk with Longe and Parole and dragged her into their
+                                agency, where they abused her for their.</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
+                        <div class="row p-4">
+                            <h3 class="mb-4">Your Review</h3>
+                            <div class="review">
 
-                                <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
-                                    aria-labelledby="day-1-tab">
-                                    <div class="p-4">
-                                        <h3 class="mb-4">{{ $val->name }}</h3>
-                                        <p>{{ $val->description }}</p>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="v-pills-2" role="tabpanel"
-                                    aria-labelledby="v-pills-day-2-tab">
-                                    <div class="p-4">
-                                        <h3 class="mb-4">Manufactured By Liquor Store</h3>
-                                        <p>On her way she met a copy. The copy warned the Little Blind Text, that where it
-                                            came from it would have been rewritten a thousand times and everything that was
-                                            left from its origin would be the word "and" and the Little Blind Text should
-                                            turn around and return to its own, safe country. But nothing the copy said could
-                                            convince her and so it didn’t take long until a few insidious Copy Writers
-                                            ambushed her, made her drunk with Longe and Parole and dragged her into their
-                                            agency, where they abused her for their.</p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-3" role="tabpanel"
-                                    aria-labelledby="v-pills-day-3-tab">
-                                    <div class="row p-4">
-                                        <h3 class="mb-4">Your Review</h3>
-                                        <div class="review">
-
-                                            {{-- USER IMAGE --}}
-                                            {{-- <div class="user-img"
+                                {{-- USER IMAGE --}}
+                                {{-- <div class="user-img"
                                                     style="background-image: url(frontend/images/person_1.jpg)">
                                                 </div> --}}
-                                            <div class="desc pr-5">
-                                                @include('errors.error')
-                                                <form action="{{ route('home.post', ['id' => $product[0]->id]) }}"
-                                                    method="POST" id="postComment">
-                                                    @csrf
-                                                    {{-- <input type="hidden" name="product_id" value="{{  }}"> --}}
+                                <div class="desc pr-5">
+                                    {{-- AJax load error messages --}}
+                                    <div class="alert alert-danger print-error-msg" style="display:none">
+                                        <ul></ul>
+                                    </div>
+                                    {{-- AJax load error messages --}}
 
-                                                    <span class="my-rating"></span> <span class="live-rating-span"></span>
-                                                    <input type="hidden" class="live-rating" name="star" value="">
+                                    <form action="{{ route('home.post', ['id' => $product[0]->id]) }}" method="POST"
+                                        id="postComment">
+                                        @csrf
+                                        {{-- <input type="hidden" name="product_id" value="{{  }}"> --}}
+
+                                        <span class="my-rating"></span> <span class="live-rating-span"></span>
+                                        <input type="hidden" class="live-rating" name="star" value="">
 
 
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <input type="text" name="fullname" class="form-control mt-4"
-                                                                placeholder="Name*">
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <input type="text" name="email" class="form-control mt-4"
-                                                                placeholder="Email*">
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <textarea name="description" class="form-control mt-4"
-                                                                placeholder="Description*" rows="5"></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                    <input class="btn btn-primary mt-4"
-                                                       type="submit" value="Post">
-                                                </form>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" name="fullname" class="form-control mt-4"
+                                                    placeholder="Name*">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="email" class="form-control mt-4"
+                                                    placeholder="Email*">
+                                            </div>
+                                            <div class="col-12">
+                                                <textarea name="description" class="form-control mt-4"
+                                                    placeholder="Description*" rows="5"></textarea>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row p-4" id="comment-list">
-                                        
-                                        <h3 class="mb-4" id="comment-total">{{ $comments->total() }} Reviews</h3>
-                                        <div class="review" id="comment-review">
-                                            @foreach ($comments as $comment)
 
-                                                {{-- USER IMAGE --}}
-                                                {{-- <div class="user-img"
+                                    </form>
+                                    <input class="btn btn-primary mt-4" id="submitPost" value="Post">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-4" id="comment-list">
+
+                            <h3 class="mb-4" id="comment-total" data-total="{{ $comments->total() }}">
+                                {{ $comments->total() }} Reviews</h3>
+                            <div class="review" id="comment-review">
+                                @foreach ($comments as $comment)
+
+                                    {{-- USER IMAGE --}}
+                                    {{-- <div class="user-img"
                                             style="background-image: url(frontend/images/person_1.jpg)">
                                             </div> --}}
-                                                <div class="desc">
-                                                    <h4>
-                                                        <span class="text-left">{{ $comment->fullname }}</span>
-                                                        <span
-                                                            class="text-right">{{ date('Y-m-d', strtotime($comment->created_date)) }}</span>
-                                                    </h4>
-                                                    <p class="star">
-                                                    <div class="my-rating-posted" data-rating="{{ $comment->star }}">
-                                                    </div>
-                                                    </p>
-                                                    <p>{{ $comment->description }}</p>
-                                                </div>
-                                            @endforeach
+                                    <div class="desc">
+                                        <h4>
+                                            <span class="text-left">{{ $comment->fullname }}</span>
+                                            <span
+                                                class="text-right">{{ date('Y-m-d', strtotime($comment->created_date)) }}</span>
+                                        </h4>
+                                        <p class="star">
+                                        <div class="my-rating-posted" data-rating="{{ $comment->star }}">
                                         </div>
-                                        <div class="d-flex justify-content-end">
-                                            {{ $comments->links() }}
-                                        </div>
+                                        </p>
+                                        <p>{{ $comment->description }}</p>
                                     </div>
-                                </div>
+                                @endforeach
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                {{ $comments->links() }}
                             </div>
                         </div>
                     </div>
-            @endforeach
+                </div>
+            </div>
+        </div>
+        @endforeach
 
-            <div class="row mt-5">
-                <div class="col-md-12">
-                    <h2 class="text-center mb-5">Related Product</h2>
-                    <div class="carousel-testimony owl-carousel ftco-owl">
-                        <!-- Sản Phẩm Liên Quan  -->
-                        @foreach ($related_product as $key => $re_product)
-                            <div class="item">
-                                <div class="d-flex">
-                                    <div class="product ftco-animate">
-                                        <form action="">
-                                            @csrf
-                                            <input type="hidden" class="product_name_cart_{{ $re_product->id }}"
-                                                value="{{ $re_product->name }}">
-                                            @if ($re_product->price != $re_product->sale_price)
-                                                <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
-                                                    value="{{ $re_product->sale_price }}">
-                                            @else
-                                                <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
-                                                    value="{{ $re_product->price }}">
-                                            @endif
-                                            <input type="hidden" class="product_quantity_cart_{{ $re_product->id }}"
-                                                value="1">
-                                            <input type="hidden" class="product_image_cart_{{ $re_product->id }}"
-                                                value="{{ $re_product->featured_image }}">
-                                            <div class="img d-flex align-items-center justify-content-center"
-                                                style="background-image: url({{ asset('frontend/images/products/' . $re_product->featured_image) }});">
-                                                <div class="desc">
-                                                    <p class="meta-prod d-flex">
-                                                        @if ($re_product->inventory_qty == 0)
-                                                            <a type="button" style="cursor: pointer;"
-                                                                data-id_product="{{ $re_product->id }}"
-                                                                class="d-flex align-items-center justify-content-center"
-                                                                onclick="notyf.error('Currently Out of Stock');"><span
-                                                                    class="flaticon-shopping-bag"></span></a>
-                                                        @else
-                                                            <a type="button" style="cursor: pointer;"
-                                                                data-id_product="{{ $re_product->id }}"
-                                                                class="d-flex align-items-center justify-content-center add-to-cart-related"><span
-                                                                    class="flaticon-shopping-bag"></span></a>
-                                                        @endif
-                                                        <a href="#"
-                                                            class="d-flex align-items-center justify-content-center"><span
-                                                                class="flaticon-heart"></span></a>
-
-                                                        <a href="{{ url('home/single-product/' . $re_product->id) }}"
-                                                            class="d-flex align-items-center justify-content-center"><span
-                                                                class="flaticon-visibility"></span></a>
-                                                    </p>
-                                                </div>
-
-                                            </div>
-                                            <div class="text text-center">
-                                                @if (date('Y', strtotime($re_product->created_date)) >= 2020)
-                                                    <span class="new">New Arrival</span>
-                                                @elseif ($re_product->featured)
-                                                    <span class="seller">Best Seller</span>
-                                                @elseif ($re_product->price!=$re_product->sale_price)
-                                                    <span class="sale">Sale</span>
-                                                @endif
-
-                                                <span class="category">{{ $re_product->category->name }}</span>
-                                                <h2>{{ $re_product->name }}</h2>
-                                                <span class="price">$
-                                                    @if ($re_product->price != $re_product->sale_price)
-                                                        {{ $re_product->sale_price }}
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h2 class="text-center mb-5">Related Product</h2>
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <!-- Sản Phẩm Liên Quan  -->
+                    @foreach ($related_product as $key => $re_product)
+                        <div class="item">
+                            <div class="d-flex">
+                                <div class="product ftco-animate">
+                                    <form action="">
+                                        @csrf
+                                        <input type="hidden" class="product_name_cart_{{ $re_product->id }}"
+                                            value="{{ $re_product->name }}">
+                                        @if ($re_product->price != $re_product->sale_price)
+                                            <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
+                                                value="{{ $re_product->sale_price }}">
+                                        @else
+                                            <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
+                                                value="{{ $re_product->price }}">
+                                        @endif
+                                        <input type="hidden" class="product_quantity_cart_{{ $re_product->id }}"
+                                            value="1">
+                                        <input type="hidden" class="product_image_cart_{{ $re_product->id }}"
+                                            value="{{ $re_product->featured_image }}">
+                                        <div class="img d-flex align-items-center justify-content-center"
+                                            style="background-image: url({{ asset('frontend/images/products/' . $re_product->featured_image) }});">
+                                            <div class="desc">
+                                                <p class="meta-prod d-flex">
+                                                    @if ($re_product->inventory_qty == 0)
+                                                        <a type="button" style="cursor: pointer;"
+                                                            data-id_product="{{ $re_product->id }}"
+                                                            class="d-flex align-items-center justify-content-center"
+                                                            onclick="notyf.error('Currently Out of Stock');"><span
+                                                                class="flaticon-shopping-bag"></span></a>
                                                     @else
-                                                        {{ $re_product->price }}
+                                                        <a type="button" style="cursor: pointer;"
+                                                            data-id_product="{{ $re_product->id }}"
+                                                            class="d-flex align-items-center justify-content-center add-to-cart-related"><span
+                                                                class="flaticon-shopping-bag"></span></a>
                                                     @endif
-                                                </span>
+                                                    <a href="#"
+                                                        class="d-flex align-items-center justify-content-center"><span
+                                                            class="flaticon-heart"></span></a>
+
+                                                    <a href="{{ url('home/single-product/' . $re_product->id) }}"
+                                                        class="d-flex align-items-center justify-content-center"><span
+                                                            class="flaticon-visibility"></span></a>
+                                                </p>
                                             </div>
-                                        </form>
-                                    </div>
+
+                                        </div>
+                                        <div class="text text-center">
+                                            @if (date('Y', strtotime($re_product->created_date)) >= 2020)
+                                                <span class="new">New Arrival</span>
+                                            @elseif ($re_product->featured)
+                                                <span class="seller">Best Seller</span>
+                                            @elseif ($re_product->price!=$re_product->sale_price)
+                                                <span class="sale">Sale</span>
+                                            @endif
+
+                                            <span class="category">{{ $re_product->category->name }}</span>
+                                            <h2>{{ $re_product->name }}</h2>
+                                            <span class="price">$
+                                                @if ($re_product->price != $re_product->sale_price)
+                                                    {{ $re_product->sale_price }}
+                                                @else
+                                                    {{ $re_product->price }}
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        @endforeach
-        
+                        </div>
+                    @endforeach
+
                 </div>
-        </div>
+            </div>
         </div>
     </section>
 
@@ -274,35 +273,8 @@
 
 @endsection
 @section('scripts')
+    {{-- Ajax loading Comment Section --}}
     <script>
-        // $(document).ready(function() {
-        //     updateAnsweredRating();
-
-        //     // Submit Comment with Ajax
-        //     $("form.form-comment").submit(function(event) {
-        //     event.preventDefault(); 
-        //     var post_url = $(this).attr("action"); 
-        //     var request_method = $(this).attr("method"); 
-        //     var form_data = $(this).serialize(); 
-        //     //display loading...
-        //     $.ajax({
-        //         url: post_url,
-        //         type: request_method,
-        //         data: form_data
-        //     })
-        //     .done(function(data) {
-        //         var comments = JSON.parse(data);
-        //         var reviewTotal = data.length + " Reviews";
-        //         $(comments).each(function (index, el){
-        //             var output = "";
-        //             $("#comment-total").html(reviewTotal);
-        //             $("#comment-review").empty();
-        //             $("#comment-review").append(output);
-        //         });
-        //         updateAnsweredRating();
-        //     });
-        // });
-
         $(document).ready(function() {
             updateAnsweredRating();
         });
@@ -322,11 +294,93 @@
             },
         });
 
+        $("input#submitPost").click(function(event) {
+            event.preventDefault();
+            var post_url = $("form#postComment").attr("action");
+            var request_method = $("form#postComment").attr("method");
+            var form_data = $("form#postComment").serialize();
+            // Clear Error Message 
+            $(".print-error-msg").find("ul").html('');
+            $(".print-error-msg").css('display', 'none');
+
+           //display Sweet Alert...
+
+            $.ajax({
+                url: post_url,
+                type: request_method,
+                data: form_data,
+                success: function(data) {
+                    //create object with key of the array
+                    var comments = JSON.parse(data);
+                    // console.log(comments);
+
+                    //add one more to total Reviews count
+                    var reviewTotal = $("#comment-total").data('total');
+                    reviewTotal = reviewTotal + 1 + " Reviews";
+
+                    // clear Comment session
+                    $("#comment-total").empty(); 
+                    $("#comment-review").empty();
+                    $("#comment-review").html('loading...');
+
+                    //Delay updating Comment session for 1s
+                    setTimeout(function() {
+                        // update toltal count 
+                        $("#comment-total").html(reviewTotal);
+
+                        // clear Comment session with loading...
+                        $("#comment-review").empty();
+
+                        //append foreach                
+                        $(comments).each(function(key, value) {
+                            var output =
+                                `<div class="desc">
+                                <h4>
+                                <span class="text-left">` + value.fullname + `</span>
+                                <span class="text-right">` + value.created_date + `</span>
+                                </h4>
+                                    <p class="star">
+                                        <div class="my-rating-posted" data-rating="` + value.star + `"></div>
+                                    </p>
+                                    <p>` + value.description + `</p>
+                                </div>`;
+                            $("#comment-review").append(output);
+                        });
+                        updateAnsweredRating();
+
+                         // Notify success 
+                        notyf.success('Comment Posted');
+                    }, 2000);
+                   
+                },
+                error: function(data) {
+                    // Chuyển từ json về array có key và value
+                    var errors = data.responseJSON;
+                    printErrorMsg(errors);
+                    notyf.error('Posting Error!');
+                }
+            });
+        });
+
+
+        //update lại mấy cái star
         function updateAnsweredRating() {
             $(".my-rating-posted").starRating({
                 activeColor: 'crimson',
                 starSize: 15,
                 readOnly: true,
+            });
+        };
+
+        //nhận báo lội từ server qua phương thức Validator bằng Ajax
+        function printErrorMsg(msg) {
+
+            //Display Error HTML
+            $(".print-error-msg").find("ul").html('');
+            $(".print-error-msg").css('display', 'block');
+            $.each(msg, function(key, value) {
+                var errors = `<li>` + value + `</li>`;
+                $(".print-error-msg").find("ul").append(errors);
             });
         }
 
