@@ -252,7 +252,7 @@
                             var user_mobile = $('.user-mobile-checkout').val();
                             var user_email = $('.user-email-address').val();
                             var user_street_address = $('.user-street-address').val();
-                            var pronvince = $('#province').val();
+                            var province = $('#province').val();
                             var district = $('#district').val();
                             var ward = $('#ward').val();
                             var coupon_id =  $('.coupon-fee-checkout').val();
@@ -267,7 +267,7 @@
                                     user_mobile: user_mobile,
                                     user_email:user_email,
                                     user_street_address:user_street_address,
-                                    pronvince:pronvince,
+                                    province:province,
                                     district:district,
                                     ward:ward,
                                     coupon_id:coupon_id,

@@ -162,6 +162,12 @@
                         <div class="col-md-6 d-flex">
                             <div class="cart-detail cart-total p-3 p-md-4">
                                 <h3 class="billing-heading mb-4">Cart Total</h3>
+                                @php
+                                    $realtotal = 0;
+                                    $coupon_fee = 0;
+                                    $shipping_fee = 0;
+                                    $subtotal = Session('subtotal');
+                                @endphp
                                 <p class="d-flex">
                                     <span>Subtotal</span>
                                     <span>
@@ -170,22 +176,24 @@
                                         @endif
                                     </span>
                                 </p>
+                                @if(session('fee'))
                                 <p class="d-flex">
                                     <span>Delivery</span>
                                     <span>
-                                        @if(session('fee'))
                                             @foreach(Session('fee') as $key => $fee)
+                                            @php $shipping_fee = $fee->price @endphp
                                              $   {{ $fee->price }}
                                             @endforeach
-                                        @endif
                                     </span>
                                 </p>
+                                @endif
                                 @if(session('coupon'))
                                 <p class="d-flex">
                                     <span>Discount</span>
                                     <span>
                                         @if(session('coupon'))
                                             @foreach(Session('coupon') as $key => $cou)
+                                            @php $coupon_fee = $cou->number @endphp
                                             $   {{ $cou->number }}
                                             @endforeach
                                         @endif
@@ -196,7 +204,12 @@
                                 <hr>
                                 <p class="d-flex total-price">
                                     <span>Total</span>
-                                    <span>$17.60</span>
+                                    <span>
+                                        <?php
+                                        $realtotal = $subtotal + $shipping_fee - $coupon_fee;
+                                            echo "$".$realtotal;
+                                            ?>
+                                    </span>
                                 </p>
                                 <hr>
                                 <p><a href="{{ url('cart') }}" class="btn btn-primary py-3 px-4">Review Cart</a></p>

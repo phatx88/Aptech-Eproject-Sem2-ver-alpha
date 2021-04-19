@@ -57,7 +57,7 @@
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 
                         {{-- TAB PANE - USER INFO --}}
-                        <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
                             aria-labelledby="nav-profile-tab">
 
                             <form action="{{ route('account.update') }}" class="billing-form" method="POST">
@@ -173,29 +173,40 @@
                                     <div class="row">
 
                                         {{-- FOREACH ORDER 2 --}}
-
+                                        @if($order_user->count() > 0)
+                                        @foreach($order_user as $key => $order)
+                                        @php
+                                            $coupon_fee = 0;
+                                            $subtotal = 0;
+                                            $order_id = $order->id
+                                        @endphp
                                         <div class="col-md-12">
                                             <div role="tablist">
                                                 <h5>ORDER
                                                     <a href="#order-detail" id="order-detail-tab" data-toggle="tab"
-                                                        role="tab" aria-controls="order-detail" aria-selected="false">#2</a>
+                                                        role="tab" aria-controls="order-detail" aria-selected="false"># {{ $order->id }}</a>
                                                 </h5>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <span class="date">
-                                                        Created date: 02-12-2019 11:12:48
+                                                        Created date: {{ $order->created_date }}
                                                     </span>
                                                     <br>
                                                     <span>
-                                                        Order Status: Completed
+                                                        Order Status:
+                                                        @if($order->order_status_id == 1)
+                                                            Uncompleted
+                                                        @else
+                                                            Completed
+                                                        @endif
                                                     </span>
                                                 </div>
                                                 <div class="col-md-9">
                                                     <span>
-                                                        Ship To : {Shipping Name} <br>
-                                                        Phone : {Shipping Mobile} <br>
-                                                        Address : {Streat Address} , {City} , {District} , {Ward}<br>
+                                                        Ship To : {{ $order->shipping_fullname }} <br>
+                                                        Phone : {{ $order->shipping_mobile }} <br>
+                                                        Address : {{ $order->shipping_housenumber_street }} <br>
                                                     </span>
                                                 </div>
                                             </div>
@@ -206,74 +217,74 @@
                                                     <thead class="thead-primary">
                                                         <tr>
                                                             <th scope="col" class="p-1">Item Feature</th>
-                                                            <th scope="col" class="p-1">Description</th>
+                                                            <th scope="col" class="p-1">Product Name</th>
                                                             <th scope="col" class="p-1">Quantity</th>
-                                                            <th scope="col" class="p-1">Price</th>
+                                                            <th scope="col" class="p-1">Total Price</th>
                                                         </tr>
                                                     </thead>
 
                                                     <tbody>
                                                         {{-- FOREACH ORDER DETAIL HERE --}}
+                                                        @foreach ($order_list as $valist)
+                                                        @if($valist['order_id'] === $order_id)
+                                                        @php $coupon_fee = $valist['coupon_fee'] @endphp
                                                         <tr>
                                                             <th scope="row" class="p-1">
-                                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
+                                                                <img src="{{ asset('frontend/images/products/'.$valist['product_image']) }}"
                                                                     alt="" class="feature-img">
                                                             </th>
-                                                            <td class="p-0">Lorem, ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Expedita, fugit?</td>
-                                                            <td class="p-0 text-center">2</td>
-                                                            <td class="p-0 text-center">$60</td>
+                                                            <td class="p-0">{{ $valist['product_name'] }}</td>
+                                                            <td class="p-0 text-center"> {{ $valist['product_quantity'] }}</td>
+                                                            <td class="p-0 text-center">${{ $valist['product_total_price'] }}</td>
                                                         </tr>
-                                                        {{-- FOREACH ORDER DETAIL HERE --}}
-                                                        <tr>
-                                                            <th scope="row" class="p-1">
-                                                                <img src="{{ asset('frontend/images/prod-2.jpg') }}"
-                                                                    alt="" class="feature-img">
-                                                            </th>
-                                                            <td class="p-0">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing.</td>
-                                                            <td class="p-0 text-center">1</td>
-                                                            <td class="p-0 text-center">$40</td>
-                                                        </tr>
-                                                        {{-- FOREACH ORDER DETAIL HERE --}}
-                                                        <tr>
-                                                            <th scope="row" class="p-1">
-                                                                <img src="{{ asset('frontend/images/prod-3.jpg') }}"
-                                                                    alt="" class="feature-img">
-                                                            </th>
-                                                            <td class="p-0">Lorem ipsum, dolor sit amet consectetur
-                                                                adipisicing elit. Quibusdam unde ea placeat.</td>
-                                                            <td class="p-0 text-center">1</td>
-                                                            <td class="p-0 text-center">$100</td>
-                                                        </tr>
+                                                        @php
+                                                            $subtotal += $valist['product_total_price'];
+                                                        @endphp
+                                                        @endif
+                                                        @endforeach
+                                                        @php
 
-                                                        {{-- END FOREACH ORDER DETAIL --}}
+
+                                                            $shipping_fee =  $order->shipping_fee ;
+
+                                                        @endphp
 
                                                         <tr class="">
                                                             <th scope="row" class="p-1 border-0"></th>
-                                                            <td class="p-0 border-0 text-left">Payment Method : COD</td>
+                                                            <td class="p-0 border-0 text-left">Payment Method :
+                                                                @if($order->payment_method == 1)
+                                                                    Banking
+                                                                @else
+                                                                    COD
+                                                                @endif
+                                                            </td>
                                                             <td class="p-0 text-left border-0">Subtotal</td>
-                                                            <td class="p-0 text-center border-0">$200</td>
+                                                            <td class="p-0 text-center border-0">${{ $subtotal }}</td>
                                                         </tr>
                                                         <tr class="">
                                                             <th scope="row" class="p-1 border-0"></th>
                                                             <td class="p-0 border-0"></td>
                                                             <td class="p-0 text-left border-0">Delivery</td>
-                                                            <td class="p-0 text-center border-0">$10</td>
+                                                            <td class="p-0 text-center border-0">${{ $shipping_fee }}</td>
                                                         </tr>
+                                                        @if($coupon_fee != 0)
                                                         <tr class="">
                                                             <th scope="row" class="p-1"></th>
-                                                            <td class="p-0 text-left text-success">Limted Time : Free
-                                                                Shipping for New USER</td>
+                                                            <td class="p-0 border-0"></td>
                                                             <td class="p-0 text-left">Discount</td>
+
                                                             <td class="p-0 text-center"><span
-                                                                    class="text-success">-$10</span></td>
+                                                                    class="text-success">${{$coupon_fee}}</span></td>
                                                         </tr>
+                                                        @endif
                                                         <tr class="">
                                                             <th scope="row" class="p-1"></th>
                                                             <td class="p-0"></td>
                                                             <td class="p-0 text-left">Total</td>
-                                                            <td class="p-0 text-center">$200</td>
+                                                            @php
+                                                                $total = $subtotal - $coupon_fee + $shipping_fee;
+                                                            @endphp
+                                                            <td class="p-0 text-center">${{ $total }}</td>
                                                         </tr>
 
                                                     </tbody>
@@ -286,120 +297,9 @@
 
 
                                         </div>
+                                        @endforeach
+                                        @endif
 
-                                        {{-- FOREACH ORDER 1 --}}
-                                        <div class="col-md-12">
-                                            <div role="tablist">
-                                                <h5>ORDER
-                                                    <a href="#order-detail" id="order-detail-tab" data-toggle="tab"
-                                                        role="tab" aria-controls="order-detail" aria-selected="false">#1</a>
-                                                </h5>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <span class="date">
-                                                        Created date: 02-12-2019 11:12:48
-                                                    </span>
-                                                    <br>
-                                                    <span>
-                                                        Order Status: Completed
-                                                    </span>
-                                                </div>
-                                                <div class="col-md-9">
-                                                    <span>
-                                                        Ship To : {Shipping Name} <br>
-                                                        Phone : {Shipping Mobile} <br>
-                                                        Address : {Streat Address} , {City} , {District} , {Ward}<br>
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <div class="table-responsive-md">
-                                                <table class="table table-hover">
-                                                    <thead class="thead-primary">
-                                                        <tr>
-                                                            <th scope="col" class="p-1">Item Feature</th>
-                                                            <th scope="col" class="p-1">Description</th>
-                                                            <th scope="col" class="p-1">Quantity</th>
-                                                            <th scope="col" class="p-1">Price</th>
-                                                        </tr>
-                                                    </thead>
-
-                                                    <tbody>
-                                                        {{-- FOREACH ORDER DETAIL HERE --}}
-                                                        <tr>
-                                                            <th scope="row" class="p-1">
-                                                                <img src="{{ asset('frontend/images/prod-1.jpg') }}"
-                                                                    alt="" class="feature-img">
-                                                            </th>
-                                                            <td class="p-0">Lorem, ipsum dolor sit amet consectetur
-                                                                adipisicing elit. Expedita, fugit?</td>
-                                                            <td class="p-0 text-center">2</td>
-                                                            <td class="p-0 text-center">$60</td>
-                                                        </tr>
-                                                        {{-- FOREACH ORDER DETAIL HERE --}}
-                                                        <tr>
-                                                            <th scope="row" class="p-1">
-                                                                <img src="{{ asset('frontend/images/prod-2.jpg') }}"
-                                                                    alt="" class="feature-img">
-                                                            </th>
-                                                            <td class="p-0">Lorem ipsum dolor sit amet consectetur
-                                                                adipisicing.</td>
-                                                            <td class="p-0 text-center">1</td>
-                                                            <td class="p-0 text-center">$40</td>
-                                                        </tr>
-                                                        {{-- FOREACH ORDER DETAIL HERE --}}
-                                                        <tr>
-                                                            <th scope="row" class="p-1">
-                                                                <img src="{{ asset('frontend/images/prod-3.jpg') }}"
-                                                                    alt="" class="feature-img">
-                                                            </th>
-                                                            <td class="p-0">Lorem ipsum, dolor sit amet consectetur
-                                                                adipisicing elit. Quibusdam unde ea placeat.</td>
-                                                            <td class="p-0 text-center">1</td>
-                                                            <td class="p-0 text-center">$100</td>
-                                                        </tr>
-
-                                                        {{-- END FOREACH ORDER DETAIL --}}
-
-                                                        <tr class="">
-                                                            <th scope="row" class="p-1 border-0"></th>
-                                                            <td class="p-0 border-0 text-left">Payment Method : COD</td>
-                                                            <td class="p-0 text-left border-0">Subtotal</td>
-                                                            <td class="p-0 text-center border-0">$200</td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <th scope="row" class="p-1 border-0"></th>
-                                                            <td class="p-0 border-0"></td>
-                                                            <td class="p-0 text-left border-0">Delivery</td>
-                                                            <td class="p-0 text-center border-0">$10</td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <th scope="row" class="p-1"></th>
-                                                            <td class="p-0 text-left text-success">Limted Time : Free
-                                                                Shipping for New USER</td>
-                                                            <td class="p-0 text-left">Discount</td>
-                                                            <td class="p-0 text-center"><span
-                                                                    class="text-success">-$10</span></td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <th scope="row" class="p-1"></th>
-                                                            <td class="p-0"></td>
-                                                            <td class="p-0 text-left">Total</td>
-                                                            <td class="p-0 text-center">$200</td>
-                                                        </tr>
-
-                                                    </tbody>
-
-
-                                                </table>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    {{-- END FOREACH ORDER --}}
                                 </div>
                             </div>
                         </div>
