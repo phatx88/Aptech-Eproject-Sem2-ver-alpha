@@ -19,6 +19,10 @@
                 <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
             </div>
             <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Order List
+                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
