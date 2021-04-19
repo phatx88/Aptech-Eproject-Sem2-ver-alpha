@@ -41,10 +41,10 @@
                 <div class="col-12 ">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            <a class="nav-item nav-link @unless($user->order->find(1)) active show @endunless" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
                                 role="tab" aria-controls="nav-profile" aria-selected="false"><span class="lead">
                                     Profile</span> </a>
-                            <a class="nav-item nav-link active show" id="order-history-tab" data-toggle="tab" href="#order-history"
+                            <a class="nav-item nav-link @if($user->order->find(1)) active show @endif" id="order-history-tab" data-toggle="tab" href="#order-history"
                                 role="tab" aria-controls="order-history" aria-selected="false"><span class="lead"> Order
                                     History</span></a>
                             <a class="nav-item nav-link" id="wish-list-tab" data-toggle="tab" href="#wish-list" role="tab"
@@ -57,7 +57,7 @@
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 
                         {{-- TAB PANE - USER INFO --}}
-                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                        <div class="tab-pane fade @unless($user->order->find(1)) show active @endunless" id="nav-profile" role="tabpanel"
                             aria-labelledby="nav-profile-tab">
 
                             <form action="{{ route('account.update') }}" class="billing-form" method="POST">
@@ -162,7 +162,7 @@
                         <!-- TAB PANE - USER INFO - END -->
 
                         {{-- TAB PANE - ORDER HISTORY - TRACKING --}}
-                        <div class="tab-pane fade show active" id="order-history" role="tabpanel" aria-labelledby="order-history-tab" >
+                        <div class="tab-pane fade @if($user->order->find(1)) active show @endif" id="order-history" role="tabpanel" aria-labelledby="order-history-tab" >
                             <div class="row">
                                 <div class="col-6">
                                     <h3 class="mb-4 mt-4 billing-heading">My Orders</h3>

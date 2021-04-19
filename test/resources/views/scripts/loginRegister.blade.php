@@ -1,18 +1,18 @@
-{{-- <script>
+<script>
 $(function () {
-    $('#registerForm').submit(function (e) {
+    $('#submitRegistration').click(function (e) {
         e.preventDefault();
-        let formData = $(this).serializeArray();
+        var formData = $("#fromRegister").serializeArray();
+        var url = $("#fromRegister").data('action');
         $(".invalid-feedback").children("strong").text("");
-        $("#registerForm input").removeClass("is-invalid");
+        $("#fromRegister input").removeClass("is-invalid");
         $.ajax({
             type: "POST",
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                Accept: "application/json"
             },
             url: "{{ route('register') }}",
             data: formData,
-            dataType: 'JSON',
             success: () => window.location.assign("{{ route('login') }}"),
             error: (response) => {
                 if (response.status === 422) {
@@ -29,7 +29,7 @@ $(function () {
         })
     });
 });
-</script> --}}
+</script>
 
  {{-- Make Login Modal to stay open --}}
  @if ($errors->has('email') || $errors->has('password'))

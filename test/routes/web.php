@@ -38,9 +38,13 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 
 
-// AUTHENTICATE
+// Trả về Trang ban đầu
 Route::get('/', function () {
     return redirect('/home');
+});
+
+Route::get('/admin', function () {
+    return redirect('/admin/product');
 });
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
@@ -97,23 +101,24 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 
 //BACK END
 
-//Có VErify
-// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
-
-//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
-// });
-
-
-// KO Verify
-Route::prefix('admin')->name('admin.')->group(function () {
+// Có VErify
+Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
-
     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
 });
+
+
+// KO Verify
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
+//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+//     Route::resource('category', Admin_CategoryController::class);
+//     Route::resource('brand', Admin_BrandController::class);
+//     Route::resource('coupon', Admin_CouponController::class);
+// });
 
 // ROUTE TEST
 Route::get('/test', function () {

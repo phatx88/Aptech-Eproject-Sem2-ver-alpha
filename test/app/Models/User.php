@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -59,5 +60,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function ward(){
         return $this->belongsTo(Ward::class, 'ward_id' , 'id');
+    }
+
+    /**
+     * Get all of the order for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class, 'customer_id', 'id');
     }
 }
