@@ -39,6 +39,10 @@ class Admin_BrandController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:brand|max:255',
+        ]);
+
         $brand = new Brand();
         $brand->name = $request->name;
         $brand->save();

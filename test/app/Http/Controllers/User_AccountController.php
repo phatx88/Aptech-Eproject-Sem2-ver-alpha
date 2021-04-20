@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Province;
 use App\Models\Coupon;
+
 class User_AccountController extends Controller
 {
     /**
@@ -21,7 +22,7 @@ class User_AccountController extends Controller
     public function __construct()
     {
 
-        $this->middleware(['auth' , 'verified']);
+        $this->middleware(['auth', 'verified']);
     }
 
 
@@ -38,20 +39,20 @@ class User_AccountController extends Controller
         //Order History
         $order_user = Order::where('customer_id', $user->id)->get();
         $order_count = $order_user->count();
-        if($order_count > 0){
-            foreach ($order_user as $key => $order){
+        if ($order_count > 0) {
+            foreach ($order_user as $key => $order) {
                 $coupon_fee = 0;
                 $coupon = Coupon::where('id', $order->coupon_id)->get();
-                foreach($coupon as $key => $val){
+                foreach ($coupon as $key => $val) {
                     $coupon_fee = $val->number;
                 }
                 $order_details = OrderItem::where('order_id', $order->id)->get();
-                foreach ($order_details as $key => $item){
+                foreach ($order_details as $key => $item) {
                     $order_list[] = array(
                         'order_id' => $order->id,
                         'product_name' => $item->product->name,
-                        'product_description' =>$item->product->description,
-                        'product_quantity' =>$item->qty,
+                        'product_description' => $item->product->description,
+                        'product_quantity' => $item->qty,
                         'product_total_price' => $item->total_price,
                         'product_image' => $item->product->featured_image,
                         'coupon_fee' => $coupon_fee
@@ -61,10 +62,9 @@ class User_AccountController extends Controller
         }
 
 
-        return view('pages.user' , ['user' => $user])->with(compact('province'))
-        ->with('order_user', $order_user)
-        ->with('order_list', $order_list);
-
+        return view('pages.user', ['user' => $user])->with(compact('province'))
+            ->with('order_user', $order_user)
+            ->with('order_list', $order_list);
     }
 
     public function upload(Request $request)
@@ -87,10 +87,11 @@ class User_AccountController extends Controller
 
         $user->profile_pic = $imageName;
         $user->save();
-        return redirect()->route('account.index')->with('success' , "Profile Avater Updated!");
+        return redirect()->route('account.index')->with('success', "Profile Avatar Updated!");
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $request->validate([
             'name' => 'max:255',
             'mobile' => 'numeric|min:11',
@@ -106,8 +107,6 @@ class User_AccountController extends Controller
         $user->ward_id = $request->ward;
 
         $user->save();
-        return redirect()->route('account.index')->with('success' , "Profile Updated!");
+        return redirect()->route('account.index')->with('success', "Profile Updated!");
     }
-
-
 }

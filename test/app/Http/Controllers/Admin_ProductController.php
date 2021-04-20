@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\Category;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon;
-use Carbon\Carbon as CarbonCarbon;
+use Carbon\Carbon;
 
 class Admin_ProductController extends Controller
 {
@@ -30,8 +31,12 @@ class Admin_ProductController extends Controller
      */
     public function create()
     {
-        $categories = DB::table('category')->get();
-        return view('admin.product.add' , ['categories' => $categories]);
+        $categories = Category::orderby('name' , 'ASC')->get();
+        $brands = Brand::orderby('name' , 'ASC')->get();
+        return view('admin.product.add' , [
+            'categories' => $categories,
+            'brands' => $brands,
+            ]);
     }
 
     /**
@@ -43,11 +48,20 @@ class Admin_ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
+            'product_name' => 'bail|required|max:255',
+            'price' => 'bail|numeric|required',
+            'discount_percentage' => 'bail|numeric|required',
+            'discount_from_date' => 'bail|date|required',
+            'discount_to_date' => 'bail|date|required',
+            'inventory_qty' => 'bail|numeric|required',
+            'category_id' => 'bail|integer|required',
+            'brand_id' => 'bail|integer|required',
+            'featured' => 'bail|integer|required',
         ]);
         
-        if($request->hasFile('image')){
-            $file = $request->file('image');
+        if($request->hasFile('featured_image')){
+            $file = $request->file('featured_image');
             $imageName = $file->getClientOriginalName();
             
             //move file to folder
@@ -59,7 +73,7 @@ class Admin_ProductController extends Controller
         $product= new Products();
         $product->barcode = $request->barcode ?? "";
         $product->sku = $request->sku ?? "";
-        $product->name = $request->name;
+        $product->name = $request->product_name;
         $product->price = $request->price;
         $product->discount_percentage = $request->discount_percentage ?? 0;
         $product->discount_from_date = $request->discount_from_date ?? '2020-01-01';
@@ -71,9 +85,8 @@ class Admin_ProductController extends Controller
         $product->created_date = $request->discount_created_date ?? Carbon::now();
         $product->description = $request->description;
         $product->featured = $request->featured;
-        $product->hidden = $request->hidden;
         $product->save();
-        return redirect()->action([Admin_ProductController::class,'index']);
+        return redirect()->route("admin.product.index")->with('success' , "Added Product : {$product->name} / ID : {$product->id} Successfully");
     }
 
     /**
@@ -95,7 +108,13 @@ class Admin_ProductController extends Controller
      */
     public function edit(Products $product)
     {
-        //
+        $categories = Category::orderby('name' , 'ASC')->get();
+        $brands = Brand::orderby('name' , 'ASC')->get();
+        return view('admin.product.edit' , [
+            'categories' => $categories,
+            'brands' => $brands,
+            'product' => $product,
+            ]);
     }
 
     /**
@@ -118,6 +137,14 @@ class Admin_ProductController extends Controller
      */
     public function destroy(Products $product)
     {
-        //
+        try {
+            $product->forceDelete();
+            request()->session()->put('success', "Deleted Product : {$product->name} / ID : {$product->id} Successfully");
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.product.index");
     }
 }
