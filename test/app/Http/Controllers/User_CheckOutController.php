@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Builder;
-
+// use Illuminate\Support\Facades\Mail;
+use Mail;
 use App\Models\Province;
 use App\Models\Transport;
 use App\Models\District;
 use App\Models\Ward;
 use App\Models\OrderItem;
 use App\Models\Order;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -85,10 +87,24 @@ class User_CheckOutController extends Controller
             $order_details->save();
          }
 
+        $order_mail = Order::where('id', $order_id)->get();
+        $order_details_mail = OrderItem::where('order_id', $order_id)->get();
+        $details[] = [
+            'user_name' => $data['user_name'],
+            'order_mail' => $order_mail,
+            'order_details' => $order_details_mail
+        ];
+
+        Mail::to($data['user_email'])->send(new \App\Mail\MyTestMail($details));
+
+            // dd("Email is Sent.");
+
         Session::forget('cart');
         Session::forget('coupon');
         Session::forget('fee');
         Session::forget('subtotal');
+
+
 
     }
 }

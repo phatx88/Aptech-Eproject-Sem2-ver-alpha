@@ -31,6 +31,9 @@ class Order extends Model
         return $this->belongsToMany(Product::class , 'order_item' , 'order_id' , 'product_id');
     }
 
+    public function coupon(){
+        return $this->belongsTo(Coupon::class, 'coupon_id');
+    }
     // public function orderItem() {
     //     return $this->hasMany(OrderItem::class , 'product_id', 'order_id');
     // }
