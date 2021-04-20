@@ -12,6 +12,8 @@
 @endphp
 @if (!empty($message))
     <div class="alert {{$alertClass}} text-center">
-        {{$message}}
+        <strong>
+            {{$message}}
+        </strong>
     </div>    
 @endif

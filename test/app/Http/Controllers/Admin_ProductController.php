@@ -86,7 +86,7 @@ class Admin_ProductController extends Controller
         $product->description = $request->description;
         $product->featured = $request->featured;
         $product->save();
-        return redirect()->action([Admin_ProductController::class,'index']);
+        return redirect()->route("admin.product.index")->with('success' , "Added Product : {$product->name} / ID : {$product->id} Successfully");
     }
 
     /**
@@ -108,7 +108,13 @@ class Admin_ProductController extends Controller
      */
     public function edit(Products $product)
     {
-        //
+        $categories = Category::orderby('name' , 'ASC')->get();
+        $brands = Brand::orderby('name' , 'ASC')->get();
+        return view('admin.product.edit' , [
+            'categories' => $categories,
+            'brands' => $brands,
+            'product' => $product,
+            ]);
     }
 
     /**
@@ -131,6 +137,14 @@ class Admin_ProductController extends Controller
      */
     public function destroy(Products $product)
     {
-        //
+        try {
+            $product->forceDelete();
+            request()->session()->put('success', "Deleted Product : {$product->name} / ID : {$product->id} Successfully");
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.product.index");
     }
 }

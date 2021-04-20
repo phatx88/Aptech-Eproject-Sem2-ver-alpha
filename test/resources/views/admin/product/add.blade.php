@@ -4,10 +4,13 @@
         <div class="container-fluid">
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
+               <li class="breadcrumb-item">
+                  <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+              </li>
                 <li class="breadcrumb-item">
-                    <a href="#">Quản lý</a>
-                </li>
-                <li class="breadcrumb-item active">Product</li>
+                  <a href="{{ route('admin.product.index') }}">Product</a>
+              </li>
+                <li class="breadcrumb-item active">Add Product</li>
             </ol>
             <!-- /form -->
             @include('errors.error')
@@ -28,30 +31,30 @@
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="name">Name </label>
                     <div class="col-md-9 col-lg-6">
-                        <input name="product_name" id="name" type="text" value="{{ old('name') }}" class="form-control">
+                        <input name="product_name" id="name" type="text" value="{{ old('product_name') }}" class="form-control @error('product_name') is-invalid @enderror" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="wholesale-price">Price </label>
                     <div class="col-md-9 col-lg-6">
-                        <input name="price" id="wholesale-price" type="number" min="0" value="{{ old('price') }}" class="form-control">
+                        <input name="price" id="wholesale-price" type="number" min="0" value="{{ old('price') }}" class="form-control @error('price') is-invalid @enderror" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="inventory-number">Inventory</label>
                     <div class="col-md-9 col-lg-6">
-                        <input name="inventory_qty" id="inventory-number" type="number" min="0" value="{{ old('inventory_qty') }}" class="form-control">
+                        <input name="inventory_qty" id="inventory-number" type="number" min="0" value="{{ old('inventory_qty') }}" class="form-control @error('inventory_qty') is-invalid @enderror" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="category">Category </label>
                     <div class="col-md-9 col-lg-6 mb-2">
-                        <select name="category_id" id="category" class="form-control">
+                        <select name="category_id" id="category" class="form-control @error('category_id') is-invalid @enderror" required>
                             <option value="">-- Select Category --</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ $category->id == old('category') ? "checked" : "" }}>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? "selected" : "" }}>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -71,10 +74,10 @@
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="brand">Brand </label>
                     <div class="col-md-9 col-lg-6 mb-2">
-                        <select name="brand_id" id="brand" class="form-control">
+                        <select name="brand_id" id="brand" class="form-control @error('brand_id') is-invalid @enderror" required>
                             <option value="">-- Select Brand --</option>
                             @foreach ($brands as $brand)
-                                <option value="{{ $brand->id }}" {{ $brand->id == old('brand') ? "checked" : "" }} >{{ $brand->name }}</option>
+                                <option value="{{ $brand->id }}" {{ $brand->id == old('brand_id') ? "selected" : "" }} >{{ $brand->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -95,21 +98,21 @@
                     <label class="col-md-12 control-label" for="discount_percentage">Discount (Percentage)</label>
                     <div class="col-md-9 col-lg-6">
                         <input name="discount_percentage" id="discount_percentage" type="number" value="{{ old('discount_percentage') }}"
-                            class="form-control">
+                            class="form-control @error('brand_id') is-invalid @enderror">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="discount_from_date">Promotion From</label>
                     <div class="col-md-9 col-lg-6">
-                        <input name="discount_from_date" id="discount_from_date" type="date" value="{{ old('discount_from_date') }}" class="form-control">
+                        <input name="discount_from_date" id="discount_from_date" type="date" value="{{ old('discount_from_date') }}" class="form-control @error('discount_from_date') is-invalid @enderror">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="discount_to_date">Promotion To</label>
                     <div class="col-md-9 col-lg-6">
-                        <input name="discount_to_date" id="discount_to_date" type="date" value="{{ old('discount_to_date') }}" class="form-control">
+                        <input name="discount_to_date" id="discount_to_date" type="date" value="{{ old('discount_to_date') }}" class="form-control @error('discount_to_date') is-invalid @enderror">
                     </div>
                 </div>
 
@@ -128,7 +131,7 @@
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="description">Description</label>
                     <div class="col-md-12">
-                        <textarea name="description" id="description" rows="10" cols="80" value="{{ old('description') }}"></textarea>
+                        <textarea name="description" id="description" rows="10" cols="80" value=""></textarea>
                     </div>
 
                 </div>
@@ -148,7 +151,7 @@
 <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
 <script>
     CKEDITOR.replace('description');
-
+    $('#description').html('{{ old('description') }}');
 </script>
 <script>
     $(document).ready(function() {

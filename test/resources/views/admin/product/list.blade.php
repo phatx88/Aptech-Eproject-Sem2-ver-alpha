@@ -5,10 +5,12 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Quản lý</a>
+                    <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                 </li>
-                <li class="breadcrumb-item active">Sản phẩm</li>
+                <li class="breadcrumb-item active">Product</li>
             </ol>
+            {{-- MESSAGE  --}}
+            @include('errors.message')
             <!-- DataTables Example -->
             <div class="action-bar">
                 <a href="{{ route('admin.product.create') }}" class="btn btn-primary btn-sm">Add</a>
@@ -74,8 +76,14 @@
                                         <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
                                         <td><a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
                                                 class="btn btn-warning btn-sm">Edit</a></td>
-                                        <td><input type="button" onclick="Delete('25');" value="Xóa"
-                                                class="btn btn-danger btn-sm"></td>
+                                        <td>
+                                            <form action="{{ route('admin.product.destroy' , ['product' => $product->id]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="submit" value="Delete"
+                                                class="btn btn-danger btn-sm">
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -121,9 +129,7 @@
     <script>
       $(document).ready(function() {
          
-        //    CKEDITOR.replace('description')
-        //   CKEDITOR.instances['cke_desciption'].updateElement(description)
-          
+        //   CKEDITOR.replace('description')
           $('#ModalDescription').on('show.bs.modal', function(event) {
             //   even.preventDefault()
               var button = $(event.relatedTarget) // Button that triggered the modal
@@ -133,7 +139,7 @@
               // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
               var modal = $(this)
               modal.find('.modal-title').text('Product Name : ' + title)
-              modal.find('.modal-body textarea').val(description)
+              modal.find('#description').val(description)
           })
 
          
