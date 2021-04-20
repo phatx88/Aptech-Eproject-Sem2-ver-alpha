@@ -2,7 +2,7 @@
 @section('admin_content')
 
     <div id="content-wrapper">
-     
+
        <div class="container-fluid">
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
@@ -170,7 +170,7 @@
           </div>
        </div>
        <!-- /.container-fluid -->
-      
+
     <!-- /.content-wrapper -->
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
@@ -179,5 +179,5 @@
  </div>
  <!-- /.content-wrapper -->
 
- 
+
 @endsection

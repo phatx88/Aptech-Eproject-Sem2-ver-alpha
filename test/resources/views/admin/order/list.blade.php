@@ -54,7 +54,7 @@
                                 <tr>
                                     <td><input type="checkbox"></td>
                                     <td>{{ $order->id  }}</td>
-                                    <td>{{ $order->user->name ?? "Guest"}}</td>
+                                    <td>{{ $order->user->name  ?? "Guest"  }}</td>
                                     <td>{{ $order->user->mobile ?? ""}}</td>
                                     <td>{{ $order->user->email ?? ""}}</td>
                                     <td>{{ $order->status->name }}</td>

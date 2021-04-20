@@ -177,31 +177,87 @@
                                     <div class="row">
 
                                         {{-- FOREACH ORDER 2 --}}
-                                        @if ($order_user->count() > 0)
-                                            @foreach ($order_user as $key => $order)
-                                                @php
-                                                    $coupon_fee = 0;
-                                                    $subtotal = 0;
-                                                    $order_id = $order->id;
-                                                @endphp
-                                                <div class="col-md-12">
-                                                    <div role="tablist">
-                                                        <h5>ORDER
-                                                            <a href="#order-detail" id="order-detail-tab" data-toggle="tab"
-                                                                role="tab" aria-controls="order-detail"
-                                                                aria-selected="false"># {{ $order->id }}</a>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <span class="date">
-                                                                Created date: {{ $order->created_date }}
-                                                            </span>
-                                                            <br>
-                                                            <span>
-                                                                Order Status:
-                                                                @if ($order->order_status_id == 1)
-                                                                    Uncompleted
+                                        @if($order_user->count() > 0)
+                                        @foreach($order_user as $key => $order)
+                                        @php
+                                            $coupon_fee = 0;
+                                            $subtotal = 0;
+                                            $order_id = $order->id
+                                        @endphp
+                                        <div class="col-md-12">
+                                            <div role="tablist">
+                                                <h5>ORDER
+                                                    <a href="#order-detail" id="order-detail-tab" data-toggle="tab"
+                                                        role="tab" aria-controls="order-detail" aria-selected="false"># {{ $order->id }}</a>
+                                                </h5>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <span class="date">
+                                                        Created date: {{ $order->created_date }}
+                                                    </span>
+                                                    <br>
+                                                    <span>
+                                                        Order Status:
+                                                        @if($order->order_status_id == 1)
+                                                            Uncompleted
+                                                        @else
+                                                            Completed
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <span>
+                                                        Ship To : {{ $order->shipping_fullname }} <br>
+                                                        Phone : {{ $order->shipping_mobile }} <br>
+                                                        Address : {{ $order->shipping_housenumber_street }} , {{ $order->ward->name }}, {{ $order->ward->district->name }} , {{ $order->ward->district->province->name }}<br>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="table-responsive-md">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-primary">
+                                                        <tr>
+                                                            <th scope="col" class="p-1">Item Feature</th>
+                                                            <th scope="col" class="p-1">Product Name</th>
+                                                            <th scope="col" class="p-1">Quantity</th>
+                                                            <th scope="col" class="p-1">Total Price</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        {{-- FOREACH ORDER DETAIL HERE --}}
+                                                        @foreach ($order_list as $valist)
+                                                        @if($valist['order_id'] === $order_id)
+                                                        @php $coupon_fee = $valist['coupon_fee'] @endphp
+                                                        <tr>
+                                                            <th scope="row" class="p-1">
+                                                                <img src="{{ asset('frontend/images/products/'.$valist['product_image']) }}"
+                                                                    alt="" class="feature-img">
+                                                            </th>
+                                                            <td class="p-0">{{ $valist['product_name'] }}</td>
+                                                            <td class="p-0 text-center"> {{ $valist['product_quantity'] }}</td>
+                                                            <td class="p-0 text-center">${{ $valist['product_total_price'] }}</td>
+                                                        </tr>
+                                                        @php
+                                                            $subtotal += $valist['product_total_price'];
+                                                        @endphp
+                                                        @endif
+                                                        @endforeach
+                                                        @php
+
+
+                                                            $shipping_fee =  $order->shipping_fee ;
+
+                                                        @endphp
+
+                                                        <tr class="">
+                                                            <th scope="row" class="p-1 border-0"></th>
+                                                            <td class="p-0 border-0 text-left">Payment Method :
+                                                                @if($order->payment_method == 1)
+                                                                    Banking
                                                                 @else
                                                                     Completed
                                                                 @endif
