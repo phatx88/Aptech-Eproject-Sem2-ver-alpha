@@ -2,7 +2,7 @@
 @section('admin_content')
 
     <div id="content-wrapper">
-     
+
        <div class="container-fluid">
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
@@ -115,9 +115,9 @@
                         <tr>
                             <td><input type="checkbox"></td>
                             <td>{{ $order->id  }}</td>
-                            <td>{{ $order->user->name }}</td>
-                            <td>{{ $order->user->mobile }}</td>
-                            <td>{{ $order->user->email}}</td>
+                            <td>{{ $order->user->name ?? "Guest"}}</td>
+                            <td>{{ $order->user->mobile ?? ""}}</td>
+                            <td>{{ $order->user->email ?? ""}}</td>
                             <td>{{ $order->status->name }}</td>
                             <td>{{ $order->created_date }}</td>
                             <td>{{ $order->shipping_fullname }}</td>
@@ -170,7 +170,7 @@
           </div>
        </div>
        <!-- /.container-fluid -->
-      
+
     <!-- /.content-wrapper -->
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
@@ -179,5 +179,5 @@
  </div>
  <!-- /.content-wrapper -->
 
- 
+
 @endsection
