@@ -15,7 +15,7 @@
           <div class="form-group row">
              <label class="col-md-12 control-label" for="name">BrandName</label>
              <div class="col-md-9 col-lg-6">
-                <input name="name" id="name" type="text" value="" class="form-control">
+                <input name="brand_name" id="name" type="text" value="" class="form-control">
              </div>
           </div>
           <div class="form-action">

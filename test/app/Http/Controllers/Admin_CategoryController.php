@@ -39,6 +39,10 @@ class Admin_CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:category|max:255',
+        ]);
+
         $category = new Category();
         $category->name = $request->name;
         $category->save();
