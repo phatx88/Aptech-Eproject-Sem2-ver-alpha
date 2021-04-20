@@ -20,8 +20,8 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
-        $products = Products::orderby('id' , 'DESC')->get();
-        return view('admin.product.list' , ['products' => $products]);
+        $products = Products::orderby('id', 'DESC')->get();
+        return view('admin.product.list', ['products' => $products]);
     }
 
     /**
@@ -31,12 +31,12 @@ class Admin_ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderby('name' , 'ASC')->get();
-        $brands = Brand::orderby('name' , 'ASC')->get();
-        return view('admin.product.add' , [
+        $categories = Category::orderby('name', 'ASC')->get();
+        $brands = Brand::orderby('name', 'ASC')->get();
+        return view('admin.product.add', [
             'categories' => $categories,
             'brands' => $brands,
-            ]);
+        ]);
     }
 
     /**
@@ -57,22 +57,21 @@ class Admin_ProductController extends Controller
             'inventory_qty' => 'bail|numeric|required',
             'category_id' => 'bail|integer|required',
             'brand_id' => 'bail|integer|required',
-            'featured' => 'bail|integer|required',
+            'featured' => 'bail|integer',
         ]);
-        
-        if($request->hasFile('featured_image')){
+
+        if ($request->hasFile('featured_image')) {
             $file = $request->file('featured_image');
             $imageName = $file->getClientOriginalName();
-            
+
             //move file to folder
             $file->move(public_path('frontend\images\products'), $imageName);
+        } else {
+            $imageName = 'product-image-placeholder.jpg';
         }
-        else{
-            $imageName = null;
-        }
-        $product= new Products();
-        $product->barcode = $request->barcode ?? "";
-        $product->sku = $request->sku ?? "";
+        $product = new Products();
+        $product->barcode = $request->barcode ?? null;
+        $product->sku = $request->sku ?? null;
         $product->name = $request->product_name;
         $product->price = $request->price;
         $product->discount_percentage = $request->discount_percentage ?? 0;
@@ -86,7 +85,7 @@ class Admin_ProductController extends Controller
         $product->description = $request->description;
         $product->featured = $request->featured;
         $product->save();
-        return redirect()->route("admin.product.index")->with('success' , "Added Product : {$product->name} / ID : {$product->id} Successfully");
+        return redirect()->route("admin.product.index")->with('success', "Added Product : {$product->name} / ID : {$product->id} Successfully");
     }
 
     /**
@@ -108,13 +107,13 @@ class Admin_ProductController extends Controller
      */
     public function edit(Products $product)
     {
-        $categories = Category::orderby('name' , 'ASC')->get();
-        $brands = Brand::orderby('name' , 'ASC')->get();
-        return view('admin.product.edit' , [
+        $categories = Category::orderby('name', 'ASC')->get();
+        $brands = Brand::orderby('name', 'ASC')->get();
+        return view('admin.product.edit', [
             'categories' => $categories,
             'brands' => $brands,
             'product' => $product,
-            ]);
+        ]);
     }
 
     /**
@@ -126,7 +125,50 @@ class Admin_ProductController extends Controller
      */
     public function update(Request $request, Products $product)
     {
-        //
+        $request->validate([
+            'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
+            'product_name' => 'bail|required|max:255',
+            'price' => 'bail|numeric|required',
+            'discount_percentage' => 'bail|numeric|required',
+            'discount_from_date' => 'bail|date|required',
+            'discount_to_date' => 'bail|date|required',
+            'inventory_qty' => 'bail|numeric|required',
+            'category_id' => 'bail|integer|required',
+            'brand_id' => 'bail|integer|required',
+            'featured' => 'bail|integer',
+        ]);
+
+        if ($request->hasFile('featured_image')) {
+            $file = $request->file('featured_image');
+            $imageName = $file->getClientOriginalName();
+
+            //move file to folder
+            $file->move(public_path('frontend\images\products'), $imageName);
+
+            //delete old pic
+            if ($product->featured_image != 'product-image-placeholder.jpg') {
+                $oldFile = public_path('frontend\images\products\\' . $product->featured_image);
+                File::delete($oldFile);
+            }
+        } else {
+            $imageName = 'product-image-placeholder.jpg';
+        }
+        $product->barcode = $request->barcode ?? null;
+        $product->sku = $request->sku ?? null;
+        $product->name = $request->product_name;
+        $product->price = $request->price;
+        $product->discount_percentage = $request->discount_percentage ?? 0;
+        $product->discount_from_date = $request->discount_from_date ?? '2020-01-01';
+        $product->discount_to_date = $request->discount_to_date ?? '2020-01-01';
+        $product->featured_image = $imageName;
+        $product->inventory_qty = $request->inventory_qty;
+        $product->category_id = $request->category_id;
+        $product->brand_id = $request->brand_id;
+        $product->created_date = $request->discount_created_date ?? Carbon::now();
+        $product->description = $request->description;
+        $product->featured = $request->featured;
+        $product->save();
+        return redirect()->route("admin.product.index")->with('success', "Edited Product : {$product->name} / ID : {$product->id} Successfully");
     }
 
     /**

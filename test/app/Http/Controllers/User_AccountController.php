@@ -75,16 +75,21 @@ class User_AccountController extends Controller
 
         $user = $request->user();
 
-        $file = $request->file('image');
-        $imageName = $file->getClientOriginalName();
-        $imageName = uniqid().$imageName;
-        //trỏ tới public
-        $file = $file->move(public_path('frontend\images\profile'), $imageName);
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $imageName = $file->getClientOriginalName();
+            $imageName = uniqid() . $imageName;
+            //trỏ tới public 
+            $file = $file->move(public_path('frontend\images\profile'), $imageName);
 
-        //delete old-pic
-        $oldFile = public_path('frontend\images\profile\\'.$user->profile_pic);
-        File::delete($oldFile);
-
+            //delete old-pic
+            if ($user->profile_pic != 'avatar.jpg') {
+                $oldFile = public_path('frontend\images\profile\\' . $user->profile_pic);
+                File::delete($oldFile);
+            }
+        } else {
+            $imageName = 'avatar.jpg';
+        }
         $user->profile_pic = $imageName;
         $user->save();
         return redirect()->route('account.index')->with('success', "Profile Avatar Updated!");
