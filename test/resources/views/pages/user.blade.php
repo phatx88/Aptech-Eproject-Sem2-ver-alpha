@@ -57,11 +57,8 @@
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 
                         {{-- TAB PANE - USER INFO --}}
-<<<<<<< HEAD
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-=======
                         <div class="tab-pane fade @unless($user->order->find(1)) show active @endunless" id="nav-profile" role="tabpanel"
->>>>>>> fb94c52cea0bbda337699f8a1e2f83bac11f5624
                             aria-labelledby="nav-profile-tab">
 
                             <form action="{{ route('account.update') }}" class="billing-form" method="POST">
@@ -210,7 +207,7 @@
                                                     <span>
                                                         Ship To : {{ $order->shipping_fullname }} <br>
                                                         Phone : {{ $order->shipping_mobile }} <br>
-                                                        Address : {{ $order->shipping_housenumber_street }} <br>
+                                                        Address : {{ $order->shipping_housenumber_street }} , {{ $order->ward->name }}, {{ $order->ward->district->name }} , {{ $order->ward->district->province->name }}<br>
                                                     </span>
                                                 </div>
                                             </div>
