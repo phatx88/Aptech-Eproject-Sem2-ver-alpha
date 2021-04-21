@@ -126,10 +126,13 @@
                     <td>
                         <p style="font-size: 14px;"><b>Hi {{ $detail['user_name'] }},</b></p>
                         @foreach($detail['order_mail'] as $key => $order)
-                        @php
+                        <?php
                             $shipping_fee = $order->shipping_fee;
+
+                            if($order->coupon_id != null){
                             $coupon_fee = $order->coupon->number;
-                        @endphp
+                            }
+                        ?>
                         <p style="font-size: 14px;">Order Is Successfully Processsed And Your Order Is On The Way,</p>
                         <p style="font-size: 14px;">Transaction ID : {{ $order->id }},</p>
                     </td>
@@ -162,15 +165,19 @@
 
             <table class="order-detail" border="0" cellpadding="0" cellspacing="0"  align="left" style="width: 100%;    margin-bottom: 50px;">
                 <tr align="left">
-                    <th>PRODUCT NAME</th>
-                    <th style="padding-left: 15px;">DESCRIPTION</th>
-                    <th>QUANTITY</th>
-                    <th>TOTAL PRICE </th>
+                    <th>Product Name</th>
+                    <th style="padding-left: 15px;">Featured Image</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
                 </tr>
                 @foreach($detail['order_details'] as $key => $or_details)
                 <tr>
                     <td valign="top" style="padding-left: 15px;">
                         <h5 style="margin-top: 15px;">{{ $or_details->product->name }}</h5>
+                    </td>
+                    <td valign="top" style="padding-left: 15px;">
+                        <img width="100px" height="100px" src="{{$message->embed(asset('frontend/images/products/'.$or_details->product->featured_image))}}">
                     </td>
                     <td valign="top" style="padding-left: 15px;">
                         <h5 style="margin-top: 15px;">{{ $or_details->product->description }}</h5>
@@ -248,7 +255,7 @@
 <table class="main-b-g-light text-center top-0"  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
         <td style="padding: 30px;">
-            <div>
+            {{-- <div>
                 <h4 class="title" style="margin:0;text-align: center;">Follow us</h4>
             </div>
             <table border="0" cellpadding="0" cellspacing="0" class="footer-social-icon" align="center" class="text-center" style="margin-top:20px;">
@@ -272,7 +279,7 @@
                         <a href="#"><img src="../assets/images/email-temp/pinterest.png" alt=""></a>
                     </td>
                 </tr>
-            </table>
+            </table> --}}
             <div style="border-top: 1px solid #ddd; margin: 20px auto 0;"></div>
             <table  border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 20px auto 0;" >
                 <tr>

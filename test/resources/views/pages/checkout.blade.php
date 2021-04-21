@@ -145,7 +145,7 @@
                     <input type="hidden" class="form-control coupon-fee-checkout" value=" {{ $cou->id }}">
                     @endforeach
                     @else
-                    <input type="hidden" class="form-control coupon-fee-checkout" value="0">
+                    <input type="hidden" class="form-control coupon-fee-checkout" value="">
                     @endif
                     @if(Session('fee'))
                     @foreach(Session('fee') as $key => $fee)

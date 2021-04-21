@@ -31,26 +31,26 @@ class User_CheckOutController extends Controller
     public function check_out_shopping(Request $request){
         $data = $request->all();
         $shipping_fee = 0;
-        $pronvince_name = '';
-        $district_name = '';
-        $ward_name = '';
+        // $pronvince_name = '';
+        // $district_name = '';
+        // $ward_name = '';
         $transport = Transport::where('province_id', $data['province'])->get();
         foreach($transport as $key => $val){
              $shipping_fee = $val->price;
         }
         $province = Province::where('id', $data['province'])->get();
-        foreach ($province as $key => $prov){
-            $province_name = $prov->name;
-        }
-        $district = District::where('id', $data['district'])->get();
-        foreach ($district as $key => $dis){
-            $district_name = $dis->name;
-        }
-        $ward = Ward::where('id', $data['ward'])->get();
-        foreach ($ward as $key => $war){
-            $ward_name = $war->name;
-        }
-        $address_shipping_checkout = $data['user_street_address'] .', '. $ward_name .', '.$district_name. ', '. $province_name;
+        // foreach ($province as $key => $prov){
+        //     $province_name = $prov->name;
+        // }
+        // $district = District::where('id', $data['district'])->get();
+        // foreach ($district as $key => $dis){
+        //     $district_name = $dis->name;
+        // }
+        // $ward = Ward::where('id', $data['ward'])->get();
+        // foreach ($ward as $key => $war){
+        //     $ward_name = $war->name;
+        // }
+        // $address_shipping_checkout = $data['user_street_address'] .', '. $ward_name .', '.$district_name. ', '. $province_name;
         if(Auth::check()) {
             $customer_id = Auth::user()->id;
             $order = new Order();
@@ -60,7 +60,7 @@ class User_CheckOutController extends Controller
             $order->shipping_mobile = $data['user_mobile'];
             $order->payment_method = $data['pay_method_checkout'];
             $order->coupon_id = $data['coupon_id'];
-            $order->shipping_housenumber_street = $address_shipping_checkout;
+            $order->shipping_housenumber_street = $data['user_street_address'];
             $order->shipping_ward_id = $data['ward'];
             $order->shipping_fee = $shipping_fee;
             $order->save();
@@ -71,7 +71,7 @@ class User_CheckOutController extends Controller
             $order->shipping_mobile = $data['user_mobile'];
             $order->payment_method = $data['pay_method_checkout'];
             $order->coupon_id = $data['coupon_id'];
-            $order->shipping_housenumber_street = $address_shipping_checkout;
+            $order->shipping_housenumber_street = $data['user_street_address'];
             $order->shipping_ward_id = $data['ward'];
             $order->shipping_fee = $shipping_fee;
             $order->save();

@@ -280,9 +280,9 @@
                                 }
                             });
 
-                                // window.setTimeout(function (){
-                                //     window.location.href = "{{url('/cart')}}";
-                                // }, 3000);
+                                window.setTimeout(function (){
+                                    window.location.href = "{{url('/cart')}}";
+                                }, 8000);
 
                         }else{
                             swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");
