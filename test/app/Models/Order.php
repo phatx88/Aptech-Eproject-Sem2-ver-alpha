@@ -18,6 +18,10 @@ class Order extends Model
         return $this->belongsTo(User::class, 'customer_id' , 'id');
     }
 
+    public function staff(){
+        return $this->belongsTo(Staff::class, 'staff_id' , 'id');
+    }
+
     public function status(){
         return $this->belongsTo(ShippingStatus::class, 'order_status_id');
     }
@@ -28,14 +32,17 @@ class Order extends Model
 
     public function product(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class , 'order_item' , 'order_id' , 'product_id');
+        return $this->belongsToMany(Product::class , 'order_item' , 'order_id' , 'product_id')->withPivot('qty' , 'unit_price' , 'total_price');
     }
 
     public function coupon(){
         return $this->belongsTo(Coupon::class, 'coupon_id');
     }
-    // public function orderItem() {
-    //     return $this->hasMany(OrderItem::class , 'product_id', 'order_id');
-    // }
+
+    public function orderItem() {
+        return $this->hasMany(OrderItem::class , 'order_id');
+    }
+
+
 
 }

@@ -15,7 +15,7 @@
             </ol>
             <!-- DataTables Example -->
             <div class="action-bar">
-                <input type="submit" class="btn btn-primary btn-sm" value="Thêm" name="add">
+                <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm" name="add">Add</a>
                 <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
             </div>
             <div class="card mb-3">
@@ -71,11 +71,13 @@
                                     </td>
                                     <td>{{ $order->delivered_date }}</td>
                                     <td></td>
-                                    <td> </td>
-                                    <td> <input type="button" onclick="Edit('1');" value="Sửa"
-                                            class="btn btn-warning btn-sm"></td>
-                                    <td> <input type="button" onclick="DELETE('1');" value="Xóa"
-                                            class="btn btn-danger btn-sm"></td>
+                                    <td>
+                                        <a type="button" class="btn btn-info btn-sm" href="{{ route('admin.order.show' , ['order' => $order->id]) }}">Detail</a>
+                                    </td>
+                                    <td> <a type="button" href="{{ route('admin.order.edit' , ['order' => $order->id]) }}" value=""
+                                            class="btn btn-warning btn-sm">Edit</a></td>
+                                    <td> <a type="button" onclick="DELETE('1');" value=""
+                                            class="btn btn-danger btn-sm">Delete</a></td>
                                 </tr>
                                 @endforeach
 
