@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admin_DashboardController;
 use App\Http\Controllers\Admin_CategoryController;
 use App\Http\Controllers\Admin_OrderController;
+use App\Http\Controllers\Admin_OrderItemController;
 use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\Admin_BrandController;
 use App\Http\Controllers\Admin_CouponController;
@@ -114,8 +115,9 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 // KO Verify
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('dashboard' , Admin_DashboardController::class);
-    Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
-    Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
+    Route::resource('product', Admin_ProductController::class); 
+    Route::resource('order', Admin_OrderController::class); 
+    Route::resource('order.item', Admin_OrderItemController::class); 
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);

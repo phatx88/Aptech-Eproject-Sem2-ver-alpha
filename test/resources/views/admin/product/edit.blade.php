@@ -14,8 +14,9 @@
             </ol>
             <!-- /form -->
             @include('errors.error')
-            <form method="POST" action="" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.product.update' , ['product' => $product]) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="barcode">Barcode (Optional)</label>
                     <div class="col-md-9 col-lg-6">

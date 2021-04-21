@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\ShippingStatus;
 use App\Models\Ward;
+use App\Models\Staff;
+use App\Models\User;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Transport;
+use Doctrine\DBAL\Schema\View;
 
 class Admin_OrderController extends Controller
 {
@@ -60,7 +65,11 @@ class Admin_OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        
+        return view('admin.order.detail' , [
+            'order' => $order,
+            
+        ]);
     }
 
     /**
@@ -71,7 +80,17 @@ class Admin_OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
+        $products = Product::get();
+        $statuses = ShippingStatus::get();
+        $staffs = User::where('is_staff' , '1')->get();
+        return view('admin.order.edit' , [
+            'order' => $order,
+            'products' => $products,
+            'statuses' => $statuses,
+            'orderItem' => $orderItem,
+            'staffs' => $staffs,
+        ]);
     }
 
     /**
