@@ -15,6 +15,8 @@ use App\Models\District;
 use App\Models\Province;
 use App\Models\Transport;
 use Doctrine\DBAL\Schema\View;
+use Illuminate\Database\QueryException;
+use Carbon\Carbon;
 
 class Admin_OrderController extends Controller
 {
@@ -43,7 +45,18 @@ class Admin_OrderController extends Controller
      */
     public function create()
     {
-        return view('admin.order.add');
+        $users = User::where('is_staff' , '0')->get();
+        $products = Product::get();
+        $provinces = Province::orderby('name', 'ASC')->get();
+        $statuses = ShippingStatus::get();
+        $staffs = User::where('is_staff' , '1')->get();
+        return view('admin.order.add', [
+            'products' => $products,
+            'statuses' => $statuses,
+            'users' => $users,
+            'staffs' => $staffs,
+            'provinces' => $provinces,
+        ]);
     }
 
     /**
@@ -54,7 +67,20 @@ class Admin_OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'customer_id' => 'max:255',
+            'order_status_id' => 'required',
+            'shipping_fullname' => 'required|max:100',
+            'shipping_mobile' => 'required',
+            'shipping_email' => 'email:rfc,dns|max:255',
+            'payment_method' => 'required',
+            'shipping_ward_id' => 'required',
+        ]);
+        
+        $order = new Order($request->all());
+        $order->save();
+        $request->session()->put('success' ,'Order Added Successfully');
+        return redirect()->route('admin.order.index');
     }
 
     /**
@@ -68,7 +94,6 @@ class Admin_OrderController extends Controller
         
         return view('admin.order.detail' , [
             'order' => $order,
-            
         ]);
     }
 
@@ -82,6 +107,7 @@ class Admin_OrderController extends Controller
     {
         $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
         $products = Product::get();
+        $provinces = Province::orderby('name', 'ASC')->get();
         $statuses = ShippingStatus::get();
         $staffs = User::where('is_staff' , '1')->get();
         return view('admin.order.edit' , [
@@ -90,6 +116,7 @@ class Admin_OrderController extends Controller
             'statuses' => $statuses,
             'orderItem' => $orderItem,
             'staffs' => $staffs,
+            'provinces' => $provinces,
         ]);
     }
 
@@ -113,6 +140,22 @@ class Admin_OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        try {
+            $order->forceDelete();
+            request()->session()->put('success', "Deleted Order ID : {$order->id} -- Created On : {$order->created_date} Successfully");
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.order.index");
+    }
+
+    public function shipping_fee(Request $request){
+
+        $transport = Transport::where('province_id', $request->province_id)->get();
+        // $shipping = $transport->price;
+        echo json_encode($transport);
+    
     }
 }

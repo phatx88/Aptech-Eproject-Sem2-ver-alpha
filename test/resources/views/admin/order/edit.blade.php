@@ -11,6 +11,7 @@
        </ol>
        <!-- /.row -->
        <form class="spacing" method="post" action="" enctype="multipart/form-data">
+        @csrf
            <div class="row">
                <div class="col-sm-12 ">
                    <label for="name" class="control-label">Đơn hàng: #112</label>  
@@ -110,7 +111,7 @@
                    <label>Shipping Fee:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
-                   $ <input type="number" value="50000"> 						
+                   $ <input type="number" id="shipping_fee" name="shipping_fee" value="50000"> 						
                </div>
            </div>
 
@@ -138,24 +139,21 @@
                <div class="col-sm-8 col-lg-6"> 
                    <div class="row">
                        <div class="col-sm-4">
-                           <select name="city" class="form-control">
-                              <option value="">Tỉnh / thành phố</option>
-                              <option value="hcm">Hồ Chí Minh</option>
-                              <option value="hn">Hà Nội</option>
+                           <select class="form-control choose province" name="province" id="province">
+                            <option value="">--Chọn Thành phố---</option>
+                              @foreach($provinces as $key => $pvin)
+                                <option value="{{ $pvin->id }}">{{ str_replace(['Thành phố' , 'Tỉnh'], '', $pvin->name) }}</option>
+                              @endforeach
                           </select>
                         </div>
                        <div class="col-sm-4">
-                           <select name="district" class="form-control">
-                               <option value="">Quận / huyện</option>
-                               <option value="q1">Quận 1</option>
-                               <option value="q2">Quận 2</option>
+                           <select class="form-control choose district" name="district" id="district"">
+                            <option value="">--Chọn quận huyện---</option>
                            </select>
                        </div>
                        <div class="col-sm-4">
-                           <select name="ward" class="form-control">
-                               <option value="">Phường / xã</option>
-                               <option value="p1">Phường 1</option>
-                               <option value="p2">Phường 2</option>
+                           <select class="form-control ward check-shipping-fee" name="ward" id="ward">
+                            <option value="">--Chọn xã phường---</option>
                            </select>
                        </div>
                    </div>							
@@ -213,7 +211,7 @@
                                    <td >{{ $item->product_id }}</td>
                                    <td>{{ $products->find($item->product_id)->name }}</td>
                                    <td><img src="{{ asset('frontend/images/products/'.$products->find($item->product_id)->featured_image) }}"></td>
-                                   <td>{{ $item->unit_price }}</del></td>
+                                   <td>{{ $item->unit_price }}</td>
                                    <td><span>{{ $item->qty }}</span></td>
                                    <td><span>${{ $item->total_price }}</span></td>                                 
                                 </tr>
@@ -259,4 +257,67 @@
 <!-- /.content-wrapper -->
 </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.choose').on('change', function() {
+                var action = $(this).attr('id');
+                var ma_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+                // alert(action);
+                // alert(ma_id);
+                if (action == 'province') {
+                    result = 'district';
+                } else if (action == 'district') {
+                    result = 'ward';
+                }
+                $.ajax({
+                    url: '{{ url('select-delivery') }}',
+                    method: 'POST',
+                    data: {
+                        action: action,
+                        ma_id: ma_id,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        // alert (result);
+                        $('#' + result).html(data);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.check-shipping-fee').change(function() {
+                var province_id = $('#province').val();
+                // var district_id = $('#district').val();
+                // var ward_id = $('#ward').val();
+                var _token = $('input[name="_token"]').val();
+                // alert(province_id);
+                // alert(district_id);
+                // alert(ward_id);
+                    $.ajax({
+                        url: '{{ url('admin/order/calculate-fee') }}',
+                        method: 'POST',
+                        data: {
+                            province_id: province_id,
+                            _token: _token
+                        },
+                        success: function(data) {
+                            // console.log(data);
+                            var transport = JSON.parse(data);
+                            // console.log(transport);
+                            var shipping_fee = transport[0].price;
+                            // console.log(shipping_fee);
+                            $("#shipping_fee").val(shipping_fee);
+
+                        }
+                    });
+            });
+        });
+    </script>
 @endsection

@@ -8,12 +8,15 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Quản lý</a>
+                    <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                 </li>
-                <li class="breadcrumb-item active">Đơn hàng</li>
-                <li class="breadcrumb-item active">Danh sách</li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('admin.order.index') }}">Order</a>
+                </li>
+                <li class="breadcrumb-item active">List</li>
             </ol>
             <!-- DataTables Example -->
+            @include('errors.message')
             <div class="action-bar">
                 <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm" name="add">Add</a>
                 <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
@@ -76,8 +79,14 @@
                                     </td>
                                     <td> <a type="button" href="{{ route('admin.order.edit' , ['order' => $order->id]) }}" value=""
                                             class="btn btn-warning btn-sm">Edit</a></td>
-                                    <td> <a type="button" onclick="DELETE('1');" value=""
-                                            class="btn btn-danger btn-sm">Delete</a></td>
+                                    <td> 
+                                        <form action="{{ route('admin.order.destroy' , ['order' => $order->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" value=""
+                                        class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
 

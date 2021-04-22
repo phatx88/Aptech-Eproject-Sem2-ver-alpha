@@ -102,7 +102,7 @@ class User_CartController extends Controller
         echo $output;
     }
     public function view_cart(){
-        $province = Province::orderby('id', 'ASC')->get();
+        $province = Province::orderby('name', 'ASC')->get();
         return view('pages/cart')->with(compact('province'));
     }
 
@@ -176,7 +176,7 @@ class User_CartController extends Controller
             if($data['action']  == "province"){
 
                 $select_district = District::where('province_id', $id)
-                ->orderby('id', 'ASC')->get();
+                ->orderby('name', 'ASC')->get();
                 $output .= '<option value="" style="text-align: center;">--Chọn quận huyện--</option>';
                 foreach ($select_district as $key =>  $district){
                     $output .= '<option value="'.$district->id.'">'.str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $district->name).'</option>';
@@ -185,7 +185,7 @@ class User_CartController extends Controller
             }else if($data['action'] == "district"){
 
                 $select_ward = Ward::where('district_id', $id)
-                ->orderby('id', 'ASC')->get();
+                ->orderby('name', 'ASC')->get();
                 $output .= '<option value="">--Chọn xã phường--</option>';
                 foreach($select_ward as $ward){
                     $output .= '<option value="'.$ward->id.'">'.str_replace(['Xã' , 'Phường', 'Thị trấn' ], ['','', ''], $ward->name).'</option>';

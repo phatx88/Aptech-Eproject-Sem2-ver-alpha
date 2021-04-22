@@ -13,8 +13,8 @@
        <form class="spacing" method="post" action="" enctype="multipart/form-data">
            <div class="row">
                <div class="col-sm-12 ">
-                   <label for="name" class="control-label">Đơn hàng: #112</label>  
-                   <input type="hidden" name="id" value="112">
+                   <label for="name" class="control-label">Order ID: #{{ $order->id }}</label>  
+                   <input type="hidden" name="order_id" value="{{ $order->id }}">
                </div>
            </div>
            <div class="card mb-3">
@@ -33,25 +33,18 @@
                               </tr>
                            </thead>
                            <tbody>
+                              @foreach ($orderItem as $item)
                               <tr>
-                                  <td><input type="checkbox"></td>
-                                 <td >#7452</td>
-                                 <td>Kem Chống Nắng SunDefense 80ml</td>
-                                 <td><img src="../../images/kemChongNangSunDefense80ml.jpg"></td>
-                                 <td>1,350,000 đ <br><del>1,500,000 đ </del><br><del>15%</del></td>
-                                 <td><input type="number" value="2"></td>
-                                 <td><span>2,750,000 đ</span></td>
-                                 
+                                 <td><input type="checkbox"></td>
+                                 <td >{{ $item->product_id }}</td>
+                                 <td>{{ $products->find($item->product_id)->name }}</td>
+                                 <td><img src="{{ asset('frontend/images/products/'.$products->find($item->product_id)->featured_image) }}"></td>
+                                 <td>{{ $item->unit_price }}</td>
+                                 <td><span>{{ $item->qty }}</span></td>
+                                 <td><span>${{ $item->total_price }}</span></td>                                 
                               </tr>
-                              <tr>
-                                  <td><input type="checkbox"></td>
-                                 <td >#7453</td>
-                                 <td>Kem Dưỡng Trắng Da UV30 15g</td>
-                                 <td><img src="../../images/kemDuongTrangDaUV3015g.jpg"></td>
-                                 <td>1,350,000 đ</td>
-                                 <td><input type="number" value="3"></td>
-                                 <td><span>4,100,000 đ</span></td>
-                              </tr>
+                              @endforeach
+                              
                            </tbody>
                        </table>
                    </div>

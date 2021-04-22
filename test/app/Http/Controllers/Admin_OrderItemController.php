@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 
 class Admin_OrderItemController extends Controller
 {
@@ -26,8 +27,12 @@ class Admin_OrderItemController extends Controller
      */
     public function create(Order $order)
     {
+        $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
+        $products = Product::get();
         return view('admin.order.add_item' , [
-            'order' => $order
+            'order' => $order,
+            'products' => $products,
+            'orderItem' => $orderItem,
         ]);
     }
 

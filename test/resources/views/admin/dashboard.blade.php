@@ -125,7 +125,7 @@
                             <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>
                             <td>${{ $sum = $orderItems->where("order_id" , '=' , $order->id)->sum('total_price')}}</td>
                             {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
-                            <td>{{ $order->shipping_fee }}</td>
+                            <td>${{ $order->shipping_fee }}</td>
                             <td>${{ $sum + $order->shipping_fee}}</td>
                             <td>{{ $order->shipping_housenumber_street }},
                                 {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}.

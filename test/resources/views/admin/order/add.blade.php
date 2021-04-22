@@ -5,22 +5,27 @@
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
           <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
+             <a href="{{ route('admin.dashboard.index') }}">Admin</a>
           </li>
-          <li class="breadcrumb-item active">Đơn hàng</li>
+          <li class="breadcrumb-item">
+            <a href="{{ route('admin.order.index') }}">Order</a>
+         </li>
           <li class="breadcrumb-item active">Thêm</li>
        </ol>
        <!-- /.row -->
-       <form class="spacing" method="post" action="" enctype="multipart/form-data">
+       @include('errors.error')
+       <form class="spacing" method="post" action="{{ route('admin.order.store') }}" enctype="multipart/form-data">
+         @csrf
            <div class="row ">
          <div class="col-sm-4 col-lg-2">
             <label>Tên khách hàng:</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <select class="form-control">
-               <option value="">Chọn khách hàng</option>
-               <option value="a@gmail.com">Nguyễn Văn A</option>
-               <option value="b@gmail.com">Nguyễn Văn B</option>
+            <select class="form-control" name="customer_id">
+               <option value="">Khách Vãng Lai</option>
+               @foreach ($users as $user)
+               <option value="{{ $user->id }}" {{ $user->id == old('customer_id') ? "selected" : "" }}>{{ $user->name }}</option>
+               @endforeach
             </select>                  
          </div>
       </div>
@@ -30,14 +35,11 @@
             <label>Trạng thái:</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <select name="status" class="form-control">
-                <option value="1" selected>Đã đặt hàng</option>
-                <option value="2">Đã xác nhận đơn hàng</option>
-                <option value="3">Hoàn tất đóng gói</option>
-                <option value="4">Đang giao Hàng</option>
-                <option value="5">Đã giao hàng</option>
-                <option value="6">Đơn hàng đã huy</option>
-              </select>
+            <select name="order_status_id" class="form-control">  
+               @foreach ($statuses as $status)
+               <option value="{{ $status->id }}" {{ $status->id == old('order_status_id') ? "selected" : "" }}>{{ $status->name }}</option>   
+               @endforeach 
+             </select>
          </div>
       </div>
       
@@ -46,7 +48,7 @@
             <label>Người nhận</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <input type="text" name="" value="Nguyễn Văn Én" class="form-control">                    
+            <input type="text" name="shipping_fullname" value="{{ old('shipping_fullname') }}" class="form-control">                    
          </div>
       </div>
       <div class="row">
@@ -54,7 +56,16 @@
             <label>Số điện thoại người nhận</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <input type="text" name="mobile" value="0932538468" class="form-control">                    
+            <input type="text" name="shipping_mobile" value="{{ old('shipping_mobile') }}" class="form-control">                    
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-sm-4 col-lg-2 ">
+            <label>Email người nhận</label>  
+         </div>
+         <div class="col-sm-8 col-lg-6"> 
+            <input type="text" name="shipping_email" value="{{ old('shipping_email') }}" class="form-control">                    
          </div>
       </div>
       
@@ -63,51 +74,52 @@
             <label>Hình thức thanh toán</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <select name="transport" class="form-control">
-                <option selected value="0">COD</option>
-                <option value="1">Bank</option>
-              </select>
+            <select name="payment_method" class="form-control">
+               <option value="0" {{ old('payment_method') == 0 ? 'selected' : '' }}>COD</option>
+               <option value="1" {{ old('payment_method') == 1 ? 'selected' : '' }}>Bank</option>
+            </select>
          </div>
       </div>
+  
       
       <div class="row">
          <div class="col-sm-4 col-lg-2">
-            <label>Địa chỉ giao hàng</label>  
+             <label>Địa chỉ giao hàng</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <div class="row">
-               <div class="col-sm-4">
-                        <select name="city" class="form-control">
-                           <option value="">Tỉnh / thành phố</option>
-                           <option value="hcm">Hồ Chí Minh</option>
-                           <option value="hn">Hà Nội</option>
-                       </select>
-                     </div>
-                    <div class="col-sm-4">
-                        <select name="district" class="form-control">
-                            <option value="">Quận / huyện</option>
-                            <option value="q1">Quận 1</option>
-                            <option value="q2">Quận 2</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select name="ward" class="form-control">
-                            <option value="">Phường / xã</option>
-                            <option value="p1">Phường 1</option>
-                            <option value="p2">Phường 2</option>
-                        </select>
-                    </div>
-            </div>                     
+            <div class="row-sm mb-2">
+               <input type="text" name="shipping_housenumber_street" value="{{ old('shipping_housenumber_street') }}" placeholder="Enter House Street Number" class="form-control">
+            </div>
+             <div class="row">
+                 <div class="col-sm-4">
+                     <select class="form-control choose province" name="province" id="province">
+                      <option value="">--Chọn Thành phố---</option>
+                        @foreach($provinces as $key => $pvin)
+                          <option value="{{ $pvin->id }}">{{ str_replace(['Thành phố' , 'Tỉnh'], '', $pvin->name) }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                 <div class="col-sm-4">
+                     <select class="form-control choose district" name="district" id="district">
+                      <option value="">--Chọn quận huyện---</option>
+                     </select>
+                 </div>
+                 <div class="col-sm-4">
+                     <select class="form-control ward" name="shipping_ward_id" id="ward">
+                      <option value="">--Chọn xã phường---</option>
+                     </select>
+                 </div>
+             </div>							
          </div>
          
-      </div>
+     </div>
 
       <div class="row">
          <div class="col-sm-4 col-lg-2 ">
             <label>Ngày giao hàng</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <input type="date" name="" value="2019-07-17" class="form-control">
+            <input type="date" name="delivered_date" value="" class="form-control">
          </div>
       </div>
       
@@ -116,15 +128,17 @@
             <label>Nhân viên phụ trách</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <select name="staff" class="form-control">
-             <option selected value="6">Nguyễn Hữu Lộc</option>
-             <option value="7">Nguyễn Thị Lệ</option>
+            <select name="staff_id" class="form-control">
+             <option value=""></option>
+             @foreach ($staffs as $staff)
+             <option value="{{ $staff->id }}">{{ $staff->name }}</option>
+             @endforeach
            </select>                
          </div>
       </div>
            
            <div class="form-action">
-               <input type="submit" class="btn btn-primary btn-sm" value="Lưu" name="save">
+               <input type="submit" class="btn btn-primary btn-sm" value="Add Order" name="save">
            </div>
            <br>
        </form>
@@ -137,4 +151,36 @@
    <!-- Sticky Footer -->
    @include('admin.footer')
 </div>
+@endsection
+@section('scripts')
+<script>
+   $(document).ready(function() {
+       $('.choose').on('change', function() {
+           var action = $(this).attr('id');
+           var ma_id = $(this).val();
+           var _token = $('input[name="_token"]').val();
+           var result = '';
+           // alert(action);
+           // alert(ma_id);
+           if (action == 'province') {
+               result = 'district';
+           } else if (action == 'district') {
+               result = 'ward';
+           }
+           $.ajax({
+               url: '{{ url('select-delivery') }}',
+               method: 'POST',
+               data: {
+                   action: action,
+                   ma_id: ma_id,
+                   _token: _token
+               },
+               success: function(data) {
+                   // alert (result);
+                   $('#' + result).html(data);
+               }
+           });
+       });
+   });
+</script>
 @endsection

@@ -121,6 +121,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
+    Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
 });
 
 // ROUTE TEST
@@ -185,17 +186,6 @@ Route::get('/staff-list', function () {
 });
 Route::get('/staff-edit', function () {
     return view('admin.staff.edit');
-});
-
-//promotion
-Route::get('/promotion-add', function () {
-    return view('admin.promotion.add');
-});
-Route::get('/promotion-list', function () {
-    return view('admin.promotion.list');
-});
-Route::get('/promotion-edit', function () {
-    return view('admin.promotion.edit');
 });
 
 //transport
