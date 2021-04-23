@@ -35,7 +35,7 @@
                                     <th>Mã</th>
                                     <th>Tên khách hàng</th>
                                     <th>Điện thoai</th>
-                                    <th>Email</th>
+                                    <th>Email người mua</th>
                                     <th>Trạng Thái</th>
                                     <th>Ngày đặt hàng</th>
                                     <th>Người nhận</th>
@@ -59,7 +59,7 @@
                                     <td>{{ $order->id  }}</td>
                                     <td>{{ $order->user->name  ?? "Guest"  }}</td>
                                     <td>{{ $order->user->mobile ?? ""}}</td>
-                                    <td>{{ $order->user->email ?? ""}}</td>
+                                    <td>{{ $order->user->email ?? $order->shipping_email}}</td>
                                     <td>{{ $order->status->name }}</td>
                                     <td>{{ $order->created_date }}</td>
                                     <td>{{ $order->shipping_fullname }}</td>
@@ -73,7 +73,7 @@
                                         {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}.
                                     </td>
                                     <td>{{ $order->delivered_date }}</td>
-                                    <td></td>
+                                    <td>{{ $order->staff->user->name ?? "" }}</td>
                                     <td>
                                         <a type="button" class="btn btn-info btn-sm" href="{{ route('admin.order.show' , ['order' => $order->id]) }}">Detail</a>
                                     </td>

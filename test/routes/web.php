@@ -122,7 +122,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
+    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 });
+
 
 // ROUTE TEST
 Route::get('/test', function () {

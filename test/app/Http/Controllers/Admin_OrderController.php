@@ -45,16 +45,16 @@ class Admin_OrderController extends Controller
      */
     public function create()
     {
-        $users = User::where('is_staff' , '0')->get();
         $products = Product::get();
         $provinces = Province::orderby('name', 'ASC')->get();
         $statuses = ShippingStatus::get();
         $staffs = User::where('is_staff' , '1')->get();
+        $users = User::where('is_staff' , '0')->get();
         return view('admin.order.add', [
             'products' => $products,
             'statuses' => $statuses,
-            'users' => $users,
             'staffs' => $staffs,
+            'users' => $users,
             'provinces' => $provinces,
         ]);
     }
@@ -79,7 +79,7 @@ class Admin_OrderController extends Controller
         
         $order = new Order($request->all());
         $order->save();
-        $request->session()->put('success' ,'Order Added Successfully');
+        $request->session()->put('success' ,"Order ID: {$order->id} -- Created On : {$order->created_date} Added Successfully");
         return redirect()->route('admin.order.index');
     }
 
@@ -109,13 +109,15 @@ class Admin_OrderController extends Controller
         $products = Product::get();
         $provinces = Province::orderby('name', 'ASC')->get();
         $statuses = ShippingStatus::get();
-        $staffs = User::where('is_staff' , '1')->get();
+        $staffs = Staff::get();
+        $users = User::where('is_staff' , '0')->get();
         return view('admin.order.edit' , [
             'order' => $order,
             'products' => $products,
             'statuses' => $statuses,
             'orderItem' => $orderItem,
             'staffs' => $staffs,
+            'users' => $users,
             'provinces' => $provinces,
         ]);
     }
@@ -129,7 +131,29 @@ class Admin_OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        $request->validate([
+            'customer_id' => 'max:255',
+            'order_status_id' => 'required',
+            'shipping_fullname' => 'required|max:100',
+            'shipping_mobile' => 'required',
+            'shipping_email' => 'email:rfc,dns|max:255',
+            'payment_method' => 'required',
+            'shipping_ward_id' => 'required',
+            'delivered_date' => 'date'
+        ]);
+        $order->customer_id = $request->customer_id;
+        $order->order_status_id = $request->order_status_id;
+        $order->shipping_fullname = $request->shipping_fullname;
+        $order->shipping_mobile = $request->shipping_mobile;
+        $order->shipping_email = $request->shipping_email;
+        $order->payment_method = $request->payment_method;
+        $order->shipping_ward_id = $request->shipping_ward_id;
+        $order->shipping_fee = $request->shipping_fee;
+        $order->delivered_date = $request->delivered_date;
+        $order->staff_id = $request->staff_id;
+        $order->save();
+        request()->session()->put('success' ,"Order ID: {$order->id} -- Created On : {$order->created_date} Updated Successfully");
+        return redirect()->route('admin.order.index');
     }
 
     /**
@@ -142,7 +166,7 @@ class Admin_OrderController extends Controller
     {
         try {
             $order->forceDelete();
-            request()->session()->put('success', "Deleted Order ID : {$order->id} -- Created On : {$order->created_date} Successfully");
+            request()->session()->put('success', "Order ID : {$order->id} -- Created On : {$order->created_date} Deleted Successfully");
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 request()->session()->put('error', $e->getMessage());

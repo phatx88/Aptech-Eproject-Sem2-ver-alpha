@@ -16,7 +16,7 @@
        @include('errors.error')
        <form class="spacing" method="post" action="{{ route('admin.order.store') }}" enctype="multipart/form-data">
          @csrf
-           <div class="row ">
+      <div class="row ">
          <div class="col-sm-4 col-lg-2">
             <label>Tên khách hàng:</label>  
          </div>

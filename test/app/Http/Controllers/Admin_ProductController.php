@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;
+
 
 class Admin_ProductController extends Controller
 {
@@ -189,5 +191,12 @@ class Admin_ProductController extends Controller
             }
         }
         return redirect()->route("admin.product.index");
+    }
+
+    public function fetchProduct(Request $request)
+    {
+        $product_id = $request->product_id;
+        $product = Product::find($product_id);
+        echo json_encode($product);
     }
 }
