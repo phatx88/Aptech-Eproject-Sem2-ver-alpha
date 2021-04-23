@@ -79,7 +79,7 @@ class User_AccountController extends Controller
             $file = $request->file('image');
             $imageName = $file->getClientOriginalName();
             $imageName = uniqid() . $imageName;
-            //trỏ tới public 
+            //trỏ tới public
             $file = $file->move(public_path('frontend\images\profile'), $imageName);
 
             //delete old-pic
