@@ -235,6 +235,7 @@
 
         $(document).ready(function() {
             $('.checkout-button').click(function() {
+
                 swal({
                         title: "Xác nhận đơn hàng ?",
                         text: "Đơn hàng sẽ không được hoàn trả, bạn có muốn dặt không!",
@@ -259,30 +260,36 @@
                             var _token = $('input[name="_token"]').val();
                             var fee_ship_checkout = $('.fee-ship-checkout').val();
                             var pay_method_checkout = $('.pay-method-checkout:checked').val();
-                            $.ajax({
-                                url: '{{ url('/check-out-shopping') }}',
-                                method: "POST",
-                                data: {
-                                    user_name: user_name,
-                                    user_mobile: user_mobile,
-                                    user_email:user_email,
-                                    user_street_address:user_street_address,
-                                    province:province,
-                                    district:district,
-                                    ward:ward,
-                                    coupon_id:coupon_id,
-                                    fee_ship_checkout:fee_ship_checkout,
-                                    pay_method_checkout:pay_method_checkout,
-                                    _token:_token
-                                },
-                                success: function(data) {
-                                    swal("Đơn hàng!", "Đơn hàng của bạn đã được gửi thành công.", "success");
-                                }
-                            });
+                            if(user_name === "" || user_mobile === "" || user_email==="" || user_street_address==="" || province==="" || district ===""
+                            || ward==="" || pay_method_checkout===""){
+                                swal("Lỗi","You must fill all information","error");
+                            }else{
+                                    $.ajax({
+                                        url: '{{ url('/check-out-shopping') }}',
+                                        method: "POST",
+                                        data: {
+                                            user_name: user_name,
+                                            user_mobile: user_mobile,
+                                            user_email:user_email,
+                                            user_street_address:user_street_address,
+                                            province:province,
+                                            district:district,
+                                            ward:ward,
+                                            coupon_id:coupon_id,
+                                            fee_ship_checkout:fee_ship_checkout,
+                                            pay_method_checkout:pay_method_checkout,
+                                            _token:_token
+                                        },
+                                        success: function(data) {
 
-                                window.setTimeout(function (){
-                                    window.location.href = "{{url('/cart')}}";
-                                }, 8000);
+                                            swal("Đơn hàng!", "Đơn hàng của bạn đã được gửi thành công.", "success");
+                                        }
+                                    });
+
+                                    window.setTimeout(function (){
+                                        window.location.href = "{{url('/cart')}}";
+                                    }, 8000);
+                            }
 
                         }else{
                             swal("Đóng", "Đơn hàng chưa được gửi, làm ơn hoàn tất đơn hàng", "error");

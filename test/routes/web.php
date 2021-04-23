@@ -9,8 +9,8 @@ use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\Admin_BrandController;
 use App\Http\Controllers\Admin_CouponController;
 // FE CONTROLLER
-use App\Http\Controllers\User_HomeController;    
-use App\Http\Controllers\User_AccountController;    
+use App\Http\Controllers\User_HomeController;
+use App\Http\Controllers\User_AccountController;
 use App\Http\Controllers\User_ProductsController;
 use App\Http\Controllers\User_CartController;
 use App\Http\Controllers\User_CheckOutController;
@@ -53,6 +53,8 @@ Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của
 Route::get('/home/user/account', [User_AccountController::class , 'index'])->name('account.index'); //trả về User Acccount trên trang Home
 Route::post('/home/user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); //trả về User Acccount trên trang Home
 Route::post('/home/user/account/update', [User_AccountController::class , 'update'])->name('account.update'); //trả về User Acccount trên trang Home
+//Another Address
+Route::get('/another-address', [User_CheckOutController::class, 'another_address']);
 
 //Check-Out-Button
 Route::post('/check-out-shopping', [User_CheckOutController::class, 'check_out_shopping']);
@@ -115,9 +117,9 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 // KO Verify
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('dashboard' , Admin_DashboardController::class);
-    Route::resource('product', Admin_ProductController::class); 
-    Route::resource('order', Admin_OrderController::class); 
-    Route::resource('order.item', Admin_OrderItemController::class); 
+    Route::resource('product', Admin_ProductController::class);
+    Route::resource('order', Admin_OrderController::class);
+    Route::resource('order.item', Admin_OrderItemController::class);
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);

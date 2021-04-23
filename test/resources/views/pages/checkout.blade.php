@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
-                    <form>
+                    <form name="check-out-form-with-validation">
                         @csrf
                         <h3 class="mb-4 mt-4 billing-heading">Shipping Contact Info</h3>
                         @include('errors.error')
@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="shipping_fullname">Full Name</label>
-                                    <input type="text" class="form-control user-name-checkout" placeholder="Enter Shipping Recipient" name="shipping_fullname" @auth
+                                    <input type="text" class="form-control user-name-checkout" placeholder="Enter Shipping Recipient" name="shipping_fullname" id="shipping_fullname" @auth
                                         value="{{ $user->name }}" @endauth>
                                 </div>
                             </div>
@@ -40,14 +40,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="shipping_mobile">Phone</label>
-                                    <input type="text" class="form-control user-mobile-checkout" placeholder="Enter Your Phone #" name="shipping_mobile"
+                                    <input type="text" required class="form-control user-mobile-checkout" placeholder="Enter Your Phone #" id="shipping_mobile" name="shipping_mobile"
                                         @auth value="{{ $user->mobile }}" @endauth>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="shipping_email">Email Address</label>
-                                    <input type="text" class="form-control user-email-address" placeholder="" name="shipping_email" @auth
+                                    <input type="text" class="form-control user-email-address" placeholder="" id="shipping_email" name="shipping_email" @auth
                                         value="{{ $user->email }}" @endauth>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                     <div class="form-group">
                                         <label for="shipping_housenumber_street">Street Address</label>
                                         <input type="text" class="form-control user-street-address" placeholder="Enter Your Street Number"
-                                            name="shipping_housenumber_street" @auth value="{{ $user->housenumber_street }}"
+                                            name="shipping_housenumber_street" id="shipping_housenumber_street" @auth value="{{ $user->housenumber_street }}"
                                             @endauth>
                                     </div>
                                 </div>
@@ -68,14 +68,22 @@
                                 <div class="form-group">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control choose province" name="province" id="province">
-                                        @auth
+
                                             @if ($user->ward_id != null)
                                                 <option value="{{ $user->ward->district->province->id }}">
                                                     {{ $user->ward->district->province->name }}</option>
-                                        @endauth
+
+                                            @elseif($ward != null)
+                                                    @foreach($ward as $key => $war)
+                                                    <option value="{{ $war->district->province->id }}">
+                                                        {{ $war->district->province->name }}</option>
+
+                                                    @endforeach
+
                                             @else
-                                            <option value="">--Chọn Thành phố---</option>
                                             @endif
+                                            <option value="0">--Chọn Thành phố---</option>
+
                                         @foreach ($province as $key => $pvin)
                                             <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
                                         @endforeach
@@ -90,14 +98,20 @@
                                 <div class="form-group">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control choose district" name="district" id="district">
-                                        @auth
+
                                             @if ($user->ward_id != null)
                                                 <option value="{{ $user->ward->district->id }}">
                                                     {{ $user->ward->district->name }}</option>
-                                            @endif
-                                        @endauth
+                                            @elseif($ward != null)
+                                            @foreach($ward as $key => $war)
+                                            <option value="{{ $war->district->id }}">
+                                                {{ $war->district->name }}</option>
 
-                                        <option value="">--Chọn quận huyện---</option>
+                                            @endforeach
+                                            @endif
+
+
+                                        <option value="0">--Chọn quận huyện---</option>
                                     </select>
                                 </div>
                             </div>
@@ -109,10 +123,16 @@
                                             @if ($user->ward_id != null)
                                                 <option value="{{ $user->ward_id }}">{{ $user->ward->name }}
                                                 </option>
-                                            @endif
+                                                @elseif($ward != null)
+                                                @foreach($ward as $key => $war)
+                                                <option value="{{ $war->district->id }}">
+                                                    {{ $war->district->name }}</option>
+
+                                                @endforeach
+                                                @endif
                                         @endauth
 
-                                        <option value="">--Chọn xã phường---</option>
+                                        <option value="0">--Chọn xã phường---</option>
                                     </select>
                                 </div>
                             </div>
@@ -132,8 +152,9 @@
                                     {{-- đăng nhập rồi thì có thể reset info ship cho người khác  --}}
                                     @auth
                                         <div class="radio">
-                                            <input class="btn btn-primary mr-3" value="Ship To Another Address" id="reset">
+                                            <a href="{{ url('another-address') }}" class="btn btn-primary mr-3" value="Ship To Another Address" id="reset">Ship To Another Address</a>
                                         </div>
+
                                     @endauth
                                 </div>
                             </div>
@@ -242,7 +263,7 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2"> I have read and accept the
+                                            <label><input type="checkbox" value="" class="mr-2" required> I have read and accept the
                                                 terms and conditions</label>
                                         </div>
                                     </div>
