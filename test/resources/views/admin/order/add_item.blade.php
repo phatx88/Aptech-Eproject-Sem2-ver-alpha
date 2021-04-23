@@ -64,14 +64,15 @@
                                             <td><input type="checkbox"></td>
                                             <td><span>{{ $item->product_id }}</span></td>
                                             <td><span>{{ $products->find($item->product_id)->name }}</span></td>
-                                            <td><img
-                                                    src="{{ asset('frontend/images/products/' . $products->find($item->product_id)->featured_image) }}">
+                                            <td><img src="{{ asset('frontend/images/products/' . $products->find($item->product_id)->featured_image) }}">
                                             </td>
-                                            <td><span id="unit_price"
-                                                    data-value="{{ $item->unit_price }}">{{ $item->unit_price }}</span>
+                                            <td><span id="unit_price">${{ $item->unit_price }}</span>
                                             </td>
-                                            <td><input name="qty" id="qty" type="number" min="0"
-                                                    value="{{ $item->qty }}"></td>
+                                            <td><input name="qty" id="qty" type="number" min="0" 
+                                             data-url="{{ route('admin.order.item.update', ['order' => $item->order_id , 'item' => $item->product_id]) }}"
+                                             data-productid="{{ $item->product_id }}" 
+                                             data-unitprice="{{ $item->unit_price }}"
+                                             value="{{ $item->qty }}"></td>
                                             <td><span id="total_price" data-value="">${{ $item->total_price }}</span>
                                             </td>
                                         </tr>
@@ -83,7 +84,7 @@
                 </div>
 
                 <div class="form-action">
-                    <input type="submit" class="btn btn-primary btn-sm" value="Save Edit" name="edit">
+                    <a href="{{ route('admin.order.edit', ['order' => $order]) }}" class="btn btn-warning btn-sm" name="edit">Save & Exit</a>
                 </div>
                 <br>
             </form>
@@ -94,13 +95,7 @@
         </div>
         <!-- /.container-fluid -->
         <!-- Sticky Footer -->
-        <footer class="sticky-footer">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright © Thầy Lộc 2017</span>
-                </div>
-            </div>
-        </footer>
+        @include('admin.footer')
     </div>
     <!-- /.content-wrapper -->
     </div>
@@ -109,7 +104,27 @@
 @section('scripts')
     <script>
        //Ajax editing qty to orderItem
-       
+       $(document).on('change', 'input', function () { 
+            //  e.preventDefault();
+             var product_id = $(this).data('productid');
+             var qty = $(this).val();
+             var unit_price = $(this).data('unitprice');
+             var _token = $('input[name="_token"]').val();
+             url = $(this).data('url');
+             $.ajax({
+                type: "PUT",
+                url: url,
+                data: {
+                   product_id : product_id,
+                   qty : Number(qty),
+                   unit_price : Number(unit_price),
+                   _token : _token,
+                },
+                success: function (response) {
+                  window.location.reload();
+                }
+             });
+       });
 
     </script>
 @endsection

@@ -93,9 +93,18 @@ class Admin_OrderItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $order, $item)
     {
-        //
+        $orderItem = OrderItem::where('order_id' , $order)->where('product_id' , $item)->first();
+        $unit_price = $request->unit_price;
+        $orderItem->unit_price = $unit_price;
+        $orderItem->qty = $request->qty;
+        $orderItem->total_price = $unit_price * $request->qty;
+        try {
+            $orderItem->save();
+        } catch (QueryException $e) {
+            request()->session()->put('error', $e->getMessage());
+        }
     }
 
     /**

@@ -91,9 +91,20 @@ class Admin_OrderController extends Controller
      */
     public function show(Order $order)
     {
-        
+        $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
+        $products = Product::get();
+        $provinces = Province::orderby('name', 'ASC')->get();
+        $statuses = ShippingStatus::get();
+        $staffs = User::where('is_staff' , '1')->get();
+        $users = User::where('is_staff' , '0')->get();
         return view('admin.order.detail' , [
             'order' => $order,
+            'products' => $products,
+            'orderItem' => $orderItem,
+            'statuses' => $statuses,
+            'staffs' => $staffs,
+            'users' => $users,
+            'provinces' => $provinces,
         ]);
     }
 
