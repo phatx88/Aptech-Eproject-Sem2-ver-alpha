@@ -105,7 +105,7 @@ class User_CheckOutController extends Controller
         Session::forget('coupon');
         Session::forget('fee');
         Session::forget('subtotal');
-
+        Session::forget('ward_id');
 
 
     }
@@ -115,7 +115,7 @@ class User_CheckOutController extends Controller
             session()->forget('ward_id');
             return redirect()->back();
         }
-
+        return redirect()->back();
     }
 }
 

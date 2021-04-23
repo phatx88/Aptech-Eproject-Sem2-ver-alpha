@@ -69,7 +69,7 @@
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control choose province" name="province" id="province">
 
-                                            @if ($user->ward_id != null)
+                                            @if (isset($user) && $user->ward_id != null)
                                                 <option value="{{ $user->ward->district->province->id }}">
                                                     {{ $user->ward->district->province->name }}</option>
 
@@ -99,9 +99,10 @@
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control choose district" name="district" id="district">
 
-                                            @if ($user->ward_id != null)
+                                            @if (isset($user) && $user->ward_id != null)
                                                 <option value="{{ $user->ward->district->id }}">
                                                     {{ $user->ward->district->name }}</option>
+
                                             @elseif($ward != null)
                                             @foreach($ward as $key => $war)
                                             <option value="{{ $war->district->id }}">
@@ -119,18 +120,19 @@
                                 <div class="form-group">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select class="form-control ward" name="ward" id="ward">
-                                        @auth
-                                            @if ($user->ward_id != null)
+
+                                            @if (isset($user) && $user->ward_id != null)
                                                 <option value="{{ $user->ward_id }}">{{ $user->ward->name }}
                                                 </option>
+
                                                 @elseif($ward != null)
                                                 @foreach($ward as $key => $war)
-                                                <option value="{{ $war->district->id }}">
-                                                    {{ $war->district->name }}</option>
+                                                <option value="{{ $war->id }}">
+                                                    {{ $war->name }}</option>
 
                                                 @endforeach
                                                 @endif
-                                        @endauth
+
 
                                         <option value="0">--Chọn xã phường---</option>
                                     </select>

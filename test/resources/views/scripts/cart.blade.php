@@ -264,6 +264,7 @@
                             || ward==="" || pay_method_checkout===""){
                                 swal("Lỗi","You must fill all information","error");
                             }else{
+                                // imageUrl:'{{ asset('frontend/images/loading.gif') }}',
                                     $.ajax({
                                         url: '{{ url('/check-out-shopping') }}',
                                         method: "POST",
@@ -280,8 +281,16 @@
                                             pay_method_checkout:pay_method_checkout,
                                             _token:_token
                                         },
+                                        beforeSend: function(){
+                                           swal({
+                                            title: "Order Proccessing!",
+                                            text: "Please wait for few second.",
+                                            showCancelButton: false, // There won't be any cancel button
+                                            showConfirmButton: false, // There won't be any confirm button
+                                            imageUrl: "{{ asset('frontend/images/loading.gif') }}"
+                                           });
+                                        },
                                         success: function(data) {
-
                                             swal("Đơn hàng!", "Đơn hàng của bạn đã được gửi thành công.", "success");
                                         }
                                     });
