@@ -44,7 +44,6 @@
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{ route('admin.product.index') }}">Danh sách</a>
                <a class="dropdown-item" href="{{ route('admin.product.create') }}">Thêm</a>
-               <a class="dropdown-item" href="">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -90,14 +89,6 @@
                <a class="dropdown-item" href="{{route('admin.coupon.index')}}">Danh sách</a>
                <a class="dropdown-item" href="{{route('admin.coupon.create')}}">Thêm</a>
                <a class="dropdown-item" href="{{URL::to('brand-edit')}}">Chỉnh sửa</a>
-            </div>
-         </li>
-         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-percentage"></i> <span>Khuyến mãi</span></a>
-            <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('promotion-list')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{URL::to('promotion-add')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('promotion-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
          <li class="nav-item dropdown">

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use Illuminate\Database\QueryException;
 
 class Admin_OrderItemController extends Controller
 {
@@ -26,8 +28,12 @@ class Admin_OrderItemController extends Controller
      */
     public function create(Order $order)
     {
+        $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
+        $products = Product::get();
         return view('admin.order.add_item' , [
-            'order' => $order
+            'order' => $order,
+            'products' => $products,
+            'orderItem' => $orderItem,
         ]);
     }
 
@@ -37,9 +43,25 @@ class Admin_OrderItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Order $order)
     {
-        //
+        $request->validate([
+            'product_id' => 'required|max:255',
+        ]);
+        $unit_price = Product::find($request->product_id)->sale_price;
+        $orderItem = new OrderItem();
+        $orderItem->order_id = $request->order_id;
+        $orderItem->product_id = $request->product_id;
+        $orderItem->unit_price = $unit_price;
+        $orderItem->qty = 1;
+        $orderItem->total_price = $unit_price;
+        try {
+            $orderItem->save();
+        } catch (QueryException $e) {
+            request()->session()->put('error', $e->getMessage());
+            return redirect()->back();
+        }
+        return redirect()->route('admin.order.item.create' , ['order' => $order]);
     }
 
     /**
@@ -71,9 +93,18 @@ class Admin_OrderItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $order, $item)
     {
-        //
+        $orderItem = OrderItem::where('order_id' , $order)->where('product_id' , $item)->first();
+        $unit_price = $request->unit_price;
+        $orderItem->unit_price = $unit_price;
+        $orderItem->qty = $request->qty;
+        $orderItem->total_price = $unit_price * $request->qty;
+        try {
+            $orderItem->save();
+        } catch (QueryException $e) {
+            request()->session()->put('error', $e->getMessage());
+        }
     }
 
     /**

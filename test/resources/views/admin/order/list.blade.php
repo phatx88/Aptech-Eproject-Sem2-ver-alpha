@@ -8,12 +8,15 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="#">Quản lý</a>
+                    <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                 </li>
-                <li class="breadcrumb-item active">Đơn hàng</li>
-                <li class="breadcrumb-item active">Danh sách</li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('admin.order.index') }}">Order</a>
+                </li>
+                <li class="breadcrumb-item active">List</li>
             </ol>
             <!-- DataTables Example -->
+            @include('errors.message')
             <div class="action-bar">
                 <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm" name="add">Add</a>
                 <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
@@ -32,7 +35,7 @@
                                     <th>Mã</th>
                                     <th>Tên khách hàng</th>
                                     <th>Điện thoai</th>
-                                    <th>Email</th>
+                                    <th>Email người mua</th>
                                     <th>Trạng Thái</th>
                                     <th>Ngày đặt hàng</th>
                                     <th>Người nhận</th>
@@ -56,7 +59,7 @@
                                     <td>{{ $order->id  }}</td>
                                     <td>{{ $order->user->name  ?? "Guest"  }}</td>
                                     <td>{{ $order->user->mobile ?? ""}}</td>
-                                    <td>{{ $order->user->email ?? ""}}</td>
+                                    <td>{{ $order->user->email ?? $order->shipping_email}}</td>
                                     <td>{{ $order->status->name }}</td>
                                     <td>{{ $order->created_date }}</td>
                                     <td>{{ $order->shipping_fullname }}</td>
@@ -70,14 +73,20 @@
                                         {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}.
                                     </td>
                                     <td>{{ $order->delivered_date }}</td>
-                                    <td></td>
+                                    <td>{{ $order->staff->user->name ?? "" }}</td>
                                     <td>
                                         <a type="button" class="btn btn-info btn-sm" href="{{ route('admin.order.show' , ['order' => $order->id]) }}">Detail</a>
                                     </td>
                                     <td> <a type="button" href="{{ route('admin.order.edit' , ['order' => $order->id]) }}" value=""
                                             class="btn btn-warning btn-sm">Edit</a></td>
-                                    <td> <a type="button" onclick="DELETE('1');" value=""
-                                            class="btn btn-danger btn-sm">Delete</a></td>
+                                    <td> 
+                                        <form action="{{ route('admin.order.destroy' , ['order' => $order->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" value=""
+                                        class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
 
