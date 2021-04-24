@@ -13,19 +13,21 @@ use App\Models\Order;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use Session;
 session_start();
 class User_CheckOutController extends Controller
 {
     public function index() {
         $province = Province::orderby('id', 'ASC')->get();
-
+        $ward_id = session()->get('ward_id');
+        $ward = Ward::where('id', $ward_id)->get();
         if (Auth::check()) {
             $user = Auth::user();
-            return view('pages.checkout' , ['user' => $user])->with(compact('province'));
+            return view('pages.checkout' , ['user' => $user])->with(compact('province'))->with('ward', $ward);
         }
 
-        return view('pages.checkout')->with(compact('province'));
+        return view('pages.checkout')->with(compact('province'))->with('ward', $ward);
     }
 
     public function check_out_shopping(Request $request){
@@ -103,9 +105,17 @@ class User_CheckOutController extends Controller
         Session::forget('coupon');
         Session::forget('fee');
         Session::forget('subtotal');
+        Session::forget('ward_id');
 
 
+    }
 
+    public function another_address(){
+        if(session()->get('ward_id') != null){
+            session()->forget('ward_id');
+            return redirect()->back();
+        }
+        return redirect()->back();
     }
 }
 

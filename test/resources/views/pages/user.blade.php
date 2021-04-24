@@ -216,61 +216,7 @@
                                             </div>
 
                                             <hr>
-                                            <div class="table-responsive-md">
-                                                <table class="table table-hover">
-                                                    <thead class="thead-primary">
-                                                        <tr>
-                                                            <th scope="col" class="p-1">Item Feature</th>
-                                                            <th scope="col" class="p-1">Product Name</th>
-                                                            <th scope="col" class="p-1">Quantity</th>
-                                                            <th scope="col" class="p-1">Total Price</th>
-                                                        </tr>
-                                                    </thead>
 
-                                                    <tbody>
-                                                        {{-- FOREACH ORDER DETAIL HERE --}}
-                                                        @foreach ($order_list as $valist)
-                                                        @if($valist['order_id'] === $order_id)
-                                                        @php $coupon_fee = $valist['coupon_fee'] @endphp
-                                                        <tr>
-                                                            <th scope="row" class="p-1">
-                                                                <img src="{{ asset('frontend/images/products/'.$valist['product_image']) }}"
-                                                                    alt="" class="feature-img">
-                                                            </th>
-                                                            <td class="p-0">{{ $valist['product_name'] }}</td>
-                                                            <td class="p-0 text-center"> {{ $valist['product_quantity'] }}</td>
-                                                            <td class="p-0 text-center">${{ $valist['product_total_price'] }}</td>
-                                                        </tr>
-                                                        @php
-                                                            $subtotal += $valist['product_total_price'];
-                                                        @endphp
-                                                        @endif
-                                                        @endforeach
-                                                        @php
-
-
-                                                            $shipping_fee =  $order->shipping_fee ;
-
-                                                        @endphp
-
-                                                        <tr class="">
-                                                            <th scope="row" class="p-1 border-0"></th>
-                                                            <td class="p-0 border-0 text-left">Payment Method :
-                                                                @if($order->payment_method == 1)
-                                                                    Banking
-                                                                @else
-                                                                    Completed
-                                                                @endif
-                                                            </span>
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                            <span>
-                                                                Ship To : {{ $order->shipping_fullname }} <br>
-                                                                Phone : {{ $order->shipping_mobile }} <br>
-                                                                Address : {{ $order->shipping_housenumber_street }} <br>
-                                                            </span>
-                                                        </div>
-                                                    </div>
 
                                                     <hr>
                                                     <div class="table-responsive-md">
@@ -286,31 +232,31 @@
 
                                                             <tbody>
                                                                 {{-- FOREACH ORDER DETAIL HERE --}}
-                                                                @foreach ($order_list as $valist)
-                                                                    @if ($valist['order_id'] === $order_id)
-                                                                        @php $coupon_fee = $valist['coupon_fee'] @endphp
+                                                                @foreach ($order_list as $key => $v_list)
+                                                                    @if ($v_list['order_id'] == $order_id)
+                                                                        @php $coupon_fee = $v_list['coupon_fee'] @endphp
                                                                         <tr>
                                                                             <th scope="row" class="p-1">
-                                                                                <img src="{{ asset('frontend/images/products/' . $valist['product_image']) }}"
+                                                                                <img src="{{ asset('frontend/images/products/' . $v_list['product_image']) }}"
                                                                                     alt="" class="feature-img">
                                                                             </th>
-                                                                            <td class="p-0">{{ $valist['product_name'] }}
+                                                                            <td class="p-0">{{ $v_list['product_name'] }}
                                                                             </td>
                                                                             <td class="p-0 text-center">
-                                                                                {{ $valist['product_quantity'] }}</td>
+                                                                                {{ $v_list['product_quantity'] }}</td>
                                                                             <td class="p-0 text-center">
-                                                                                ${{ $valist['product_total_price'] }}
+                                                                                ${{ $v_list['product_total_price'] }}
                                                                             </td>
                                                                         </tr>
                                                                         @php
-                                                                            $subtotal += $valist['product_total_price'];
+                                                                            $subtotal += $v_list['product_total_price'];
                                                                         @endphp
                                                                     @endif
                                                                 @endforeach
                                                                 @php
-                                                                    
+
                                                                     $shipping_fee = $order->shipping_fee;
-                                                                    
+
                                                                 @endphp
 
                                                                 <tr class="">
@@ -364,7 +310,7 @@
                                 </div>
                             </div>
                         </div>
-                    
+
                     {{-- ORDER HISTORY - TRACKING - END --}}
 
                     {{-- TAB PANE - MY WISH LIST --}}

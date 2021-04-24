@@ -10,8 +10,8 @@ use App\Http\Controllers\Admin_BrandController;
 use App\Http\Controllers\Admin_CouponController;
 use App\Http\Controllers\Admin_StaffController;
 // FE CONTROLLER
-use App\Http\Controllers\User_HomeController;    
-use App\Http\Controllers\User_AccountController;    
+use App\Http\Controllers\User_HomeController;
+use App\Http\Controllers\User_AccountController;
 use App\Http\Controllers\User_ProductsController;
 use App\Http\Controllers\User_CartController;
 use App\Http\Controllers\User_CheckOutController;
@@ -50,6 +50,9 @@ Route::get('/admin', function () {
 });
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
+
+//Another Address
+Route::get('/another-address', [User_CheckOutController::class, 'another_address']);
 
 //Check-Out-Button
 Route::post('/check-out-shopping', [User_CheckOutController::class, 'check_out_shopping']);
@@ -135,9 +138,9 @@ Route::prefix('home')->group(function() {
 // Admin Dashboard
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('dashboard' , Admin_DashboardController::class);
-    Route::resource('product', Admin_ProductController::class); 
-    Route::resource('order', Admin_OrderController::class); 
-    Route::resource('order.item', Admin_OrderItemController::class); 
+    Route::resource('product', Admin_ProductController::class);
+    Route::resource('order', Admin_OrderController::class);
+    Route::resource('order.item', Admin_OrderItemController::class);
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);

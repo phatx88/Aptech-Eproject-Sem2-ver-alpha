@@ -181,7 +181,7 @@ class User_CartController extends Controller
                 foreach ($select_district as $key =>  $district){
                     $output .= '<option value="'.$district->id.'">'.str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $district->name).'</option>';
                 }
-                
+
             }else if($data['action'] == "district"){
 
                 $select_ward = Ward::where('district_id', $id)
@@ -197,6 +197,11 @@ class User_CartController extends Controller
 
     public function calculate_fee(Request $request){
         $data = $request->all();
+        $ward_id = session()->get('ward_id');
+        if($ward_id != null){
+            session()->put('ward_id', '');
+        }
+        session()->put('ward_id', $data['ward_id']);
 
         $transport = Transport::where('province_id', $data['province_id'])->get();
         $output = '';
@@ -211,6 +216,7 @@ class User_CartController extends Controller
         }else{
             session()->put('fee', 20);
         }
+
         session()->save();
 
     }

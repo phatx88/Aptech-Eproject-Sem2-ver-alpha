@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link rel="stylesheet" href="{{ asset('frontend/css/star-rating-svg.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
-    
+
 </head>
 
 <body>
@@ -503,6 +503,8 @@
     <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="{{ asset('frontend/js/form-validation.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.star-rating-svg.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
