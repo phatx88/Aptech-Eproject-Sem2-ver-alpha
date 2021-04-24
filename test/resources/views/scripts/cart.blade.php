@@ -1,4 +1,5 @@
 <script type="text/javascript">
+
         $(document).ready(function() {
             fetch_btn();
             function fetch_btn(){
@@ -234,8 +235,8 @@
 
 
         $(document).ready(function() {
-            $('.checkout-button').click(function(ev) {
-                ev.preventDefault();
+            $('.checkout-button').click(function(event) {
+                event.preventDefault();
                 swal({
                         title: "Xác nhận đơn hàng ?",
                         text: "Đơn hàng sẽ không được hoàn trả, bạn có muốn dặt không!",
@@ -260,21 +261,41 @@
                             var _token = $('input[name="_token"]').val();
                             var fee_ship_checkout = $('.fee-ship-checkout').val();
                             var pay_method_checkout = $('.pay-method-checkout:checked').val();
+                            // var check_box = $('.checkbox-checkout').val();
+                            // alert(check_box);
                             var patt = new RegExp("[a-zA-Z ]{3,}");
-
+                            var patt1 = new RegExp("[0-9]{10,12}");
+                            var patt2 = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
+                            var patt3 = new RegExp("[a-zA-Z0-9 ]{5,}");
                             // console.log(patt);
                             // console.log(patt.test(user_name));
-
+                            // alert(pay_method_checkout);
                             if(patt.test(user_name) === false){
                                 // alert('error');
                                 swal("Lỗi","Name must be greater than 3", "error");
                             }
-
+                            else if(patt1.test(user_mobile) == false){
+                                swal("Lỗi","Mobile must be number and greater than 10", "error");
+                            }
+                            else if(patt2.test(user_email) == false){
+                                swal("Lỗi","Email is not valid", "error");
+                            }
+                            else if(patt3.test(user_street_address) == false){
+                                swal("Lỗi","Street is not valid", "error");
+                            }else if(province === ""){
+                                swal("Lỗi","Please choose Province ", "error");
+                            }else if(district === ""){
+                                swal("Lỗi","Please choose District ", "error");
+                            }else if(ward === ""){
+                                swal("Lỗi","Please choose Ward ", "error");
+                            }else if(pay_method_checkout != 0 && pay_method_checkout != 1){
+                                swal("Lỗi","Please choose Payment Method ", "error");
+                            }
                             else if(user_name === "" || user_mobile === "" || user_email==="" || user_street_address==="" || province==="" || district ===""
                             || ward==="" || pay_method_checkout===""){
                                 swal("Lỗi","You must fill all information", "error");
 
-                            }else{
+                             }else{
                                 // imageUrl:'{{ asset('frontend/images/loading.gif') }}',
                                     $.ajax({
                                         url: '{{ url('/check-out-shopping') }}',
