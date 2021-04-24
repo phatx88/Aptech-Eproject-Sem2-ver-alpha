@@ -260,10 +260,19 @@
                             var _token = $('input[name="_token"]').val();
                             var fee_ship_checkout = $('.fee-ship-checkout').val();
                             var pay_method_checkout = $('.pay-method-checkout:checked').val();
+                            var patt = new RegExp("[a-zA-Z ]{3,}");
 
-                            if(user_name === "" || user_mobile === "" || user_email==="" || user_street_address==="" || province==="" || district ===""
+                            // console.log(patt);
+                            // console.log(patt.test(user_name));
+
+                            if(patt.test(user_name) === false){
+                                // alert('error');
+                                swal("Lỗi","Name must be greater than 3", "error");
+                            }
+
+                            else if(user_name === "" || user_mobile === "" || user_email==="" || user_street_address==="" || province==="" || district ===""
                             || ward==="" || pay_method_checkout===""){
-                                swal("Lỗi","You must fill all information","error");
+                                swal("Lỗi","You must fill all information", "error");
 
                             }else{
                                 // imageUrl:'{{ asset('frontend/images/loading.gif') }}',
