@@ -19,7 +19,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-10 ftco-animate">
-                    <form name="check-out-form-with-validation">
+                    <form name="check-out-form-with-validation" method="GET">
                         @csrf
                         <h3 class="mb-4 mt-4 billing-heading">Shipping Contact Info</h3>
                         @include('errors.error')
@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="shipping_fullname">Full Name</label>
-                                    <input type="text" class="form-control user-name-checkout" placeholder="Enter Shipping Recipient" name="shipping_fullname" id="shipping_fullname" @auth
+                                    <input type="text" required minlength="3" class="form-control user-name-checkout" placeholder="Enter Shipping Recipient" name="shipping_fullname" id="shipping_fullname" @auth
                                         value="{{ $user->name }}" @endauth>
                                 </div>
                             </div>
@@ -82,7 +82,7 @@
 
                                             @else
                                             @endif
-                                            <option value="0">--Chọn Thành phố---</option>
+                                            <option value="">--Chọn Thành phố---</option>
 
                                         @foreach ($province as $key => $pvin)
                                             <option value="{{ $pvin->id }}">{{ $pvin->name }}</option>
@@ -112,7 +112,7 @@
                                             @endif
 
 
-                                        <option value="0">--Chọn quận huyện---</option>
+                                        <option value="">--Chọn quận huyện---</option>
                                     </select>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
                                                 @endif
 
 
-                                        <option value="0">--Chọn xã phường---</option>
+                                        <option value="">--Chọn xã phường---</option>
                                     </select>
                                 </div>
                             </div>
@@ -270,7 +270,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p><a href="#" class="btn btn-primary py-3 px-4 checkout-button">Place an order</a></p>
+                                <p><button type="submit" class="btn btn-primary py-3 px-4 checkout-button">Place an order</button></p>
                             </div>
                         </div>
                     </div>

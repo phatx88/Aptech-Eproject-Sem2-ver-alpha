@@ -234,8 +234,8 @@
 
 
         $(document).ready(function() {
-            $('.checkout-button').click(function() {
-
+            $('.checkout-button').click(function(ev) {
+                ev.preventDefault();
                 swal({
                         title: "Xác nhận đơn hàng ?",
                         text: "Đơn hàng sẽ không được hoàn trả, bạn có muốn dặt không!",
@@ -260,9 +260,11 @@
                             var _token = $('input[name="_token"]').val();
                             var fee_ship_checkout = $('.fee-ship-checkout').val();
                             var pay_method_checkout = $('.pay-method-checkout:checked').val();
+
                             if(user_name === "" || user_mobile === "" || user_email==="" || user_street_address==="" || province==="" || district ===""
                             || ward==="" || pay_method_checkout===""){
                                 swal("Lỗi","You must fill all information","error");
+
                             }else{
                                 // imageUrl:'{{ asset('frontend/images/loading.gif') }}',
                                     $.ajax({
