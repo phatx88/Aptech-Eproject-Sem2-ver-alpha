@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -63,6 +65,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Get the staff associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function staff(): HasOne
+    {
+        return $this->hasOne(Staff::class, 'user_id', 'id');
+    }
+
+    /**
      * Get all of the order for the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -70,5 +82,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function order(): HasMany
     {
         return $this->hasMany(Order::class, 'customer_id', 'id');
+    }
+
+    public function assignRole($role) 
+    {
+        return Staff::create([
+            'user_id' => $this->id,
+            'role' => $role,
+        ]);
     }
 }

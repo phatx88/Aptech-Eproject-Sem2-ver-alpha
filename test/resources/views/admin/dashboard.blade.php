@@ -8,6 +8,7 @@
           <ol class="breadcrumb">
              <li class="breadcrumb-item active">Tổng quan</li>
           </ol>
+          @include('errors.message')
           <div class="mb-3 my-3">
              <a href="#" class="active btn btn-primary">Hôm nay</a>
              <a href="#" class="btn btn-primary">Hôm qua</a>
