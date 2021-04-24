@@ -8,31 +8,29 @@
     <ul class="navbar-nav ml-auto">
        <li class="nav-item no-arrow text-dark">
          <div class="">
-
             @guest
-                @if (Route::has('login'))
-                    <a href="#register" class="btn-register mr-2 text-dark" data-toggle="modal">Sign Up</a>
-                @endif
-
-                @if (Route::has('register'))
-                    <a href="#login" class="btn-login text-dark" data-toggle="modal">Log In</a>
-                @endif
-            @else
-                {{-- User drop down menu --}}
+            @if (Route::has('register'))
+                <a href="{{ route('login') }}" class="btn-login text-dark">Log In</a>
+            @endif
+            @endguest
+            @auth
+            @if (Auth::user()->hasVerifiedEmail())
                 <a href="{{ route('account.index') }}" class="text-dark mr-2">
                     {{ Auth::user()->name }}
                 </a>
 
-                {{-- User drop down menu --}}
-                <a href="{{ route('logout') }} " class="text-dark"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
+            @else
+                <a href="{{ route('verification.notice') }}" class="text-dark mr-2">Activate Account</a>
+            @endif
 
-            @endguest
+            <a href="" class="text-dark"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        @endauth
         </div>
        </li>
     </ul>

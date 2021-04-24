@@ -102,7 +102,7 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Nhân viên</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('staff-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('admin.staff.index')}}">Danh sách</a>
                <a class="dropdown-item" href="{{URL::to('staff-add')}}">Thêm</a>
                <a class="dropdown-item" href="{{URL::to('staff-edit')}}">Chỉnh sửa</a>
             </div>

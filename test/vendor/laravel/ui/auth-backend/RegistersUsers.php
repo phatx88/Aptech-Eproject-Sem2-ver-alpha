@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 trait RegistersUsers
 {
     use RedirectsUsers;
@@ -18,7 +19,7 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('auth.login');
     }
 
     /**

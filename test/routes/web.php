@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin_OrderItemController;
 use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\Admin_BrandController;
 use App\Http\Controllers\Admin_CouponController;
+use App\Http\Controllers\Admin_StaffController;
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;    
 use App\Http\Controllers\User_AccountController;    
@@ -49,10 +50,6 @@ Route::get('/admin', function () {
 });
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
-
-Route::get('/home/user/account', [User_AccountController::class , 'index'])->name('account.index'); //trả về User Acccount trên trang Home
-Route::post('/home/user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); //trả về User Acccount trên trang Home
-Route::post('/home/user/account/update', [User_AccountController::class , 'update'])->name('account.update'); //trả về User Acccount trên trang Home
 
 //Check-Out-Button
 Route::post('/check-out-shopping', [User_CheckOutController::class, 'check_out_shopping']);
@@ -103,16 +100,39 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 //BACK END
 
 // Có VErify
-// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-//     Route::resource('product', Admin_ProductController::class); //Thêm sửa xóa trang products bên Admin
-//     Route::resource('order', Admin_OrderController::class); //Thêm sửa xóa trang orders bên Admin
-//     Route::resource('category', Admin_CategoryController::class);
-//     Route::resource('brand', Admin_BrandController::class);
-//     Route::resource('coupon', Admin_CouponController::class);
+// User Dashboard 
+// Route::prefix('home')->middleware(['auth' , 'verified'])->group(function() {
+//     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index'); 
+//     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); 
+//     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
 // });
 
 
-// KO Verify
+
+//Admin Dashboard
+// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
+//     Route::resource('dashboard' , Admin_DashboardController::class);
+//     Route::resource('product', Admin_ProductController::class); 
+//     Route::resource('order', Admin_OrderController::class); 
+//     Route::resource('order.item', Admin_OrderItemController::class); 
+//     Route::resource('category', Admin_CategoryController::class);
+//     Route::resource('brand', Admin_BrandController::class);
+//     Route::resource('coupon', Admin_CouponController::class);
+//     Route::resource('staff', Admin_StaffController::class);
+//     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
+//     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+// });
+
+
+// KO Verify - Development Only
+// User Dashboard 
+Route::prefix('home')->group(function() {
+    Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index'); 
+    Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); 
+    Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
+});
+
+// Admin Dashboard
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('dashboard' , Admin_DashboardController::class);
     Route::resource('product', Admin_ProductController::class); 
@@ -121,6 +141,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
+    Route::resource('staff', Admin_StaffController::class);
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 });
