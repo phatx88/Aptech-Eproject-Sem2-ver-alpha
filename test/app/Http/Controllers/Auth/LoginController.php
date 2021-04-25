@@ -44,7 +44,7 @@ class LoginController extends Controller
         if (Auth::check() && Auth::user()->is_staff == 1) {
             return redirect()->route('admin.dashboard.index');
         } else {
-            return redirect()->route('admin.home.index');
+            return redirect()->route('home.index');
         }
     }
 

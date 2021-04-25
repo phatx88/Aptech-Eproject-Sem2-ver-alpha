@@ -62,12 +62,15 @@
                             @endif
                         @endguest
                         @auth
-                            @if (Auth::user()->hasVerifiedEmail())
+                            @if (Auth::user()->hasVerifiedEmail() && Auth::user()->is_staff == 0)
                                 {{-- User drop down menu --}}
                                 <a href="{{ route('account.index') }}" class="text-white mr-2">
                                     {{ Auth::user()->name }}
                                 </a>
-
+                            @elseif (Auth::user()->hasVerifiedEmail() && Auth::user()->is_staff == 1)
+                            <a href="{{ route('admin.dashboard.index') }}" class="text-white mr-2">
+                                {{ Auth::user()->name }}
+                            </a>
                             @else
                                 <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
                             @endif

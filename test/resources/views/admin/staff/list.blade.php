@@ -12,6 +12,7 @@
                 </li>
                 <li class="breadcrumb-item active">List</li>
             </ol>
+            @include('errors.message')
             <!-- DataTables Example -->
             <div class="action-bar">
                 <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm" >Add Employee</a>
@@ -44,8 +45,8 @@
                                         <td>{{ $user->mobile  ?? ""}}</td>
                                         <td>{{ $user->staff->role }}</td>
                                         <td>{{ $user->is_active == true ? "Yes" : "No" }}</td>
-                                        <td> <input type="button" onclick="Edit('1');" value="Sửa"
-                                                class="btn btn-warning btn-sm"></td>
+                                        <td> <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $user->id]) }}"
+                                                class="btn btn-warning btn-sm">Edit</a></td>
                                         <td><input type="button" onclick="Delete('1');" value="Xóa"
                                                 class="btn btn-danger btn-sm"></td>
                                     </tr>

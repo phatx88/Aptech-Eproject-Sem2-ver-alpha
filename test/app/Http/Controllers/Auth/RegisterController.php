@@ -16,6 +16,8 @@ class RegisterController extends Controller
         'email' => 'required|email|unique:users|max:255',
         'password' => 'required|min:8|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'required|min:8',
+        'is_staff' => 'prohibited',
+        'is_active' => 'prohibited',
     ];
 
     protected $messenger = [
@@ -98,7 +100,6 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'is_staff' => $data['is_staff'] ?? 0,
             'password' => Hash::make($data['password']),
         ]);
     }

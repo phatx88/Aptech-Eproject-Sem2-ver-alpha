@@ -54,7 +54,7 @@ class Admin_StaffController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'is_staff' => 'required',
-            'role' => 'required'
+            'role' => 'required|in:Staff,Inspector',
         ]);
     
         $input = $request->all();
@@ -63,7 +63,7 @@ class Admin_StaffController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('role'));
 
-        return redirect()->route('admin.dashboard.index')
+        return redirect()->route('admin.staff.index')
                         ->with('success',"Staff : {$user->name} - {$user->email} created successfully");
     }
 
@@ -86,7 +86,14 @@ class Admin_StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+        $staff_user = User::where('id' , $id)->first();
+        $staff_roles = Staff::get();
+        $provinces = Province::get();
+        return view('admin.staff.edit' , [
+            'staff_user' => $staff_user,
+            'staff_roles' => $staff_roles,
+            'provinces' => $provinces,
+        ]);
     }
 
     /**
@@ -98,7 +105,26 @@ class Admin_StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'is_staff' => 'required',
+            'email' => 'prohibited', 
+            'role' => 'required|in:Staff,Inspector',
+        ]);
+
+        $user = User::where('id' , $id)->first();
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->ward_id = $request->ward_id;
+        $user->housenumber_street = $request->housenumber_street;
+        $user->save();
+
+        $staff = Staff::where('user_id' , $id)->first();
+        $staff->role = $request->role;
+        $staff->save();
+
+        return redirect()->route('admin.staff.index')
+                        ->with('success',"Staff : {$user->name} - {$user->email} Edit successfully");
     }
 
     /**

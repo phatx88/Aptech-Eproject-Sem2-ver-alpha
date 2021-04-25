@@ -147,7 +147,7 @@ class Admin_OrderController extends Controller
             'order_status_id' => 'required',
             'shipping_fullname' => 'required|max:100',
             'shipping_mobile' => 'required',
-            'shipping_email' => 'email:rfc,dns|max:255',
+            'shipping_email' => 'email|max:255',
             'payment_method' => 'required',
             'shipping_ward_id' => 'required',
             'delivered_date' => 'date'

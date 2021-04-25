@@ -15,7 +15,7 @@
             @endguest
             @auth
             @if (Auth::user()->hasVerifiedEmail())
-                <a href="{{ route('account.index') }}" class="text-dark mr-2">
+                <a href="{{ route('admin.dashboard.index') }}" class="text-dark mr-2">
                     {{ Auth::user()->name }}
                 </a>
 
