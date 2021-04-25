@@ -35,9 +35,9 @@
                     @csrf
                     <h1>Sign in</h1>
                     <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="{{ route('login.facebook') }}" class="social"><i class="fab fa-facebook-f"></i></a>
+                        <a href="{{ route('login.google') }}" class="social"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social"><i class="fab fa-twitter"></i></a>
                     </div>
                     <span>or use your account</span>
                     <input id="email" type="email" placeholder="Email"
@@ -73,9 +73,9 @@
                             @else
                                 <h1>Welcome!</h1>
                                 <div class="social-container-signup">
-                                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                                    <a href="{{ route('login.facebook') }}" class="social"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="{{ route('login.google') }}" class="social"><i class="fab fa-google"></i></a>
+                                    <a href="#" class="social"> <i class="fab fa-twitter"></i> </a>
                                 </div>
                                 <p class="mt-0">Sign up using your social media account or register your email</p>
                             @endif

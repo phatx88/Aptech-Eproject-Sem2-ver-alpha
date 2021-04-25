@@ -53,6 +53,15 @@ Route::get('/admin', function () {
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
 
+
+// Google login
+Route::get('login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);
+
+// Facebook login
+Route::get('login/facebook', [App\Http\Controllers\Auth\LoginController::class, 'redirectToFacebook'])->name('login.facebook');
+Route::get('login/facebook/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleFacebookCallback']);
+
 //Another Address
 Route::get('/another-address', [User_CheckOutController::class, 'another_address']);
 
@@ -128,6 +137,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkR
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 });
+
+
 
 
 // KO Verify - Development Only

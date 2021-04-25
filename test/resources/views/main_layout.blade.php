@@ -348,18 +348,17 @@
                             </div>
                             <div class="form-group pt-2">
                                 <button class="btn btn-info form-control">{{ __('Login') }}</button>
-                                @if (Route::has('password.request'))
+                                {{-- @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
-                                @endif
+                                @endif --}}
                             </div>
                             <div class="form-group text-center pt-2 social-login">
                                 <h6>OR Continue with</h6>
-                                <a href="#" class="google"> <i class="fa fa-google-plus fa-lg"></i> </a>
-                                <a href="#" class="facebook"> <i class="fa fa-facebook fa-lg"></i> </a>
+                                <a href="{{ route('login.google') }}" class="google"> <i class="fa fa-google fa-lg"></i> </a>
+                                <a href="{{ route('login.facebook') }}" class="facebook"> <i class="fa fa-facebook fa-lg"></i> </a>
                                 <a href="#" class="twitter"> <i class="fa fa-twitter fa-lg"></i> </a>
-                                <a href="#" class="github"> <i class="fa fa-github fa-lg"></i> </a>
                             </div>
                         </form>
                     </div>
@@ -380,6 +379,7 @@
                             @csrf
                             <div class="form-group text-center pb-2 heading-section">
                                 <h2 id="registerModal">{{ __('Register') }}</h2>
+                                <span>Register now to receive $10 coupon on first purchase</span>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
@@ -429,6 +429,12 @@
 
                             <div class="form-group">
                                 <button id="submitRegistration" class="btn btn-info form-control">{{ __('Register') }}</button>
+                            </div>
+                            <div class="form-group text-center pt-2 social-login">
+                                <h6>OR Continue with</h6>
+                                <a href="{{ route('login.google') }}" class="google"> <i class="fa fa-google fa-lg"></i> </a>
+                                <a href="{{ route('login.facebook') }}" class="facebook"> <i class="fa fa-facebook fa-lg"></i> </a>
+                                <a href="#" class="twitter"> <i class="fa fa-twitter fa-lg"></i> </a>
                             </div>
                         </form>
                     </div>
