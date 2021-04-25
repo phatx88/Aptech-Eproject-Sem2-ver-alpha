@@ -15,7 +15,9 @@ use App\Http\Controllers\User_AccountController;
 use App\Http\Controllers\User_ProductsController;
 use App\Http\Controllers\User_CartController;
 use App\Http\Controllers\User_CheckOutController;
+use Illuminate\Routing\RouteUri;
 // OTHERS
+use App\Http\Controllers\PasswordSetupController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -99,17 +101,18 @@ Route::prefix('home')->name('home.')->group(function () {
 // CHECK OUT
 Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('checkout.index'); //Về Trang Check Out
 
+//SETUP PASSWORD FOR STAFF
+Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwordset']);
 
 //BACK END
 
 // Có VErify
 // User Dashboard 
-Route::prefix('home')->middleware(['auth' , 'verified'])->group(function() {
+Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->group(function() {
     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index'); 
     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); 
     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
 });
-
 
 
 //Admin Dashboard

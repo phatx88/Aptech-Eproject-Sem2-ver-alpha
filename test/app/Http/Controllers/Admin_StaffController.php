@@ -8,9 +8,26 @@ use App\Models\User;
 use App\Models\Province;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\StaffWelcome;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class Admin_StaffController extends Controller
 {
+    public function generateToken()
+    {
+    // This is set in the .env file
+    $key = config('app.key');
+
+    // Illuminate\Support\Str;
+    if (Str::startsWith($key, 'base64:')) {
+        $key = base64_decode(substr($key, 7));
+    }
+    return hash_hmac('sha256', Str::random(64), $key);
+    }
+    
+    
     /**
      * Display a listing of the resource.
      *
@@ -62,6 +79,19 @@ class Admin_StaffController extends Controller
     
         $user = User::create($input);
         $user->assignRole($request->input('role'));
+
+        //Sending welcome message and set up new user password
+        $username = $user->name;
+        $useremail = $user->email;
+        $token = $this->generateToken(); 
+        DB::table('password_resets')->insert(['email' => $user->email, 'token' => bcrypt($token), 'created_at' =>  \Carbon\Carbon::now()->toDateTimeString()]);
+
+        $details = [
+            'username' => $username,
+            'useremail' => $useremail,
+            'token' => $token,
+        ];
+        Mail::to($useremail)->send(new StaffWelcome($details));
 
         return redirect()->route('admin.staff.index')
                         ->with('success',"Staff : {$user->name} - {$user->email} created successfully");
@@ -137,4 +167,6 @@ class Admin_StaffController extends Controller
     {
         //
     }
+
+    
 }
