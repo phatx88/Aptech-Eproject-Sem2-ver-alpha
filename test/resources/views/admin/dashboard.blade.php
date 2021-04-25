@@ -6,7 +6,7 @@
        <div class="container-fluid">
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
-             <li class="breadcrumb-item active">Tổng quan</li>
+             <li class="breadcrumb-item active">Dashboard</li>
           </ol>
           @include('errors.message')
           <div class="mb-3 my-3">

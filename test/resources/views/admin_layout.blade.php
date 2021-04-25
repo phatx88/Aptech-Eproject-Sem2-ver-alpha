@@ -18,6 +18,8 @@
       <link href="{{asset('backend/vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
       {{-- Notif CSS  --}}
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+      {{-- Sweet Alert  --}}
+      <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
       <!-- Custom styles for this template-->
       <link href="{{asset('backend/css/sb-admin.css')}}" rel="stylesheet">
       <link href="{{asset('backend/css/admin.css')}}" rel="stylesheet">
@@ -155,6 +157,7 @@
  <script src="{{asset('backend/vendor/datatables/jquery.dataTables.js')}}"></script>
  <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
  <script src="https://cdn.datatables.net/plug-ins/1.10.24/dataRender/ellipsis.js"></script>
+ <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
  <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
  <!-- Custom scripts for all pages-->
  <script src="{{asset('backend/js/sb-admin.min.js')}}"></script>

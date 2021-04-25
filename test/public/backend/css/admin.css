@@ -77,6 +77,7 @@ table img {
 /* width */
 ::-webkit-scrollbar {
 	width: 10px;
+	height: 12px;
   }
   
   /* Track */
@@ -90,6 +91,14 @@ table img {
 	background: rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
   }
+
+  /* flipping horizontal scroll bar in datatables */
+  .dataTables_scrollBody {
+    transform:rotateX(180deg);
+}
+.dataTables_scrollBody table {
+    transform:rotateX(180deg);
+}
   
   
 
