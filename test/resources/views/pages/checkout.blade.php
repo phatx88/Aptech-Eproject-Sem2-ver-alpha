@@ -265,12 +265,17 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2" required> I have read and accept the
-                                                terms and conditions</label>
+                                            <label>
+                                                <input type="checkbox" class="checkbox-checkout" name="check-box" class="mr-2"
+                                                id="toggle-check-box"
+                                                > I have read and accept the
+                                                terms and conditions
+
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
-                                <p><button type="submit" class="btn btn-primary py-3 px-4 checkout-button">Place an order</button></p>
+                                <p><input type="submit" disabled="disabled" class="btn btn-primary py-3 px-4 checkout-button" id="checkout-button" value="Place an order"></p>
                             </div>
                         </div>
                     </div>
