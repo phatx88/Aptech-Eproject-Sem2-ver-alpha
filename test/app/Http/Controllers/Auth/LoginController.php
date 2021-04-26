@@ -110,6 +110,7 @@ class LoginController extends Controller
             $user->email = $data->email;
             $user->provider_id = $data->id;
             $user->profile_pic = $data->avatar;
+            $user->email_verified_at = now();
             $user->save();
         }
 
