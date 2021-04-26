@@ -32,17 +32,17 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/LaravelTest/test/public/login/google/callback',
+        'redirect' => 'http://localhost/Aptech-Eproject-Sem2-ver-alpha/test/public/login/google/callback',
     ],
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/LaravelTest/test/public/login/facebook/callback',
+        'redirect' => 'http://localhost/Aptech-Eproject-Sem2-ver-alpha/test/public/login/facebook/callback',
     ],
     'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/LaravelTest/test/public/login/twitter/callback',
+        'redirect' => 'http://localhost/Aptech-Eproject-Sem2-ver-alpha/test/public/login/twitter/callback',
     ],
 
 ];
