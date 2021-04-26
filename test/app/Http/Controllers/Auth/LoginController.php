@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use File;
 
 class LoginController extends Controller
 {
@@ -103,62 +104,31 @@ class LoginController extends Controller
 
     protected function _registerOrLoginUser($data)
     {
-        $user = User::where('email', '=', $data->email)->first();
+        //search by social email
+        if($data->email != null) {
+            $user = User::where('email', $data->email)->first();
+        } 
+        //then search by social id
+        else {
+            $user = User::where('provider_id', $data->id)->first();
+        }
+        //if user doesnt existed create new one
         if (!$user) {
             $user = new User();
             $user->name = $data->name;
             $user->email = $data->email;
             $user->provider_id = $data->id;
-            $user->profile_pic = $data->avatar;
+            //Save profile pic to files.
+            if ($data->avatar) {
+                $imageid = uniqid();
+                getSocialAvatar($data->avatar, $imageid, '\frontend\images\profile\\');
+                $user->profile_pic = $imageid.'.jpg';
+            }
             $user->email_verified_at = now();
             $user->save();
         }
 
         Auth::login($user);
     }
-
-    /**
-     * Redirect the user to the social authentication page.
-     *
-     * @return Response
-     */
-    // public function redirectToProvider($provider)
-    // {
-    //     return Socialite::driver($provider)->redirect();
-    // }
-
-    /**
-     * Obtain the user information from social media.
-     *
-     * @return Response
-     */
-    // public function handleProviderCallback($provider)
-    // {
-    //     $user = Socialite::driver($provider)->user();
-    //     $authUser = $this->findOrCreateUser($user, $provider);
-    //     Auth::login($authUser, true);
-    //     return redirect($this->redirectTo);
-    // }
-
-    /**
-     * If a user has registered before using social auth, return the user
-     * else, create a new user object.
-     * @param  $user Socialite user object
-     * @param $provider Social auth provider
-     * @return  User
-     */
-    // public function findOrCreateUser($user, $provider)
-    // {
-    //     $authUser = User::where('provider_id', $user->id)->first();
-    //     if ($authUser) {
-    //         return $authUser;
-    //     }
-    //     return User::create([
-    //         'name'     => $user->name,
-    //         'email'    => $user->email,
-    //         'provider' => $provider,
-    //         'provider_id' => $user->id
-    //     ]);
-    // }
 
 }
