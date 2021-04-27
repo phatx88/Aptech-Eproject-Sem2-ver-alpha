@@ -13,6 +13,7 @@ use App\Models\Brand;
 use App\Models\Coupon;
 use App\Models\User;
 use App\Models\Comment;
+
 use Exception;
 
 class User_ProductsController extends Controller
@@ -25,7 +26,7 @@ class User_ProductsController extends Controller
         $price_to = $request->price_to;
 
 
-        //SEARCH BY CATE_ID & FEATURED 
+        //SEARCH BY CATE_ID & FEATURED
         if ($id != null) {
             switch ($id) {
                 case 'sale':
@@ -71,7 +72,7 @@ class User_ProductsController extends Controller
             }
         }
 
-        // SEARCH by Price Range 
+        // SEARCH by Price Range
         else if ($price_from != null && $price_to != null) {
             $products = DB::table('view_product')
                 ->join('brand', 'view_product.brand_id', '=', 'brand.id')
@@ -82,7 +83,7 @@ class User_ProductsController extends Controller
                 ->paginate(9);
         }
 
-        // SEARCH ALL OR BY NAME 
+        // SEARCH ALL OR BY NAME
         else {
 
             $products = DB::table(function ($query) {
@@ -102,13 +103,14 @@ class User_ProductsController extends Controller
 
         //Get all category id
         $all_cate = DB::table('category')->get();
-
+        $product_top_view = DB::table('product')->orderby('view_count', 'DESC')->limit(5)->get();
         return view('pages.product', [
             'products' => $products,
             'all_cate' => $all_cate,
             'search' => $search,
             'price_from' => $price_from,
             'price_to' => $price_to,
+            'product_top_view' => $product_top_view
         ]);
     }
 
@@ -126,7 +128,7 @@ class User_ProductsController extends Controller
         $comments = Comment::where('product_id', $id)->orderby('created_date', 'DESC')->paginate(5);
         $product = Product::where('id', $id)->get();
         // dd($product);
-        
+        DB::table('product')->where('id', $id)->increment('view_count');
         $category_id = 0;
         foreach ($product as $key => $value) {
             $category_id = $value->category_id;
@@ -140,7 +142,7 @@ class User_ProductsController extends Controller
             ->with('comments', $comments);
     }
 
-    public function postComment(Request $request, $id) 
+    public function postComment(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'star' => 'required',
@@ -151,11 +153,11 @@ class User_ProductsController extends Controller
 
         if ($validator->fails()) {
 			return response()->json($validator->errors()->all() , 400);
-        } 
+        }
         else
         {
             try {
-                // Save Comment to Data 
+                // Save Comment to Data
             $comment = new Comment;
             $comment->product_id = $id;
             $comment->star = $request->star;
@@ -169,7 +171,7 @@ class User_ProductsController extends Controller
                 return response()->json([$e->getMessage()], 400);
             }
         }
-        
+
         $comments = Comment::where('product_id', $id)->orderby('created_date', 'DESC')->paginate(5);
         $data = [];
         foreach ($comments as $comment) :

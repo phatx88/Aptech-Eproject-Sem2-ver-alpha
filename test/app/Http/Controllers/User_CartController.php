@@ -11,8 +11,9 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
 use App\Models\Transport;
-
+use App\Models\Products;
 use Session;
+use DB;
 // session_start();
 
 class User_CartController extends Controller
@@ -26,6 +27,9 @@ class User_CartController extends Controller
             $qty = $pro->inventory_qty;
         }
         $product_id = $data['id'];
+
+       DB::table('product')->where('id', $data['id'])->increment('view_count');
+
         $cart = Session('cart');
         $output = '';
         if($qty >= $data['product_quantity']){

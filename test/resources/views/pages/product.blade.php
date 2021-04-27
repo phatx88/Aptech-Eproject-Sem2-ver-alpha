@@ -72,43 +72,17 @@
 
                     {{-- Slider --}}
                     <div class="sidebar-box ftco-animate">
-                        <h3>Recent Blog</h3>
+                        <h3>Top View Product</h3>
+                        @foreach($product_top_view as $key => $view_product)
                         <div class="block-21 mb-4 d-flex">
                             <a class="blog-img mr-4"
-                                style="background-image: url({{ asset('frontend/images/image_1.jpg') }});"></a>
+                            style="background-image: url('{{ asset('frontend/images/products/' . $view_product->featured_image) }}');"></a>
                             <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
-                                        blind texts</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
-                                    <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
-                                </div>
+                                <h3 class="heading"><a href="{{ url('home/single-product/' . $view_product->id) }}">{{ $view_product->name }}</a></h3>
                             </div>
                         </div>
-                        <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url({{ asset('frontend/images/image_2.jpg') }});"></a>
-                            <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
-                                        blind texts</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
-                                    <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4"
-                                style="background-image: url({{ asset('frontend/images/image_3.jpg') }});"></a>
-                            <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about the
-                                        blind texts</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="fa fa-calendar"></span> Apr. 18, 2020</a></div>
-                                    <div><a href="#"><span class="fa fa-comment"></span> 19</a></div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
                 {{-- SIDE BAR --}}
