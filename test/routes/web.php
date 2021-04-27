@@ -132,40 +132,15 @@ Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwor
 
 // Có VErify
 // User Dashboard
-Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->group(function() {
-    Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
-    Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
-    Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
-});
-
-
-//Admin Dashboard
-Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-    Route::resource('dashboard' , Admin_DashboardController::class);
-    Route::resource('product', Admin_ProductController::class);
-    Route::resource('order', Admin_OrderController::class);
-    Route::resource('order.item', Admin_OrderItemController::class);
-    Route::resource('category', Admin_CategoryController::class);
-    Route::resource('brand', Admin_BrandController::class);
-    Route::resource('coupon', Admin_CouponController::class);
-    Route::resource('staff', Admin_StaffController::class);
-    Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
-});
-
-
-
-
-// KO Verify - Development Only
-// User Dashboard
-// Route::prefix('home')->group(function() {
+// Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->group(function() {
 //     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
 //     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
 //     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
 // });
 
-// Admin Dashboard
-// Route::prefix('admin')->name('admin.')->group(function () {
+
+//Admin Dashboard
+// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
 //     Route::resource('dashboard' , Admin_DashboardController::class);
 //     Route::resource('product', Admin_ProductController::class);
 //     Route::resource('order', Admin_OrderController::class);
@@ -177,6 +152,31 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkR
 //     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
 //     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 // });
+
+
+
+
+// KO Verify - Development Only
+// User Dashboard
+Route::prefix('home')->group(function() {
+    Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
+    Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
+    Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
+});
+
+// Admin Dashboard
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('dashboard' , Admin_DashboardController::class);
+    Route::resource('product', Admin_ProductController::class);
+    Route::resource('order', Admin_OrderController::class);
+    Route::resource('order.item', Admin_OrderItemController::class);
+    Route::resource('category', Admin_CategoryController::class);
+    Route::resource('brand', Admin_BrandController::class);
+    Route::resource('coupon', Admin_CouponController::class);
+    Route::resource('staff', Admin_StaffController::class);
+    Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
+    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+});
 
 
 // ROUTE TEST

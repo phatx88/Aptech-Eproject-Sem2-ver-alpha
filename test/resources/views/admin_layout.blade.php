@@ -161,9 +161,12 @@
  <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
  <!-- Custom scripts for all pages-->
  <script src="{{asset('backend/js/sb-admin.min.js')}}"></script>
+ {{-- Chart JS  --}}
+ <script src="{{asset('backend\vendor\chart.js\Chart.min.js')}}"></script>
  <!-- Demo scripts for this page-->
  <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
  <script src="{{asset('backend/js/admin.js')}}"></script>
+
  @yield('scripts')
  @include('scripts.notyf')
 </body>
