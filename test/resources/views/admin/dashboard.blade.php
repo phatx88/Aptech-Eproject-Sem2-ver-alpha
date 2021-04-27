@@ -82,10 +82,12 @@
           </div>
            {{-- Chart Larapex --}}
          <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
+               {!! $visitChart->container() !!}
+            </div>
+            <div class="col-md-6">
                {!! $usersChart->container() !!}
             </div>
-            <div class="col-6"></div>
          </div>
           <!-- DataTables Example -->
           <div class="card mb-3">
@@ -193,4 +195,5 @@
 
 @section('scripts')
 {{ $usersChart->script() }}
+{{ $visitChart->script() }}
 @endsection
