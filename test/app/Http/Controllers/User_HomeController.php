@@ -19,7 +19,7 @@ class User_HomeController extends Controller
                 ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
                 ->get();
         });
-        DB::table('visitor_count')->increment('count');
+        
         return view('pages.home', ['products' => $products]);
     }
 }

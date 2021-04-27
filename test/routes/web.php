@@ -46,7 +46,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 // Trả về Trang ban đầu
 Route::get('/', function () {
     return redirect('/home');
-});
+})->middleware(['countVisitor']);
 
 Route::get('/admin', function () {
     return redirect('/admin/dashboard');
