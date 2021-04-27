@@ -359,6 +359,7 @@
                                 <a href="{{ route('login.google') }}" class="google"> <i class="fa fa-google fa-lg"></i> </a>
                                 <a href="{{ route('login.facebook') }}" class="facebook"> <i class="fa fa-facebook fa-lg"></i> </a>
                                 <a href="{{ route('login.twitter') }}" class="twitter"> <i class="fa fa-twitter fa-lg"></i> </a>
+                                <a href="{{ route('login.github') }}" class="github"> <i class="fa fa-github fa-lg"></i> </a>
                             </div>
                         </form>
                     </div>

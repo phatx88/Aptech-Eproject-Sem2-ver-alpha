@@ -44,5 +44,10 @@ return [
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
         'redirect' => 'http://localhost/Aptech-Eproject-Sem2-ver-alpha/test/public/login/twitter/callback',
     ],
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => 'http://localhost/Aptech-Eproject-Sem2-ver-alpha/test/public/login/github/callback',
+    ],
 
 ];

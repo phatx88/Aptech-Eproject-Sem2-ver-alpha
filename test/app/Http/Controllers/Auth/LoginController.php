@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Carbon;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -50,6 +51,16 @@ class LoginController extends Controller
             return redirect()->route('home.index');
         }
     }
+    //Github Login
+    public function redirectToGithub(){
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function handleGithubCallback(){
+        $user = Socialite::driver('github')->user();
+        $this->_registerOrLoginUser($user, 'github');
+        return redirect()->route('home.index');
+    }
 
     // Google login
     public function redirectToGoogle()
@@ -62,7 +73,7 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('google')->user();
 
-        $this->_registerOrLoginUser($user);
+        $this->_registerOrLoginUser($user, 'google');
 
         // Return home after login
         return redirect()->route('home.index');
@@ -79,7 +90,7 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('facebook')->user();
 
-        $this->_registerOrLoginUser($user);
+        $this->_registerOrLoginUser($user, 'facebook');
 
         // Return home after login
         return redirect()->route('home.index');
@@ -96,13 +107,13 @@ class LoginController extends Controller
     {
         $user = Socialite::driver('twitter')->user();
 
-        $this->_registerOrLoginUser($user);
+        $this->_registerOrLoginUser($user, 'twitter');
 
         // Return home after login
         return redirect()->route('home.index');
     }
 
-    protected function _registerOrLoginUser($data)
+    protected function _registerOrLoginUser($data, $driver)
     {
         //search by social email
         if($data->email != null) {
@@ -118,14 +129,18 @@ class LoginController extends Controller
             $user->name = $data->name;
             $user->email = $data->email;
             $user->provider_id = $data->id;
-            //Save profile pic to files.
-            if ($data->avatar) {
-                $imageid = uniqid();
-                getSocialAvatar($data->avatar, $imageid, '\frontend\images\profile\\');
-                $user->profile_pic = $imageid.'.jpg';
-            }
+            $user->profile_pic = $data->avatar;
+            $user->provider = $driver;
             $user->email_verified_at = now();
             $user->save();
+        }else{
+            $user->update([
+                'name' => $data->name,
+                'provider_id' => $data->id,
+                'provider' => $driver
+
+            ]);
+
         }
 
         Auth::login($user);
