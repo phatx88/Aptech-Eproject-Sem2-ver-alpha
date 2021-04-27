@@ -53,6 +53,10 @@ Route::get('/admin', function () {
 
 Auth::routes(['verify' => true]); //Auth để kiểm tra có verify email của user if not -> trang login, else -> trang home
 
+//Github routes
+Route::get('login/github', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGithub'])->name('login.github');
+Route::get('login/github/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGithubCallback']);
+
 
 // Google login
 Route::get('login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
@@ -126,10 +130,10 @@ Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwor
 //BACK END
 
 // Có VErify
-// User Dashboard 
+// User Dashboard
 Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->group(function() {
-    Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index'); 
-    Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); 
+    Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
+    Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
 });
 
@@ -137,9 +141,9 @@ Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->gro
 //Admin Dashboard
 Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
     Route::resource('dashboard' , Admin_DashboardController::class);
-    Route::resource('product', Admin_ProductController::class); 
-    Route::resource('order', Admin_OrderController::class); 
-    Route::resource('order.item', Admin_OrderItemController::class); 
+    Route::resource('product', Admin_ProductController::class);
+    Route::resource('order', Admin_OrderController::class);
+    Route::resource('order.item', Admin_OrderItemController::class);
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
@@ -152,10 +156,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkR
 
 
 // KO Verify - Development Only
-// User Dashboard 
+// User Dashboard
 // Route::prefix('home')->group(function() {
-//     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index'); 
-//     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload'); 
+//     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
+//     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
 //     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
 // });
 
