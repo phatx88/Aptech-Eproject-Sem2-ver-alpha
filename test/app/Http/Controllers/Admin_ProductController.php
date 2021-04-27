@@ -1,17 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Models\Products;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;
-
+use Session;
+session_start();
 
 class Admin_ProductController extends Controller
 {
@@ -24,7 +26,94 @@ class Admin_ProductController extends Controller
     public function index()
     {
         $products = Products::orderby('id', 'DESC')->get();
-        return view('admin.product.list', ['products' => $products]);
+        $product_view_count = DB::table('product')->orderby('view_count', 'DESC')->limit(5)->get();
+        $name_product = array();
+        $count_product = array();
+        foreach($product_view_count as $key => $pro_count){
+            $name_product[] = $pro_count->name;
+            $count_product[] = $pro_count->view_count;
+        }
+        // //Count order-item
+        // $order_count_product = session()->get('top_product');
+
+        // $product_order_count = OrderItem::all();
+
+        // $product_order_count_first = OrderItem::first();
+
+        // if($order_count_product == null){
+
+        //         $order_count_product[] = array(
+        //             'id' => $product_order_count_first->product_id,
+        //             'product_name' => $product_order_count_first->product->name,
+        //             'product_count' => $product_order_count_first->qty
+        //         );
+
+        // }
+        // $count = 0;
+        // foreach($order_count_product as $key => $value){
+        //     foreach ($product_order_count as  $pro_order){
+        //         if($pro_order->product_id == $value['id']){
+        //             $order_count_product[$key]['product_count'] += $pro_order->qty;
+        //         }else{
+        //             $order_count_product[] = array(
+        //                 'id' => $pro_order->product_id,
+        //                 'product_name' => $pro_order->product->name,
+        //                 'product_count' => $pro_order->qty
+        //             );
+        //         }
+        //     }
+        // }
+        // dd($order_count_product);
+        // for($i = 0 ; $i < count($order_count_product) - 1; $i++){
+        //     for($j = $i + 1; $j < count($order_count_product) ; $j++){
+        //         if($order_count_product[$i]['product_count'] < $order_count_product[$j]['product_count']){
+        //             $order_count_product[$i] = $order_count_product[$j];
+        //         }
+        //     }
+        // }
+        // $top5_seller = array();
+        // for($k = 0 ; $k < 5; $k++){
+        //     $top5_seller[] = $order_count_product[$k];
+        // }
+        // dd($top5_seller);
+
+        // $order_name = array();
+        // $order_count = array();
+        // for($i = 0; $i <= 5; $i++){
+        //     $order_name[] = $order_count[$i]['product_name'];
+        //     $order_count[] = $order_count[$i]['product_count'];
+        // }
+
+        $top_product = DB::table('top_seller_product')
+        ->orderby('total_qty', 'DESC')
+        ->limit(5)->get();
+
+        $order_name = array();
+        $order_count = array();
+        foreach ($top_product as $key => $value){
+            $order_name[] = $value->NAME;
+            $order_count[] = $value->total_qty;
+        }
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $productChart  = (new LarapexChart)->polarAreaChart()
+        ->setTitle('Top 5 View of Product in Now.')
+        ->setSubtitle('Hiện tại : '. now())
+        ->addData($count_product)
+        ->setLabels($name_product);
+
+        $orderChart  = (new LarapexChart)->polarAreaChart()
+        ->setTitle('Top 5 Selling Product in Now.')
+        ->setSubtitle('Hiện tại : '. now())
+        ->addData($order_count)
+        ->setLabels($order_name);
+
+
+
+        return view('admin.product.list', [
+            'products' => $products,
+            'productChart' => $productChart,
+            'orderChart' => $orderChart
+            ]);
     }
 
     /**

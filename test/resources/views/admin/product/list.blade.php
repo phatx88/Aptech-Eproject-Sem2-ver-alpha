@@ -9,6 +9,15 @@
                 </li>
                 <li class="breadcrumb-item active">Product</li>
             </ol>
+             {{-- Chart Larapex --}}
+            <div class="row">
+                <div class="col-6">
+                {!! $productChart->container() !!}
+                </div>
+                <div class="col-6">
+                    {!! $orderChart->container() !!}
+                </div>
+            </div>
             {{-- MESSAGE  --}}
             @include('errors.message')
             <!-- DataTables Example -->
@@ -63,7 +72,7 @@
                                         <td>{{ $product->discount_from_date == 0 ? 'N/A' : $product->discount_from_date }}
                                         </td>
                                         <td>{{ $product->discount_to_date == 0 ? 'N/A' : $product->discount_to_date }}</td>
-                                        
+
                                         <td>{{ $product->inventory_qty }}</td>
                                         <td>{{ $product->category->name }}</td>
                                         <td>{{ $product->brand->name }}</td>
@@ -128,7 +137,7 @@
     <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
       $(document).ready(function() {
-         
+
         //   CKEDITOR.replace('description')
           $('#ModalDescription').on('show.bs.modal', function(event) {
             //   even.preventDefault()
@@ -142,10 +151,15 @@
               modal.find('#description').val(description)
           })
 
-         
+
       });
+
   </script>
+  {{ $productChart->script() }}
+  {{ $orderChart->script() }}
     @endsection
-    
+
 
 @endsection
+
+
