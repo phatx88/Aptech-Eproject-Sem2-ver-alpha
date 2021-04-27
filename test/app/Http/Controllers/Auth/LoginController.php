@@ -129,8 +129,12 @@ class LoginController extends Controller
             $user->name = $data->name;
             $user->email = $data->email;
             $user->provider_id = $data->id;
-            $user->profile_pic = $data->avatar;
             $user->provider = $driver;
+            if ($data->avatar) {
+                $imageid = uniqid();
+                getSocialAvatar($data->avatar, $imageid, '\frontend\images\profile\\');
+                $user->profile_pic = $imageid.'.jpg';
+            }
             $user->email_verified_at = now();
             $user->save();
         }else{
