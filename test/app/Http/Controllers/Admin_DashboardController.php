@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\User;
 use App\Models\OrderItem;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class Admin_DashboardController extends Controller
 {
@@ -18,10 +20,20 @@ class Admin_DashboardController extends Controller
 
         $orders = Order::orderby('id' , 'DESC')->get();
         $orderItems = OrderItem::get();
+
+        $usersChart = (new LarapexChart)->pieChart()
+        ->setTitle('Users')
+        ->setSubtitle('Active/inActive Users.')
+        ->addData([
+            User::where('is_active', 1)->count(), 
+            User::where('is_active', 0)->count(),
+            ])
+        ->setLabels(['Active Users', 'InActive Users']);
         
         return view('admin.dashboard', [
             'orders'=>$orders,
             'orderItems' => $orderItems,
+            'usersChart' => $usersChart,
             ]);
     }
 

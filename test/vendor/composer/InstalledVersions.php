@@ -30,11 +30,20 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'fddae4f94f854a1d459b4c4c47cfffcb2521f174',
+    'reference' => 'f2045dd4149a432897a72a5c1cf246b41fec2b2e',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
   array (
+    'arielmejiadev/larapex-charts' => 
+    array (
+      'pretty_version' => '2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '7de57e5aed5b0851cf6043376addc838ef5123dd',
+    ),
     'asm89/stack-cors' => 
     array (
       'pretty_version' => 'v2.0.3',
@@ -505,7 +514,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'fddae4f94f854a1d459b4c4c47cfffcb2521f174',
+      'reference' => 'f2045dd4149a432897a72a5c1cf246b41fec2b2e',
     ),
     'laravel/sail' => 
     array (
