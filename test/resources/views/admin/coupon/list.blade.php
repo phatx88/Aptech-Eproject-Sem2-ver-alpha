@@ -13,6 +13,8 @@
        <div class="action-bar">
           <input type="submit" class="btn btn-primary btn-sm" value="Thêm" name="add">
           <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
+          <a href="{{ route('admin.coupon.export') }}"><input type="submit" class="btn btn-danger btn-sm" value="Export" name="export"></a>
+
        </div>
        <div class="card mb-3">
           <div class="card-body">

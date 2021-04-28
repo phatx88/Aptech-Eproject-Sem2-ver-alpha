@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CouponExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
 
+use Maatwebsite\Excel\Facades\Excel;
 class Admin_CouponController extends Controller
 {
     /**
@@ -95,5 +97,9 @@ class Admin_CouponController extends Controller
     {
         Coupon::find($id)->delete();
         return redirect()->action([Admin_CouponController::class,'index']);
+    }
+
+    public function export(){
+        return Excel::download(new CouponExport, 'coupon.xlsx');
     }
 }

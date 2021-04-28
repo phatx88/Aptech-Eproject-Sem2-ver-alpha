@@ -167,6 +167,7 @@ Route::prefix('home')->group(function() {
 // Admin Dashboard
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export'); //must be before route resource
+    Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export'); //must be before route resource
     Route::resource('dashboard' , Admin_DashboardController::class);
     Route::resource('product', Admin_ProductController::class);
     Route::resource('order', Admin_OrderController::class);
