@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use Session;
-session_start();
+
+// session_start();
 
 class Admin_ProductController extends Controller
 {
@@ -288,4 +289,6 @@ class Admin_ProductController extends Controller
         $product = Product::find($product_id);
         echo json_encode($product);
     }
+
+          
 }

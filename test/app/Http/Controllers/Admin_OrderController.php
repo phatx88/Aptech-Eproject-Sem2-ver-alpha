@@ -17,6 +17,8 @@ use App\Models\Transport;
 use Doctrine\DBAL\Schema\View;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;
+use App\Exports\OrderExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Admin_OrderController extends Controller
 {
@@ -193,4 +195,9 @@ class Admin_OrderController extends Controller
         echo json_encode($transport);
     
     }
+
+    public function export() 
+    {
+        return Excel::download(new OrderExport, 'orders.xlsx');
+    } 
 }

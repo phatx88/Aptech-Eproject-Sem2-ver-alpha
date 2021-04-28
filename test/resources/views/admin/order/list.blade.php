@@ -18,6 +18,7 @@
             <!-- DataTables Example -->
             @include('errors.message')
             <div class="action-bar">
+                <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm">Export</a>
                 <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm" name="add">Add</a>
                 <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
             </div>
