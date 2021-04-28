@@ -25,7 +25,7 @@ class CountVisitor
             'date_visited' => $date_visited,
             'user_id' => auth()->id(),
             ]);
-        DB::table('visitor_count')->where('user_id' , $visitor->user_id)->increment('hits');
+        DB::table('visitor_count')->where('user_id' , $visitor->user_id)->whereDate('date_visited' , $date_visited)->increment('hits');
         return $next($request);
     }
 }

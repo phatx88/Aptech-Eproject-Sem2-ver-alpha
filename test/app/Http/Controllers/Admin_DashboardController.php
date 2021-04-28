@@ -24,11 +24,11 @@ class Admin_DashboardController extends Controller
         $orderItems = OrderItem::get();
 
         // APEX CHART MOST ACTIVE USERS 
-        $usersRange = Visitor::distinct('user_id')->whereNotNull('user_id')->orderBy('hits' , 'DESC')->pluck('user_id')->take(10)->toArray();    
-        $usershits = Visitor::whereIn('user_id', $usersRange)->orderBy('user_id' , 'ASC')->pluck('hits')->toArray();
+        $usersRange = Visitor::selectRaw('Sum(hits) , user_id')->whereNotNull('user_id')->groupBy('user_id')->orderBy('Sum(hits)' , 'DESC')->pluck('user_id')->take(10)->toArray();    
+        $usershits = Visitor::selectRaw('Sum(hits) , user_id')->whereIn('user_id', $usersRange)->groupBy('user_id')->orderBy('user_id' , 'ASC')->pluck('Sum(hits)')->toArray();
         $usernames = User::whereIn('id' , $usersRange)->orderBy('id' , 'ASC')->pluck('name' , 'id')->toArray();
         $usernames = parameterize_array($usernames);
-        // dd ($usernames);
+        // dd ($usershits);
         $usersChart = (new LarapexChart)->radarChart()
             ->setTitle('Most Active Users.')
             ->setSubtitle('Total # of Hits.')
@@ -40,15 +40,12 @@ class Admin_DashboardController extends Controller
         // APEX CHART MOST VISITED BY DATE 
         $dateRange = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('date_visited')->toArray();
         $nonRegHits = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->whereNull('user_id')->pluck('hits')->toArray();
-        $RegHits = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->whereNotNull('user_id')->pluck('hits')->toArray();
-        // dd($dateRange);
-        // dd($nonRegHits);
-        // dd($RegHits);
+        $RegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNotNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
         $visitChart = (new LarapexChart)->barChart()
-            ->setTitle('Most Visited by Date.')
-            ->setSubtitle('Hits during 2021.')
+            ->setTitle('Visitors by Date.')
+            ->setSubtitle('Hits during last 7 days.')
             ->addData('Non-registered', $nonRegHits)
-            ->addData('Registered', [7, 3, 8, 2, 6, 4])
+            ->addData('Registered', $RegHits)
             ->setXAxis($dateRange);
         
         return view('admin.dashboard', [

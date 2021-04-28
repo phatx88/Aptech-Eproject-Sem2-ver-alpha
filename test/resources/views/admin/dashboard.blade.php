@@ -81,12 +81,28 @@
              </div>
           </div>
            {{-- Chart Larapex --}}
-         <div class="row">
+         <div class="row mb-3">
             <div class="col-md-6">
-               {!! $visitChart->container() !!}
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-users"></i>
+                     Visitor Chart
+                  </div>
+                     <div class="card-body">
+                        {!! $visitChart->container() !!}
+                     </div>
+               </div>
             </div>
             <div class="col-md-6">
-               {!! $usersChart->container() !!}
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-user"></i>
+                     Users Chart
+                  </div>
+                     <div class="card-body">
+                        {!! $usersChart->container() !!}
+                     </div>
+               </div>
             </div>
          </div>
           <!-- DataTables Example -->
