@@ -153,9 +153,12 @@
                             {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
                             <td>${{ $order->shipping_fee }}</td>
                             <td>${{ $sum + $order->shipping_fee}}</td>
-                            <td>{{ $order->shipping_housenumber_street }},
+                            <td><button class="btn btn-info btn-sm m-auto" data-toggle="modal" data-target="#ModalDescription"
+                              data-description="{{ $order->shipping_housenumber_street }}, {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}"
+                              data-title="Shipping Address">Show</button></td>
+                            {{-- <td>{{ $order->shipping_housenumber_street }},
                                 {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}.
-                            </td>
+                            </td> --}}
                             <td>{{ $order->delivered_date }}</td>
                             <td></td>
                             <td> </td>
@@ -202,6 +205,32 @@
     <!-- Sticky Footer -->
     @include('admin.footer')
     <!-- Sticky Footer -->
+    {{-- Description Modal --}}
+    <div class="modal fade" id="ModalDescription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                   <label class="col-md-12 control-label" for="description">Description</label>
+                   <div class="col-md-12">
+                      <textarea name="description" id="description" class="form-control" rows="10" cols="60"></textarea>
+                   </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
  </div>
  <!-- /.content-wrapper -->
 
@@ -211,4 +240,25 @@
 @section('scripts')
 {{ $usersChart->script() }}
 {{ $visitChart->script() }}
+
+<script>
+   $(document).ready(function() {
+
+     //   CKEDITOR.replace('description')
+       $('#ModalDescription').on('show.bs.modal', function(event) {
+         //   even.preventDefault()
+           var button = $(event.relatedTarget) // Button that triggered the modal
+           var description = button.data('description') // Extract info from data-* attributes
+           var title = button.data('title') // Extract info from data-* attributes
+           // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+           // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+           var modal = $(this)
+           modal.find('.modal-title').text('Product Name : ' + title)
+           modal.find('#description').val(description)
+       })
+
+
+   });
+
+</script>
 @endsection
