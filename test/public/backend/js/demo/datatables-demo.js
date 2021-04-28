@@ -2,6 +2,7 @@
 $(document).ready(function () {
   $('#dataTable').DataTable({
     // flipping horizontal scroll bar in datatables refer to admin.css line 94
+    autoWidth: 'TRUE',
     scrollX : 'TRUE', 
     lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
     columnDefs: [ {

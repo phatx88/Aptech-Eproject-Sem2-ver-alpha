@@ -31,37 +31,44 @@
 
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
-         <li class="nav-item active">
+         <li class="nav-item logo-wrapper" style="background-image: url({{ asset('frontend/images/image_2.jpg') }})">
+                @if (Auth::user()->profile_pic != null)
+                    <img src="{{ asset('frontend/images/profile/' . Auth::user()->profile_pic) }}" alt="Avatar" class="logo">
+                @else
+                    <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="logo">
+                @endif
+         </li>
+         <li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.dashboard.index') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'order' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.order.index')}}">Danh sách</a>
                <a class="dropdown-item" href="{{route('admin.order.create')}}">Thêm</a>
             </div>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'product' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fab fa-product-hunt"></i> <span>Sản phẩm</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{ route('admin.product.index') }}">Danh sách</a>
                <a class="dropdown-item" href="{{ route('admin.product.create') }}">Thêm</a>
             </div>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'comment' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-comments"></i> <span>Comment</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{URL::to('comment-list')}}">Danh sách</a>
             </div>
          </li>
 
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'image' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="far fa-image"></i> <span>Hình ảnh</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{URL::to('image-list')}}">Danh sách</a>
             </div>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Khách hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{URL::to('customer-list')}}">Danh sách</a>
@@ -69,7 +76,7 @@
                <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'category' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Danh mục</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.category.index')}}">Danh sách</a>
@@ -77,7 +84,7 @@
                <a class="dropdown-item" href="{{URL::to('category-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'brand' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Brand</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.brand.index')}}">Danh sách</a>
@@ -101,7 +108,7 @@
                <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'staff' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Nhân viên</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.staff.index')}}">Danh sách</a>

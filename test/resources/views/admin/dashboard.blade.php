@@ -2,7 +2,6 @@
 @section('admin_content')
 
     <div id="content-wrapper">
-
        <div class="container-fluid">
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">

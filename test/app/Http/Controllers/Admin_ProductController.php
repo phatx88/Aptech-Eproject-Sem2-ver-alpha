@@ -91,7 +91,7 @@ class Admin_ProductController extends Controller
         $order_name = array();
         $order_count = array();
         foreach ($top_product as $key => $value){
-            $order_name[] = $value->NAME;
+            $order_name[] = $value->name;
             $order_count[] = $value->total_qty;
         }
         date_default_timezone_set('Asia/Ho_Chi_Minh');
