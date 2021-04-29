@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\FetchChartDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -130,6 +131,9 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 //SETUP PASSWORD FOR STAFF
 Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwordset']);
 
+// FETCH DATA FOR API 
+Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
+
 //BACK END
 
 // Có VErify
@@ -185,14 +189,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
     Route::resource('blog', Admin_BlogController::class);
 });
-
-
-// ROUTE TEST
-Route::get('/test', function () {
-    return view('auth.verify');
-});
-
-
 
 
 //URL TRẢ VỀ VIEW -> Cho development thôi

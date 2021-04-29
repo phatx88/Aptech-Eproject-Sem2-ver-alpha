@@ -10,15 +10,31 @@
                 <li class="breadcrumb-item active">Product</li>
             </ol>
              {{-- Chart Larapex --}}
-            <div class="row">
-                <div class="col-6">
-                {!! $productChart->container() !!}
-                </div>
-                <div class="col-6">
-                    {!! $orderChart->container() !!}
-                </div>
+               {{-- Chart Larapex --}}
+            <div class="row mb-3">
+            <div class="col-md-6">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-heart"></i>
+                     Most Viewed Items Chart
+                  </div>
+                     <div class="card-body">
+                        {!! $productChart->container() !!}
+                     </div>
+               </div>
             </div>
-
+            <div class="col-md-6">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-shopping-basket"></i>
+                     Best Selling Items Chart
+                  </div>
+                     <div class="card-body">
+                        {!! $orderChart->container() !!}
+                     </div>
+               </div>
+            </div>
+         </div>
             {{-- MESSAGE  --}}
             @include('errors.message')
             <!-- DataTables Example -->
