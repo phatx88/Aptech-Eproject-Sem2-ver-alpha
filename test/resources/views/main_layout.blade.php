@@ -129,6 +129,7 @@
                             </button>
                         </div>
                     </div>
+                    <img src="" alt="">
                     <div class="dropdown-item d-flex align-items-start" href="#">
                         <div class="img" style="background-image: url({{ asset('frontend/images/prod-4.jpg') }});">
                         </div>

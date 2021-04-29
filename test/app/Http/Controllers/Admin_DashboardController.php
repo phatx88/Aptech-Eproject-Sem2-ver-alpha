@@ -23,8 +23,8 @@ class Admin_DashboardController extends Controller
         $orders = Order::orderby('id' , 'DESC')->get();
         $orderItems = OrderItem::get();
 
-        // APEX CHART MOST ACTIVE USERS 
-        $usersRange = Visitor::selectRaw('Sum(hits) , user_id')->whereNotNull('user_id')->groupBy('user_id')->orderBy('Sum(hits)' , 'DESC')->pluck('user_id')->take(10)->toArray();    
+        // APEX CHART MOST ACTIVE USERS
+        $usersRange = Visitor::selectRaw('Sum(hits) , user_id')->whereNotNull('user_id')->groupBy('user_id')->orderBy('Sum(hits)' , 'DESC')->pluck('user_id')->take(10)->toArray();
         $usershits = Visitor::selectRaw('Sum(hits) , user_id')->whereIn('user_id', $usersRange)->groupBy('user_id')->orderBy('user_id' , 'ASC')->pluck('Sum(hits)')->toArray();
         $usernames = User::whereIn('id' , $usersRange)->orderBy('id' , 'ASC')->pluck('name' , 'id')->toArray();
         $usernames = parameterize_array($usernames);
@@ -37,7 +37,7 @@ class Admin_DashboardController extends Controller
             ->setColors(['#FFC107'])
             ->setMarkers(['#ff455f'], 5, 10);
 
-        // APEX CHART MOST VISITED BY DATE 
+        // APEX CHART MOST VISITED BY DATE
         $dateRange = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('date_visited')->toArray();
         $nonRegHits = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->whereNull('user_id')->pluck('hits')->toArray();
         $RegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNotNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
@@ -47,7 +47,7 @@ class Admin_DashboardController extends Controller
             ->addData('Non-registered', $nonRegHits)
             ->addData('Registered', $RegHits)
             ->setXAxis($dateRange);
-        
+
         return view('admin.dashboard', [
             'orders'=>$orders,
             'orderItems' => $orderItems,

@@ -76,6 +76,14 @@
                <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a>
             </div>
          </li>
+         <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-blog"></i> <span>Blog</span></a>
+            <div class="dropdown-menu" aria-labelledby="">
+               <a class="dropdown-item" href="{{ route('admin.blog.index') }}">Danh sách</a>
+               <a class="dropdown-item" href="{{ route('admin.blog.create') }}">Thêm</a>
+               {{-- <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a> --}}
+            </div>
+         </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'category' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Danh mục</span></a>
             <div class="dropdown-menu" aria-labelledby="">
@@ -173,7 +181,12 @@
  <!-- Demo scripts for this page-->
  <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
  <script src="{{asset('backend/js/admin.js')}}"></script>
+ <script src="{{asset('backend/ckeditor/ckeditor.js')}}"></script>
+ <script type="text/javascript">
+    CKEDITOR.replace('ckeditor');
+    CKEDITOR.replace('ckeditor1');
 
+</script>
  @yield('scripts')
  @include('scripts.notyf')
 </body>
