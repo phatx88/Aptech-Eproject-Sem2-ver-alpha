@@ -41,6 +41,7 @@
             <div class="action-bar">
                 <a href="{{ route('admin.product.create') }}" class="btn btn-primary btn-sm">Add</a>
                 <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
+                <a href="{{ route('admin.product.export') }}" class="btn btn-success btn-sm">Export</a>
             </div>
             <div class="card mb-3">
                 <div class="card-body">

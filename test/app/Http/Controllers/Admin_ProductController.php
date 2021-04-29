@@ -14,6 +14,8 @@ use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use Session;
 
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
 // session_start();
 
 class Admin_ProductController extends Controller
@@ -290,5 +292,8 @@ class Admin_ProductController extends Controller
         echo json_encode($product);
     }
 
-          
+    public function export(){
+        return Excel::download(new ProductExport, 'productExport.xlsx');
+    }
+
 }

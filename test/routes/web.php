@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin_ProductController;
 use App\Http\Controllers\Admin_BrandController;
 use App\Http\Controllers\Admin_CouponController;
 use App\Http\Controllers\Admin_StaffController;
+use App\Http\Controllers\Admin_BlogController;
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
 use App\Http\Controllers\User_AccountController;
@@ -171,7 +172,10 @@ Route::prefix('home')->group(function() {
 // Admin Dashboard
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export'); //must be before route resource
-    Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export'); //must be before route resource
+    Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export');
+
+    Route::get('product/export', [Admin_ProductController::class, 'export'])->name('product.export');
+    //must be before route resource
     Route::resource('dashboard' , Admin_DashboardController::class);
     Route::resource('product', Admin_ProductController::class);
     Route::resource('order', Admin_OrderController::class);
@@ -182,6 +186,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('staff', Admin_StaffController::class);
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+    Route::resource('blog', Admin_BlogController::class);
 });
 
 
