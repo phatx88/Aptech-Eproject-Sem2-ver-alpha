@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Session;
+use DB;
 class Admin_BlogController extends Controller
 {
     /**
@@ -24,6 +25,10 @@ class Admin_BlogController extends Controller
      */
     public function create()
     {
+        $sesion_tags = session()->get('tags');
+        if($sesion_tags){
+            session()->forget('tags');
+        }
         return view('admin.blog.add');
     }
 
