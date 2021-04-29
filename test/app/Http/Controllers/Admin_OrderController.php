@@ -19,6 +19,7 @@ use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use App\Exports\OrderExport;
 use Maatwebsite\Excel\Facades\Excel;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
 
 class Admin_OrderController extends Controller
 {
@@ -33,10 +34,18 @@ class Admin_OrderController extends Controller
 
         $orders = Order::orderby('id' , 'DESC')->get();
         $orderItems = OrderItem::get();
+
+        $saleChart = (new LarapexChart)->lineChart()
+        ->setTitle('Sales during 2021.')
+        ->setSubtitle('Physical sales vs Digital sales.')
+        ->addData('Physical sales', [40, 93, 35, 42, 18, 82])
+        ->addData('Digital sales', [70, 29, 77, 28, 55, 45])
+        ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
         
         return view('admin.order.list', [
             'orders'=>$orders,
             'orderItems' => $orderItems,
+            'saleChart' => $saleChart,
             ]);
     }
 

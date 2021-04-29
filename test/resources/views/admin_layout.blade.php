@@ -32,7 +32,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
          <li class="nav-item logo-wrapper" style="background-image: url({{ asset('frontend/images/image_2.jpg') }})">
-                @if (Auth::user()->profile_pic != null)
+                @if (Auth::check())
                     <img src="{{ asset('frontend/images/profile/' . Auth::user()->profile_pic) }}" alt="Avatar" class="logo">
                 @else
                     <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="logo">
