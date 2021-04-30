@@ -9,6 +9,7 @@ use App\Models\Visitor;
 use App\Models\OrderItem;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class Admin_DashboardController extends Controller
 {
@@ -19,9 +20,11 @@ class Admin_DashboardController extends Controller
      */
     public function index()
     {
+        $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
+            return Order::with('orderItem', 'user' , 'ward')->orderby('id' , 'DESC')->get();
+        });
 
-        $orders = Order::orderby('id' , 'DESC')->get();
-        $orderItems = OrderItem::get();
+        $orderItems = OrderItem::with('product' , 'order')->get();
 
         // APEX CHART MOST ACTIVE USERS
         $usersRange = Visitor::selectRaw('Sum(hits) , user_id')->whereNotNull('user_id')->groupBy('user_id')->orderBy('Sum(hits)' , 'DESC')->pluck('user_id')->take(10)->toArray();

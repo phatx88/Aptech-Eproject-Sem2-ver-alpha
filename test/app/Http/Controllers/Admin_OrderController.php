@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use App\Exports\OrderExport;
 use Maatwebsite\Excel\Facades\Excel;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
+use Illuminate\Support\Facades\Cache;
 
 class Admin_OrderController extends Controller
 {
@@ -32,8 +33,11 @@ class Admin_OrderController extends Controller
     public function index()
     {
 
-        $orders = Order::orderby('id' , 'DESC')->get();
-        $orderItems = OrderItem::get();
+        $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
+            return Order::with('orderItem', 'user' , 'ward')->orderby('id' , 'DESC')->get();
+        });
+
+        $orderItems = OrderItem::with('product' , 'order')->get();
 
         $saleChart = (new LarapexChart)->lineChart()
         ->setTitle('Sales during 2021.')
@@ -128,11 +132,11 @@ class Admin_OrderController extends Controller
     public function edit(Order $order)
     {
         $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
-        $products = Product::get();
+        $products = Product::with('order')->get();
         $provinces = Province::orderby('name', 'ASC')->get();
         $statuses = ShippingStatus::get();
         $staffs = Staff::get();
-        $users = User::where('is_staff' , '0')->get();
+        $users = User::with('ward' , 'order')->where('is_staff' , '0')->get();
         return view('admin.order.edit' , [
             'order' => $order,
             'products' => $products,

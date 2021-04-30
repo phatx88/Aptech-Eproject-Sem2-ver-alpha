@@ -190,6 +190,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('blog', Admin_BlogController::class);
 });
 
+Route::get('clear-cache', function () {
+    Artisan::call('cache:clear');
+    return back()->with('success', "Cache Cleared");
+})->name('clear-cache');
 
 //URL TRẢ VỀ VIEW -> Cho development thôi
 

@@ -12,7 +12,7 @@ class User_HomeController extends Controller
     public function index()
     {
 
-        $products = Cache::remember('homepage-products', 60 * 60 * 24, function () {         
+        $products = Cache::remember('homepage-products', now()->addHours(12), function () {         
             return DB::table('view_product')
                 ->join('brand', 'view_product.brand_id', '=', 'brand.id')
                 ->join('category', 'view_product.category_id', '=', 'category.id')

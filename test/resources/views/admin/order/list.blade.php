@@ -15,6 +15,7 @@
                 </li>
                 <li class="breadcrumb-item active">List</li>
             </ol>
+            @include('errors.message')
               {{-- Chart Larapex --}}
          <div class="row mb-3">
             <div class="col-12">
@@ -30,7 +31,7 @@
             </div>
          </div>
             <!-- DataTables Example -->
-            @include('errors.message')
+            
             <div class="action-bar">
                 <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm">Export</a>
                 <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm" name="add">Add</a>
@@ -40,6 +41,7 @@
                 <div class="card-header">
                     <i class="fas fa-table"></i>
                     Order List
+                    <a type="button" href="{{ route('clear-cache') }}" class="btn btn-success btn-sm float-right">Refresh</a>
                  </div>
                 <div class="card-body">
                     <div class="table-responsive">

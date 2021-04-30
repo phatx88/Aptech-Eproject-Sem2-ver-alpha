@@ -36,9 +36,9 @@
                       <div class="card-body-icon">
                          <i class="fas fa-fw fa-list"></i>
                       </div>
-                      <div class="mr-5">2 Đơn hàng</div>
+                      <div class="mr-5">{{ $orders->count() }} Orders</div>
                    </div>
-                   <a class="card-footer text-white clearfix small z-1" href="#">
+                   <a class="card-footer text-white clearfix small z-1" href="{{ route('admin.order.index') }}">
                    <span class="float-left">Chi tiết</span>
                    <span class="float-right">
                    <i class="fas fa-angle-right"></i>
@@ -123,6 +123,7 @@
              <div class="card-header">
                 <i class="fas fa-table"></i>
                 Order Summary
+                <a type="button" href="{{ route('clear-cache') }}" class="btn btn-success btn-sm float-right">Refresh</a>
              </div>
              <div class="card-body">
                 <div class="table-responsive">

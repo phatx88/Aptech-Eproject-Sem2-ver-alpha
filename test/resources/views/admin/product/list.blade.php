@@ -44,6 +44,11 @@
                 <a href="{{ route('admin.product.export') }}" class="btn btn-success btn-sm">Export</a>
             </div>
             <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    Product List
+                    <a type="button" href="{{ route('clear-cache') }}" class="btn btn-success btn-sm float-right">Refresh</a>
+                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
