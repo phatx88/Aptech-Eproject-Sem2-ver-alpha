@@ -82,19 +82,59 @@ class Admin_CategoryBlogController extends Controller
                     'id' => $tag->id,
                     'tag_name' => $tag->tag_name
                 ];
-                $output .= '<li class="list-group-item"># '.$tag->tag_name.'</li>';
+                $output .= '<li class="list-group-item alert" role="alert" value="'.$tag->id.'"  ># '.$tag->tag_name.'
+                <button type="button" data-id_tag_delete="'.$tag->id.'" class="close delete-tag-input" data-dismiss="alert" aria-label="Close" style="font-size: 15px; margin-left: 10px; margin-top: 3.5px">
+                                    x
+                                </button>
+                </li>
+
+                ';
             }
         }else{
             $sesion_tags[] = [
                 'id' => $tag->id,
                 'tag_name' => $tag->tag_name
             ];
-            $output .= '<option class="list-group-item" value="'.$tag->id.'"  ># '.$tag->tag_name.'</option>';
+            $output .= '<li class="list-group-item alert" role="alert" value="'.$tag->id.'"  ># '.$tag->tag_name.'
+            <button type="button" data-id_tag_delete="'.$tag->id.'" class="close delete-tag-input" data-dismiss="alert" aria-label="Close" style="font-size: 15px; margin-left: 10px; margin-top: 3.5px">
+                                    x
+                                </button>
+            </li>
+
+            ';
         }
         session()->put('tags', $sesion_tags);
         session()->save();
 
 
         echo $output;
+    }
+    public function show_tag_blog(Request $request){
+        $sesion_tags = session()->get('tags');
+        $output = '';
+        if($sesion_tags){
+            foreach($sesion_tags as $key => $val){
+                $output .= '<li class="list-group-item alert" role="alert" value="'.$val['id'].'"  ># '.$val['tag_name'].'
+                <button type="button" data-id_tag_delete="'.$val['id'].'" class="close delete-tag-input" data-dismiss="alert" aria-label="Close" style="font-size: 15px; margin-left: 10px; margin-top: 3.5px">
+                                        x
+                                    </button>
+                </li>
+
+                ';
+            }
+        }
+        echo $output;
+    }
+
+    public function delete_tag_blog(Request $request){
+        $data = $request->all();
+        $sesion_tags = session()->get('tags');
+        foreach ($sesion_tags as $key => $val){
+            if($val['id'] == $data['id']){
+                unset($sesion_tags[$key]);
+            }
+        }
+        session()->put('tags', $sesion_tags);
+        session()->save();
     }
 }

@@ -36,7 +36,12 @@
                 <input name="" id="time" type="text" value="" class="form-control">
            </div>
         </div>
-
+        <div class="form-group row">
+            <label class="col-md-12 control-label" for="time">Featured Image</label>
+            <div class="col-md-9 col-lg-6">
+                <input type="file" name="featured_image" id="image">
+            </div>
+        </div>
         <div class="form-group row">
             <label class="col-md-12 control-label" for="category">Category </label>
             <div class="col-md-9 col-lg-6 mb-2">
@@ -78,12 +83,13 @@
             </form>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-3 col-lg-2">
+        <div class="form-group row" id="list-of-tags">
                 <ul class="list-group" id="tag-list">
+                    {{-- <tr class="alert list-group"  id="tag-list">
 
+                    </tr> --}}
                 </ul>
-            </div>
+
        </div>
         <hr>
         <div class="form-group row">

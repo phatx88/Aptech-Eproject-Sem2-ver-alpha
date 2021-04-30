@@ -131,7 +131,7 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 //SETUP PASSWORD FOR STAFF
 Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwordset']);
 
-// FETCH DATA FOR API 
+// FETCH DATA FOR API
 Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
 
 //BACK END
@@ -316,3 +316,6 @@ Route::post('/show-list-tag-blog', [Admin_CategoryBlogController::class, 'show_l
 
 Route::post('/add-tag', [Admin_CategoryBlogController::class, 'add_tag']);
 //---------------------BLOG--------------------------//
+ Route::post('/show-tag-blog', [Admin_CategoryBlogController::class, 'show_tag_blog']);
+
+ Route::post('/delete-tag-blog', [Admin_CategoryBlogController::class, 'delete_tag_blog']);

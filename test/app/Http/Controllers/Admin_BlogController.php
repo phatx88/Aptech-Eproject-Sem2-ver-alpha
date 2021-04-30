@@ -26,9 +26,9 @@ class Admin_BlogController extends Controller
     public function create()
     {
         $sesion_tags = session()->get('tags');
-        if($sesion_tags){
-            session()->forget('tags');
-        }
+        // if($sesion_tags){
+        //     session()->forget('tags');
+        // }
         return view('admin.blog.add');
     }
 

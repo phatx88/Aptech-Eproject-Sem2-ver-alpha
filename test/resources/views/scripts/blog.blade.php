@@ -90,6 +90,39 @@
         });
     });
 
+    $(document).ready(function() {
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url: '{{ url('/show-tag-blog') }}',
+            method: 'POST',
+            data: {
+                _token:_token
+            },
+            success: function(data){
+                $('#tag-list').html(data);
+            }
+        });
+
+    });
+
+    $(document).ready(function() {
+        $('#list-of-tags').on('click','.delete-tag-input', function(){
+            var _token = $('input[name="_token"]').val();
+            var id = $(this).data('id_tag_delete');
+            $.ajax({
+                url: '{{ url('/delete-tag-blog') }}',
+                method: 'POST',
+                data: {
+                    _token:_token,
+                    id:id
+                },
+                success: function(data){
+
+                }
+            });
+        });
+    });
+
 </script>
 
 
