@@ -36,30 +36,68 @@
                 <input name="" id="time" type="text" value="" class="form-control">
            </div>
         </div>
+
         <div class="form-group row">
-            <label class="col-md-12 control-label" for="time">Category </label>
-            <div class="col-md-9 col-lg-6">
-                <input name="" id="time" type="text" value="" class="form-control">
-           </div>
+            <label class="col-md-12 control-label" for="category">Category </label>
+            <div class="col-md-9 col-lg-6 mb-2">
+                <select name="category_id" id="category_select_blog" class="form-control " required>
+                    <option value="">-- Select Category --</option>
+                </select>
+            </div>
+            <div class="col-md-3 col-lg-2">
+                <form action="">
+                    @csrf
+                <div class="input-group">
+                        <input type="text" name="category_name" id="categoryInputBlog" class="form-control"
+                            data-url="">
+                        <button class="btn btn-primary input-group-prepend" type="button" id="add_category_blog">Add</button>
+                </div>
+            </form>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-12 control-label" for="tag">Tag </label>
+            <div class="col-md-9 col-lg-6 mb-2">
+                <form action="">
+                <select name="tag_id" id="tag_select_blog" class="form-control" required>
+                    <option value="">-- Select Tag --</option>
+                </select>
+                <br>
+                <input type="button" id="add-select-tag" value="Add Tag" class="form-control btn btn-primary ">
+            </form>
+            </div>
+            <div class="col-md-3 col-lg-2">
+                <form action="">
+                    @csrf
+                <div class="input-group">
+                    <input type="text" name="name" id="tagInput" class="form-control"
+                        data-url="">
+                    <button class="btn btn-primary input-group-prepend" type="button" id="add_tag_blog">Add</button>
+                </div>
+            </form>
+            </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-12 control-label" for="time">Tag</label>
-            <div class="col-md-9 col-lg-6">
-                <input name="" id="time" type="text" value="" class="form-control">
-           </div>
-        </div>
+            <div class="col-md-3 col-lg-2">
+                <ul class="list-group" id="tag-list">
+
+                </ul>
+            </div>
+       </div>
+        <hr>
         <div class="form-group row">
             <label class="col-md-12 control-label" for="cpn_condition">Content</label>
-                <div class="col-md-9 col-lg-6">
-                    <textarea id="ckeditor1" name="" id="" cols="30" rows="10"></textarea>
+                <div class="col-md-12">
+                    <textarea id="ckeditor1" name="" id="" rows="10" cols="80"></textarea>
                </div>
         </div>
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     {{-- <label class="col-md-12 control-label" for="number">Number</label> --}}
                     {{-- <div class="col-md-9 col-lg-6 ">
                         <input name="number" id="number" type="number" value="" class="form-control">
                    </div> --}}
-                    </div>
+                    {{-- </div> --}}
                     <div class="form-group row">
 
                         <div class="col-md-9 col-lg-6">
@@ -72,13 +110,7 @@
     </div>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-       <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-             <span>Copyright © Thầy Lộc 2017</span>
-          </div>
-       </div>
-    </footer>
+    @include('admin.footer')
  </div>
  <!-- /.content-wrapper -->
 @endsection

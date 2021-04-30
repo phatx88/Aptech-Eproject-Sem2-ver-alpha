@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin_BrandController;
 use App\Http\Controllers\Admin_CouponController;
 use App\Http\Controllers\Admin_StaffController;
 use App\Http\Controllers\Admin_BlogController;
+use App\Http\Controllers\Admin_CategoryBlogController;
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
 use App\Http\Controllers\User_AccountController;
@@ -303,4 +304,15 @@ Route::get('/permission-role_action-add', function () {
 });
 
 
+//Category/Tag BLOG
+Route::post('/add-to-category-blog-by-input', [Admin_CategoryBlogController::class, 'add_category_blog_by_input']);
 
+Route::post('/show-list-category-blog', [Admin_CategoryBlogController::class, 'show_list_category_blog']);
+
+
+Route::post('/add-to-tag-blog-by-input', [Admin_CategoryBlogController::class, 'add_to_tag_blog_by_input']);
+
+Route::post('/show-list-tag-blog', [Admin_CategoryBlogController::class, 'show_list_tag_blog']);
+
+Route::post('/add-tag', [Admin_CategoryBlogController::class, 'add_tag']);
+//---------------------BLOG--------------------------//
