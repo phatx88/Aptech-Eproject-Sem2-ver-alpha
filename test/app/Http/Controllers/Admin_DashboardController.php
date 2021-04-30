@@ -42,7 +42,7 @@ class Admin_DashboardController extends Controller
 
         // APEX CHART MOST VISITED BY DATE
         $dateRange = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('date_visited')->toArray();
-        $nonRegHits = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->whereNull('user_id')->pluck('hits')->toArray();
+        $nonRegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
         $RegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNotNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
         $visitChart = (new LarapexChart)->barChart()
             ->setTitle('Visitors by Date.')
