@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Builder;
 // use Illuminate\Support\Facades\Mail;
 use Mail;
+use App\Models\Ward;
+use App\Models\District;
 use App\Models\Province;
 use App\Models\Transport;
-use App\Models\District;
-use App\Models\Ward;
 use App\Models\OrderItem;
 use App\Models\Order;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Session;
 session_start();
@@ -78,7 +79,9 @@ class User_CheckOutController extends Controller
             $order->shipping_fee = $shipping_fee;
             $order->save();
           }
-        $order_id =  $order->id;
+          $province_id = $order->ward->district->province->id;
+          $order_id =  $order->id;
+          DB::table('province')->where('id' , $province_id)->increment('order_count');
          foreach(Session('cart') as $key => $cart){
             $order_details = new OrderItem();
             $order_details->product_id = $cart['product_id'];

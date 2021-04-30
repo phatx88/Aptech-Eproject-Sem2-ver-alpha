@@ -9,6 +9,7 @@ use App\Models\Visitor;
 use App\Models\OrderItem;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class Admin_DashboardController extends Controller
 {
@@ -19,9 +20,11 @@ class Admin_DashboardController extends Controller
      */
     public function index()
     {
+        $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
+            return Order::with('orderItem', 'user' , 'ward')->orderby('id' , 'DESC')->get();
+        });
 
-        $orders = Order::orderby('id' , 'DESC')->get();
-        $orderItems = OrderItem::get();
+        $orderItems = OrderItem::with('product' , 'order')->get();
 
         // APEX CHART MOST ACTIVE USERS
         $usersRange = Visitor::selectRaw('Sum(hits) , user_id')->whereNotNull('user_id')->groupBy('user_id')->orderBy('Sum(hits)' , 'DESC')->pluck('user_id')->take(10)->toArray();
@@ -39,7 +42,7 @@ class Admin_DashboardController extends Controller
 
         // APEX CHART MOST VISITED BY DATE
         $dateRange = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('date_visited')->toArray();
-        $nonRegHits = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->whereNull('user_id')->pluck('hits')->toArray();
+        $nonRegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
         $RegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNotNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
         $visitChart = (new LarapexChart)->barChart()
             ->setTitle('Visitors by Date.')
