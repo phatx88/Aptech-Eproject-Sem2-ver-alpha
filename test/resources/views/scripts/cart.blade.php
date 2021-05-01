@@ -324,12 +324,13 @@
                                         },
                                         success: function(data) {
                                             swal("Đơn hàng!", "Đơn hàng của bạn đã được gửi thành công.", "success");
+                                            window.setTimeout(function (){
+                                                window.location.href = "{{url('/cart')}}";
+                                            }, 2000);
                                         }
                                      });
 
-                                    window.setTimeout(function (){
-                                        window.location.href = "{{url('/cart')}}";
-                                    }, 10000);
+
                             }
 
                         }else{

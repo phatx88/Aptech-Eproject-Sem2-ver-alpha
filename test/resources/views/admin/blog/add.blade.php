@@ -123,7 +123,7 @@
                     Please select Category.
                 </div>
                 <br>
-                <input type="button" id="add-select-tag" value="Add Tag" class="form-control btn btn-primary ">
+                <input type="button" id="add-select-tag" value="Add Multiple Tag" class="form-control btn btn-primary ">
             {{-- </form> --}}
             </div>
             <div class="col-md-3 col-lg-2">
