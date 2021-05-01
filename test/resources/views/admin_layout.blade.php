@@ -58,7 +58,7 @@
          <li class="nav-item dropdown {{ Request::segment(2) == 'comment' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-comments"></i> <span>Comment</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('comment-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('admin.comment.index')}}">Danh sách</a>
             </div>
          </li>
 

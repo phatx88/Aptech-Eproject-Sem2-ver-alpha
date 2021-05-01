@@ -11,7 +11,7 @@
        </ol>
        <!-- DataTables Example -->
        <div class="action-bar">
-          
+
           <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
        </div>
        <div class="card mb-3">
@@ -30,24 +30,20 @@
                       </tr>
                    </thead>
                    <tbody>
+                       @if ($comment != null)
+                       @foreach ($comments as $comment)
                       <tr>
                          <td><input type="checkbox"></td>
-                         <td>a@gmail.com</td>
-                         <td>Nguyễn Văn A </td>
-                         <td>4</td>
-                         <td>2019-08-12</td>
-                         <td>ABC</td>
+                         <td>{{ $comment->email }}</td>
+                         <td>{{ $comment->fullname }} </td>
+                         <td>{{ $comment->star }}</td>
+                         <td>{{ $comment->created }}</td>
+                         <td>{{ $comment->description }}</td>
                          <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
                       </tr>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td>b@gmail.com</td>
-                         <td>Nguyễn Văn B </td>
-                         <td>4</td>
-                         <td>2019-08-13</td>
-                         <td>XYZ</td>
-                         <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
+
+                      @endforeach
+                      @endif
                    </tbody>
                 </table>
              </div>

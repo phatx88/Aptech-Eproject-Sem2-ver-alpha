@@ -188,6 +188,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
     Route::resource('blog', Admin_BlogController::class);
+    Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
+
 });
 
 Route::get('clear-cache', function () {
