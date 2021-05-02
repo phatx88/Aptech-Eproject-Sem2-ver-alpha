@@ -191,6 +191,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
     Route::resource('blog', Admin_BlogController::class);
     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
+    Route::get('delete/{id}', [Admin_BlogController::class, 'delete']);
+    Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
+    Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
+    Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
 
 });
 

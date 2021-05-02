@@ -1,15 +1,16 @@
 @extends('admin_layout')
 @section('admin_content')
 <div id="content-wrapper">
-    <form action="{{ route('admin.blog.store') }}" method="post" class="needs-validation"  novalidate enctype="multipart/form-data">
+    <form action="{{ route('admin.blog.update',['blog' => $post]) }}" method="POST" class="needs-validation"  novalidate enctype="multipart/form-data">
         @csrf
+        @method('PUT')
     <div class="container-fluid">
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
           <li class="breadcrumb-item">
              <a href="#">Quản lý</a>
           </li>
-          <li class="breadcrumb-item active">Create New Blog</li>
+          <li class="breadcrumb-item active">Edit Blog</li>
        </ol>
        <!-- /form -->
         @if(session()->get('message'))
@@ -29,7 +30,7 @@
         <div class="form-group row">
             <label class="col-md-12 control-label" for="name">Tiêu Đề</label>
             <div class="col-md-9 col-lg-6">
-                <input name="blog_title" id="blog_title" type="text" value="" class="form-control" required>
+                <input name="blog_title" id="blog_title" type="text" value="{{ $post->title }}" class="form-control" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -41,7 +42,7 @@
        <div class="form-group row">
         <label class="col-md-12 control-label" for="name">Thẻ Tiêu Đề</label>
         <div class="col-md-9 col-lg-6">
-            <input name="blog_meta_title" id="blog_meta_title" type="text" value="" class="form-control" required>
+            <input name="blog_meta_title" id="blog_meta_title" type="text" value="{{ $post->metaTitle }}" class="form-control" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -53,7 +54,7 @@
        <div class="form-group row">
         <label class="col-md-12 control-label" for="code">Summary</label>
         <div class="col-md-9 col-lg-6">
-            <input name="summary_blog" id="summary_blog" type="text" value="" class="form-control" required>
+            <input name="summary_blog" id="summary_blog" type="text" value="{{ $post->summary }}" class="form-control" required>
             <div class="valid-feedback">
                 Looks good!
             </div>
@@ -65,7 +66,7 @@
         <div class="form-group row">
             <label class="col-md-12 control-label" for="time">Slug</label>
             <div class="col-md-9 col-lg-6">
-                <input name="slug_blog" id="slug_blog" type="text" value="" class="form-control" required>
+                <input name="slug_blog" id="slug_blog" type="text" value="{{ $post->slug }}" class="form-control" required>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
@@ -77,7 +78,7 @@
         <div class="form-group row">
             <label class="col-md-12 control-label" for="time">Featured Image</label>
             <div class="col-md-9 col-lg-6">
-                <input type="file" name="image" id="image" class="form-control" required>
+                <input type="file" name="image" id="image" value="" class="form-control" required >
 
                 <div class="invalid-feedback">
                     Please choose featured image.
@@ -88,7 +89,11 @@
             <label class="col-md-12 control-label" for="category">Category </label>
             <div class="col-md-9 col-lg-6 mb-2">
                 <select name="category_id" id="category_select_blog" class="form-control " required>
-                    <option value="">-- Select Category --</option>
+                    @if($post)
+                    <option value="{{ $post->categoryId }}">{{ $post->categoryblog->category_bname }}</option>
+                    @else
+                    <option value="">-- Select CategoryBlog --</option>
+                    @endif
                 </select>
                 <div class="valid-feedback">
                     Well!
@@ -114,7 +119,7 @@
             <div class="col-md-9 col-lg-6 mb-2">
                 {{-- <form action="">
                     @csrf --}}
-                <select name="tags_id" id="tag_select_blog" class="form-control" required>
+                <select name="tags_id" id="tag_select_blog" class="form-control">
                     <option value="">-- Select Tag --</option>
                 </select>
                 <div class="valid-feedback">
@@ -140,9 +145,7 @@
         </div>
         <div class="form-group row" id="list-of-tags">
                 <ul class="list-group" id="tag-list">
-                    {{-- <tr class="alert list-group"  id="tag-list">
 
-                    </tr> --}}
                 </ul>
 
        </div>
@@ -169,7 +172,7 @@
                     <div class="form-group row">
 
                         <div class="col-md-9 col-lg-6">
-                            <input type="submit" class="btn btn-primary btn-sm pull-right"  value="Lưu" name="save">
+                            <input type="submit" class="btn btn-primary btn-sm pull-right"  value="Cập Nhật" name="save">
                        </div>
                    </div>
 
@@ -239,7 +242,7 @@
                 _token:_token
             },
             success: function(data){
-                $('#category_select_blog').html(data);
+                $('#category_select_blog').append(data);
             }
         });
 

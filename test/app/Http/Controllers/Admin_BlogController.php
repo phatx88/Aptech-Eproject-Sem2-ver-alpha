@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session;
+
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\PostTag;
 use App\Models\CategoryBlog;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use File;
+
 class Admin_BlogController extends Controller
 {
     /**
@@ -20,7 +23,8 @@ class Admin_BlogController extends Controller
      */
     public function index()
     {
-
+        $posts = Post::all();
+        return view('admin.blog.list',['posts' => $posts]);
     }
 
     /**
@@ -45,14 +49,13 @@ class Admin_BlogController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->hasFile('featured_image')) {
-            $file = $request->file('featured_image');
+        $imageName = '';
+        if ($request->file('image')) {
+            // $file = $request->file('featured_image');
+            $file = $request->file('image');
             $imageName = $file->getClientOriginalName();
-
             //move file to folder
             $file->move(public_path('backend\images\blogs'), $imageName);
-        }else {
-            $imageName = 'product-image-placeholder.jpg';
         }
         $data = $request->all();
         $blog_title = $data['blog_title'];
@@ -72,6 +75,7 @@ class Admin_BlogController extends Controller
             $post->metaTitle = $blog_meta_title;
             $post->summary = $summary_blog;
             $post->content = $blog_content;
+            $post->slug = $slug_blog;
             $post->featured_image = $imageName;
             $post->save();
 
@@ -90,6 +94,7 @@ class Admin_BlogController extends Controller
             $post->metaTitle = $blog_meta_title;
             $post->summary = $summary_blog;
             $post->content = $blog_content;
+            $post->slug = $slug_blog;
             $post->featured_image = $imageName;
             $post->save();
 
@@ -100,7 +105,7 @@ class Admin_BlogController extends Controller
                 $post_tag->tagId = $tag_id;
                 $post_tag->save();
         }
-        return redirect()->back()->with('message', 'success');
+        return redirect()->back()->with('message', 'Create Successfully');
     }
 
     /**
@@ -111,7 +116,23 @@ class Admin_BlogController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::where('id', $id)->first();
+        $post_tag = PostTag::where('postId', $post->id)->get();
+        $tag = session()->get('tags');
+        if(isset($tag)){
+           unset($tag);
+        }
+        foreach($post_tag as $key => $value){
+            $tag[] = [
+                'id' => $value->tagId,
+                'tag_name' => $value->tag->tag_name
+            ];
+        }
+        session()->put('tags', $tag);
+        session()->save();
+        return view('admin.blog.edit',[
+            'post' => $post
+        ]);
     }
 
     /**
@@ -120,9 +141,9 @@ class Admin_BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, Blog $blog)
     {
-        //
+
     }
 
     /**
@@ -132,9 +153,72 @@ class Admin_BlogController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+    public function update(Request $request, Post $blog)
     {
-        //
+
+        // $postOld = Post::where('id', $blog->id)->first();
+        // $id = $postOld->id;
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $imageName = $file->getClientOriginalName();
+            //move file to folder
+            //delete old pic
+            if ($blog->featured_image != $imageName) {
+                $oldFile = public_path('backend\images\blogs\\'.$blog->featured_image);
+                File::delete($oldFile);
+                $file->move(public_path('backend\images\blogs'), $imageName);
+            }
+        }
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $data = $request->all();
+        $blog_title = $data['blog_title'];
+        $summary_blog = $data['summary_blog'];
+        $slug_blog = $data['slug_blog'];
+        $category_id = $data['category_id'];
+        $blog_content = $data['blog_content'];
+        $blog_meta_title = $data['blog_meta_title'];
+        $user = Auth::user();
+        $blog_tag = session()->get('tags');
+        if($blog_tag != null){
+            $post = Post::where('id', $blog->id)->update([
+                'categoryId' => $category_id,
+                'title' => $blog_title,
+                'metaTitle' => $blog_meta_title,
+                'summary' => $summary_blog,
+                'content' => $blog_content,
+                'slug' => $slug_blog,
+                'featured_image' => $imageName,
+                'updatedAt' => now()
+            ]);
+
+            PostTag::where('postId',$blog->id)->delete();
+            foreach($blog_tag as $key => $tag){
+                $post_tag = new PostTag();
+                $post_tag->postId = $blog->id;
+                $post_tag->tagId = $tag['id'];
+                $post_tag->save();
+            }
+        }else{
+            $post = Post::where('id', $blog->id)->update([
+                'categoryId' => $category_id,
+                'title' => $blog_title,
+                'metaTitle' => $blog_meta_title,
+                'summary' => $summary_blog,
+                'content' => $blog_content,
+                'slug' => $slug_blog,
+                'featured_image' => $imageName,
+                'updatedAt' => now()
+            ]);
+            PostTag::where('postId', $blog->id)->delete();
+            $tag_id = $data['tags_id'];
+                $post_tag = new PostTag();
+                $post_tag->postId = $blog->id;
+                $post_tag->tagId = $tag_id;
+                $post_tag->save();
+        }
+
+        return redirect()->route('admin.blog.index')->with('message', 'Update Successfully');
     }
 
     /**
@@ -145,6 +229,40 @@ class Admin_BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+    }
+
+    public function delete($id){
+        PostTag::where('postId', $id)->delete();
+        Post::where('id', $id)->delete();
+        return redirect()->back()->with('message', 'Delete Successfully');
+
+    }
+    public function published_blog($id){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        Post::where('id', $id)->update([
+            'published' => 1,
+            'publishedAt' => now(),
+            'hidden' => 1
+        ]);
+        return redirect()->back()->with('message', 'Pusblished Successfully');
+    }
+
+    public function hidden($id){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        Post::where('id', $id)->update([
+            'updatedAt' => now(),
+            'hidden' => 0
+        ]);
+        return redirect()->back()->with('message', 'Unactive Successfully');
+    }
+
+    public function unhidden($id){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        Post::where('id', $id)->update([
+            'updatedAt' => now(),
+            'hidden' => 1
+        ]);
+        return redirect()->back()->with('message', 'Active Successfully');
     }
 }
