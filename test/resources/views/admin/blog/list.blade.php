@@ -101,9 +101,9 @@
 
                                         <td>
                                             @if($post->published == 0)
-                                            <a href="{{ url('admin/published-blog/'.$post->id) }}" class="btn btn-primary btn-sm">NonPublished</a>
+                                            <a href="{{ url('admin/published-blog/'.$post->id) }}" class="btn btn-warning btn-sm">Publish</a>
                                             @else
-                                            <p>Published</p>
+                                            <p class="btn btn-primary btn-sm">Published</p>
                                             @endif
                                         </td>
                                         <td>{{ $post->createdAt }}</td>

@@ -153,7 +153,7 @@
         <div class="form-group row">
             <label class="col-md-12 control-label" for="cpn_condition">Content</label>
                 <div class="col-md-12">
-                    <textarea id="ckeditor1" name="blog_content" id="" rows="10" cols="80" required>
+                    <textarea id="ckeditor1" name="blog_content" id="" rows="150" cols="100" required>{{ $post->content }}
                 </textarea>
                 <div class="valid-feedback">
                     Well!
