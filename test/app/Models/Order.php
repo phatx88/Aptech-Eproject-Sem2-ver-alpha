@@ -43,6 +43,18 @@ class Order extends Model
         return $this->hasMany(OrderItem::class , 'order_id');
     }
 
+    public function getShippingStatus() {
+        $order_status = [
+            1 => "ordered",
+            2 => "confirmed", 
+            3 => "packaged",
+            4 => "shipping",
+            5 => "delivered",
+            6 => "canceled",
+        ];
+        return $order_status[$this->order_status_id];
+    }
+
 
 
 }

@@ -21,6 +21,7 @@ use App\Exports\OrderExport;
 use Maatwebsite\Excel\Facades\Excel;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Admin_OrderController extends Controller
 {
@@ -37,7 +38,7 @@ class Admin_OrderController extends Controller
             return Order::with('orderItem', 'user' , 'ward')->orderby('id' , 'DESC')->get();
         });
 
-        $orderItems = OrderItem::with('product' , 'order')->get();
+        $orderTotals = DB::table('total_per_order')->get();
 
         $saleChart = (new LarapexChart)->lineChart()
         ->setTitle('Sales during 2021.')
@@ -48,7 +49,7 @@ class Admin_OrderController extends Controller
         
         return view('admin.order.list', [
             'orders'=>$orders,
-            'orderItems' => $orderItems,
+            'orderTotals' => $orderTotals,
             'saleChart' => $saleChart,
             ]);
     }

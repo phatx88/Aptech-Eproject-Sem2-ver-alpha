@@ -20,16 +20,23 @@ class DatabaseSeeder extends Seeder
         // Order::factory(10)->create();
         
         // Magic method - belong to relationship
-        // $user =  User::factory(2)->create();
+        // $user =  User::factory()->create();
         // Order::factory()
         //     ->count(3)
         //     ->for($user)
         //     ->create();
 
         // Magic method - has many
-        Order::factory()
-            ->has(OrderItem::factory()->count(3))
-            ->create();
+        // Order::factory()
+        //     ->has(OrderItem::factory()->count(3))
+        //     ->create();
         
+        //User->Order->OrderItem
+        // $user =  User::factory()->create();
+        Order::factory()
+        ->count(10)
+        ->for(User::factory())
+        ->has(OrderItem::factory()->count(3))
+        ->create();
     }
 }
