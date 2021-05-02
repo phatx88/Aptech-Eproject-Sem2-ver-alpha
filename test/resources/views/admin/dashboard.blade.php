@@ -85,7 +85,7 @@
                 <div class="card">
                    <div class="card-header">
                      <i class="fas fa-shipping-fast"></i>
-                     Most Delivered To
+                     Most Ordered by Regions
                    </div>
                    <div class="card-body">
                       <div id="regions_div" style="width: 100%; height: 500px;" data-url="{{ url('fetch-order-data') }}"></div>
@@ -94,6 +94,21 @@
              </div>
           </div>
            {{-- Chart Larapex --}}
+                
+         <div class="row mb-3">
+            <div class="col-12">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-users"></i>
+                     Sale Chart
+                  </div>
+                     <div class="card-body">
+                        {!! $saleChart->container() !!}
+                     </div>
+               </div>
+            </div>
+         </div>
+
          <div class="row mb-3">
             <div class="col-md-6">
                <div class="card">
@@ -118,96 +133,9 @@
                </div>
             </div>
          </div>
-          <!-- DataTables Example -->
-          <div class="card mb-3">
-             <div class="card-header">
-                <i class="fas fa-table"></i>
-                Order Summary
-                <a type="button" href="{{ route('clear-cache') }}" class="btn btn-success btn-sm float-right">Refresh</a>
-             </div>
-             <div class="card-body">
-                <div class="table-responsive">
-                   <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
-                     <thead>
-                        <tr>
-                            <th><input type="checkbox" onclick="checkAll(this)"></th>
-                            <th>Mã</th>
-                            <th>Tên khách hàng</th>
-                            <th>Điện thoai</th>
-                            <th>Email</th>
-                            <th>Trạng Thái</th>
-                            <th>Ngày đặt hàng</th>
-                            <th>Người nhận</th>
-                            <th>Số điện thoại người nhận</th>
-                            <th>Hình thức thanh toán</th>
-                            <th>Tạm tính</th>
-                            <th>Phí giao hàng</th>
-                            <th>Tổng cộng</th>
-                            <th>Địa chỉ giao hàng</th>
-                            <th>Ngày giao</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($orders as $order)
-                        <tr>
-                            <td><input type="checkbox"></td>
-                            <td>{{ $order->id  }}</td>
-                            <td>{{ $order->user->name ?? "Guest"}}</td>
-                            <td>{{ $order->user->mobile ?? ""}}</td>
-                            <td>{{ $order->user->email ?? ""}}</td>
-                            <td>{{ $order->getShippingStatus() }}</td>
-                            <td>{{ $order->created_date }}</td>
-                            <td>{{ $order->shipping_fullname }}</td>
-                            <td>{{ $order->shipping_mobile }}</td>
-                            <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>
-                            <td>${{ $sum = $orderTotals->where("order_id" , '=' , $order->id)->first()->total ?? 0}}</td>
-                            {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
-                            <td>${{ $order->shipping_fee }}</td>
-                            <td>${{ $sum + $order->shipping_fee}}</td>
-                            <td>{{ $order->shipping_housenumber_street }}</td>
-                            <td>{{ $order->delivered_date }}</td>
-                            <td></td>
-                            <td></td>
-                            <td> <input type="button" onclick="Edit('1');" value="Sửa"
-                                    class="btn btn-warning btn-sm"></td>
-                            <td> <input type="button" onclick="DELETE('1');" value="Xóa"
-                                    class="btn btn-danger btn-sm"></td>
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th><input type="checkbox" onclick="checkAll(this)"></th>
-                            <th>Mã</th>
-                            <th>Tên khách hàng</th>
-                            <th>Điện thoai</th>
-                            <th>Email</th>
-                            <th>Trạng Thái</th>
-                            <th>Ngày đặt hàng</th>
-                            <th>Người nhận</th>
-                            <th>Số điện thoại người nhận</th>
-                            <th>Hình thức thanh toán</th>
-                            <th>Tạm tính</th>
-                            <th>Phí giao hàng</th>
-                            <th>Tổng cộng</th>
-                            <th>Địa chỉ giao hàng</th>
-                            <th>Ngày giao</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </tfoot>
-                   </table>
-                </div>
-             </div>
-          </div>
+          
        </div>
+       {{-- Chart Larapex --}}
        <!-- /.container-fluid -->
 
     <!-- /.content-wrapper -->
@@ -297,27 +225,8 @@
   }
 </script>
 
+{{ $saleChart->script() }}
 {{ $usersChart->script() }}
 {{ $visitChart->script() }}
 
-<script>
-   $(document).ready(function() {
-
-     //   CKEDITOR.replace('description')
-       $('#ModalDescription').on('show.bs.modal', function(event) {
-         //   even.preventDefault()
-           var button = $(event.relatedTarget) // Button that triggered the modal
-           var description = button.data('description') // Extract info from data-* attributes
-           var title = button.data('title') // Extract info from data-* attributes
-           // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-           // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-           var modal = $(this)
-           modal.find('.modal-title').text('Shipping Address : ' + title)
-           modal.find('#description').val(description)
-       })
-
-
-   });
-
-</script>
 @endsection

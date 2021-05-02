@@ -16,20 +16,7 @@
                 <li class="breadcrumb-item active">List</li>
             </ol>
             @include('errors.message')
-              {{-- Chart Larapex --}}
-         <div class="row mb-3">
-            <div class="col-12">
-               <div class="card">
-                  <div class="card-header">
-                     <i class="fas fa-users"></i>
-                     Sale Chart
-                  </div>
-                     <div class="card-body">
-                        {!! $saleChart->container() !!}
-                     </div>
-               </div>
-            </div>
-         </div>
+         
             <!-- DataTables Example -->
             
             <div class="action-bar">
@@ -167,7 +154,7 @@
     </div>
 @endsection
 @section('scripts')
-{{ $saleChart->script() }}
+
 <script>
     $(document).ready(function() {
 

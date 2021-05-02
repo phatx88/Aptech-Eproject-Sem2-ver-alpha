@@ -40,21 +40,12 @@ class Admin_OrderController extends Controller
 
         $orderTotals = DB::table('total_per_order')->get();
 
-        // $thisYear = 
-
-        // $lastYear =
-
-        $saleChart = (new LarapexChart)->lineChart()
-        ->setTitle('Sales Figures (in $).')
-        ->setSubtitle('This Year Sales vs Last Year Sales.')
-        ->addData('This Year Sales', [40, 93, 35, 42, 18, 82])
-        ->addData('Last Year Sales', [70, 29, 77, 28, 55, 45])
-        ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
         
+
         return view('admin.order.list', [
             'orders'=>$orders,
             'orderTotals' => $orderTotals,
-            'saleChart' => $saleChart,
+            
             ]);
     }
 

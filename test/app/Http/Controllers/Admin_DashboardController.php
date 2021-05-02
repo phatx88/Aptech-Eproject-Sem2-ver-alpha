@@ -52,11 +52,35 @@ class Admin_DashboardController extends Controller
             ->addData('Registered', $RegHits)
             ->setXAxis($dateRange);
 
+        // APEX CHART SALE FIGURES 
+        $lastYear = DB::table('total_sales_per_month')
+        ->where('year(created_date)', now()->year - 1)
+        ->whereBetween('month(created_date)', [1,12])
+        ->pluck('total_sales')
+        ->toArray();
+
+        $thisYear = DB::table('total_sales_per_month')
+        ->where('year(created_date)', now()->year)
+        ->whereBetween('month(created_date)', [1,12])
+        ->pluck('total_sales')
+        ->toArray();
+        
+        $saleChart = (new LarapexChart)->areaChart()
+        ->setTitle('Sales Figures (in $).')
+        ->setSubtitle('This Year Sales vs Last Year Sales.')
+        ->addData('This Year Sales', $thisYear)
+        ->addData('Last Year Sales', $lastYear)
+        ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+        ->setGrid(false, '#303F9F', 0.1)
+        ->setColors(['#FFC107', '#303F9F'])
+        ->setMarkers(['#FF5722', '#303FFF'], 5, 10);
+
         return view('admin.dashboard', [
             'orders'=>$orders,
             'orderTotals' => $orderTotals,
             'usersChart' => $usersChart,
             'visitChart' => $visitChart,
+            'saleChart' => $saleChart,
             ]);
     }
 
