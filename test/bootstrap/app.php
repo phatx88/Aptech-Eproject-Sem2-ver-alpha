@@ -41,6 +41,8 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$app->register(\KitLoong\MigrationsGenerator\MigrationsGeneratorServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
