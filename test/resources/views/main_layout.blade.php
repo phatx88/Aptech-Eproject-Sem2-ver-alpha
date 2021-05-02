@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <link rel="stylesheet" href="{{ asset('frontend/css/star-rating-svg.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
-
+    {{-- <link rel="stylesheet" href="{{ asset('frontend/css/content-styles.css') }}"> --}}
 </head>
 
 <body>
@@ -193,7 +193,7 @@
                             aria-haspopup="true" aria-expanded="false">Products</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
                             <a class="dropdown-item" href="{{ route('home.products.index') }}">Products</a>
-                            <a class="dropdown-item" href="{{ URL::to('single-blog') }}">Single Blog</a>
+                            {{-- <a class="dropdown-item" href="{{ URL::to('single-blog') }}">Single Blog</a> --}}
                             <a class="dropdown-item" href="{{ URL::to('cart') }}">Cart</a>
                             <a class="dropdown-item" href="{{ route('checkout.index') }}">Checkout</a>
                             <a class="dropdown-item" href="{{ route('account.index') }}">User Account</a>
