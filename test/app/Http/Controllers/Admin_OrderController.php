@@ -35,11 +35,12 @@ class Admin_OrderController extends Controller
     {
 
         $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
-            return Order::with('orderItem', 'user' , 'ward')->orderby('id' , 'DESC')->get();
+            return Order::with('orderItem', 'user' , 'ward:id,name,district_id')->orderby('id' , 'DESC')->get();
         });
 
         $orderTotals = DB::table('total_per_order')->get();
 
+        
         
 
         return view('admin.order.list', [

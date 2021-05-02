@@ -16,7 +16,8 @@
                 <li class="breadcrumb-item active">List</li>
             </ol>
             @include('errors.message')
-         
+
+            
             <!-- DataTables Example -->
             
             <div class="action-bar">
@@ -50,7 +51,7 @@
                                     <th>Tổng cộng</th>
                                     <th>Địa chỉ giao hàng</th>
                                     <th>Ngày giao</th>
-                                    <th>Nhân viên phụ trách</th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>

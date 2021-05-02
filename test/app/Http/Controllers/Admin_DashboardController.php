@@ -21,12 +21,7 @@ class Admin_DashboardController extends Controller
      */
     public function index()
     {
-        $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
-            return Order::with('orderItem', 'user' , 'ward:id,name,district_id')->orderby('id' , 'DESC')->get();
-        });
-
-        $orderTotals = DB::table('total_per_order')->get();
-
+        $orders = DB::table('total_per_order')->get();
         // APEX CHART MOST ACTIVE USERS
         $usersRange = Visitor::selectRaw('Sum(hits) , user_id')->whereNotNull('user_id')->groupBy('user_id')->orderBy('Sum(hits)' , 'DESC')->pluck('user_id')->take(10)->toArray();
         $usershits = Visitor::selectRaw('Sum(hits) , user_id')->whereIn('user_id', $usersRange)->groupBy('user_id')->orderBy('user_id' , 'ASC')->pluck('Sum(hits)')->toArray();
@@ -75,12 +70,42 @@ class Admin_DashboardController extends Controller
         ->setColors(['#FFC107', '#303F9F'])
         ->setMarkers(['#FF5722', '#303FFF'], 5, 10);
 
+        // APEX CHART Order FIGURES by Months 
+        $lastYearOrder = DB::table('total_sales_per_month')
+        ->where('year(created_date)', now()->year - 1)
+        ->whereBetween('month(created_date)', [1,12])
+        ->pluck('total_orders')
+        ->toArray();
+
+        $thisYearOrder = DB::table('total_sales_per_month')
+        ->where('year(created_date)', now()->year)
+        ->whereBetween('month(created_date)', [1,12])
+        ->pluck('total_orders')
+        ->toArray();
+
+        $orderbar = (new LarapexChart)->horizontalBarChart()
+            ->setTitle('Monthly Orders.')
+            ->setSubtitle('This Year Orders vs Last Year Orders.')
+            ->addData('This Year Orders', $thisYearOrder)
+            ->addData('Last Year Orders', $lastYearOrder)
+            ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+            ->setColors(['#FFC107', '#303F9F']);
+
+        $salebar = (new LarapexChart)->horizontalBarChart()
+        ->setTitle('Sales Figures (in $).')
+        ->setSubtitle('This Year Sales vs Last Year Sales.')
+        ->addData('This Year Sales', $thisYear)
+        ->addData('Last Year Sales', $lastYear)
+        ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
+        ->setColors(['#FF5722', '#303F9F']);
+
         return view('admin.dashboard', [
-            'orders'=>$orders,
-            'orderTotals' => $orderTotals,
             'usersChart' => $usersChart,
             'visitChart' => $visitChart,
             'saleChart' => $saleChart,
+            'orderbar' => $orderbar,
+            'salebar' => $salebar,
+            'orders' => $orders,
             ]);
     }
 

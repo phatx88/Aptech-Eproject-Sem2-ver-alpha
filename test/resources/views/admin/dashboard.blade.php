@@ -52,7 +52,7 @@
                       <div class="card-body-icon">
                          <i class="fas fa-fw fa-shopping-cart"></i>
                       </div>
-                      <div class="mr-5">Doanh thu 3,500,000 đ</div>
+                      <div class="mr-5">${{ number_format( $orders->sum('total') , 0) }} in Sales</div>
                    </div>
                    <a class="card-footer text-white clearfix small z-1" href="#">
                    <span class="float-left">Chi tiết</span>
@@ -80,6 +80,7 @@
              </div>
           </div>
           {{-- GOOGLE GEOCHART  --}}
+          
           <div class="row mb-3">
              <div class="col-12">
                 <div class="card">
@@ -93,14 +94,40 @@
                 </div>
              </div>
           </div>
-           {{-- Chart Larapex --}}
-                
+
+         {{-- Apex Chart - Order  --}}
          <div class="row mb-3">
+            <div class="col-6">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-file-invoice-dollar"></i>
+                     Orders per Month
+                  </div>
+                     <div class="card-body">
+                        {!! $orderbar->container() !!}
+                     </div>
+               </div>
+            </div>
+            <div class="col-6">
+               <div class="card">
+                  <div class="card-header">
+                     <i class="fas fa-money-bill"></i>
+                     Sales per Month
+                  </div>
+                     <div class="card-body">
+                        {!! $salebar->container() !!}
+                     </div>
+               </div>
+            </div>
+         </div>
+            {{-- Apex Chart - Sales  --}}
+         
+            <div class="row mb-3">
             <div class="col-12">
                <div class="card">
                   <div class="card-header">
-                     <i class="fas fa-users"></i>
-                     Sale Chart
+                     <i class="fas fa-chart-line"></i>
+                     Revenue Trend
                   </div>
                      <div class="card-body">
                         {!! $saleChart->container() !!}
@@ -108,6 +135,9 @@
                </div>
             </div>
          </div>
+         
+
+         {{-- Apex Chart - Visitors & Users  --}}
 
          <div class="row mb-3">
             <div class="col-md-6">
@@ -225,6 +255,8 @@
   }
 </script>
 
+{{ $orderbar->script() }}
+{{ $salebar->script() }}
 {{ $saleChart->script() }}
 {{ $usersChart->script() }}
 {{ $visitChart->script() }}
