@@ -69,4 +69,27 @@ class OrderFactory extends Factory
         }
        
     }
+
+    /**
+     * Indicate that the model's order is delivered.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function delivered()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'order_status_id' => ShippingStatus::find(5),
+            ];
+        });
+    }
+
+    public function cancelled()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'order_status_id' => ShippingStatus::find(6),
+            ];
+        });
+    }
 }

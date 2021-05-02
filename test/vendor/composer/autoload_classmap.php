@@ -60,6 +60,8 @@ return array(
     'App\\Models\\District' => $baseDir . '/app/Models/District.php',
     'App\\Models\\Order' => $baseDir . '/app/Models/Order.php',
     'App\\Models\\OrderItem' => $baseDir . '/app/Models/OrderItem.php',
+    'App\\Models\\Post' => $baseDir . '/app/Models/Post.php',
+    'App\\Models\\PostTag' => $baseDir . '/app/Models/PostTag.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\Products' => $baseDir . '/app/Models/Products.php',
     'App\\Models\\Province' => $baseDir . '/app/Models/Province.php',
