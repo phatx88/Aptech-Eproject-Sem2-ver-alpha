@@ -164,7 +164,7 @@
                             <td>{{ $order->shipping_fullname }}</td>
                             <td>{{ $order->shipping_mobile }}</td>
                             <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>
-                            <td>${{ $sum = $orderTotals->where("order_id" , '=' , $order->id)->first()->total}}</td>
+                            <td>${{ $sum = $orderTotals->where("order_id" , '=' , $order->id)->first()->total ?? 0}}</td>
                             {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
                             <td>${{ $order->shipping_fee }}</td>
                             <td>${{ $sum + $order->shipping_fee}}</td>
