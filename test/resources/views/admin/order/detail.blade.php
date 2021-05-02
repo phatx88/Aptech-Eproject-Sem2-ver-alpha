@@ -148,7 +148,7 @@
                     <label>Nhân viên phụ trách:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
-                    <span>{{ $order->staff->name ?? "" }}</span>
+                    <span>{{ $order->staff->user->name ?? "" }}</span>
                 </div>
             </div>
             <label class="control-label">Sản phẩm</label>

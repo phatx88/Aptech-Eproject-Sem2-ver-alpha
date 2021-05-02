@@ -145,7 +145,7 @@
                             <th>Tổng cộng</th>
                             <th>Địa chỉ giao hàng</th>
                             <th>Ngày giao</th>
-                            <th>Nhân viên phụ trách</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -159,24 +159,19 @@
                             <td>{{ $order->user->name ?? "Guest"}}</td>
                             <td>{{ $order->user->mobile ?? ""}}</td>
                             <td>{{ $order->user->email ?? ""}}</td>
-                            <td>{{ $order->status->name }}</td>
+                            <td>{{ $order->getShippingStatus() }}</td>
                             <td>{{ $order->created_date }}</td>
                             <td>{{ $order->shipping_fullname }}</td>
                             <td>{{ $order->shipping_mobile }}</td>
                             <td>{{ $order->payment_method == 0 ? 'COD':'BANK'}}</td>
-                            <td>${{ $sum = $orderItems->where("order_id" , '=' , $order->id)->sum('total_price')}}</td>
+                            <td>${{ $sum = $orderTotals->where("order_id" , '=' , $order->id)->first()->total}}</td>
                             {{-- tạm tính là tổng sum của cột total_price trong bảng order.item where id thuộc về bảng order --}}
                             <td>${{ $order->shipping_fee }}</td>
                             <td>${{ $sum + $order->shipping_fee}}</td>
-                            <td><button class="btn btn-info btn-sm m-auto" data-toggle="modal" data-target="#ModalDescription"
-                              data-description="{{ $order->shipping_housenumber_street }}, {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}"
-                              data-title="{{ $order->shipping_fullname }}">Show</button></td>
-                            {{-- <td>{{ $order->shipping_housenumber_street }},
-                                {{ $order->ward->name ?? "" }} , {{ $order->ward->district->name ?? "" }} , {{ $order->ward->district->province->name?? "" }}.
-                            </td> --}}
+                            <td>{{ $order->shipping_housenumber_street }}</td>
                             <td>{{ $order->delivered_date }}</td>
                             <td></td>
-                            <td> </td>
+                            <td></td>
                             <td> <input type="button" onclick="Edit('1');" value="Sửa"
                                     class="btn btn-warning btn-sm"></td>
                             <td> <input type="button" onclick="DELETE('1');" value="Xóa"
@@ -202,7 +197,7 @@
                             <th>Tổng cộng</th>
                             <th>Địa chỉ giao hàng</th>
                             <th>Ngày giao</th>
-                            <th>Nhân viên phụ trách</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
