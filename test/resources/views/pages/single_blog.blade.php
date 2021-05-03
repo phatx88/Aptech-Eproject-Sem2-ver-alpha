@@ -38,126 +38,90 @@
             </div>
           </div>
 
+        <form action="{{ url('/comment/blog') }}" method="POST">
+                @csrf
+            @if(Auth::check())
+                <div class="row p-4">
+                    <h3 class="mb-4">Your Review</h3>
+                    <div class="review">
 
-          <div class="pt-5 mt-5">
-            <h3 class="mb-5">6 Comments</h3>
+                {{-- USER IMAGE --}}
+                {{-- <div class="user-img"
+                                    style="background-image: url(frontend/images/person_1.jpg)">
+                                </div> --}}
+                    <div class="desc pr-5">
+                        {{-- AJax load error messages --}}
+                        <div class="alert alert-danger print-error-msg" style="display:none">
+                            <ul></ul>
+                        </div>
+                        {{-- AJax load error messages --}}
+
+
+                            <input type="hidden" class="blog-id" name="blog_id" value="{{ $post_details->id }}">
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input  type="hidden" name="user_id" class="form-control mt-4 user-id"
+                                            placeholder="Name*" value="{{ Auth::user()->id }}">
+                                    </div>
+                                    <div class="col-sm-6">
+                                            <input type="hidden" name="email" class="form-control mt-4"
+                                                placeholder="Email*" value="{{ Auth::user()->email }}">
+                                        </div>
+                                    <div class="col-sm-6">
+                                        <span class="my-rating"></span> <span class="live-rating-span"></span>
+                                                <input type="hidden" class="live-rating " id="star-rating" name="star" value="">
+
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="description" class="form-control mt-4 post-comment-description"
+                                            placeholder="Description*" rows="5"></textarea>
+                                    </div>
+                                </div>
+                        <input type="submit" class="btn btn-primary mt-4" id="submitPost" value="Post">
+                        </div>
+                    </div>
+                    </div>
+            @endif
+        </form>
+            @if($comments)
+
+                {{-- comment --}}
             <ul class="comment-list">
-              <li class="comment">
+                @foreach($comments as $key => $comment)
+                <li>
                 <div class="vcard bio">
-                  <img src="{{asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                </div>
-                <div class="comment-body">
-                  <h3>John Doe</h3>
-                  <div class="meta">April 12, 2020 at 1:21am</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                  <p><a href="#" class="reply">Reply</a></p>
-                </div>
-              </li>
+                    <img style="" src="{{ asset('frontend/images/profile/' . $comment->user->profile_pic) }}" alt="Avatar" >
+                  </div>
 
-              <li class="comment">
-                <div class="vcard bio">
-                  <img src="{{asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                </div>
-                <div class="comment-body">
-                  <h3>John Doe</h3>
-                  <div class="meta">April 12, 2020 at 1:21am</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                  <p><a href="#" class="reply">Reply</a></p>
-                </div>
 
-                <ul class="children">
-                  <li class="comment">
-                    <div class="vcard bio">
-                      <img src="{{asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
+                <div class="comment-body">
+                    <h4>
+                        <span class="text-left">{{ $comment->name }}</span>
+                        <span class="text-right">{{ $comment->createdAt	 }}</span>
+                    </h4>
+                    <p class="star">
+                    <div class="my-rating-posted" data-rating="{{ $comment->star }}">
                     </div>
-                    <div class="comment-body">
-                      <h3>John Doe</h3>
-                      <div class="meta">April 12, 2020 at 1:21am</div>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                      <p><a href="#" class="reply">Reply</a></p>
-                    </div>
-
-
-                    <ul class="children">
-                      <li class="comment">
-                        <div class="vcard bio">
-                          <img src="{{asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                        </div>
-                        <div class="comment-body">
-                          <h3>John Doe</h3>
-                          <div class="meta">April 12, 2020 at 1:21am</div>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                          <p><a href="#" class="reply">Reply</a></p>
-                        </div>
-
-                          <ul class="children">
-                            <li class="comment">
-                              <div class="vcard bio">
-                                <img src="{{asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
-                              </div>
-                              <div class="comment-body">
-                                <h3>John Doe</h3>
-                                <div class="meta">April 12, 2020 at 1:21am</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                <p><a href="#" class="reply">Reply</a></p>
-                              </div>
-                            </li>
-                          </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-
-              <li class="comment">
-                <div class="vcard bio">
-                  <img src="{{asset('frontend/images/person_1.jpg')}}" alt="Image placeholder">
+                    </p>
+            <p>{{ $comment->content }}</p>
                 </div>
-                <div class="comment-body">
-                  <h3>John Doe</h3>
-                  <div class="meta">April 12, 2020 at 1:21am</div>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                  <p><a href="#" class="reply">Reply</a></p>
-                </div>
-              </li>
+            </li>
+            @endforeach
             </ul>
-            <!-- END comment-list -->
 
-            <div class="comment-form-wrap pt-5">
-              <h3 class="mb-5">Leave a comment</h3>
-              <form action="#" class="p-5 bg-light">
-                <div class="form-group">
-                  <label for="name">Name *</label>
-                  <input type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group">
-                  <label for="email">Email *</label>
-                  <input type="email" class="form-control" id="email">
-                </div>
-                <div class="form-group">
-                  <label for="website">Website</label>
-                  <input type="url" class="form-control" id="website">
-                </div>
+            @endif
 
-                <div class="form-group">
-                  <label for="message">Message</label>
-                  <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                  <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
-                </div>
-
-              </form>
-            </div>
-          </div>
-
+        {{-- comment --}}
         </div> <!-- .col-md-8 -->
         <div class="col-lg-4 sidebar pl-lg-5 ftco-animate">
           <div class="sidebar-box">
             <form action="#" class="search-form">
               <div class="form-group">
                 <span class="fa fa-search"></span>
-                <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+                <input type="text" class="form-control" placeholder="T  er">
               </div>
             </form>
           </div>
@@ -228,4 +192,39 @@
       </div>
     </div>
   </section> <!-- .section -->
+
+@endsection
+@section('scripts')
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        updateAnsweredRating();
+    });
+
+    $(".my-rating").starRating({
+        strokeColor: '#894A00',
+        strokeWidth: 10,
+        starSize: 25,
+        disableAfterRate: true,
+        onHover: function(currentIndex, currentRating, $el) {
+            $('.live-rating').val(currentIndex);
+            $('.live-rating-span').text(currentIndex);
+        },
+        onLeave: function(currentIndex, currentRating, $el) {
+            $('.live-rating').val(currentRating);
+            $('.live-rating-span').text(currentRating);
+        },
+    });
+
+    function updateAnsweredRating() {
+            $(".my-rating-posted").starRating({
+                activeColor: 'crimson',
+                starSize: 20,
+                readOnly: true,
+            });
+        };
+</script>
+
+
+
 @endsection
