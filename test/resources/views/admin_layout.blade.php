@@ -71,8 +71,8 @@
          <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Khách hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               {{-- <a class="dropdown-item" href="{{route('admin.customer.index')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{route('admin.customer-add')}}">Thêm</a> --}}
+               <a class="dropdown-item" href="{{route('admin.user.index')}}">Danh sách</a>
+               {{-- <a class="dropdown-item" href="{{route('admin.user.add')}}">Thêm</a> --}}
                <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a>
             </div>
          </li>

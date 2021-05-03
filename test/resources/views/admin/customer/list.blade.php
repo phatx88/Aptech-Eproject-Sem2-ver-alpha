@@ -39,7 +39,7 @@
                                     <td><input type="checkbox"></td>
                                     <td >{{ $user->name }}</td>
                                     <td >{{ $user->email }}</td>
-                                    <td >{{ $user->mobile?? }}</td>
+                                    <td >{{ $user->mobile??'' }}</td>
                                     <td>{{ $user->provider }}</td>
                                     <td>{{ $user->housenumber_street }}</td>
                                     {{-- <td>{{ $user-> }}</td>
