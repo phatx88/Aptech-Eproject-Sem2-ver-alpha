@@ -21,6 +21,7 @@ use App\Exports\OrderExport;
 use Maatwebsite\Excel\Facades\Excel;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Admin_OrderController extends Controller
 {
@@ -34,22 +35,18 @@ class Admin_OrderController extends Controller
     {
 
         $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
-            return Order::with('orderItem', 'user' , 'ward')->orderby('id' , 'DESC')->get();
+            return Order::with('orderItem', 'user' , 'ward:id,name,district_id')->orderby('id' , 'DESC')->get();
         });
 
-        $orderItems = OrderItem::with('product' , 'order')->get();
+        $orderTotals = DB::table('total_per_order')->get();
 
-        $saleChart = (new LarapexChart)->lineChart()
-        ->setTitle('Sales during 2021.')
-        ->setSubtitle('Physical sales vs Digital sales.')
-        ->addData('Physical sales', [40, 93, 35, 42, 18, 82])
-        ->addData('Digital sales', [70, 29, 77, 28, 55, 45])
-        ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June']);
         
+        
+
         return view('admin.order.list', [
             'orders'=>$orders,
-            'orderItems' => $orderItems,
-            'saleChart' => $saleChart,
+            'orderTotals' => $orderTotals,
+            
             ]);
     }
 

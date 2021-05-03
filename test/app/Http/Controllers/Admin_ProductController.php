@@ -33,7 +33,7 @@ class Admin_ProductController extends Controller
         $name_product = array();
         $count_product = array();
         foreach($product_view_count as $key => $pro_count){
-            $name_product[] = $pro_count->name;
+            $name_product[] = substr($pro_count->name, 0, 15)."...";
             $count_product[] = $pro_count->view_count;
         }
         // //Count order-item
@@ -94,19 +94,19 @@ class Admin_ProductController extends Controller
         $order_name = array();
         $order_count = array();
         foreach ($top_product as $key => $value){
-            $order_name[] = $value->name;
+            $order_name[] = substr($value->name,0,15)."...";
             $order_count[] = $value->total_qty;
         }
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $productChart  = (new LarapexChart)->polarAreaChart()
+        $productChart  = (new LarapexChart)->pieChart()
         ->setTitle('Top 5 View of Product in Now.')
-        ->setSubtitle('Hiện tại : '. now())
+        ->setSubtitle(now())
         ->addData($count_product)
         ->setLabels($name_product);
 
         $orderChart  = (new LarapexChart)->polarAreaChart()
         ->setTitle('Top 5 Selling Product in Now.')
-        ->setSubtitle('Hiện tại : '. now())
+        ->setSubtitle(now())
         ->addData($order_count)
         ->setLabels($order_name);
 

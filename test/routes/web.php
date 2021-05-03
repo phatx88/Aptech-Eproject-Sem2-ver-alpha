@@ -20,6 +20,7 @@ use App\Http\Controllers\User_AccountController;
 use App\Http\Controllers\User_ProductsController;
 use App\Http\Controllers\User_CartController;
 use App\Http\Controllers\User_CheckOutController;
+use App\Http\Controllers\User_BlogController;
 use Illuminate\Routing\RouteUri;
 // OTHERS
 use App\Http\Controllers\PasswordSetupController;
@@ -136,6 +137,7 @@ Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwor
 
 // FETCH DATA FOR API
 Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
+Route::get('/fetch-product-sale-data', [FetchChartDataController::class,'fetchSalesPerProduct']);
 
 //BACK END
 
@@ -193,6 +195,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
     Route::resource('blog', Admin_BlogController::class);
     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
+    Route::get('delete/{id}', [Admin_BlogController::class, 'delete']);
+    Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
+    Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
+    Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
 
 });
 
@@ -206,9 +212,7 @@ Route::get('clear-cache', function () {
 Route::get('/about', function () {
     return view('pages.about');
 });
-Route::get('/blog', function () {
-    return view('pages.blog');
-});
+
 
 Route::get('/single-blog', function () {
     return view('pages.single_blog');
@@ -314,7 +318,7 @@ Route::get('/permission-role_action-add', function () {
 });
 
 
-//Category/Tag BLOG
+//Category/Tag BLOG ADMIN
 Route::post('/add-to-category-blog-by-input', [Admin_CategoryBlogController::class, 'add_category_blog_by_input']);
 
 Route::post('/show-list-category-blog', [Admin_CategoryBlogController::class, 'show_list_category_blog']);
@@ -325,7 +329,14 @@ Route::post('/add-to-tag-blog-by-input', [Admin_CategoryBlogController::class, '
 Route::post('/show-list-tag-blog', [Admin_CategoryBlogController::class, 'show_list_tag_blog']);
 
 Route::post('/add-tag', [Admin_CategoryBlogController::class, 'add_tag']);
-//---------------------BLOG--------------------------//
+
  Route::post('/show-tag-blog', [Admin_CategoryBlogController::class, 'show_tag_blog']);
 
  Route::post('/delete-tag-blog', [Admin_CategoryBlogController::class, 'delete_tag_blog']);
+
+//---------------------BLOG--------------------------//
+//BLOG USER
+
+Route::get('/blog',[User_BlogController::class, 'index']);
+
+Route::get('/blog/details/{slug}', [User_BlogController::class, 'blog_details']);

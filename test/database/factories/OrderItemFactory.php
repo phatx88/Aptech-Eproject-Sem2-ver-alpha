@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\OrderItem;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class OrderItemFactory extends Factory
 {
@@ -23,14 +24,16 @@ class OrderItemFactory extends Factory
      */
     public function definition()
     {
+        $product_id = Product::all()->pluck('id')->random();
+        $qty = $this->faker->numberBetween(1, 3);
+        $unit_price = Product::where('id' , $product_id)->value('sale_price');
+        $total_price = $unit_price * $qty;
         return [
-            'order_id' => factory(Order::class),
-            'product_id' => factory(Product::class),
-            'qty' => $this->faker->numberBetween(1, 20),
-            'unit_price' => function (array $orderItem) {
-                return Product::find($orderItem['product_id'])->sale_price;
-            },
-            'Total_price' => $this->faker->numberBetween(100, 1000),
+            'order_id' => Order::all()->pluck('id')->random(),
+            'product_id' => $product_id,
+            'qty' => $qty,
+            'unit_price' => $unit_price,
+            'total_price' => $total_price,
         ];
     }
 }

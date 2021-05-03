@@ -27,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'mobile',
         'is_staff',
-        'provider', 
+        'provider',
         'provider_id',
     ];
 
@@ -86,7 +86,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Order::class, 'customer_id', 'id');
     }
 
-    public function assignRole($role) 
+    public function post(): HasMany
+    {
+        return $this->hasMany(Post::class, 'authorId', 'id');
+    }
+
+    public function assignRole($role)
     {
         return Staff::create([
             'user_id' => $this->id,

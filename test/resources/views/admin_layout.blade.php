@@ -189,6 +189,6 @@
 </script>
  @yield('scripts')
  @include('scripts.notyf')
- @include('scripts.blog')
+
 </body>
 </html>
