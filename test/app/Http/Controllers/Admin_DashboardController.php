@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Visitor;
 use App\Models\OrderItem;
@@ -21,7 +22,7 @@ class Admin_DashboardController extends Controller
      */
     public function index()
     {
-        $orders = DB::table('total_per_order')->get();
+        
         // APEX CHART MOST ACTIVE USERS
         $usersRange = Visitor::selectRaw('Sum(hits) , user_id')->whereNotNull('user_id')->groupBy('user_id')->orderBy('Sum(hits)' , 'DESC')->pluck('user_id')->take(10)->toArray();
         $usershits = Visitor::selectRaw('Sum(hits) , user_id')->whereIn('user_id', $usersRange)->groupBy('user_id')->orderBy('user_id' , 'ASC')->pluck('Sum(hits)')->toArray();
@@ -99,6 +100,9 @@ class Admin_DashboardController extends Controller
         ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
         ->setColors(['#FF5722', '#303F9F']);
 
+        $products = Product::select('id' , 'name', 'featured_image', 'price' , 'inventory_qty', 'sale_price')->get();
+        $orders = DB::table('total_per_order')->orderBy('created_date' , 'DESC')->get();
+
         return view('admin.dashboard', [
             'usersChart' => $usersChart,
             'visitChart' => $visitChart,
@@ -106,6 +110,7 @@ class Admin_DashboardController extends Controller
             'orderbar' => $orderbar,
             'salebar' => $salebar,
             'orders' => $orders,
+            'products' => $products
             ]);
     }
 

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar bg-dark static-top border-bottom">
+<nav class="navbar navbar-expand navbar bg-dark static-top border-bottom" id="navbar">
     <a class="navbar-brand mr-1 text-white" href="{{ route('home.index') }}">Liquor Store</a>
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
     <i class="fas fa-bars"></i>
