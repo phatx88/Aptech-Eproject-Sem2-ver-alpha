@@ -104,7 +104,7 @@
                                                 data-title="{{ $product->name }}">Show</button></td>
                                         <td>{{ $product->created_date }}</td>
                                         <td>{{ $product->featured == 1 ? 'yes' : 'no' }}</td>
-                                        <td><a href="../../pages/comment/list.html">Đánh giá</a></td>
+                                        <td><a href="{{ URL('admin/comment/'.$product->id) }}">Đánh giá</a></td>
                                         <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
                                         <td><a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
                                                 class="btn btn-warning btn-sm">Edit</a></td>

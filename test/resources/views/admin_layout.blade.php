@@ -58,7 +58,7 @@
          <li class="nav-item dropdown {{ Request::segment(2) == 'comment' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-comments"></i> <span>Comment</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.comment.index')}}">Danh sách</a>
+               {{-- <a class="dropdown-item" href="{{route('admin.comment.index')}}">Danh sách</a> --}}
             </div>
          </li>
 
@@ -71,8 +71,8 @@
          <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Khách hàng</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('customer-list')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{URL::tO('customer-add')}}">Thêm</a>
+               {{-- <a class="dropdown-item" href="{{route('admin.customer.index')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{route('admin.customer-add')}}">Thêm</a> --}}
                <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a>
             </div>
          </li>

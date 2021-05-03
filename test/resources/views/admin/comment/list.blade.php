@@ -30,7 +30,7 @@
                       </tr>
                    </thead>
                    <tbody>
-                       @if ($comment != null)
+
                        @foreach ($comments as $comment)
                       <tr>
                          <td><input type="checkbox"></td>
@@ -43,7 +43,7 @@
                       </tr>
 
                       @endforeach
-                      @endif
+
                    </tbody>
                 </table>
              </div>

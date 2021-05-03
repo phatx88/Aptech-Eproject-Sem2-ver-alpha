@@ -13,9 +13,10 @@ class Admin_CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $comments = Comment::get();
+
+        $comments = Comment::where('product_id', $id)->get();
         return view('admin.comment.list',[
             'comments' =>$comments
         ]);

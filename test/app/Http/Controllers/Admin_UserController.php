@@ -15,7 +15,10 @@ class Admin_UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::where('is_staff' , 0)->get();
+        return view('admin.customer.list' , [
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -25,7 +28,7 @@ class Admin_UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.customer.add');
     }
 
     /**

@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin_CouponController;
 use App\Http\Controllers\Admin_StaffController;
 use App\Http\Controllers\Admin_BlogController;
 use App\Http\Controllers\Admin_CategoryBlogController;
+use App\Http\Controllers\Admin_CommentController;
+use App\Http\Controllers\Admin_UserController;
+
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
 use App\Http\Controllers\User_AccountController;
@@ -185,6 +188,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
     Route::resource('staff', Admin_StaffController::class);
+    Route::resource('user', Admin_UserController::class);
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
     Route::resource('blog', Admin_BlogController::class);
