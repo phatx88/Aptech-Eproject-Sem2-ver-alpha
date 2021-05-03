@@ -222,15 +222,18 @@
                 },
                 success: function(data){
                     notyf.success(data);
-                    window.setTimeout(function (){
-                        location.reload();
-                    }, 2000);
+                    $('#categoryInputBlog').val('');
+                    // window.setTimeout(function (){
+                    //     location.reload();
+                    // }, 2000);
+                    show_list_categoy_blog();
                 }
             });
         });
     })
-
-    $(document).ready(function() {
+    show_list_categoy_blog();
+   function show_list_categoy_blog(){
+    // $(document).ready(function() {
         var _token = $('input[name="_token"]').val();
         $.ajax({
             url: '{{ url('/show-list-category-blog') }}',
@@ -243,7 +246,8 @@
             }
         });
 
-    });
+    // });
+   }
 
     $(document).ready(function() {
         $('#add_tag_blog').click(function(){
@@ -258,16 +262,19 @@
                 },
                 success: function(data){
                     notyf.success(data);
-                    window.setTimeout(function (){
-                        location.reload();
-                    }, 1000);
+                    // window.setTimeout(function (){
+                    //     location.reload();
+                    // }, 1000);
+                    $('#tagInput').val('')
+                    show_list_tag();
                 }
             });
         });
     });
+    show_list_tag();
 
-
-    $(document).ready(function() {
+    function show_list_tag(){
+        // $(document).ready(function() {
         var _token = $('input[name="_token"]').val();
         $.ajax({
             url: '{{ url('/show-list-tag-blog') }}',
@@ -280,7 +287,8 @@
             }
         });
 
-    });
+    // });
+    }
 
     $(document).ready(function() {
         $('#add-select-tag').click(function(){

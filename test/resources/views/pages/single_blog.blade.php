@@ -38,7 +38,7 @@
             </div>
           </div>
 
-        <form action="{{ url('/comment/blog') }}" method="POST">
+        <form action="{{ url('/comment/blog') }}" method="POST" class="needs-validation"  novalidate>
                 @csrf
             @if(Auth::check())
                 <div class="row p-4">
@@ -72,13 +72,20 @@
                                         </div>
                                     <div class="col-sm-6">
                                         <span class="my-rating"></span> <span class="live-rating-span"></span>
-                                                <input type="hidden" class="live-rating " id="star-rating" name="star" value="">
+                                                <input type="hidden" class="live-rating form-control" id="star-rating" name="star" value="0" min="1">
+                                                <div class="invalid-feedback">
+                                                    Please provide a valid feedback.
+                                                </div>
 
                                     </div>
                                     <div class="col-12">
                                         <textarea name="description" class="form-control mt-4 post-comment-description"
-                                            placeholder="Description*" rows="5"></textarea>
+                                            placeholder="Description*" rows="5" required></textarea class="form-control">
+                                            <div class="invalid-feedback">
+                                                Please provide a valid feedback.
+                                            </div>
                                     </div>
+
                                 </div>
                         <input type="submit" class="btn btn-primary mt-4" id="submitPost" value="Post">
                         </div>
@@ -193,6 +200,28 @@
     </div>
   </section> <!-- .section -->
 
+  <script>
+
+            (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+                })
+            })()
+    </script>
 @endsection
 @section('scripts')
 <script type="text/javascript">
