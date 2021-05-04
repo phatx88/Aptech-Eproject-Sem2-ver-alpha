@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Province;
 use App\Models\Order;
-use App\Models\ShippingStatus;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class FetchChartDataController extends Controller
@@ -62,14 +61,24 @@ class FetchChartDataController extends Controller
             $search = $request->input('search.value');
 
             $orders =  Order::where('id', 'LIKE', "%{$search}%")
-                ->orWhere('title', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_email', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_mobile', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_housenumber_street', 'LIKE', "%{$search}%")
+                ->orWhere('created_date', 'LIKE', "%{$search}%")
+                ->orWhere('delivered_date', 'LIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
 
             $totalFiltered = Order::where('id', 'LIKE', "%{$search}%")
-                ->orWhere('title', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_email', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_mobile', 'LIKE', "%{$search}%")
+                ->orWhere('shipping_housenumber_street', 'LIKE', "%{$search}%")
+                ->orWhere('created_date', 'LIKE', "%{$search}%")
+                ->orWhere('delivered_date', 'LIKE', "%{$search}%")
                 ->count();
         }
 
@@ -93,6 +102,93 @@ class FetchChartDataController extends Controller
                 $nestedData['amount'] = "$".($order->orderItem->sum('total_price'));
                 $nestedData['total'] = "$".($order->orderItem->sum('total_price') - ($order->coupon->number ?? 0) + $order->shipping_fee);
                 $nestedData['payment_method'] = $order->getPayment();
+                $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
+                $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        echo json_encode($json_data);
+    }
+
+    public function fetchUser(Request $request)
+    {
+        $columns = array(
+            0 => 'id',
+            1 => 'name',
+            2 => 'email',
+            3 => 'email_verified_at',
+            4 => 'created_at',
+            5 => 'updated_at',
+            6 => 'mobile',
+            7 => 'profile_pic',
+            8 => 'provider',
+            9 => 'is_active',
+        );
+
+        $totalData = User::where('is_staff' , 0)->count();
+
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')]; //arrange from order of collumn 0
+        $dir = $request->input('order.0.dir');
+
+        if (empty($request->input('search.value'))) {
+            $users = User::where('is_staff' , 0)
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+        } else {
+            $search = $request->input('search.value');
+
+            $users =  User::where('is_staff' , 0)
+                ->where('id', 'LIKE', "%{$search}%")
+                ->orWhere('name', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%")
+                ->orWhere('mobile', 'LIKE', "%{$search}%")
+                ->orWhere('provider', 'LIKE', "%{$search}%")
+                ->orWhere('created_at', 'LIKE', "%{$search}%")
+                ->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir)
+                ->get();
+
+            $totalFiltered = User::where('is_staff' , 0)
+                ->where('id', 'LIKE', "%{$search}%")
+                ->orWhere('name', 'LIKE', "%{$search}%")
+                ->orWhere('email', 'LIKE', "%{$search}%")
+                ->orWhere('mobile', 'LIKE', "%{$search}%")
+                ->orWhere('provider', 'LIKE', "%{$search}%")
+                ->orWhere('created_at', 'LIKE', "%{$search}%")
+                ->count();
+        }
+
+        $data = array();
+        if (!empty($users)) {
+            foreach ($users as $user) {
+                $show =  route('admin.user.show', $user->id);
+                $edit =  route('admin.user.edit', $user->id);
+
+                $nestedData['id'] = $user->id;
+                $nestedData['name'] = $user->name;
+                $nestedData['email'] = $user->email;
+                $nestedData['email_verified_at'] = date($user->email_verified_at ?? "");
+                $nestedData['created_at'] = date($user->created_at ?? "");
+                $nestedData['updated_at'] = date($user->updated_at ?? "");
+                $nestedData['mobile'] = $user->mobile ?? "";
+                $nestedData['profile_pic'] = $user->profile_pic ?? "";
+                $nestedData['provider'] = $user->provider;
+                $nestedData['is_active'] = $user->is_active == 1 ? "Active" : "inActive" ;
                 $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
                 $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
                 $data[] = $nestedData;

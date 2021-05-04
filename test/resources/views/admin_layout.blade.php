@@ -39,89 +39,70 @@
                 @endif
          </li>
          <li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('admin.dashboard.index') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Tổng quan</span></a>
+            <a class="nav-link" href="{{ route('admin.dashboard.index') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Dash Board</span></a>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'order' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Đơn hàng</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Orders</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.order.index')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{route('admin.order.create')}}">Thêm</a>
+               <a class="dropdown-item" href="{{route('admin.order.index')}}">List</a>
+               <a class="dropdown-item" href="{{route('admin.order.create')}}">Add</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'product' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fab fa-product-hunt"></i> <span>Sản phẩm</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fab fa-product-hunt"></i> <span>Products</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('admin.product.index') }}">Danh sách</a>
-               <a class="dropdown-item" href="{{ route('admin.product.create') }}">Thêm</a>
+               <a class="dropdown-item" href="{{ route('admin.product.index') }}">List</a>
+               <a class="dropdown-item" href="{{ route('admin.product.create') }}">Add</a>
+               <a class="dropdown-item" href="{{route('admin.category.index')}}"><i class="fas fa-folder"></i> Category</a>
+               <a class="dropdown-item" href="{{route('admin.brand.index')}}"><i class="fas fa-folder"></i>  Brand</a>
             </div>
          </li>
-         <li class="nav-item dropdown {{ Request::segment(2) == 'comment' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-comments"></i> <span>Comment</span></a>
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-gift"></i> <span>Coupons</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               {{-- <a class="dropdown-item" href="{{route('admin.comment.index')}}">Danh sách</a> --}}
+               <a class="dropdown-item" href="{{route('admin.coupon.index')}}">List</a>
+               <a class="dropdown-item" href="{{route('admin.coupon.create')}}">Add</a>
+               <a class="dropdown-item" href="{{URL::to('brand-edit')}}">Edit</a>
             </div>
          </li>
-
          <li class="nav-item dropdown {{ Request::segment(2) == 'image' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="far fa-image"></i> <span>Hình ảnh</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="far fa-image"></i> <span>Images</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('image-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('image-list')}}">List</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Khách hàng</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Users</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.user.index')}}">Danh sách</a>
-               {{-- <a class="dropdown-item" href="{{route('admin.user.add')}}">Thêm</a> --}}
-               <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a>
+               <a class="dropdown-item" href="{{route('admin.user.index')}}">List</a>
+               {{-- <a class="dropdown-item" href="{{route('admin.user.add')}}">Add</a> --}}
+               <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Edit</a>
             </div>
          </li>
-         <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'blog' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-blog"></i> <span>Blog</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('admin.blog.index') }}">Danh sách</a>
-               <a class="dropdown-item" href="{{ route('admin.blog.create') }}">Thêm</a>
-               {{-- <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Chỉnh sửa</a> --}}
+               <a class="dropdown-item" href="{{ route('admin.blog.index') }}">List</a>
+               <a class="dropdown-item" href="{{ route('admin.blog.create') }}">Add</a>
+               {{-- <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Edit</a> --}}
             </div>
          </li>
-         <li class="nav-item dropdown {{ Request::segment(2) == 'category' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Danh mục</span></a>
-            <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.category.index')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{route('admin.category.create')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('category-edit')}}">Chỉnh sửa</a>
-            </div>
-         </li>
-         <li class="nav-item dropdown {{ Request::segment(2) == 'brand' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Brand</span></a>
-            <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.brand.index')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{route('admin.brand.create')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('brand-edit')}}">Chỉnh sửa</a>
-            </div>
-         </li>
+         
+         
          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-folder"></i> <span>Coupon</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Shipping Fee</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.coupon.index')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{route('admin.coupon.create')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('brand-edit')}}">Chỉnh sửa</a>
-            </div>
-         </li>
-         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Phí giao hàng</span></a>
-            <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('transport-list')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{URL::to('transport-add')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Chỉnh sửa</a>
+               <a class="dropdown-item" href="{{URL::to('transport-list')}}">List</a>
+               <a class="dropdown-item" href="{{URL::to('transport-add')}}">Add</a>
+               <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Edit</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'staff' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Nhân viên</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.staff.index')}}">Danh sách</a>
-               <a class="dropdown-item" href="{{URL::to('staff-add')}}">Thêm</a>
-               <a class="dropdown-item" href="{{URL::to('staff-edit')}}">Chỉnh sửa</a>
+               <a class="dropdown-item" href="{{route('admin.staff.index')}}">List</a>
+               <a class="dropdown-item" href="{{URL::to('staff-add')}}">Add</a>
+               <a class="dropdown-item" href="{{URL::to('staff-edit')}}">Edit</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -138,16 +119,10 @@
 
             </div>
          </li>
-         <li class="nav-item">
-            <a class="nav-link" href="{{URL::to('order_status-list')}}"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng</span></a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" href="{{URL::to('order_status-edit')}}"><i class="fas fa-star-half-alt"></i> <span>Trạng thái đơn hàng (Sửa)</span></a>
-         </li>
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('newsletter-list')}}">Danh sách</a>
+               <a class="dropdown-item" href="{{URL::to('newsletter-list')}}">List</a>
                <a class="dropdown-item" href="{{URL::to('newsletter-send')}}">Gởi mail</a>
             </div>
          </li>
