@@ -343,3 +343,5 @@ Route::get('/blog',[User_BlogController::class, 'index']);
 Route::get('/blog/details/{slug}', [User_BlogController::class, 'blog_details']);
 
 Route::post('/comment/blog', [User_CommentBlogController::class, 'comment_blog']);
+
+Route::get('blog/category/{id}', [User_BlogController::class, 'blog_category']);

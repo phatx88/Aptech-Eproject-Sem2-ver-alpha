@@ -10,6 +10,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\PostTag;
 use App\Models\CategoryBlog;
+use App\Models\PostComment;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use File;
@@ -235,6 +236,8 @@ class Admin_BlogController extends Controller
     public function delete($id){
         PostTag::where('postId', $id)->delete();
         Post::where('id', $id)->delete();
+        PostComment::where('postId', $id)->delete();
+
         return redirect()->back()->with('message', 'Delete Successfully');
 
     }
