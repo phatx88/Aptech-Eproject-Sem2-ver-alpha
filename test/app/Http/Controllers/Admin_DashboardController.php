@@ -93,7 +93,7 @@ class Admin_DashboardController extends Controller
             ->setColors(['#FFC107', '#303F9F']);
 
         $salebar = (new LarapexChart)->horizontalBarChart()
-        ->setTitle('Sales Figures (in $).')
+        ->setTitle('Monthly Sales.')
         ->setSubtitle('This Year Sales vs Last Year Sales.')
         ->addData('This Year Sales', $thisYear)
         ->addData('Last Year Sales', $lastYear)

@@ -110,11 +110,18 @@ img.logo {
 	margin-bottom: 3rem;
 }
 
+@media only screen and (max-width: 768px) {
+	img.logo {
+		width: 60px;
+		height: auto;
+	}
+  }
+
 .logo-wrapper {
 	background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
 	opacity: 0.7;
 }
-  
+
 

@@ -5,9 +5,9 @@
                <!-- Breadcrumbs-->
                <ol class="breadcrumb">
                   <li class="breadcrumb-item">
-                     <a href="#">Quản lý</a>
+                     <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                   </li>
-                  <li class="breadcrumb-item active">Khách hàng</li>
+                  <li class="breadcrumb-item active">User</li>
                </ol>
                <!-- DataTables Example -->
                <div class="action-bar">
@@ -15,55 +15,117 @@
                   <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
                </div>
                <div class="card mb-3">
+                  <div class="card-header">
+                     <i class="fas fa-users"></i>
+                     User List
+                     {{-- <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm float-right">Export</a> --}}
+                 </div>
                   <div class="card-body">
                      <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-hover" id="datatableAjax" width="100%" cellspacing="0">
+                           @csrf
 							<thead>
-							   <tr>
-                           <th><input type="checkbox" onclick="checkAll(this)"></th>
-								<th>Tên </th>
-								<th>Email</th>
-								<th>Số điện thoại</th>
-                                <th>Đăng nhập từ</th>
-                                <th>Địa chỉ</th>
-                                {{-- <th>Tên người nhận</th>
-                                <th>Điện thoại người nhận</th> --}}
-                                <th></th>
-								<th></th>
-								<th></th>
-							   </tr>
+							  <tr>
+                          <th>Id</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Email Verified At</th>
+                          <th>Created At</th>
+                          <th>Updated At</th>
+                          <th>Mobile</th>
+                          <th>Register From</th>
+                          <th>Status</th>
+                          <th></th>
+                          <th>Actions</th>
+                       </tr>
 							</thead>
-							<tbody>
-                                @foreach ($users as $user)
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td >{{ $user->name }}</td>
-                                    <td >{{ $user->email }}</td>
-                                    <td >{{ $user->mobile??'' }}</td>
-                                    <td>{{ $user->provider }}</td>
-                                    <td>{{ $user->housenumber_street }}</td>
-                                    {{-- <td>{{ $user-> }}</td>
-                                    <td>0123456789</td> --}}
-                                    {{-- <td>{{ $user->is_active} }}</td> --}}
-                                    <td > <input type="button" onclick="Edit('1');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                                    <td ><input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                                </tr>
-                                @endforeach
-							</tbody>
-                        </table>
+							<tfoot>
+                        <tr>
+                           <th>Id</th>
+                           <th>Name</th>
+                           <th>Email</th>
+                           <th>Email Verified At</th>
+                           <th>Created At</th>
+                           <th>Updated At</th>
+                           <th>Mobile</th>
+                           <th>Register From</th>
+                           <th>Status</th>
+                           <th></th>
+                           <th>Actions</th>
+                        </tr>
+                     </tfoot>
+                     </table>
                     </div>
                   </div>
                 </div>
             </div>
             <!-- /.container-fluid -->
             <!-- Sticky Footer -->
-            <footer class="sticky-footer">
-               <div class="container my-auto">
-                  <div class="copyright text-center my-auto">
-                     <span>Copyright © Thầy Lộc 2017</span>
-                  </div>
-               </div>
-            </footer>
+            @include('admin.footer')
          </div>
          <!-- /.content-wrapper -->
+@endsection
+@section('scripts')
+<script>
+   $(document).ready(function() {
+                $('#datatableAjax').DataTable({
+                    "order": [[ 0, "desc" ]],
+                    "autoWidth": 'TRUE',
+                    "scrollX": 'TRUE',
+                    "lengthMenu": [
+                        [5, 10, 25, 50, 100, -1],
+                        [5, 10, 25, 50, 100, "All"]
+                    ],
+                  //   "columnDefs": [ {
+                  //   targets: 8,
+                  //   render: $.fn.dataTable.render.ellipsis( 30, true )
+                  //   } ],
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        "url": "{{ url('fetch-user') }}",
+                        "dataType": "json",
+                        "type": "POST",
+                        "data": {
+                            _token: "{{ csrf_token() }}"
+                        }
+                    },
+                    "columns": [{
+                            "data": "id"
+                        },
+                        {
+                            "data": "name"
+                        },
+                        {
+                            "data": "email"
+                        },
+                        {
+                            "data": "email_verified_at"
+                        },
+                        {
+                            "data": "created_at"
+                        },
+                        {
+                            "data": "updated_at"
+                        },
+                        {
+                            "data": "mobile"
+                        },
+                        {
+                            "data": "provider"
+                        },
+                        {
+                            "data": "is_active"
+                        },
+                        {
+                            "data": "option_show"
+                        },
+                        {
+                            "data": "option_edit"
+                        }
+                    ]
+
+                });
+            });
+</script>
 @endsection
