@@ -1,6 +1,7 @@
 @extends('main_layout')
 @section('content')
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');" <div
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');"> 
+        <div
         class="overlay">
         </div>
         <div class="container">
@@ -299,6 +300,7 @@
             var post_url = $("form#postComment").attr("action");
             var request_method = $("form#postComment").attr("method");
             var form_data = $("form#postComment").serialize();
+            console.log(form_data);
             // Clear Error Message 
             $(".print-error-msg").find("ul").html('');
             $(".print-error-msg").css('display', 'none');
@@ -361,7 +363,6 @@
                 }
             });
         });
-
 
         //update lại mấy cái star
         function updateAnsweredRating() {

@@ -161,17 +161,13 @@
               </div>
             </form>
           </div>
-          {{-- <div class="sidebar-box ftco-animate">
+          <div class="sidebar-box ftco-animate">
             <div class="categories">
               <h3>Services</h3>
               <li><a href="#">Relation Problem <span class="fa fa-chevron-right"></span></a></li>
-              <li><a href="#">Couples Counseling <span class="fa fa-chevron-right"></span></a></li>
-              <li><a href="#">Depression Treatment <span class="fa fa-chevron-right"></span></a></li>
-              <li><a href="#">Family Problem <span class="fa fa-chevron-right"></span></a></li>
-              <li><a href="#">Personal Problem <span class="fa fa-chevron-right"></span></a></li>
-              <li><a href="#">Business Problem <span class="fa fa-chevron-right"></span></a></li>
+              
             </div>
-          </div> --}}
+          </div>
 
           <div class="sidebar-box ftco-animate">
             <h3>Recent Blog</h3>

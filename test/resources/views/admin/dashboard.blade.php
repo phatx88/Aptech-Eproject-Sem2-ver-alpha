@@ -124,8 +124,8 @@
                         <div class="card-header">
                             <i class="fas fa-table"></i>
                             Product Lookup
-                            <a type="button" href="{{ route('clear-cache') }}"
-                                class="btn btn-success btn-sm float-right">Refresh</a>
+                            <a type="button" href="{{ route('admin.product.export') }}"
+                                class="btn btn-success btn-sm float-right">Export</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -135,9 +135,9 @@
                                             <th>Image</th>
                                             <th>ID</th>
                                             <th style="width:50px">Name </th>
-                                            <th>Price</th>
                                             <th>Inventory</th>
                                             <th>Sale Price</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -150,9 +150,10 @@
                                                         src="{{ asset('frontend/images/products/' . $product->featured_image) }}">
                                                 <td>{{ $product->id }}</td>
                                                 <td style="width:50px">{{ $product->name }}</td>
-                                                <td>${{ $product->price }}</td>
                                                 <td>{{ $product->inventory_qty }}</td>
                                                 <td>${{ $product->sale_price }}</td>
+                                                <td><a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
+                                                    class="btn btn-warning btn-sm">Edit</a></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -169,8 +170,8 @@
                       <div class="card-header">
                           <i class="fas fa-table"></i>
                           lastest Order
-                          <a type="button" href="{{ route('clear-cache') }}"
-                              class="btn btn-success btn-sm float-right">Refresh</a>
+                          <a type="button" href="{{ route('admin.order.export') }}"
+                              class="btn btn-success btn-sm float-right">Export</a>
                       </div>
                       <div class="card-body">
                           <div class="table-responsive">
@@ -182,6 +183,7 @@
                                           <th style="width:50px">Created Date </th>
                                           <th>Shipping Fee</th>
                                           <th>Total</th>
+                                          <th>Action</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -194,6 +196,10 @@
                                               <td>{{ $order->created_date }}</td>
                                               <td>{{ $order->shipping_fee }}</td>
                                               <td>${{ $order->total }}</td>
+                                              <td> 
+                                                  <a type="button" href="{{ route('admin.order.edit' , ['order' => $order->order_id]) }}" value=""
+                                                class="btn btn-warning btn-sm">Edit</a>
+                                            </td>
                                           </tr>
                                       @endforeach
                                   </tbody>
@@ -352,8 +358,11 @@
             //step 5 : Using DataTable() method and addRows to data
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Province');
-            data.addColumn('number', 'Ordered');
+            data.addColumn('number', 'Total Orders');
+            data.addColumn('number', 'Total Sales');
             data.addRows(arrdata);
+
+            // console.log(arrdata);
 
             var options = {
                 region: 'VN',
@@ -377,7 +386,8 @@
 
     <script type="text/javascript">
         google.charts.load("current", {
-            packages: ["corechart"]
+            'packages': ["corechart"],
+            'mapsApiKey': 'AIzaSyDFfRF1akEo2X06xy_Vzvn6czOyKcraJKs'
         });
         google.charts.setOnLoadCallback(drawChart);
 
@@ -402,7 +412,7 @@
                 arrdata.push(data);
             });
 
-            console.log(arrdata);
+           
 
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Product Id');
