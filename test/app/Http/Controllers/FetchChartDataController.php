@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class FetchChartDataController extends Controller
 {
     public function fetchOrderByProvince() {
-        $data = DB::table('province')->select('type' , 'order_count')->get();
+        $data = DB::table('total_order_by_regions')->select('type' , 'order_count', 'total_sales')->get();
         //fix vietnamese to json issues
         echo json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
     }

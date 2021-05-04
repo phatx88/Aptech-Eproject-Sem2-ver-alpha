@@ -22,6 +22,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+// use App\DataTables\OrderDataTable;
 
 class Admin_OrderController extends Controller
 {
@@ -35,19 +36,17 @@ class Admin_OrderController extends Controller
     {
 
         $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
-            return Order::with('orderItem', 'user' , 'ward:id,name,district_id')->orderby('id' , 'DESC')->get();
+            return Order::with('orderItem', 'user:name,email,ward_id,mobile' , 'ward:id,name,district_id')->orderby('id' , 'DESC')->get();
         });
 
         $orderTotals = DB::table('total_per_order')->get();
 
-        
-        
-
         return view('admin.order.list', [
             'orders'=>$orders,
-            'orderTotals' => $orderTotals,
-            
+            'orderTotals' => $orderTotals,      
             ]);
+        
+        // return $dataTable->render('admin.order.list');
     }
 
     /**
