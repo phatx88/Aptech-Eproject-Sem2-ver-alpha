@@ -139,6 +139,7 @@ Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwor
 // FETCH DATA FOR API
 Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
 Route::get('/fetch-product-sale-data', [FetchChartDataController::class,'fetchSalesPerProduct']);
+Route::post('/fetch-order', [FetchChartDataController::class,'fetchOrder']);
 
 //BACK END
 

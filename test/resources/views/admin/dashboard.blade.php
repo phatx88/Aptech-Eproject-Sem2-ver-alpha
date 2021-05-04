@@ -8,7 +8,7 @@
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
             @include('errors.message')
-            <div class="mb-3 my-3">
+            {{-- <div class="mb-3 my-3">
                 <a href="#" class="active btn btn-primary">Hôm nay</a>
                 <a href="#" class="btn btn-primary">Hôm qua</a>
                 <a href="#" class="btn btn-primary">Tuần này</a>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Icon Cards-->
             <div class="row">
@@ -103,7 +103,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fas fa-shipping-fast"></i>
+                            <i class="fas fa-cash-register"></i>
                             Products Inventory and Sales Report
                         </div>
                         <div class="card-body">
@@ -122,7 +122,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fas fa-table"></i>
+                            <i class="fas fa-wine-bottle"></i>
                             Product Lookup
                             <a type="button" href="{{ route('admin.product.export') }}"
                                 class="btn btn-success btn-sm float-right">Export</a>
@@ -132,8 +132,8 @@
                                 <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr class="text-center">
+                                            <th>Id</th>
                                             <th>Image</th>
-                                            <th>ID</th>
                                             <th style="width:50px">Name </th>
                                             <th>Inventory</th>
                                             <th>Sale Price</th>
@@ -146,9 +146,9 @@
                                         @endphp
                                         @foreach ($products as $product)
                                             <tr class="text-center">
-                                                <td><img class="m-auto d-block"
-                                                        src="{{ asset('frontend/images/products/' . $product->featured_image) }}">
                                                 <td>{{ $product->id }}</td>
+                                                <td><img class="m-auto d-block"
+                                                    src="{{ asset('frontend/images/products/' . $product->featured_image) }}"></td>
                                                 <td style="width:50px">{{ $product->name }}</td>
                                                 <td>{{ $product->inventory_qty }}</td>
                                                 <td>${{ $product->sale_price }}</td>
@@ -168,8 +168,8 @@
                 <div class="col-md-6">
                   <div class="card">
                       <div class="card-header">
-                          <i class="fas fa-table"></i>
-                          lastest Order
+                          <i class="fas fa-file-invoice-dollar"></i>
+                          Lastest Order
                           <a type="button" href="{{ route('admin.order.export') }}"
                               class="btn btn-success btn-sm float-right">Export</a>
                       </div>
@@ -179,7 +179,7 @@
                                   <thead>
                                       <tr class="text-center">
                                           {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
-                                          <th>ORDER ID</th>
+                                          <th>Id</th>
                                           <th style="width:50px">Created Date </th>
                                           <th>Shipping Fee</th>
                                           <th>Total</th>
@@ -228,7 +228,7 @@
 
             {{-- Apex Chart - Order --}}
             <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-file-invoice-dollar"></i>
@@ -239,7 +239,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-money-bill"></i>
@@ -416,7 +416,7 @@
 
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Product Id');
-            data.addColumn('number', 'Unit Price');
+            data.addColumn('number', 'Item Price');
             data.addColumn('number', 'Inventory');
             data.addColumn('number', 'Items Sold');
             data.addColumn('number', 'Total Sales');
@@ -425,7 +425,7 @@
             var options = {
                 title: 'Products Inventory & Sales Report',
                 hAxis: {
-                    title: 'Unit Price',
+                    title: 'Price Per Product',
                     format: 'currency',
                     minValue: 1000,
                 },
@@ -451,6 +451,11 @@
 
             chart.draw(data, options);
         }
+
+        $(window).resize(function(){
+            drawRegionsMap();
+            drawChart();
+        });
 
     </script>
 

@@ -55,6 +55,14 @@ class Order extends Model
         return $order_status[$this->order_status_id];
     }
 
+    public function getPayment() {
+        $paymentMethod = [
+            0 => "COD",
+            1 => "BANK", 
+        ];
+        return $paymentMethod[$this->payment_method];
+    }
+
 
 
 }
