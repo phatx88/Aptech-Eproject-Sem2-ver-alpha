@@ -98,4 +98,9 @@ class User extends Authenticatable implements MustVerifyEmail
             'role' => $role,
         ]);
     }
+
+    public function postcomment()
+    {
+        return $this->hasMany(PostComment::class, 'user_id', 'id');
+    }
 }

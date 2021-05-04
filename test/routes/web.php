@@ -21,6 +21,7 @@ use App\Http\Controllers\User_ProductsController;
 use App\Http\Controllers\User_CartController;
 use App\Http\Controllers\User_CheckOutController;
 use App\Http\Controllers\User_BlogController;
+use App\Http\Controllers\User_CommentBlogController;
 use Illuminate\Routing\RouteUri;
 // OTHERS
 use App\Http\Controllers\PasswordSetupController;
@@ -340,3 +341,5 @@ Route::post('/add-tag', [Admin_CategoryBlogController::class, 'add_tag']);
 Route::get('/blog',[User_BlogController::class, 'index']);
 
 Route::get('/blog/details/{slug}', [User_BlogController::class, 'blog_details']);
+
+Route::post('/comment/blog', [User_CommentBlogController::class, 'comment_blog']);

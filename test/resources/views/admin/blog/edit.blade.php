@@ -78,7 +78,7 @@
         <div class="form-group row">
             <label class="col-md-12 control-label" for="time">Featured Image</label>
             <div class="col-md-9 col-lg-6">
-                <input type="file" name="image" id="image" value="" class="form-control" required >
+                <input type="file" name="image" id="image" value="" class="form-control" required>
 
                 <div class="invalid-feedback">
                     Please choose featured image.
