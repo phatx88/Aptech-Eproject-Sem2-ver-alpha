@@ -22,6 +22,7 @@ use App\Http\Controllers\User_CartController;
 use App\Http\Controllers\User_CheckOutController;
 use App\Http\Controllers\User_BlogController;
 use App\Http\Controllers\User_CommentBlogController;
+use App\Http\Controllers\User_WishListController;
 use Illuminate\Routing\RouteUri;
 // OTHERS
 use App\Http\Controllers\PasswordSetupController;
@@ -347,3 +348,11 @@ Route::get('/blog/details/{slug}', [User_BlogController::class, 'blog_details'])
 Route::post('/comment/blog', [User_CommentBlogController::class, 'comment_blog']);
 
 Route::get('blog/category/{id}', [User_BlogController::class, 'blog_category']);
+
+
+//WISH LIST
+Route::post('/add-to-wishlist', [User_WishListController::class, 'add_to_wishlist']);
+
+Route::post('/roll-button-wishlist', [User_WishListController::class, 'roll_button_wishlist']);
+
+Route::post('/delete-button-wishlist', [User_WishListController::class, 'delete_button_wishlist']);

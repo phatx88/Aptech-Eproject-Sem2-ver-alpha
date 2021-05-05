@@ -103,4 +103,6 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(PostComment::class, 'user_id', 'id');
     }
+
+
 }

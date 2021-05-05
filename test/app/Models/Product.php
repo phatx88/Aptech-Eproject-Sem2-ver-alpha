@@ -31,4 +31,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class , 'order_item' , 'product_id' , 'order_id');
     }
+
+    public function wishlist(){
+        return $this->belongsTo(WishList::class, 'wishlist_item', 'wish_list_id', 'product_id');
+    }
 }

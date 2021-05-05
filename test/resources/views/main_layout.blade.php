@@ -97,7 +97,7 @@
             {{-- Shopping cart drop down --}}
 
 
-            <div class="order-lg-last btn-group" id="roll-button">
+            <div class="order-lg-last btn-group">
 
                 <form action="">
                     @csrf
@@ -108,75 +108,13 @@
             </div>
 
             {{-- Wishlist drop down --}}
-            <div class="order-lg-last btn-group">
-                <a href="#cart-drop" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="flaticon-heart"></span>
-                    <div class="d-flex justify-content-center align-items-center"><small>4</small></div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-3.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Bacardi 151</h4>
-                            <p class="mb-0"><a href="#" class="price">$25.99</a><span class="quantity ml-3">In Stock:
-                                    40</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
+            <div class="order-lg-last btn-group" id="">
+                <form action="">
+                    @csrf
+                    <div id="roll-button-wishlist">
+
                     </div>
-                    <img src="" alt="">
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-4.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Jim Beam Kentucky Straight</h4>
-                            <p class="mb-0"><a href="#" class="price">$30.89</a><span class="quantity ml-3">In Stock:
-                                    40</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-5.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Citadelle</h4>
-                            <p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">In Stock:
-                                    40</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dropdown-item d-flex align-items-start" href="#">
-                        <div class="img" style="background-image: url({{ asset('frontend/images/prod-6.jpg') }});">
-                        </div>
-                        <div class="text pl-3">
-                            <h4>Citadelle</h4>
-                            <p class="mb-0"><a href="#" class="price">$22.50</a><span class="quantity ml-3">In Stock:
-                                    40</span></p>
-                        </div>
-                        <div class="pt-3">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close"></i></span>
-                            </button>
-                        </div>
-                    </div>
-                    <a class="dropdown-item text-center btn-link d-block w-100" href="{{ URL::to('cart') }}">
-                        View All
-                        <span class="ion-ios-arrow-round-forward"></span>
-                    </a>
-                </div>
+                </form>
             </div>
             {{-- Wishlist drop down --}}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
@@ -523,6 +461,7 @@
     @yield('scripts')
     @include('scripts.notyf')
     @include('scripts.cart')
+    @include('scripts.wishlist')
     @include('scripts.loginRegister')
 
 

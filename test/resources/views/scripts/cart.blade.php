@@ -1,9 +1,9 @@
 <script type="text/javascript">
 
-        $(document).ready(function() {
+        // $(document).ready(function() {
             fetch_btn();
             function fetch_btn(){
-                    var _token = $('input[name="_token"]').val();
+                var _token = $('input[name="_token"]').val();
                 $.ajax({
                     url: '{{ url('roll-button') }}',
                     method: "POST",
@@ -15,7 +15,7 @@
                     }
                 });
             }
-        });
+        // });
 
         $(document).ready(function() {
             $('.check-shipping-fee').click(function() {
@@ -226,7 +226,8 @@
                         _token: _token
                     },
                     success: function(data) {
-                        location.reload();
+                        // location.reload();
+                        fetch_btn();
 
                     }
                 });
@@ -339,4 +340,8 @@
                 });
             });
         });
+
+
+
+
 </script>
