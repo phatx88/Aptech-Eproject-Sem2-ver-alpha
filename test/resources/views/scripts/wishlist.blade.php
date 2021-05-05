@@ -15,7 +15,7 @@
                     },
                     success: function(data) {
                         fetch_wishlist();
-                        notyf.success('Wishlist Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
+                        notyf.success('Updated <a href="{{ url('cart') }}" class="text-dark">Wishlist</a>');
                     }
                 });
         });

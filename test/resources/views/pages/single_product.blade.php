@@ -1,6 +1,6 @@
 @extends('main_layout')
 @section('content')
-    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');"> 
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('frontend/images/bg_2.jpg') }}');">
         <div
         class="overlay">
         </div>
@@ -228,9 +228,22 @@
                                                             class="d-flex align-items-center justify-content-center add-to-cart-related"><span
                                                                 class="flaticon-shopping-bag"></span></a>
                                                     @endif
-                                                    <a href="#"
-                                                        class="d-flex align-items-center justify-content-center"><span
-                                                            class="flaticon-heart"></span></a>
+                                                    @if(Auth::check())
+                                                    <input type="hidden" class="user_id_wishlist_{{ $re_product->id }}"
+                                                    value="{{ Auth::user()->id }}">
+                                                        <a type="button" style="cursor: pointer;"
+                                                        data-id_product="{{ $re_product->id }}"
+                                                        class="d-flex align-items-center justify-content-center add-to-wishlist"
+                                                        ><span
+                                                            class="flaticon-heart
+                                                            "></span></a>
+
+                                                    @else
+                                                    <a type="button"
+                                                        class="d-flex align-items-center justify-content-center" style="cursor: pointer;" onclick="notyf.error('You must login before adding to wishlist');"><span
+                                                            class="flaticon-heart
+                                                            "></span></a>
+                                                    @endif
 
                                                     <a href="{{ url('home/single-product/' . $re_product->id) }}"
                                                         class="d-flex align-items-center justify-content-center"><span
@@ -301,7 +314,7 @@
             var request_method = $("form#postComment").attr("method");
             var form_data = $("form#postComment").serialize();
             console.log(form_data);
-            // Clear Error Message 
+            // Clear Error Message
             $(".print-error-msg").find("ul").html('');
             $(".print-error-msg").css('display', 'none');
 
@@ -321,19 +334,19 @@
                     reviewTotal = reviewTotal + 1 + " Reviews";
 
                     // clear Comment session
-                    $("#comment-total").empty(); 
+                    $("#comment-total").empty();
                     $("#comment-review").empty();
                     $("#comment-review").html('loading...');
 
                     //Delay updating Comment session for 1s
                     setTimeout(function() {
-                        // update toltal count 
+                        // update toltal count
                         $("#comment-total").html(reviewTotal);
 
                         // clear Comment session with loading...
                         $("#comment-review").empty();
 
-                        //append foreach                
+                        //append foreach
                         $(comments).each(function(key, value) {
                             var output =
                                 `<div class="desc">
@@ -350,10 +363,10 @@
                         });
                         updateAnsweredRating();
 
-                         // Notify success 
+                         // Notify success
                         notyf.success('Comment Posted');
                     }, 2000);
-                   
+
                 },
                 error: function(data) {
                     // Chuyển từ json về array có key và value
