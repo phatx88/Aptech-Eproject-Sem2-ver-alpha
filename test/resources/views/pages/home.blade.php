@@ -171,8 +171,22 @@
                                             <a type="button" style="cursor: pointer;" data-id_product="{{ $product->id }}" class="d-flex align-items-center justify-content-center add-to-cart"><span
                                                 class="flaticon-shopping-bag"></span></a>
                                             @endif
-                                            <a href="#" class="d-flex align-items-center justify-content-center"><span
-                                                    class="flaticon-heart"></span></a>
+                                            @if(Auth::check())
+                                                    <input type="hidden" class="user_id_wishlist_{{ $product->id }}"
+                                                    value="{{ Auth::user()->id }}">
+                                                        <a type="button" style="cursor: pointer;"
+                                                        data-id_product="{{ $product->id }}"
+                                                        class="d-flex align-items-center justify-content-center add-to-wishlist"
+                                                        ><span
+                                                            class="flaticon-heart
+                                                            "></span></a>
+
+                                                    @else
+                                                    <a type="button"
+                                                        class="d-flex align-items-center justify-content-center" style="cursor: pointer;" onclick="notyf.error('You must login before adding to wishlist');"><span
+                                                            class="flaticon-heart
+                                                            "></span></a>
+                                                    @endif
 
                                             <a href="{{ url('home/single-product/'.$product->id) }}" class="d-flex align-items-center justify-content-center"><span
                                                     class="flaticon-visibility"></span></a>
