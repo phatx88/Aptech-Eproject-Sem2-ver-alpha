@@ -321,58 +321,71 @@
                                 <thead class="thead-primary">
                                     <tr>
                                         <th scope="col" class="p-1">Item Feature</th>
-                                        <th scope="col" class="p-1">Description</th>
+                                        <th scope="col" class="p-1">Name</th>
                                         <th scope="col" class="p-1">Price</th>
                                         <th scope="col" class="p-1">Availiability</th>
                                         <th scope="col" class="p-1">Action</th>
                                     </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody id="wishlist_user_account">
                                     {{-- FOREACH HERE --}}
-                                    <tr>
+                                    @if(isset($wish_list_item))
+                                    @foreach($wish_list_item as $key => $product)
+                                    <form action="">
+                                        @csrf
+                                        <input type="hidden" class="product_name_cart_{{ $product->product_id }}"
+                                        value="{{ $product->product->name }}">
+                                        <input type="hidden" class="product_price_cart_{{ $product->product_id }}"
+                                        value="{{ $product->product->sale_price }}">
+                                        <input type="hidden" class="product_quantity_cart_{{ $product->product_id }}" value="1">
+                                        <input type="hidden" class="product_image_cart_{{ $product->product_id }}"
+                                        value="{{ $product->product->featured_image }}">
+
+                                    <tr role="alert" class="alert">
                                         <th scope="row" class="p-1">
-                                            <img src="{{ asset('frontend/images/prod-1.jpg') }}" alt=""
+                                            <img src="{{ asset('frontend/images/products/'.$product->product->featured_image) }}" alt=""
                                                 class="feature-img">
                                         </th>
-                                        <td class="p-0">Lorem, ipsum dolor sit amet consectetur
-                                            adipisicing elit. Expedita, fugit?</td>
-                                        <td class="p-0 text-center">$60</td>
-                                        <td class="p-0 text-center">In Stock : 40</td>
+                                        <td class="p-0">{{ $product->product->name }}</td>
+                                        <td class="p-0 text-center">$ {{ $product->product->sale_price }}</td>
+                                        <td class="p-0 text-center">In Stock : {{ $product->product->inventory_qty }}</td>
+
                                         <td class="p-0 text-center">
-                                            <button type="button" class="bg-warning" data-dismiss="alert" aria-label="">
+                                            @if ($product->product->inventory_qty == 0)
+                                            <button type="button" class="bg-warning"  aria-label=""
+                                            style="cursor: pointer;"
+                                            data-id_product="{{ $product->product_id }}"
+                                            onclick="notyf.error('Currently Out of Stock');">
                                                 <span aria-hidden="true"><i class="fa fa-shopping-cart"></i></span>
                                             </button>
-                                            <button type="button" class="bg-danger" data-dismiss="alert" aria-label="">
+                                            @else
+                                            <button type="button" class="bg-warning add-to-cart"  aria-label=""
+                                            style="cursor: pointer;"
+                                            data-id_product="{{ $product->product_id }}"
+                                            >
+                                                <span aria-hidden="true"><i class="fa fa-shopping-cart"></i></span>
+                                            </button>
+                                            @endif
+                                            <input type="hidden" class="wish_list_id_{{ $product->product_id }}" value="{{ $product->wish_list_id }}">
+                                            <button type="button" style="cursor: pointer;" class="bg-danger delete-wishlist-button" data-dismiss="alert" aria-label="Close" data-id_delete="{{ $product->product_id }}">
                                                 <span aria-hidden="true"><i class="fa fa-close"></i></span>
                                             </button>
 
                                         </td>
                                     </tr>
-                                    {{-- FOREACH HERE --}}
+                                    </form>
+                                    @endforeach
+                                    @else
                                     <tr>
-                                        <th scope="row" class="p-1">
-                                            <img src="{{ asset('frontend/images/prod-1.jpg') }}" alt=""
-                                                class="feature-img">
-                                        </th>
-                                        <td class="p-0">Lorem, ipsum dolor sit amet consectetur
-                                            adipisicing elit. Expedita, fugit?</td>
-                                        <td class="p-0 text-center">$60</td>
-                                        <td class="p-0 text-center">In Stock : 40</td>
-                                        <td class="p-0 text-center">
-                                            <button type="button" class="bg-warning" data-dismiss="alert" aria-label="">
-                                                <span aria-hidden="true"><i class="fa fa-shopping-cart"></i></span>
-                                            </button>
-                                            <button type="button" class="bg-danger" data-dismiss="alert" aria-label="">
-                                                <span aria-hidden="true"><i class="fa fa-close"></i></span>
-                                            </button>
-
-                                        </td>
+                                        <td colspan="5" style="text-align: center; font-size: 20px;">No Data</td>
                                     </tr>
+                                    @endif
+
                                     {{-- END FOREACH --}}
                                 </tbody>
                             </table>
-                            <a href="http://localhost/LaravelTest/test/public/product"
+                            <a href="{{ route('home.products.index') }}"
                                 class="btn btn-primary py-3 px-4 pull-right">Continue Shopping</a>
                         </div>
 

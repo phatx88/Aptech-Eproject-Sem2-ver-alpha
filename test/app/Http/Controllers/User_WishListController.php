@@ -117,11 +117,11 @@ class User_WishListController extends Controller
                         </div>
                         <div class="text pl-3">
                             <h4>'.$wish_list_item->product->name.'1</h4>
-                            <p class="mb-0"><a href="#" class="price">$'.$wish_list_item->product->price.'</a></p>
+                            <p class="mb-0"><a href="#" class="price">$'.$wish_list_item->product->sale_price.'</a></p>
                         </div>
                         <div class="pt-3">
-                        <input type="hidden" class="wish_list_id_'.$wish_list_item->wish_list_id.'" value="'.$wish_list_item->product_id.'">
-                            <button type="button" class="close delete-wishlist-button" data-dismiss="alert" aria-label="Close" data-id_delete="'.$wish_list_item->wish_list_id.'">
+                        <input type="hidden" class="wish_list_id_'.$wish_list_item->product_id.'" value="'.$wish_list_item->wish_list_id.'">
+                            <button type="button" class="close delete-wishlist-button" data-dismiss="alert" aria-label="Close" data-id_delete="'.$wish_list_item->product_id.'">
                                 <span aria-hidden="true" style="color: #dc3545"><i class="fa fa-close" ></i></span>
                             </button>
                         </div>

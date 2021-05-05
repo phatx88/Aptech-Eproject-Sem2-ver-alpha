@@ -4,6 +4,7 @@
             var product_id = $(this).data('id_product');
             var user_id = $('.user_id_wishlist_'+product_id).val();
             var _token = $('input[name="_token"]').val();
+
             $.ajax({
                     url: '{{ url('/add-to-wishlist') }}',
                     method: "POST",
@@ -15,7 +16,8 @@
                     },
                     success: function(data) {
                         fetch_wishlist();
-                        notyf.success('Updated <a href="{{ url('cart') }}" class="text-dark">Wishlist</a>');
+                        notyf.success('Updated <a href="{{ route('account.index') }}" class="text-dark"> View Wishlist</a>');
+
                     }
                 });
         });
@@ -38,11 +40,11 @@
 
         $(document).ready(function() {
             $('#roll-button-wishlist').on('click','.delete-wishlist-button', function() {
-                var wishlist_id = $(this).data('id_delete');
-                var product_id = $('.wish_list_id_'+ wishlist_id).val();
+                var product_id = $(this).data('id_delete');
+                var wishlist_id = $('.wish_list_id_'+ product_id).val();
                 var _token = $('input[name="_token"]').val();
-                // alert(wishlist_id);
                 // alert(product_id);
+                // alert(wish_list_id);
                 $.ajax({
                     url: '{{ url('/delete-button-wishlist') }}',
                     method: "POST",
@@ -60,5 +62,29 @@
             });
         });
 
+
+        $(document).ready(function() {
+            $('#wishlist_user_account').on('click','.delete-wishlist-button', function() {
+                var product_id = $(this).data('id_delete');
+                var wishlist_id = $('.wish_list_id_'+ product_id).val();
+                var _token = $('input[name="_token"]').val();
+                // alert(wishlist_id);
+                // alert(product_id);
+                $.ajax({
+                    url: '{{ url('/delete-button-wishlist') }}',
+                    method: "POST",
+                    data: {
+                        wishlist_id: wishlist_id,
+                        product_id:product_id,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        // location.reload();
+                        fetch_wishlist();
+                        notyf.success('<a>Delete Success</a>');
+                    }
+                });
+            });
+        });
 
 </script>

@@ -11,7 +11,8 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Province;
 use App\Models\Coupon;
-
+use App\Models\WishList;
+use App\Models\WishListItem;
 class User_AccountController extends Controller
 {
     /**
@@ -61,10 +62,21 @@ class User_AccountController extends Controller
             }
         }
 
-
+        $wish_list = WishList::where('user_id', $user->id)->first();
+        if($wish_list != null){
+            $wish_list_item = WishListItem::where('wish_list_id', $wish_list->id)->get();
+            if($wish_list_item->count() != 0){
+                return view('pages.user', ['user' => $user])->with(compact('province'))
+                ->with('order_user', $order_user)
+                ->with('order_list', $order_list)
+                ->with('wish_list_item', $wish_list_item);
+            }
+        }
         return view('pages.user', ['user' => $user])->with(compact('province'))
             ->with('order_user', $order_user)
             ->with('order_list', $order_list);
+
+
     }
 
     public function upload(Request $request)
