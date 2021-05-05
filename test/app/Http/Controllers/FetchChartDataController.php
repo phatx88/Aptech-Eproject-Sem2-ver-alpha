@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class FetchChartDataController extends Controller
@@ -13,6 +14,13 @@ class FetchChartDataController extends Controller
     public function fetchOrderByProvince()
     {
         $data = DB::table('total_order_by_regions')->select('type', 'order_count', 'total_sales')->get();
+        //fix vietnamese to json issues
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    public function fetchDailyOrder()
+    {
+        $data = Order::where('created_date', '>=' , Carbon::now()->subYear(2))->selectRaw( 'created_date , count(id)')->groupByRaw('date(created_date)')->get();
         //fix vietnamese to json issues
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
@@ -89,9 +97,9 @@ class FetchChartDataController extends Controller
                 $edit =  route('admin.order.edit', $order->id);
 
                 $nestedData['id'] = $order->id;
-                $nestedData['created_date'] = $order->created_date;
+                $nestedData['created_date'] = date($order->created_date);
                 $nestedData['order_status_id'] = $order->getShippingStatus();
-                $nestedData['delivered_date'] = $order->delivered_date ?? "";
+                $nestedData['delivered_date'] = date($order->delivered_date ?? "");
                 $nestedData['customer_name'] = $order->user->name ?? "guest";
                 $nestedData['shipping_fullname'] = $order->shipping_fullname;
                 $nestedData['shipping_email'] = $order->shipping_email;

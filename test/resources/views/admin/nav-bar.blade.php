@@ -14,11 +14,17 @@
             @endif
             @endguest
             @auth
-            @if (Auth::user()->hasVerifiedEmail())
-                <a href="{{ route('admin.dashboard.index') }}" class="text-white mr-2">
-                    {{ Auth::user()->name }}
-                </a>
-
+            @if (Auth::check())
+            <form action="{{ route('account.upload') }}" method="POST" id="avatar_upload" enctype="multipart/form-data" class="form-inline d-inline mr-1">
+                @csrf
+                    <label for="profile_pic" style="cursor: pointer; color: #fff;" class="m-0 p-0 d-inline" title="Upload Profile Image"><i class="fas fa-camera-retro" aria-hidden="true">
+                        </i> </label>
+                    <input type="file" class="center-block file-upload d-none" id="profile_pic" name="image"
+                        onchange="this.form.submit()">
+            </form>
+            <a href="{{ route('admin.dashboard.index') }}" class="text-white mr-2">
+                {{ Auth::user()->name }}
+            </a> 
             @else
                 <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
             @endif
