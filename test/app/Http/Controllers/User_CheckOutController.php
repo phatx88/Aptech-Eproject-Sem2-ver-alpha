@@ -81,7 +81,7 @@ class User_CheckOutController extends Controller
           }
           $province_id = $order->ward->district->province->id;
           $order_id =  $order->id;
-          DB::table('province')->where('id' , $province_id)->increment('Count');
+          DB::table('province')->where('id' , $province_id)->increment('order_count');
          foreach(Session('cart') as $key => $cart){
             $order_details = new OrderItem();
             $order_details->product_id = $cart['product_id'];

@@ -29,7 +29,7 @@
                           <th>Id</th>
                           <th>Name</th>
                           <th>Email</th>
-                          <th>Email Verified At</th>
+                          <th>Verified At</th>
                           <th>Created At</th>
                           <th>Updated At</th>
                           <th>Mobile</th>
@@ -44,7 +44,7 @@
                            <th>Id</th>
                            <th>Name</th>
                            <th>Email</th>
-                           <th>Email Verified At</th>
+                           <th>Verified At</th>
                            <th>Created At</th>
                            <th>Updated At</th>
                            <th>Mobile</th>
@@ -76,10 +76,10 @@
                         [5, 10, 25, 50, 100, -1],
                         [5, 10, 25, 50, 100, "All"]
                     ],
-                  //   "columnDefs": [ {
-                  //   targets: 8,
-                  //   render: $.fn.dataTable.render.ellipsis( 30, true )
-                  //   } ],
+                    "columnDefs": [ {
+                    targets: 2,
+                    render: $.fn.dataTable.render.ellipsis( 15, true )
+                    } ],
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
