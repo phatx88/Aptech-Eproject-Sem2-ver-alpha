@@ -129,7 +129,7 @@ class User_WishListController extends Controller
                     ';
                 }
                 $output .= '
-                        <a class="dropdown-item text-center btn-link d-block w-100" href="">
+                        <a class="dropdown-item text-center btn-link d-block w-100" href="'. route('account.index').'">
                             View All
                             <span class="ion-ios-arrow-round-forward"></span>
                         </a>
@@ -143,7 +143,7 @@ class User_WishListController extends Controller
                 <div class="d-flex justify-content-center align-items-center"><small>0</small></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item text-center btn-link d-block w-100" href="">
+                <a class="dropdown-item text-center btn-link d-block w-100" href="'. route('account.index').'">
                 View All
                 <span class="ion-ios-arrow-round-forward"></span>
             </a>
