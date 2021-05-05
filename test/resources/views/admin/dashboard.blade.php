@@ -37,7 +37,7 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-list"></i>
                             </div>
-                            <div class="mr-5">{{ $orders->count() }} Orders</div>
+                            <div class="mr-5">{{ number_format($totalOrder) }} Orders</div>
                         </div>
                         <a class="card-footer text-white clearfix small z-1" href="{{ route('admin.order.index') }}">
                             <span class="float-left">Chi tiết</span>
@@ -53,7 +53,7 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-shopping-cart"></i>
                             </div>
-                            <div class="mr-5">${{ number_format($orders->sum('total'), 0) }} in Sales</div>
+                            <div class="mr-5">${{ number_format($totalSales) }} in Sales</div>
                         </div>
                         <a class="card-footer text-white clearfix small z-1" href="#">
                             <span class="float-left">Chi tiết</span>

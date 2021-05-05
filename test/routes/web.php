@@ -137,9 +137,12 @@ Route::get('/checkout', [User_CheckOutController::class , 'index'])->name('check
 //SETUP PASSWORD FOR STAFF
 Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwordset']);
 
-// FETCH DATA FOR API
+// FETCH DATA FOR CHART
 Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
+Route::get('/fetch-daily-order-data', [FetchChartDataController::class,'fetchDailyOrder']);
 Route::get('/fetch-product-sale-data', [FetchChartDataController::class,'fetchSalesPerProduct']);
+
+// FETCH DATA FOR DATATABLE
 Route::post('/fetch-order', [FetchChartDataController::class,'fetchOrder']);
 Route::post('/fetch-user', [FetchChartDataController::class,'fetchUser']);
 

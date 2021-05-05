@@ -16,7 +16,22 @@
                 <li class="breadcrumb-item active">List</li>
             </ol>
             @include('errors.message')
+            {{-- GOOGLE CALENDAR CHART --}}
 
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            Daily Order Report
+                        </div>
+                        <div class="card-body">
+                            <div id="calendar_basic" style="width: 100%; height: 500px;"
+                                data-url="{{ url('fetch-daily-order-data') }}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- DataTables Example -->
 
@@ -140,17 +155,19 @@
             $(document).ready(function() {
                 // var _token = $('input[name="_token"]').val();
                 $('#datatableAjax').DataTable({
-                    "order": [[ 0, "desc" ]],
+                    "order": [
+                        [0, "desc"]
+                    ],
                     "autoWidth": 'TRUE',
                     "scrollX": 'TRUE',
                     "lengthMenu": [
                         [5, 10, 25, 50, 100, -1],
                         [5, 10, 25, 50, 100, "All"]
                     ],
-                    "columnDefs": [ {
-                    targets: 8,
-                    render: $.fn.dataTable.render.ellipsis( 30, true )
-                    } ],
+                    "columnDefs": [{
+                        targets: 8,
+                        render: $.fn.dataTable.render.ellipsis(30, true)
+                    }],
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
@@ -213,6 +230,98 @@
 
                 });
             });
+
+        </script>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            google.charts.load("current", {
+                packages: ["calendar"],
+                mapsApiKey: 'AIzaSyDFfRF1akEo2X06xy_Vzvn6czOyKcraJKs'
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var url = $('#calendar_basic').data('url');
+                //step 1 : Get data from laravel controller via route
+                var jsonData = $.ajax({
+                    url: url,
+                    dataType: "json",
+                    async: false
+                }).responseText;
+                //step 2 : parse JSON to js Array of Obj
+                var arrObj = JSON.parse(jsonData);
+                var arrdata = [];
+                //step 3 : loop through each obj convert into array of value : value
+                $.each(arrObj, function(k, obj) {
+                    var data = Object.keys(obj).map(function(key) {
+                        return obj[key];
+                    });
+                    //step 4 : insert each array(v,v) to array of data
+                    arrdata.push(data);
+                });
+
+                // console.log(arrdata);
+                // Step 5 : change first element of array to date type 
+                $.each(arrdata, function(k, v) {
+                    v[0] = new Date(v[0]);
+                });
+
+                // console.log(arrdata);
+
+                var dataTable = new google.visualization.DataTable();
+                dataTable.addColumn({
+                    type: 'date',
+                    id: 'Date'
+                });
+                dataTable.addColumn({
+                    type: 'number',
+                    id: 'Order'
+                });
+                dataTable.addRows(arrdata);
+
+                var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
+
+                var options = {
+                    title: "Daily Aggregate Orders",
+                    height: 500,
+                    colorAxis: {
+                        minValue: 0,
+                        colors: ['#fff', '#ff0000']
+                    },
+                    noDataPattern: {
+                        backgroundColor: '#fff',
+                        color: '#e9ecef'
+                    },
+                    calendar: {
+                        dayOfWeekRightSpace: 10,
+                        dayOfWeekLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 12,
+                            color: '#1a8763',
+                            bold: true,
+                            italic: true,
+                        },
+                        underMonthSpace: 16,
+                        monthLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 12,
+                            color: '#981b48',
+                            bold: true,
+                            italic: true
+                        },
+                        underYearSpace: 10, // Bottom padding for the year labels.
+                        yearLabel: {
+                            fontName: 'Times-Roman',
+                            fontSize: 32,
+                            color: '#1A8763',
+                            bold: true,
+                            italic: true
+                        },
+                    }
+                };
+                chart.draw(dataTable, options);
+            }
 
         </script>
 

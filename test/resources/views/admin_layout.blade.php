@@ -32,11 +32,11 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
          <li class="nav-item logo-wrapper" style="background-image: url({{ asset('frontend/images/image_2.jpg') }})">
-                @if (Auth::check())
-                    <img src="{{ asset('frontend/images/profile/' . Auth::user()->profile_pic) }}" alt="Avatar" class="logo">
+                @if (Auth::check() && isset(Auth::user()->profile_pic))
+                   <img src="{{ asset('frontend/images/profile/' . Auth::user()->profile_pic) }}" alt="Avatar" class="logo">
                 @else
-                    <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="logo">
-                @endif
+                   <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="logo">
+                @endif                         
          </li>
          <li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.dashboard.index') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Dash Board</span></a>
