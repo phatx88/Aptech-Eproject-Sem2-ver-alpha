@@ -37,7 +37,12 @@
             </form>
             <h3 class="text-center">Welcome {{ $user->name }}</h3>
             {{-- <hr class="mt-5 mb-0"> --}}
-            <div class="row mt-5">
+                <div class="col-12 mt-5">
+                @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+                @endif
                 <div class="col-12 ">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -68,15 +73,19 @@
                                 @include('errors.error')
                                 @include('errors.message')
                                 <div class="row align-items-end">
+                                    <input type="hidden" class="form-control" placeholder="" name="email"
+                                    value="{{ $user->email }}">
+
+                                    <div class="w-100"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="firstname">Full Name</label>
                                             <input type="text" class="form-control" placeholder="" name="name"
                                                 value="{{ $user->name }}">
+                                            
                                         </div>
                                     </div>
 
-                                    <div class="w-100"></div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="phone">Phone</label>
@@ -84,13 +93,7 @@
                                                 name="mobile" value="{{ $user->mobile }}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="emailaddress">Email Address</label>
-                                            <input type="text" class="form-control" placeholder="" name="email"
-                                                value="{{ $user->email }}" readonly>
-                                        </div>
-                                    </div>
+                                   
                                     <h3 class="mb-4 mt-4 billing-heading">Default Address</h3>
                                     <div class="w-100"></div>
                                     <div class="col-md-12">
@@ -394,49 +397,32 @@
 
                     {{-- TAB PANE - CHANGE PASSWORD --}}
                     <div class="tab-pane fade" id="edit-profile" role="tabpanel" aria-labelledby="edit-profile-tab">
-
-                        <form action="#" class="billing-form">
-                            <h3 class="mb-4 mt-4 billing-heading">Change Password</h3>
+                        <form action="{{ route('password.email') }}" class="billing-form" method="POST">
+                            @csrf
+                            <h3 class="mb-4 mt-4 billing-heading">{{ __('Reset Password') }}</h3>
                             <div class="row align-items-end">
                                 <div class="w-100"></div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="form-group">
-                                            <label for="oldpass">Current Password</label>
-                                            <input type="text" class="form-control" placeholder="" id="oldpass"
-                                                name="oldpass">
+                                            <label for="email">{{ __('E-Mail Address') }}</label>
+                                            <input type="text" class="form-control" placeholder="" id="email"
+                                                name="email">
+                                                @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
-                                <div class="w-100"></div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <label for="newpass">New Password</label>
-                                            <input type="text" class="form-control" placeholder="" id="newpass"
-                                                name="newpass">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="w-100"></div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <div class="form-group">
-                                            <label for="confirmpass">Confirm New Password</label>
-                                            <input type="text" class="form-control" placeholder="" id="confirmpass"
-                                                name="confirmpass">
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="w-100"></div>
                                 <div class="col-md-12">
                                     <div class="form-group mt-4">
                                         <div class="radio">
-                                            <button class="btn btn-primary mr-3" type="submit" name="Savepass"> Save
+                                            <button class="btn btn-primary mr-3" type="submit"> {{ __('Reset Password') }}
                                             </button>
-                                            <button class="btn btn-danger mr-3" type="reset" name="Savepass">
-                                                Reset</button>
                                         </div>
                                     </div>
                                 </div>

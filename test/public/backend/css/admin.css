@@ -130,6 +130,7 @@ img.logo {
 	right: 25px;
 	cursor: pointer;
 	border-radius: 50%;
+	z-index: 999;
 }
 .introjs-icon i {
 	border-radius: 50%;

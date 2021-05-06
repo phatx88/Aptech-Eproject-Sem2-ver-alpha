@@ -59,7 +59,7 @@
                 @endif
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-hover" id="dataTable_3" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
@@ -176,6 +176,7 @@
         @include('admin.footer')
     </div>
     <!-- /.content-wrapper -->
+    @endsection
     @section('scripts')
     <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
@@ -198,11 +199,23 @@
       });
 
   </script>
-  {{-- {{ $productChart->script() }}
-  {{ $orderChart->script() }} --}}
+
+  <script>
+      $('#dataTable_3').DataTable({
+        // flipping horizontal scroll bar in datatables refer to admin.css line 94
+        order: [[ 1, "desc" ]],
+        autoWidth: 'TRUE',
+        scrollX : 'TRUE', 
+        lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        columnDefs: [ {
+        targets: [5,6,7,8],
+        render: $.fn.dataTable.render.ellipsis( 30, true )
+        } ],
+    });
+  </script>
     @endsection
 
 
-@endsection
+
 
 

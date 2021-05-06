@@ -3,6 +3,9 @@
 
     <div id="content-wrapper">
         <div class="container-fluid">
+            <a class="introjs-icon" title="Page Tour" onclick="userBoarding()">
+                <i class="fa fa-2x fa-question-circle blob red"></i>
+            </a>
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active">Dashboard</li>
@@ -456,28 +459,33 @@
             },
             {
                 element: document.querySelector('li.logo-wrapper'),
-                intro: 'This is your profile - who\'s the handsome guy?'
+                title: 'This is your profile',
+                intro: 'Who\'s the handsome guy?'
             },
             {
                 element: document.querySelector('li.active'),
-                intro: 'The dashboard menu: <br> You can find Sales report, Revenue Trend, and Geo-Sales chart.'
+                title: 'The dashboard menu:',
+                intro: 'You can find Sales report, Revenue Trend, and Geo-Sales chart.'
             },
             {
                 element: document.querySelector('#dashboard-card'),
-                intro: 'The dashboard cards: <br> You can find aggregate Orders, Sales statistic, and more.'
+                title: 'The dashboard cards:',
+                intro: 'You can find aggregate Orders, Sales statistic, and more.'
             },
             {
                 element: document.querySelector('#textstyle'),
-                intro: 'Chart Report: <br> You can also find Orders/Sales statistic from website operation.'
+                title: 'Chart Report:',
+                intro: 'You can also find Orders/Sales statistic from website operation.'
             },
             {
                 element: document.querySelector('#dataTable'),
-                intro: 'Data Tables: <br> Tables with fully functional sort/search system and pagination.'
+                title: 'Data Tables:',
+                intro: 'Tables with fully functional sort/search system and pagination.'
             },
             {
                 element: document.querySelector('#exportBtn'),
                 title: 'End Tour!',
-                intro: 'Export to Excel: <br> Fast and easy button for exporting CSV files.'
+                intro: 'Fast and easy button for exporting CSV files.'
             },
             
             ]
