@@ -35,6 +35,8 @@
                           <th>Mobile</th>
                           <th>Register From</th>
                           <th>Status</th>
+                          <th>Total Order</th>
+                          <th>Total Spent</th>
                           <th></th>
                           <th>Actions</th>
                        </tr>
@@ -50,6 +52,8 @@
                            <th>Mobile</th>
                            <th>Register From</th>
                            <th>Status</th>
+                           <th>Total Order</th>
+                           <th>Total Spent</th>
                            <th></th>
                            <th>Actions</th>
                         </tr>
@@ -118,11 +122,18 @@
                             "data": "is_active"
                         },
                         {
+                            "data": "total_ordered"
+                        },
+                        {
+                            "data": "total_spent"
+                        },
+                        {
                             "data": "option_show"
                         },
                         {
                             "data": "option_edit"
-                        }
+                        },
+                        
                     ]
 
                 });

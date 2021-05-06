@@ -25,6 +25,17 @@ class User_ProductsController extends Controller
         $price_from = $request->price_from;
         $price_to = $request->price_to;
 
+        $bestSelling = DB::table('top_seller_product')
+        ->orderBy('total_qty' , 'DESC')
+        ->limit(10)
+        ->pluck('name')
+        ->toArray();
+
+        $bestSellingId = DB::table('top_seller_product')
+        ->orderBy('total_qty' , 'DESC')
+        ->limit(10)
+        ->pluck('product_id')
+        ->toArray();
 
         //SEARCH BY CATE_ID & FEATURED
         if ($id != null) {
@@ -40,13 +51,17 @@ class User_ProductsController extends Controller
                     break;
 
                 case 'best':
-                    $products = DB::table('view_product')
-                        ->join('brand', 'view_product.brand_id', '=', 'brand.id')
-                        ->join('category', 'view_product.category_id', '=', 'category.id')
-                        ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
-                        ->where('featured', 1)
-                        ->where('hidden', false)
-                        ->paginate(9);
+                    $products = DB::table(function ($query) use ($bestSellingId) {
+                        return $query
+                            ->select('*')
+                            ->from('view_product')
+                            ->whereIn('id', $bestSellingId)
+                            ->where('hidden', false);
+                    }, 'view_product')
+                    ->join('brand', 'view_product.brand_id', '=', 'brand.id')
+                    ->join('category', 'view_product.category_id', '=', 'category.id')
+                    ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
+                    ->paginate(9);                       
                     break;
 
                 case 'new':
@@ -101,6 +116,12 @@ class User_ProductsController extends Controller
                 ->paginate(9);
         }
 
+        $bestSelling = DB::table('top_seller_product')
+        ->orderBy('total_qty' , 'DESC')
+        ->limit(10)
+        ->pluck('name')
+        ->toArray();
+
         //Get all category id
         $all_cate = DB::table('category')->get();
         $product_top_view = DB::table('product')->orderby('view_count', 'DESC')->limit(5)->get();
@@ -110,7 +131,8 @@ class User_ProductsController extends Controller
             'search' => $search,
             'price_from' => $price_from,
             'price_to' => $price_to,
-            'product_top_view' => $product_top_view
+            'product_top_view' => $product_top_view,
+            'bestSelling' => $bestSelling
         ]);
     }
 
@@ -136,10 +158,17 @@ class User_ProductsController extends Controller
         $related_product = Product::orderby('created_date', 'DESC')
             ->where('category_id', $category_id)->get();
 
+        $bestSelling = DB::table('top_seller_product')
+        ->orderBy('total_qty' , 'DESC')
+        ->limit(10)
+        ->pluck('name')
+        ->toArray();
+
         return view('pages.single_product')
             ->with('product', $product)
             ->with('related_product', $related_product)
-            ->with('comments', $comments);
+            ->with('comments', $comments)
+            ->with('bestSelling', $bestSelling);
     }
 
     public function postComment(Request $request, $id)

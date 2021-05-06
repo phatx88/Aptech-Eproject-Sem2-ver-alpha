@@ -70,6 +70,7 @@
                                     <th>Description</th>
                                     <th>Created Date</th>
                                     <th>Featured</th>
+                                    <th>Hidden</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -82,7 +83,7 @@
                                 @endphp
                                 @foreach ($products as $product)
                                     <tr>
-                                        <td><input type="checkbox" {{ $product->hidden == false ? 'checked' : "" }}></td>
+                                        <td><input type="checkbox" {{ $product->hidden == 0 ? 'checked' : "" }}></td>
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td><img src="{{ asset('frontend/images/products/' . $product->featured_image) }}">
@@ -104,7 +105,18 @@
                                                 data-title="{{ $product->name }}">Show</button></td>
                                         <td>{{ $product->created_date }}</td>
                                         <td>{{ $product->featured == 1 ? 'yes' : 'no' }}</td>
-                                        <td><a href="{{ URL('admin/comment/'.$product->id) }}">Đánh giá</a></td>
+                                        <td>
+                                            @if($product->hidden == 0)
+                                                <a class="btn btn-danger btn-sm" href="{{ url('admin/product/status/'.$product->id) }}">
+                                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                                </a>
+                                            @else
+                                                <a class="btn btn-success btn-sm" href="{{ url('admin/product/status/'.$product->id) }}">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td><a href="{{ URL('admin/comment/'.$product->id) }}">Comments</a></td>
                                         <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
                                         <td><a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
                                                 class="btn btn-warning btn-sm">Edit</a></td>

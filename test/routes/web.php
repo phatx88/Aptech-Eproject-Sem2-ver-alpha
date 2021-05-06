@@ -190,6 +190,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('product/export', [Admin_ProductController::class, 'export'])->name('product.export');
     //must be before route resource
     Route::resource('dashboard' , Admin_DashboardController::class);
+    Route::get('product/status/{id}', [Admin_ProductController::class, 'status'] );
     Route::resource('product', Admin_ProductController::class);
     Route::resource('order', Admin_OrderController::class);
     Route::resource('order.item', Admin_OrderItemController::class);

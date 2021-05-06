@@ -139,9 +139,11 @@ class FetchChartDataController extends Controller
             7 => 'profile_pic',
             8 => 'provider',
             9 => 'is_active',
+            10 => 'total_ordered',
+            11 => 'total_spent'
         );
 
-        $totalData = User::where('is_staff' , 0)->count();
+        $totalData = DB::table('total_per_user')->where('is_staff' , 0)->count();
 
         $totalFiltered = $totalData;
 
@@ -151,7 +153,7 @@ class FetchChartDataController extends Controller
         $dir = $request->input('order.0.dir');
 
         if (empty($request->input('search.value'))) {
-            $users = User::where('is_staff' , 0)
+            $users = DB::table('total_per_user')->where('is_staff' , 0)
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -159,7 +161,7 @@ class FetchChartDataController extends Controller
         } else {
             $search = $request->input('search.value');
 
-            $users =  User::where('is_staff' , 0)
+            $users = DB::table('total_per_user')->where('is_staff' , 0)
                 ->where('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->orWhere('email', 'LIKE', "%{$search}%")
@@ -171,7 +173,7 @@ class FetchChartDataController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = User::where('is_staff' , 0)
+            $totalFiltered = DB::table('total_per_user')->where('is_staff' , 0)
                 ->where('id', 'LIKE', "%{$search}%")
                 ->orWhere('name', 'LIKE', "%{$search}%")
                 ->orWhere('email', 'LIKE', "%{$search}%")
@@ -182,11 +184,11 @@ class FetchChartDataController extends Controller
         }
 
         $data = array();
+        
         if (!empty($users)) {
             foreach ($users as $user) {
                 $show =  route('admin.user.show', $user->id);
                 $edit =  route('admin.user.edit', $user->id);
-
                 $nestedData['id'] = $user->id;
                 $nestedData['name'] = $user->name;
                 $nestedData['email'] = $user->email;
@@ -196,6 +198,8 @@ class FetchChartDataController extends Controller
                 $nestedData['mobile'] = $user->mobile ?? "";
                 $nestedData['profile_pic'] = $user->profile_pic ?? "";
                 $nestedData['provider'] = $user->provider;
+                $nestedData['total_ordered'] = number_format($user->total_ordered ?? 0);
+                $nestedData['total_spent'] = "$".number_format($user->amount_spent ?? 0);
                 $nestedData['is_active'] = $user->is_active == 1 ? "Active" : "inActive" ;
                 $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
                 $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";

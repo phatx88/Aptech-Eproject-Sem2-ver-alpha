@@ -186,7 +186,7 @@ class Admin_ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Http\Response
      */
     public function show(Products $product)
@@ -295,5 +295,21 @@ class Admin_ProductController extends Controller
     public function export(){
         return Excel::download(new ProductExport, 'productExport.xlsx');
     }
+
+    public function status($id){
+        $status = Products::where('id', $id)->value('hidden');
+        if ($status == false) {
+            Products::where('id', $id)->update([
+                'hidden' => 1
+            ]);
+        } else {
+            Products::where('id', $id)->update([
+                'hidden' => 0
+            ]);
+        }
+        return redirect()->back()->with('success', 'Product Status Changed');
+        
+    }
+
 
 }

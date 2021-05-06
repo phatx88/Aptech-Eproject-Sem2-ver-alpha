@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         //User->Order->OrderItem
         // $user =  User::factory()->create();
         Order::factory()
-        ->count(1000)
+        ->count(100)
         ->for(User::factory())
         ->has(OrderItem::factory()->count(1))
         ->create();

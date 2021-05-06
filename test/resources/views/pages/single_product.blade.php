@@ -253,12 +253,12 @@
 
                                         </div>
                                         <div class="text text-center">
-                                            @if (date('Y', strtotime($re_product->created_date)) >= 2020)
+                                            @if (strtotime($re_product->created_date) >= strtotime('-30 days'))
                                                 <span class="new">New Arrival</span>
+                                            @elseif (in_array($re_product->name , $bestSelling))
+                                            <span class="seller">Best Seller</span>
                                             @elseif ($re_product->featured)
-                                                <span class="seller">Best Seller</span>
-                                            @elseif ($re_product->price!=$re_product->sale_price)
-                                                <span class="sale">Sale</span>
+                                                <span class="sale">Featured</span>
                                             @endif
 
                                             <span class="category">{{ $re_product->category->name }}</span>

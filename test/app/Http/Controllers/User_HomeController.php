@@ -12,14 +12,25 @@ class User_HomeController extends Controller
     public function index()
     {
 
-        $products = Cache::remember('homepage-products', now()->addHours(12), function () {         
-            return DB::table('view_product')
+        $products = DB::table('view_product')
                 ->join('brand', 'view_product.brand_id', '=', 'brand.id')
                 ->join('category', 'view_product.category_id', '=', 'category.id')
                 ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
+                ->where('hidden', false)
+                ->orderBy('view_count' , 'ASC')
                 ->get();
-        });
-        
-        return view('pages.home', ['products' => $products]);
+
+        $bestSelling = DB::table('top_seller_product')
+        ->orderBy('total_qty' , 'DESC')
+        ->limit(10)
+        ->pluck('name')
+        ->toArray();
+
+        // dd ($bestSelling);
+
+        return view('pages.home', [
+            'products' => $products,
+            'bestSelling' => $bestSelling
+            ]);
     }
 }

@@ -166,10 +166,20 @@
                     <div class="ftco-footer-widget mb-4 ml-md-4">
                         <h2 class="ftco-heading-2">My Accounts</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Account</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
-                            <li><a href="#"><span class="fa fa-chevron-right mr-2"></span>My Order</a></li>
+                            @auth
+                            @if (Auth::user()->hasVerifiedEmail() && Auth::user()->is_staff == 0)
+                                {{-- User drop down menu --}}
+                                <li><a href="{{ route('account.index') }}"><span class="fa fa-chevron-right mr-2"></span>Order History</a></li>
+                            @elseif (Auth::user()->hasVerifiedEmail() && Auth::user()->is_staff == 1)
+                            <li><a href="{{ route('admin.dashboard.index') }}"><span class="fa fa-chevron-right mr-2"></span>Dashboard</a></li>
+                            @else
+                                <a href="{{ route('verification.notice') }}" class="text-white mr-2">Activate Account</a>
+                            @endif
+                            @endauth
+                            @guest
+                            <li><a href="#registerForm" class="btn-register mr-2" data-toggle="modal"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
+                            <li><a href="#loginModal" class="btn-login" data-toggle="modal"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
+                            @endguest
                         </ul>
                     </div>
                 </div>

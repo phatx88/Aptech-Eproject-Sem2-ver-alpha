@@ -180,11 +180,11 @@
                                             @if (strtotime($product->created_date) >= strtotime('-30 days'))
                                                 <span class="new">New Arrival</span>
                                             @endif
-                                            @if ($product->featured)
-                                                <span class="seller">Best Seller</span>
+                                            @if (in_array($product->name , $bestSelling))
+                                            <span class="seller">Best Seller</span>
                                             @endif
-                                            @if ($product->price != $product->sale_price)
-                                                <span class="sale">Sale</span>
+                                            @if ($product->featured)
+                                                <span class="sale">Featured</span>
                                             @endif
                                             <span class="category">{{ $product->category_name }}</span>
                                             <h5>{{ $product->name }}</h5>
