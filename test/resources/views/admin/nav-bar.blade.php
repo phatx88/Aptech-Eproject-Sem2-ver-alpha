@@ -6,6 +6,9 @@
     <!-- Navbar Search -->
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto">
+        <a class="introjs-icon" title="Page Tour" onclick="userBoarding()">
+            <i class="fa fa-2x fa-question-circle blob red"></i>
+        </a>
        <li class="nav-item no-arrow text-white">
          <div class="">
             @guest

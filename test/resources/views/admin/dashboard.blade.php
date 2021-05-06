@@ -8,29 +8,8 @@
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
             @include('errors.message')
-            {{-- <div class="mb-3 my-3">
-                <a href="#" class="active btn btn-primary">Hôm nay</a>
-                <a href="#" class="btn btn-primary">Hôm qua</a>
-                <a href="#" class="btn btn-primary">Tuần này</a>
-                <a href="#" class="btn btn-primary">Tháng này</a>
-                <a href="#" class="btn btn-primary">3 tháng</a>
-                <a href="#" class="btn btn-primary">Năm này</a>
-                <div class="dropdown" style="display:inline-block">
-                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <div style="margin:20px">
-                            Từ ngày <input type="date" class="form-control" id="usr">
-                            Đến ngày <input type="date" class="form-control" id="usr">
-                            <br>
-                            <input type="submit" value="Tìm" class="btn btn-primary form-control">
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-
             <!-- Icon Cards-->
-            <div class="row">
+            <div class="row" id="dashboard-card">
                 <div class="col-xl-4 col-sm-6 mb-3">
                     <div class="card text-white bg-warning o-hidden h-100">
                         <div class="card-body">
@@ -171,7 +150,7 @@
                           <i class="fas fa-file-invoice-dollar"></i>
                           Lastest Order
                           <a type="button" href="{{ route('admin.order.export') }}"
-                              class="btn btn-success btn-sm float-right">Export</a>
+                              class="btn btn-success btn-sm float-right" id="exportBtn">Export</a>
                       </div>
                       <div class="card-body">
                           <div class="table-responsive">
@@ -218,7 +197,7 @@
                            <i class="fas fa-chart-line"></i>
                            Revenue Trend
                        </div>
-                       <div class="card-body">
+                       <div class="card-body" id="revenueTrend">
                            {!! $saleChart->container() !!}
                        </div>
                    </div>
@@ -322,6 +301,7 @@
 @endsection
 
 @section('scripts')
+    
 
     {{-- GOOGLE GEOCHART --}}
 
@@ -465,4 +445,43 @@
     {{ $usersChart->script() }}
     {{ $visitChart->script() }}
 
+    <script>
+        function userBoarding() {
+            introJs().setOptions({
+            steps: [
+            {
+                element: document.querySelector('ul.sidebar'),
+                title: 'Welcome Admin!',
+                intro: 'This is Admin menu! - You can have access to database and perform CRUD operation from here'
+            },
+            {
+                element: document.querySelector('li.logo-wrapper'),
+                intro: 'This is your profile - who\'s the handsome guy?'
+            },
+            {
+                element: document.querySelector('li.active'),
+                intro: 'The dashboard menu: <br> You can find Sales report, Revenue Trend, and Geo-Sales chart.'
+            },
+            {
+                element: document.querySelector('#dashboard-card'),
+                intro: 'The dashboard cards: <br> You can find aggregate Orders, Sales statistic, and more.'
+            },
+            {
+                element: document.querySelector('#textstyle'),
+                intro: 'Chart Report: <br> You can also find Orders/Sales statistic from website operation.'
+            },
+            {
+                element: document.querySelector('#dataTable'),
+                intro: 'Data Tables: <br> Tables with fully functional sort/search system and pagination.'
+            },
+            {
+                element: document.querySelector('#exportBtn'),
+                title: 'End Tour!',
+                intro: 'Export to Excel: <br> Fast and easy button for exporting CSV files.'
+            },
+            
+            ]
+            }).start();
+        }
+    </script>
 @endsection
