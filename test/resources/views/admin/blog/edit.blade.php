@@ -7,10 +7,13 @@
     <div class="container-fluid">
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">Edit Blog</li>
+        <li class="breadcrumb-item">
+            <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ route('admin.blog.index') }}">Blog</a>
+        </li>
+        <li class="breadcrumb-item active">edit</li>
        </ol>
        <!-- /form -->
         @if(session()->get('message'))

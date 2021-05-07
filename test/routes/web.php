@@ -197,6 +197,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
     Route::resource('coupon', Admin_CouponController::class);
+    Route::post('staff/calendar/action', [Admin_StaffController::class, 'action']); //FullCalender Action
     Route::resource('staff', Admin_StaffController::class);
     Route::resource('user', Admin_UserController::class);
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
