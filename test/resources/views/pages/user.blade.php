@@ -82,7 +82,7 @@
                                             <label for="firstname">Full Name</label>
                                             <input type="text" class="form-control" placeholder="" name="name"
                                                 value="{{ $user->name }}">
-                                            
+
                                         </div>
                                     </div>
 
@@ -93,7 +93,7 @@
                                                 name="mobile" value="{{ $user->mobile }}">
                                         </div>
                                     </div>
-                                   
+
                                     <h3 class="mb-4 mt-4 billing-heading">Default Address</h3>
                                     <div class="w-100"></div>
                                     <div class="col-md-12">
@@ -202,10 +202,12 @@
                                                     <br>
                                                     <span>
                                                         Order Status:
-                                                        @if($order->order_status_id == 1)
-                                                            Uncompleted
-                                                        @else
+                                                        @if($order->order_status_id == 5)
                                                             Completed
+                                                        @elseif($order->order_status_id == 6)
+                                                            Cancelled
+                                                        @else
+                                                            Uncompleted
                                                         @endif
                                                     </span>
                                                 </div>
@@ -302,7 +304,63 @@
                                                                     @endphp
                                                                     <td class="p-0 text-center">${{ $total }}</td>
                                                                 </tr>
+                                                                <tr>
+           <?php
+                $output = '';
+                switch ($order->order_status_id) {
+                    case 1: $output .= '<hr class="flex-fill"></span>
+                                        <hr class="flex-fill">
+                                        <hr class="flex-fill">
+                                        <hr class="flex-fill"></div>';
+                                break;
+                    case 2: $output.= ' <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill">
+                                        <hr class="flex-fill">
+                                        <hr class="flex-fill"></div>';
+                            break;
+                    case 3: $output.= ' <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill"></span>
+                                        <hr class="flex-fill"></div>';
+                            break;
+                    case 4: $output.= '<hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill"></div>';
+                            break;
+                    case 5: $output.= '<hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="d-flex justify-content-center align-items-center big-dot dot"
+                                        style="background-color: green;"><i style="font-size: 20px"  class="fa fa-check text-white"></i></span></div>';
+                            break;
+                    case 6: $output.= '<hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="dot"></span>
+                                        <hr class="flex-fill track-line"><span class="d-flex justify-content-center align-items-center big-dot dot"
+                                        style="background-color: red;"><i style="font-size: 20px;" class="fa fa-times text-white"></i></span></div>';
+                            break;
 
+                }
+            ?>
+                                                                    <td colspan="4">
+                                                                        <div class="d-flex flex-row justify-content-between align-items-center align-content-center"><span class="dot"></span>
+                                                                            {!! $output !!}
+                                                                            <div class="d-flex flex-row justify-content-between align-items-center">
+                                                                                <div class="d-flex flex-column align-items-start"><span>{{ date_format($order->created_date, 'd-m-Y ') }}</span><span>Ordered</span></div>
+                                                                                <div class="d-flex flex-column justify-content-center"><span></span><span>Confirmed</span></div>
+                                                                                <div class="d-flex flex-column justify-content-center align-items-center"><span></span><span>Packaged</span></div>
+                                                                                <div class="d-flex flex-column align-items-center"><span></span><span>Shipping</span></div>
+                                                                                @if($order->order_status_id == 5)
+                                                                                <div class="d-flex flex-column align-items-end"><span>{{ date_format(new DateTime($order->delivered_date), 'd-m-Y ') }}</span><span>Delivered</span></div>
+                                                                                @elseif($order->order_status_id == 6)
+                                                                                <div class="d-flex flex-column align-items-end"><span>{{ date_format(new DateTime($order->delivered_date), 'd-m-Y ') }}</span><span>Cancelled</span></div>
+                                                                                @else
+                                                                                <div class="d-flex flex-column align-items-end"><span></span><span>Delivered</span></div>
+                                                                                @endif
+                                                                            </div>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -416,7 +474,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="w-100"></div>
                                 <div class="col-md-12">
                                     <div class="form-group mt-4">
