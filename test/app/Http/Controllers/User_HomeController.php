@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;  //Lay du lieu tu DB
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Post;
 
 class User_HomeController extends Controller
 {
@@ -26,11 +27,13 @@ class User_HomeController extends Controller
         ->pluck('name')
         ->toArray();
 
+        $post = Post::all();
         // dd ($bestSelling);
 
         return view('pages.home', [
             'products' => $products,
-            'bestSelling' => $bestSelling
+            'bestSelling' => $bestSelling,
+            'post' => $post
             ]);
     }
 }
