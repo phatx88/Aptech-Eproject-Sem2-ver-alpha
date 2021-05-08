@@ -22,6 +22,8 @@
       <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
       {{-- introJS  --}}
       <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
+      {{-- Full Calendar  --}}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
       <!-- Custom styles for this template-->
       <link href="{{asset('backend/css/sb-admin.css')}}" rel="stylesheet">
       <link href="{{asset('backend/css/admin.css')}}" rel="stylesheet">
@@ -73,6 +75,14 @@
                <a class="dropdown-item" href="{{URL::to('image-list')}}">List</a>
             </div>
          </li>
+         <li class="nav-item dropdown {{ Request::segment(2) == 'staff' ? 'active' : '' }}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Staff</span></a>
+            <div class="dropdown-menu" aria-labelledby="">
+               <a class="dropdown-item" href="{{route('admin.staff.index')}}">List</a>
+               <a class="dropdown-item" href="{{URL::to('staff-add')}}">Add</a>
+               <a class="dropdown-item" href="{{URL::to('staff-edit')}}">Edit</a>
+            </div>
+         </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Users</span></a>
             <div class="dropdown-menu" aria-labelledby="">
@@ -99,14 +109,7 @@
                <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Edit</a>
             </div>
          </li>
-         <li class="nav-item dropdown {{ Request::segment(2) == 'staff' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Nhân viên</span></a>
-            <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.staff.index')}}">List</a>
-               <a class="dropdown-item" href="{{URL::to('staff-add')}}">Add</a>
-               <a class="dropdown-item" href="{{URL::to('staff-edit')}}">Edit</a>
-            </div>
-         </li>
+        
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a>
             <div class="dropdown-menu" aria-labelledby="">
@@ -141,7 +144,8 @@
    </a>
 
  <!-- Bootstrap core JavaScript-->
- <script src="{{asset('backend/vendor/jquery/jquery.min.js')}}"></script>
+ {{-- <script src="{{asset('backend/vendor/jquery/jquery.min.js')}}"></script> --}}
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
  <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
  <!-- Core plugin JavaScript-->
  <script src="{{asset('backend/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -150,10 +154,14 @@
  <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
  <script src="https://cdn.datatables.net/plug-ins/1.10.24/dataRender/ellipsis.js"></script>
  <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
+ <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
  <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
  <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
  <!-- Custom scripts for all pages-->
  <script src="{{asset('backend/js/sb-admin.min.js')}}"></script>
+ {{-- Full Calendar JS  --}}
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
  {{-- Chart JS  --}}
  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
  <!-- Demo scripts for this page-->

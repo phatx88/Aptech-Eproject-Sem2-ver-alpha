@@ -7,33 +7,9 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                 </li>
-                <li class="breadcrumb-item active">Product</li>
+                <li class="breadcrumb-item active">Blog</li>
             </ol>
-             {{-- Chart Larapex --}}
-               {{-- Chart Larapex --}}
-            {{-- <div class="row mb-3">
-            <div class="col-md-6">
-               <div class="card">
-                  <div class="card-header">
-                     <i class="fas fa-heart"></i>
-                     Most Viewed Items Chart
-                  </div>
-                     <div class="card-body">
-                        {!! $productChart->container() !!}
-                     </div>
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="card">
-                  <div class="card-header">
-                     <i class="fas fa-shopping-basket"></i>
-                     Best Selling Items Chart
-                  </div>
-                     <div class="card-body">
-                        {!! $orderChart->container() !!}
-                     </div>
-               </div>
-            </div> --}}
+             
          </div>
             {{-- MESSAGE  --}}
             {{-- @include('errors.message') --}}

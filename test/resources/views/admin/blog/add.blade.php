@@ -6,10 +6,13 @@
     <div class="container-fluid">
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">Create New Blog</li>
+        <li class="breadcrumb-item">
+            <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ route('admin.blog.index') }}">Blog</a>
+        </li>
+        <li class="breadcrumb-item active">add</li>
        </ol>
        <!-- /form -->
         @if(session()->get('message'))
@@ -335,7 +338,7 @@
                     id:id
                 },
                 success: function(data){
-
+                notyf.error('Tag Deleted');
                 }
             });
         });
