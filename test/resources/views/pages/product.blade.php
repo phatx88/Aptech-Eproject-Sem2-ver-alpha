@@ -122,22 +122,22 @@
                                 <div class="product ftco-animate items-products">
                                     <form>
                                         @csrf
-                                        <input type="hidden" class="product_name_cart_{{ $product->id }}"
+                                        <input type="hidden" id="product_name_cart_{{ $product->id }}" class="product_name_cart_{{ $product->id }}"
                                             value="{{ $product->name }}">
                                         @if ($product->price != $product->sale_price)
-                                            <input type="hidden" class="product_price_cart_{{ $product->id }}"
+                                            <input type="hidden" id="product_price_cart_{{ $product->id }}" class="product_price_cart_{{ $product->id }}"
                                                 value="{{ $product->sale_price }}">
                                         @else
-                                            <input type="hidden" class="product_price_cart_{{ $product->id }}"
+                                            <input type="hidden" id="product_price_cart_{{ $product->id }}" class="product_price_cart_{{ $product->id }}"
                                                 value="{{ $product->price }}">
                                         @endif
-                                        <input type="hidden" class="product_quantity_cart_{{ $product->id }}" value="1">
-                                        <input type="hidden" class="product_image_cart_{{ $product->id }}"
+                                        <input type="hidden" id="product_quantity_cart_{{ $product->id }}" class="product_quantity_cart_{{ $product->id }}" value="1">
+                                        <input type="hidden" id="product_image_cart_{{ $product->id }}" class="product_image_cart_{{ $product->id }}"
                                             value="{{ $product->featured_image }}">
                                         <div class="img d-flex align-items-center justify-content-center image-products_{{ $product->id }}"
                                             style="background-image: url('{{ asset('frontend/images/products/' . $product->featured_image) }}');">
 
-                                            <img class="img_{{ $product->id }}" src="{{  asset('frontend/images/products/' . $product->featured_image)  }}" height="40px" width="40px" style="visibility: hidden; position: absolute;" alt="">
+                                            <img id="img_{{ $product->id }}" class="img_{{ $product->id }}" src="{{  asset('frontend/images/products/' . $product->featured_image)  }}" height="40px" width="40px" style="visibility: hidden; position: absolute;" alt="">
 
                                             <div class="desc">
                                                 <p class="meta-prod d-flex">
@@ -169,12 +169,14 @@
                                                             class="flaticon-heart
                                                             "></span></a>
                                                     @endif
-                                                    <a href="{{ url('home/single-product/' . $product->id) }}"
+                                                    <a id="product_detail_{{ $product->id }}" href="{{ url('home/single-product/' . $product->id) }}"
                                                         class="d-flex align-items-center justify-content-center"><span
                                                             class="flaticon-visibility"></span></a>
+                                                    <a style="cursor: pointer;" class="d-flex align-items-center justify-content-center" onclick="add_compare({{ $product->id }})" data-toggle="modal" data-target="#compare"><span
+                                                        class="fa fa-compress" ></span></a>
                                                 </p>
                                             </div>
-
+                                            {{-- data-toggle="modal" data-target="#compare" --}}
                                         </div>
 
                                         <div class="text text-center">
@@ -203,8 +205,50 @@
                                     </form>
                                 </div>
                             </div>
+                            <div id="compare_block">
 
-                        @endforeach
+                                {{-- <h2>Modal Example</h2> --}}
+                                <!-- Trigger the modal with a button -->
+                                {{-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#compare">Open Modal</button> --}}
+
+                               <!-- Modal -->
+                                <div class="modal fade" id="compare" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                    <div class="modal-content" style="width: 1000px;
+                                    top: 100%;
+                                    left: 50%;
+                                    margin-top: 350px;
+                                    margin-right: -50%;
+                                    transform: translate(-50%, -50%)">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"><span id="title-compare"></span></h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div>
+                                                <table class="table table-hover">
+                                                  <tr>
+                                                    <th>Name</th>
+                                                    <th>Featured Image</th>
+                                                    <th>Price</th>
+                                                    <th>Details</th>
+                                                    <th>Delete</th>
+                                                  </tr>
+                                                <tbody id="row_compare">
+
+                                                </tbody>
+                                              </table>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+           @endforeach
 
 
                     </div>
@@ -239,6 +283,59 @@
                 });
             }
         });
+
+        function add_compare(product_id) {
+            // $('#compare').modal();
+            // alert(product_id);
+            document.getElementById('title-compare').innerHTML ='Comparison';
+            var id = product_id;
+            var name = document.getElementById('product_name_cart_'+id).value;
+            var price = document.getElementById('product_price_cart_'+id).value;
+            var image = document.getElementById('img_'+id).src;
+            var url = document.getElementById('product_detail_'+id).href;
+
+            var newItem ={
+                'id': id,
+                'name':name,
+                'price':price,
+                'image':image,
+                'url':url
+            }
+            // alert(newItem);
+            if(localStorage.getItem('compare') == null){
+                localStorage.setItem('compare', `[]`);
+            }
+
+            var old_data = JSON.parse(localStorage.getItem('compare'));
+
+            var matches = $.grep(old_data, function(obj){
+                return obj.id == id;
+            })
+
+            if(matches.length){
+
+            }else{
+                if(old_data.length < 3){
+
+                    old_data.push(newItem);
+
+                    $('#row_compare').append(`
+                        <tr id="row_compare `+ id +`">
+                                <td>`+ newItem.name +`</td>
+                                <td><img width="70px" height="80px" src="`+ newItem.image +`"></td>
+                                <td>`+ newItem.price +`</td>
+                                <td><a href="`+ newItem.url +`">Details</a></td>
+                                <td onclick="delete_compare(`+id+`)">Delete Compare Item</td>
+                            </tr>
+                    `);
+                }else{
+                    notyf.error('You just can compare 3 items!!!');
+                }
+            }
+            localStorage.setItem('compare', JSON.stringify(old_data));
+
+        }
+
 
     </script>
 @endsection

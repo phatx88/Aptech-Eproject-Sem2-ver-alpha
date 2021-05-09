@@ -196,7 +196,7 @@
                     @foreach ($related_product as $key => $re_product)
                         <div class="item">
                             <div class="d-flex">
-                                <div class="product ftco-animate">
+                                <div class="product ftco-animate items-products-related">
                                     <form action="">
                                         @csrf
                                         <input type="hidden" class="product_name_cart_{{ $re_product->id }}"
@@ -214,6 +214,7 @@
                                             value="{{ $re_product->featured_image }}">
                                         <div class="img d-flex align-items-center justify-content-center"
                                             style="background-image: url({{ asset('frontend/images/products/' . $re_product->featured_image) }});">
+                                            <img class="img_{{ $re_product->id }}" src="{{  asset('frontend/images/products/' . $re_product->featured_image)  }}" height="40px" width="40px" style="visibility: hidden; position: absolute;" alt="">
                                             <div class="desc">
                                                 <p class="meta-prod d-flex">
                                                     @if ($re_product->inventory_qty == 0)

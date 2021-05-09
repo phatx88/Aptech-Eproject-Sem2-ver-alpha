@@ -144,7 +144,7 @@
                 @foreach ($products as $product)
                     <div class="col-md-3 d-flex">
 
-                        <div class="product ftco-animate">
+                        <div class="product ftco-animate items-products">
                             <form>
                                 @csrf
                                 <input type="hidden" class="product_name_cart_{{ $product->id }}"
@@ -161,7 +161,7 @@
                                     value="{{ $product->featured_image }}">
                                 <div class="img d-flex align-items-center justify-content-center"
                                     style="background-image: url('{{ asset('frontend/images/products/' . $product->featured_image) }}');">
-                                    {{-- <img class="" style="position: absolute; width: 100%; height: 350px; z-index: -1;" src="{{ asset('frontend/images/products/'.$product->featured_image) }}" alt=""> --}}
+                                    <img class="img_{{ $product->id }}" src="{{  asset('frontend/images/products/' . $product->featured_image)  }}" height="40px" width="40px" style="visibility: hidden; position: absolute;" alt="">
                                     <div class="desc">
                                         <p class="meta-prod d-flex">
                                             @if($product->inventory_qty == 0)

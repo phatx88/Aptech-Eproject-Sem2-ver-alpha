@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('frontend/css/content-styles.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/track-order.css') }}">
+
+
 </head>
 
 <body>
