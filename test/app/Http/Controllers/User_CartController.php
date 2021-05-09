@@ -68,8 +68,8 @@ class User_CartController extends Controller
                 $count_items++;
             }
             $output .= '
-                <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="flaticon-shopping-bag"></span>
+                <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="block-button">
+                    <span class="flaticon-shopping-bag" id="shopping-bag-shake"></span>
                     <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>'.$count_items.'</small></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -233,7 +233,7 @@ class User_CartController extends Controller
             $output .= '
                     <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <span class="flaticon-shopping-bag"></span>
+                        <span class="flaticon-shopping-bag" id="shopping-bag-shake"></span>
                         <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>0</small></div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -252,7 +252,7 @@ class User_CartController extends Controller
             }
             $output .= '
                 <a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split"      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="flaticon-shopping-bag"></span>
+                    <span class="flaticon-shopping-bag" id="shopping-bag-shake"></span>
                     <div id="count_items_cart" class="d-flex justify-content-center align-items-center count_items"><small>'.$count_items.'</small></div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">

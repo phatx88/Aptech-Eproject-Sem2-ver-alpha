@@ -98,7 +98,7 @@
             {{-- Shopping cart drop down --}}
 
 
-            <div class="order-lg-last btn-group">
+            <div class="order-lg-last btn-group" id="roll-button-cart">
 
                 <form action="">
                     @csrf
@@ -469,6 +469,9 @@
     <script src="{{ asset('frontend/js/jquery.star-rating-svg.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/check-box.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('frontend/js/cart_animation.js') }}"></script>
     @yield('scripts')
     @include('scripts.notyf')
     @include('scripts.cart')
