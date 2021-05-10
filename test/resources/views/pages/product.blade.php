@@ -272,17 +272,47 @@
 @endsection
 
 @section('scripts')
+
     <script type="text/javascript">
-        var path = "{{ route('find') }}";
-        $('input.typeahead').typeahead({
-            source: function(query, process) {
-                return $.get(path, {
-                    query: query
-                }, function(data) {
-                    return process(data);
-                });
+        view_compare();
+        function delete_compare(id) {
+            // alert(id);
+            if(localStorage.getItem('compare') != null){
+                var data = JSON.parse(localStorage.getItem('compare'));
+                var index = data.findIndex(item => item.id === id);
+                // alert(index);
+                data.splice(index, 1);
+                localStorage.setItem('compare', JSON.stringify(data));
+                document.getElementById("row_compare" + id).remove();
             }
-        });
+        }
+
+        function view_compare(){
+            if(localStorage.getItem('compare') != null){
+                // alert('have value');
+                var data = JSON.parse(localStorage.getItem('compare'));
+
+                var i;
+
+                for(i = 0; i < data.length; i++){
+                    var id = data[i].id;
+                    var name = data[i].name;
+                    var price = data[i].price;
+                    var image = data[i].image;
+                    var url  = data[i].url;
+                    $('#row_compare').append(`
+                        <tr id="row_compare`+ id +`">
+                                <td>`+ name +`</td>
+                                <td><img width="70px" height="80px" src="`+ image + `"></td>
+                                <td>$`+ price +`</td>
+                                <td><a href="`+ url +`">Details</a></td>
+                                <td><a style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a></td>
+                            </tr>
+                    `);
+                }
+            }
+        }
+
 
         function add_compare(product_id) {
             // $('#compare').modal();
@@ -313,19 +343,19 @@
             })
 
             if(matches.length){
-
+                notyf.error('You have already choosen this items!!!');
             }else{
                 if(old_data.length < 3){
 
                     old_data.push(newItem);
 
                     $('#row_compare').append(`
-                        <tr id="row_compare `+ id +`">
+                        <tr id="row_compare`+ id +`">
                                 <td>`+ newItem.name +`</td>
                                 <td><img width="70px" height="80px" src="`+ newItem.image +`"></td>
-                                <td>`+ newItem.price +`</td>
+                                <td>$`+ newItem.price +`</td>
                                 <td><a href="`+ newItem.url +`">Details</a></td>
-                                <td onclick="delete_compare(`+id+`)">Delete Compare Item</td>
+                                <td><a style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a></td>
                             </tr>
                     `);
                 }else{
@@ -335,7 +365,15 @@
             localStorage.setItem('compare', JSON.stringify(old_data));
 
         }
-
-
+            var path = "{{ route('find') }}";
+            $('input.typeahead').typeahead({
+                source: function(query, process) {
+                    return $.get(path, {
+                        query: query
+                    }, function(data) {
+                        return process(data);
+                    });
+                }
+            });
     </script>
 @endsection

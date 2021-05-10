@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col-lg-6 mb-5 ftco-animate">
                             <a href="{{ asset('frontend/images/products/' . $val->featured_image) }}"
-                                class="image-popup prod-img-bg"><img
+                                class="image-popup prod-img-bg"><img width="100%"
                                     src="{{ asset('frontend/images/products/' . $val->featured_image) }}"
                                     class="img-fluid" alt="Colorlib Template"></a>
                         </div>
