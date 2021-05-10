@@ -150,7 +150,7 @@ Route::post('/fetch-user', [FetchChartDataController::class,'fetchUser']);
 
 // Có VErify
 // User Dashboard
-Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->group(function() {
+Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user,staff'])->group(function() {
     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');

@@ -212,10 +212,9 @@
                                 {{-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#compare">Open Modal</button> --}}
 
                                <!-- Modal -->
-                                <div style="overflow-y: hidden;" class="modal fade" id="compare" tabindex="-1" role="dialog">
+                                <div class="modal fade" id="compare" tabindex="-1" role="dialog" style="overflow-y:hidden;">
                                     <div class="modal-dialog">
                                     <div class="modal-content" style="width: fit-content;
-
                                     top: 100%;
                                     left: 50%;
                                     margin-top: 450px;

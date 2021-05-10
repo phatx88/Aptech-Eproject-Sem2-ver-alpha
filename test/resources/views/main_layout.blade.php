@@ -400,45 +400,8 @@
                 </div>
             </div>
         </div>
-        {{-- forget password Modal --}}
-        {{-- <div class="modal fade" id="forgotPassword">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content form-wrapper">
-                    <div class="close-box" data-dismiss="modal">
-                        <i class="fa fa-times fa-2x"></i>
-                    </div>
-                    <div class="container-fluid mt-5">
 
-                        <form method="POST" action="{{ route('password.email') }}">
-                            @csrf
-                            <div class="form-group text-center heading-section">
-                                <h2>Forget Password</h2>
-                            </div>
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-                            <div class="form-group" style="position: relative;">
-                                <label for="email-recover">{{ __('E-Mail Address') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group pt-2">
-                                <button class="btn btn-info form-control">{{ __('Reset Password') }}</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
+        
     </footer>
 
 

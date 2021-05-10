@@ -10,9 +10,11 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;
 use Session;
+
 
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -105,9 +107,9 @@ class Admin_ProductController extends Controller
             'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
             'product_name' => 'bail|required|max:255',
             'price' => 'bail|numeric|required',
-            'discount_percentage' => 'bail|numeric|required',
-            'discount_from_date' => 'bail|date|required',
-            'discount_to_date' => 'bail|date|required',
+            'discount_percentage' => 'bail|numeric',
+            'discount_from_date' => 'bail|date',
+            'discount_to_date' => 'bail|date',
             'inventory_qty' => 'bail|numeric|required',
             'category_id' => 'bail|integer|required',
             'brand_id' => 'bail|integer|required',
@@ -191,9 +193,9 @@ class Admin_ProductController extends Controller
             'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
             'product_name' => 'bail|required|max:255',
             'price' => 'bail|numeric|required',
-            'discount_percentage' => 'bail|numeric|required',
-            'discount_from_date' => 'bail|date|required',
-            'discount_to_date' => 'bail|date|required',
+            'discount_percentage' => 'bail|numeric',
+            'discount_from_date' => 'bail|date',
+            'discount_to_date' => 'bail|date',
             'inventory_qty' => 'bail|numeric|required',
             'category_id' => 'bail|integer|required',
             'brand_id' => 'bail|integer|required',

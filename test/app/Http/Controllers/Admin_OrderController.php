@@ -35,14 +35,11 @@ class Admin_OrderController extends Controller
     public function index()
     {
 
-        $orders = Cache::remember('dashboard-orders', now()->addHours(12), function () {         
-            return Order::with('orderItem', 'user:name,email,ward_id,mobile' , 'ward:id,name,district_id')->orderby('id' , 'DESC')->get();
-        });
-
         $orderTotals = DB::table('total_per_order')->get();
+        $statuses = ShippingStatus::get();
 
         return view('admin.order.list', [
-            'orders'=>$orders,
+            'statuses' => $statuses,
             'orderTotals' => $orderTotals,      
             ]);
         

@@ -105,9 +105,9 @@
                                         </td>
                                         <td>${{ round(($product->price * (100 - $product->discount_percentage)) / 100, 2) }}
                                         </td>
-                                        <td>{{ $product->discount_from_date == 0 ? 'N/A' : $product->discount_from_date }}
+                                        <td>{{ $product->discount_from_date ?? 'N/A'}}
                                         </td>
-                                        <td>{{ $product->discount_to_date == 0 ? 'N/A' : $product->discount_to_date }}</td>
+                                        <td>{{ $product->discount_to_date ?? 'N/A'}}</td>
 
                                         <td>{{ $product->inventory_qty }}</td>
                                         <td>{{ $product->category->name }}</td>

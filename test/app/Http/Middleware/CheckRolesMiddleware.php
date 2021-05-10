@@ -14,7 +14,7 @@ class CheckRolesMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
         //not allow if not login in
         // if ( ! Auth::check()) {
@@ -22,11 +22,12 @@ class CheckRolesMiddleware
         // }
         // $role shoule be staff or user only 
         //not allow if not user don't have the right credentials
-            // dd($role);
-
-        if ( $request->user()->role() == $role) {
-            return $next($request);
-        }
+            // dd($roles);
+            foreach ($roles as $role) {
+                if ( $request->user()->role() == $role) {
+                    return $next($request);
+                }
+            }
         return redirect()->route('login');
 
     }

@@ -60,34 +60,56 @@ class FetchChartDataController extends Controller
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        if (empty($request->input('search.value'))) {
-            $orders = Order::offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
+        $columns = $request->input('columns');
+
+        //Search Individuall collumns
+        for ($i=0; $i < $totalFiltered; $i++) { 
+            if( !empty($request->columns[$i]['search']['value']))
+            {
+                $whereColumns = $request->columns[$i]['data'];
+                $search = $request->columns[$i]['search']['value'];
+            }
+        }
+        //if no search value get all
+        if (empty($search)) {
+            if (empty($request->input('search.value'))) {
+                $orders = Order::offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+            } else {
+                $search = $request->input('search.value');
+    
+                $orders =  Order::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_email', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_mobile', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_housenumber_street', 'LIKE', "%{$search}%")
+                    ->orWhere('created_date', 'LIKE', "%{$search}%")
+                    ->orWhere('delivered_date', 'LIKE', "%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+    
+                $totalFiltered = Order::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_email', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_mobile', 'LIKE', "%{$search}%")
+                    ->orWhere('shipping_housenumber_street', 'LIKE', "%{$search}%")
+                    ->orWhere('created_date', 'LIKE', "%{$search}%")
+                    ->orWhere('delivered_date', 'LIKE', "%{$search}%")
+                    ->count();
+            }
         } else {
-            $search = $request->input('search.value');
+            $orders = Order::where($whereColumns, '=' , $search)
+                    ->orwhere($whereColumns,'LIKE',"%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
 
-            $orders =  Order::where('id', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_email', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_mobile', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_housenumber_street', 'LIKE', "%{$search}%")
-                ->orWhere('created_date', 'LIKE', "%{$search}%")
-                ->orWhere('delivered_date', 'LIKE', "%{$search}%")
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
-
-            $totalFiltered = Order::where('id', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_email', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_mobile', 'LIKE', "%{$search}%")
-                ->orWhere('shipping_housenumber_street', 'LIKE', "%{$search}%")
-                ->orWhere('created_date', 'LIKE', "%{$search}%")
-                ->orWhere('delivered_date', 'LIKE', "%{$search}%")
-                ->count();
+            $totalFiltered = Order::where($whereColumns,'LIKE',"%{$search}%")->count();
         }
 
         $data = array();
@@ -97,7 +119,7 @@ class FetchChartDataController extends Controller
                 $edit =  route('admin.order.edit', $order->id);
                 $delete =  route('admin.order.destroy', $order->id);
 
-                $nestedData['id'] = $order->id;
+                $nestedData['id'] = intval($order->id);
                 $nestedData['created_date'] = date($order->created_date);
                 $nestedData['order_status_id'] = $order->getShippingStatus();
                 $nestedData['delivered_date'] = date($order->delivered_date ?? "");

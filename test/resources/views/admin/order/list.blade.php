@@ -41,6 +41,7 @@
                     <div class="float-right">
                         <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm"
                         name="add">Add</a>
+                        <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
                         <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm">Export</a>
                     </div>
                 </div>
@@ -62,7 +63,7 @@
                                     <th>Shipping Fee</th>
                                     <th>Coupon Discount</th>
                                     <th>Order Amount</th>
-                                    <th>Total</th>
+                                    <th>Total Amount</th>
                                     <th>Payment Method</th>
                                     <th>Actions</th>
                                     <th></th>
@@ -71,21 +72,54 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Order Id</th>
-                                    <th>Created Date</th>
-                                    <th>Order Status</th>
-                                    <th>Delivered Date</th>
-                                    <th>Registered User</th>
-                                    <th>Recipient Name</th>
-                                    <th>Recipient Email</th>
-                                    <th>Recipient Mobile</th>
-                                    <th>Recipient Address</th>
-                                    <th>Shipping Fee</th>
-                                    <th>Coupon Discount</th>
-                                    <th>Order Amount</th>
-                                    <th>Total</th>
-                                    <th>Payment Method</th>
-                                    <th>Actions</th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="0" placeholder="Search">
+                                    </th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="1" placeholder="Search">
+                                    </th>
+                                    <th>
+                                        <select data-column="2" class="form-control form-control-sm filter-select">
+                                            <option value="">Select</option>
+                                            @foreach ($statuses as $status)
+                                            <option value="{{ $status->id }}">{{ $status->name }}</option>  
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="3" placeholder="Search">
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="5" placeholder="Search">
+                                    </th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="6" placeholder="Search">
+                                    </th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="7" placeholder="Search">
+                                    </th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="8" placeholder="Search">
+                                    </th>
+                                    <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="9" placeholder="Search">
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                    </th>
+                                    <th>
+                                        <select data-column="13" class="form-control form-control-sm filter-select">
+                                            <option value="">Select</option>
+                                            <option value="0">COD</option>  
+                                            <option value="1">BANK</option>  
+                                        </select>
+                                    </th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -152,16 +186,21 @@
 
         <script>
             $(document).ready(function() {
-                // var _token = $('input[name="_token"]').val();
-                $('#datatableAjax').DataTable({
+            //     $('#datatableAjax tfoot th').each( function () {
+            //         var title = $(this).text();
+            //         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+            //    } );
+
+
+                var table = $('#datatableAjax').DataTable({
                     "order": [
                         [0, "desc"]
                     ],
                     "autoWidth": 'TRUE',
                     "scrollX": 'TRUE',
                     "lengthMenu": [
-                        [5, 10, 25, 50, 100, -1],
-                        [5, 10, 25, 50, 100, "All"]
+                        [5, 10, 25, 50, 100, 500, 1000],
+                        [5, 10, 25, 50, 100, 500, 1000]
                     ],
                     "columnDefs": [{
                         targets: 8,
@@ -240,9 +279,35 @@
                                             </td>`;
                             }
                         }
-                    ]
-
+                    ],
+                    // initComplete: function () {
+                    //     // Apply the search
+                    //     this.api().columns().every( function () {
+                    //         var that = this;
+            
+                    //         $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    //             if ( that.search() !== this.value ) {
+                    //                 that
+                    //                     .search( this.value )
+                    //                     .draw();
+                    //             }
+                    //         } );
+                    //     } );
+                    // }
                 });
+
+                $('.filter-input').keyup(function () { 
+                        table.column( $(this).data('column') )
+                        .search( $(this).val() )
+                        .draw();
+                    });
+                   
+                $('.filter-select').change(function () { 
+                    table.column( $(this).data('column') )
+                    .search( $(this).val() )
+                    .draw();
+                });
+                   
             });
 
         </script>
