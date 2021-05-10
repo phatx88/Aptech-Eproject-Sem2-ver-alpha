@@ -212,12 +212,13 @@
                                 {{-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#compare">Open Modal</button> --}}
 
                                <!-- Modal -->
-                                <div class="modal fade" id="compare" tabindex="-1" role="dialog">
+                                <div style="overflow-y: hidden;" class="modal fade" id="compare" tabindex="-1" role="dialog">
                                     <div class="modal-dialog">
-                                    <div class="modal-content" style="width: 1000px;
+                                    <div class="modal-content" style="width: fit-content;
+
                                     top: 100%;
                                     left: 50%;
-                                    margin-top: 350px;
+                                    margin-top: 400px;
                                     margin-right: -50%;
                                     transform: translate(-50%, -50%)">
                                         <div class="modal-header">
@@ -302,7 +303,7 @@
                     var url  = data[i].url;
                     $('#row_compare').append(`
                         <tr id="row_compare`+ id +`">
-                                <td>`+ name +`</td>
+                                <td>`+ name.substr(0, 15) +`...</td>
                                 <td><img width="70px" height="80px" src="`+ image + `"></td>
                                 <td>$`+ price +`</td>
                                 <td><a href="`+ url +`">Details</a></td>
@@ -351,7 +352,7 @@
 
                     $('#row_compare').append(`
                         <tr id="row_compare`+ id +`">
-                                <td>`+ newItem.name +`</td>
+                                <td>`+ newItem.name.substr(0, 15) +`...</td>
                                 <td><img width="70px" height="80px" src="`+ newItem.image +`"></td>
                                 <td>$`+ newItem.price +`</td>
                                 <td><a href="`+ newItem.url +`">Details</a></td>
