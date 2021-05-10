@@ -218,7 +218,7 @@
 
                                     top: 100%;
                                     left: 50%;
-                                    margin-top: 400px;
+                                    margin-top: 450px;
                                     margin-right: -50%;
                                     transform: translate(-50%, -50%)">
                                         <div class="modal-header">
@@ -226,17 +226,22 @@
                                         </div>
                                         <div class="modal-body">
                                             <div>
-                                                <table class="table table-hover">
-                                                  <tr>
+                                                <table class="table table-striped">
+                                                  {{-- <tr>
                                                     <th>Name</th>
                                                     <th>Featured Image</th>
                                                     <th>Price</th>
                                                     <th>Details</th>
                                                     <th>Delete</th>
-                                                  </tr>
-                                                <tbody id="row_compare">
+                                                  </tr> --}}
+                                                <tr>
+                                                    <th width="33%">Item 1</th>
+                                                    <th width="33%">Item 2</th>
+                                                    <th width="33%">Item 3</th>
+                                                </tr>
+                                                <tr id="row_compare">
 
-                                                </tbody>
+                                                </tr>
                                               </table>
                                             </div>
                                         </div>
@@ -302,13 +307,18 @@
                     var image = data[i].image;
                     var url  = data[i].url;
                     $('#row_compare').append(`
-                        <tr id="row_compare`+ id +`">
-                                <td>`+ name.substr(0, 15) +`...</td>
-                                <td><img width="70px" height="80px" src="`+ image + `"></td>
-                                <td>$`+ price +`</td>
-                                <td><a href="`+ url +`">Details</a></td>
-                                <td><a style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a></td>
-                            </tr>
+
+                            <td id="row_compare`+ id +`">
+                                <div class="card">
+                                    <img width="100%" height="350px" src="`+ image +`" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">`+ name.substr(0, 20) +`...</h5>
+                                        <p>Price: `+ price+`</p>
+                                        <a class="btn btn-primary" href="`+ url +`">Details</a>
+                                        <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
+                                    </div>
+                                </div>
+                            </td>
                     `);
                 }
             }
@@ -351,13 +361,17 @@
                     old_data.push(newItem);
 
                     $('#row_compare').append(`
-                        <tr id="row_compare`+ id +`">
-                                <td>`+ newItem.name.substr(0, 15) +`...</td>
-                                <td><img width="70px" height="80px" src="`+ newItem.image +`"></td>
-                                <td>$`+ newItem.price +`</td>
-                                <td><a href="`+ newItem.url +`">Details</a></td>
-                                <td><a style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a></td>
-                            </tr>
+                        <td id="row_compare`+ id +`">
+                                <div class="card">
+                                    <img width="100%" height="350px" src="`+ newItem.image +`" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title">`+ newItem.name.substr(0, 20) +`...</h5>
+                                        <p>Price: `+ price+`</p>
+                                        <a href="`+ newItem.url +`" class="btn btn-primary">Details</a>
+                                        <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
+                                    </div>
+                                </div>
+                            </td>
                     `);
                 }else{
                     notyf.error('You just can compare 3 items!!!');
