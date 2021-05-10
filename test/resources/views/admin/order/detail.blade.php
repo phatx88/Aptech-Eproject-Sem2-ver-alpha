@@ -22,7 +22,7 @@
             </div>
             <div class="row ">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Tên khách hàng:</label>
+                    <label>Customer Name:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
 
@@ -36,7 +36,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Điện thoại:</label>
+                    <label>Mobile:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>{{ $order->user->mobile ?? $order->shipping_mobile }}</span>
@@ -45,7 +45,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Email:</label>
+                    <label>Recipient Email:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>{{ $order->user->email ?? $order->shipping_email }}</span>
@@ -54,7 +54,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Trạng thái:</label>
+                    <label>Order Status:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>{{ $order->status->name }}</span>
@@ -63,7 +63,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Ngày đặt hàng:</label>
+                    <label>Order Date:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>{{ $order->created_date }}</span>
@@ -72,7 +72,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2 ">
-                    <label>Người nhận</label>  
+                    <label>Recipient Name:</label>  
                 </div>
                 <div class="col-sm-8 col-lg-6"> 
                     <span>{{ $order->shipping_fullname }}</span>
@@ -80,7 +80,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 col-lg-2 ">
-                    <label>Số điện thoại người nhận</label>  
+                    <label>Recipient Phone:</label>  
                 </div>
                 <div class="col-sm-8 col-lg-6"> 
                     <span>{{ $order->shipping_mobile }}</span>
@@ -89,7 +89,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2 ">
-                    <label>Hình thức thanh toán</label>  
+                    <label>Payment Method</label>  
                 </div>
                 <div class="col-sm-8 col-lg-6"> 
                     <span>{{ $order->payment_method == 0 ? 'COD' : 'Bank Transfer' }}</span>
@@ -99,7 +99,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2 ">
-                    <label>Tạm tính:</label>
+                    <label>Amount:</label>
                 </div>
                 <div class="col-sm-8 col-lg-6">
                     <span>$
@@ -118,7 +118,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Phí giao hàng:</label>
+                    <label>Shipping Fee:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>$ {{ $order->shipping_fee }}</span>
@@ -127,7 +127,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Tổng cộng:</label>
+                    <label>Total:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>$ {{ $sum + $order->shipping_fee }}</span>
@@ -136,7 +136,7 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Địa chỉ giao hàng:</label>
+                    <label>Shipping Address:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>{{ $order->shipping_housenumber_street }}, {{ $order->ward->name }}, {{ $order->ward->district->name }}, {{ $order->ward->district->province->name }}</span>
@@ -145,13 +145,13 @@
 
             <div class="row">
                 <div class="col-sm-4 col-lg-2">
-                    <label>Nhân viên phụ trách:</label>
+                    <label>Responsible staff:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
                     <span>{{ $order->staff->user->name ?? "" }}</span>
                 </div>
             </div>
-            <label class="control-label">Sản phẩm</label>
+            <label class="control-label">Product</label>
 
             <div class="card mb-3">
                 <div class="card-body">
@@ -160,12 +160,12 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Mã sản phẩm</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th>Featured Image</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total Price</th>
                                 </tr>
                             </thead>
                             <tbody>

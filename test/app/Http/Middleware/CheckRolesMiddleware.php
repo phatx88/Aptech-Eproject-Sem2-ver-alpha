@@ -20,12 +20,14 @@ class CheckRolesMiddleware
         // if ( ! Auth::check()) {
         //     abort(403, 'Unauthorized action.');
         // }
-
+        // $role shoule be staff or user only 
         //not allow if not user don't have the right credentials
-        if ( ! $request->user()->hasRole($role)) {
-            return redirect()->route('login');
-        }
+            // dd($role);
 
-        return $next($request);
+        if ( $request->user()->role() == $role) {
+            return $next($request);
+        }
+        return redirect()->route('login');
+
     }
 }

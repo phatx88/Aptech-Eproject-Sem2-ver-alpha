@@ -4,11 +4,14 @@
     <div class="container-fluid">
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">Danh mục</li>
-       </ol>
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+         </li>
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.brand.index') }}">Brand</a>
+         </li>
+         <li class="breadcrumb-item active">Edit</li>
+     </ol>
        <!-- /form -->
        <form method="post" action="{{ route('admin.brand.store') }}" enctype="multipart/form-data">
         @csrf
@@ -19,20 +22,14 @@
              </div>
           </div>
           <div class="form-action">
-             <input type="submit" class="btn btn-primary btn-sm" value="Lưu" name="save">
+             <input type="submit" class="btn btn-primary btn-sm" value="Add" name="save">
           </div>
        </form>
        <!-- /form -->
     </div>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-       <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-             <span>Copyright © Thầy Lộc 2017</span>
-          </div>
-       </div>
-    </footer>
+    @include('admin.footer')
  </div>
  <!-- /.content-wrapper -->
 @endsection

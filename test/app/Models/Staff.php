@@ -18,7 +18,7 @@ class Staff extends Model
      */
     protected $fillable = [
         'user_id',
-        'role',
+        'role_id',
     ];
 
     public function user(){

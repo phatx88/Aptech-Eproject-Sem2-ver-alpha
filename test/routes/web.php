@@ -150,58 +150,44 @@ Route::post('/fetch-user', [FetchChartDataController::class,'fetchUser']);
 
 // Có VErify
 // User Dashboard
-// Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->group(function() {
-//     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
-//     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
-//     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
-// });
-
-
-//Admin Dashboard
-// Route::prefix('admin')->name('admin.')->middleware(['auth' , 'verified', 'checkRoles:staff'])->group(function () {
-//     Route::resource('dashboard' , Admin_DashboardController::class);
-//     Route::resource('product', Admin_ProductController::class);
-//     Route::resource('order', Admin_OrderController::class);
-//     Route::resource('order.item', Admin_OrderItemController::class);
-//     Route::resource('category', Admin_CategoryController::class);
-//     Route::resource('brand', Admin_BrandController::class);
-//     Route::resource('coupon', Admin_CouponController::class);
-//     Route::resource('staff', Admin_StaffController::class);
-//     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-//     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
-// });
-
-
-
-
-// KO Verify - Development Only
-// User Dashboard
-Route::prefix('home')->group(function() {
+Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user'])->group(function() {
     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
 });
 
-// Admin Dashboard
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export'); //must be before route resource
-    Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export');
 
-    Route::get('product/export', [Admin_ProductController::class, 'export'])->name('product.export');
-    //must be before route resource
+//Admin Dashboard
+Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff'])->group(function () {
+    // Dash Board
     Route::resource('dashboard' , Admin_DashboardController::class);
+
+    // Product 
+    Route::get('product/export', [Admin_ProductController::class, 'export'])->name('product.export');
     Route::get('product/status/{id}', [Admin_ProductController::class, 'status'] );
+    Route::get('product/restore/{id}', [Admin_ProductController::class, 'restore'] );
+    Route::get('product/trash', [Admin_ProductController::class, 'showTrash'] );
     Route::resource('product', Admin_ProductController::class);
-    Route::resource('order', Admin_OrderController::class);
-    Route::resource('order.item', Admin_OrderItemController::class);
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
+    Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export');
     Route::resource('coupon', Admin_CouponController::class);
+
+    // Order 
+    Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export'); 
+    Route::get('order/restore/{id}', [Admin_OrderController::class, 'restore'] );
+    Route::get('order/trash', [Admin_OrderController::class, 'showTrash'] );
+    Route::resource('order', Admin_OrderController::class);
+    Route::resource('order.item', Admin_OrderItemController::class);
+    
+    // Staff 
     Route::post('staff/calendar/action', [Admin_StaffController::class, 'action']); //FullCalender Action
     Route::resource('staff', Admin_StaffController::class);
+
+    // User
     Route::resource('user', Admin_UserController::class);
-    Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+
+    // Blog 
     Route::resource('blog', Admin_BlogController::class);
     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
     Route::get('delete/{id}', [Admin_BlogController::class, 'delete']);
@@ -209,7 +195,49 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
 
+    // Misc 
+    Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
+    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 });
+
+
+
+
+// KO Verify - Development Only
+// User Dashboard
+// Route::prefix('home')->group(function() {
+//     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
+//     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
+//     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
+// });
+
+// Admin Dashboard
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export'); //must be before route resource
+//     Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export');
+//     Route::get('product/export', [Admin_ProductController::class, 'export'])->name('product.export');
+//     //must be before route resource
+//     Route::resource('dashboard' , Admin_DashboardController::class);
+//     Route::get('product/status/{id}', [Admin_ProductController::class, 'status'] );
+//     Route::resource('product', Admin_ProductController::class);
+//     Route::resource('order', Admin_OrderController::class);
+//     Route::resource('order.item', Admin_OrderItemController::class);
+//     Route::resource('category', Admin_CategoryController::class);
+//     Route::resource('brand', Admin_BrandController::class);
+//     Route::resource('coupon', Admin_CouponController::class);
+//     Route::post('staff/calendar/action', [Admin_StaffController::class, 'action']); //FullCalender Action
+//     Route::resource('staff', Admin_StaffController::class);
+//     Route::resource('user', Admin_UserController::class);
+//     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
+//     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+//     Route::resource('blog', Admin_BlogController::class);
+//     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
+//     Route::get('delete/{id}', [Admin_BlogController::class, 'delete']);
+//     Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
+//     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
+//     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
+
+// });
 
 Route::get('clear-cache', function () {
     Artisan::call('cache:clear');

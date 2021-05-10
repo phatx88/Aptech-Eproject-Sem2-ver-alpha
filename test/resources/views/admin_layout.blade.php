@@ -48,17 +48,19 @@
          <li class="nav-item dropdown {{ Request::segment(2) == 'order' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shopping-cart"></i> <span>Orders</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.order.index')}}">List</a>
-               <a class="dropdown-item" href="{{route('admin.order.create')}}">Add</a>
+               <a class="dropdown-item" href="{{route('admin.order.index')}}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{route('admin.order.create')}}"><i class="fas fa-plus"></i> Add</a>
+               <a class="dropdown-item" href="{{url('admin/order/trash')}}"><i class="fas fa-recycle"></i>  Restore</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'product' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fab fa-product-hunt"></i> <span>Products</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('admin.product.index') }}">List</a>
-               <a class="dropdown-item" href="{{ route('admin.product.create') }}">Add</a>
+               <a class="dropdown-item" href="{{ route('admin.product.index') }}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{ route('admin.product.create') }}"><i class="fas fa-plus"></i> Add</a>
                <a class="dropdown-item" href="{{route('admin.category.index')}}"><i class="fas fa-folder"></i> Category</a>
                <a class="dropdown-item" href="{{route('admin.brand.index')}}"><i class="fas fa-folder"></i>  Brand</a>
+               <a class="dropdown-item" href="{{url('admin/product/trash')}}"><i class="fas fa-recycle"></i>  Restore</a>
             </div>
          </li>
          <li class="nav-item dropdown">
@@ -154,7 +156,7 @@
  <script src="{{asset('backend/vendor/datatables/dataTables.bootstrap4.js')}}"></script>
  <script src="https://cdn.datatables.net/plug-ins/1.10.24/dataRender/ellipsis.js"></script>
  <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+ {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
  <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
  <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
  <!-- Custom scripts for all pages-->

@@ -25,14 +25,14 @@
            </div>
            <div class="row ">
             <div class="col-sm-4 col-lg-2">
-               <label>Tên khách hàng:</label>  
+               <label>Customer Name:</label>  
             </div>
             <div class="col-sm-8 col-lg-6"> 
                <select class="form-control" name="customer_id">
                    @if ($order->customer_id != null)
                    <option value="{{ $order->user->id }}">{{ $order->user->name }}</option>
                    @else
-                   <option value="">Khách Vãng Lai</option>
+                   <option value="">Guest</option>
                    @endif   
                   @foreach ($users as $user)
                   <option value="{{ $user->id }}" {{ $user->id == $order->id ? "selected" : "" }}>{{ $user->name }}</option>
@@ -43,7 +43,7 @@
            
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Shipping_Email:</label>  
+                   <label>Recipient Email:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <input type="email" name="shipping_email" class="form-control" value="{{ $order->user->email ?? $order->shipping_email }}" required>
@@ -51,7 +51,7 @@
            </div>
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Trạng thái:</label>  
+                   <label>Order Status:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <select name="order_status_id" class="form-control">  
@@ -63,7 +63,7 @@
            </div>
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Ngày đặt hàng:</label>  
+                   <label>Order Date:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <span>{{ $order->created_date }}</span>							
@@ -71,7 +71,7 @@
            </div>
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Người nhận</label>  
+                   <label>Recipient Name:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <input type="text" name="shipping_fullname" value="{{ $order->shipping_fullname }}" class="form-control"> 							
@@ -79,7 +79,7 @@
            </div>
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Số điện thoại người nhận</label>  
+                   <label>Recipient Phone:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <input type="text" name="shipping_mobile" value="{{ $order->shipping_mobile }}" class="form-control"> 							
@@ -88,7 +88,7 @@
            
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Hình thức thanh toán</label>  
+                   <label>Payment Method</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <select name="payment_method" class="form-control">
@@ -102,7 +102,7 @@
            
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Tạm tính:</label>  
+                   <label>Amount:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <span>$
@@ -131,7 +131,7 @@
 
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Tổng cộng:</label>  
+                   <label>Total:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <span id="total" data-value="{{ $sum }}">$ {{ $total = $sum + $order->shipping_fee - $coupon }}</span>							
@@ -139,7 +139,7 @@
            </div>
            <div class="row">
                <div class="col-sm-4 col-lg-2">
-                   <label>Địa chỉ giao hàng</label>  
+                   <label>Shipping Address</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <div class="row">
@@ -180,7 +180,7 @@
 
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Ngày giao hàng</label>  
+                   <label>Delivered Date:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <input type="date" name="delivered_date" value="{{ $order->delivered_date ?? "" }}" class="form-control">
@@ -189,7 +189,7 @@
            
            <div class="row">
                <div class="col-sm-4 col-lg-2 ">
-                   <label>Nhân viên phụ trách</label>  
+                   <label>Responsible staff:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
                    <select name="staff_id" class="form-control">
@@ -201,10 +201,9 @@
                </div>
            </div>
 
-           <label class="control-label">Sản phẩm</label>  
+           <label class="control-label">Product</label>  
            <div class="form-group">
-                <a class="btn btn-primary btn-sm" type="button" href="{{ route('admin.order.item.create' , ['order' => $order->id]) }}">Thêm sản phẩm</a> 
-                <input type="submit" class="btn btn-danger btn-sm" value="Xóa sản phẩm" name="delete"> 
+                <a class="btn btn-warning btn-sm" type="button" href="{{ route('admin.order.item.index' , ['order' => $order->id]) }}">Edit Order Item</a> 
            </div>
            <div class="card mb-3">
                  <div class="card-body">
@@ -213,12 +212,12 @@
                            <thead>
                               <tr>
                                   <th><input type="checkbox" onclick="checkAll(this)"></th>
-                                 <th>Mã sản phẩm</th>
-                                 <th>Tên sản phẩm</th>
-                                 <th>Hình ảnh</th>
-                                 <th>Giá</th>
-                                 <th>Số lượng</th>
-                                 <th>Thành tiền</th>
+                                  <th>Product ID</th>
+                                  <th>Product Name</th>
+                                  <th>Featured Image</th>
+                                  <th>Unit Price</th>
+                                  <th>Quantity</th>
+                                  <th>Total Price</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -251,7 +250,7 @@
            </div>
            
            <div class="form-action">
-               <input type="submit" class="btn btn-primary btn-sm" value="Cập nhật" name="edit">
+               <input type="submit" class="btn btn-primary btn-sm" value="Save" name="edit">
            </div>
            <br>
        </form>

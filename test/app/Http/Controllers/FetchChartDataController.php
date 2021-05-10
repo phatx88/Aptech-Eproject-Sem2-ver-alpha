@@ -38,13 +38,13 @@ class FetchChartDataController extends Controller
             0 => 'id',
             1 => 'created_date',
             2 => 'order_status_id',
-            3 => 'customer_name',
+            3 => 'customer_id',
             4 => 'shipping_fullname',
             5 => 'shipping_email',
             6 => 'shipping_mobile',
-            7 => 'shipping_address',
+            7 => 'shipping_housenumber_street',
             8 => 'shipping_fee',
-            9 => 'coupon_discount',
+            9 => 'coupon_id',
             10 => 'amount',
             11 => 'total',
             12 => 'delivered_date',
@@ -95,23 +95,25 @@ class FetchChartDataController extends Controller
             foreach ($orders as $order) {
                 $show =  route('admin.order.show', $order->id);
                 $edit =  route('admin.order.edit', $order->id);
+                $delete =  route('admin.order.destroy', $order->id);
 
                 $nestedData['id'] = $order->id;
                 $nestedData['created_date'] = date($order->created_date);
                 $nestedData['order_status_id'] = $order->getShippingStatus();
                 $nestedData['delivered_date'] = date($order->delivered_date ?? "");
-                $nestedData['customer_name'] = $order->user->name ?? "guest";
+                $nestedData['customer_id'] = $order->user->name ?? "guest";
                 $nestedData['shipping_fullname'] = $order->shipping_fullname;
                 $nestedData['shipping_email'] = $order->shipping_email;
                 $nestedData['shipping_mobile'] = $order->shipping_mobile;
-                $nestedData['shipping_address'] = $order->shipping_housenumber_street." , ".$order->ward->name." , ".$order->ward->district->name." , ".$order->ward->district->province->name;
-                $nestedData['shipping_fee'] = "$".$order->shipping_fee ;
-                $nestedData['coupon_discount'] = "$".($order->coupon->number ?? 0);
-                $nestedData['amount'] = "$".($order->orderItem->sum('total_price'));
-                $nestedData['total'] = "$".($order->orderItem->sum('total_price') - ($order->coupon->number ?? 0) + $order->shipping_fee);
+                $nestedData['shipping_housenumber_street'] = $order->shipping_housenumber_street." , ".$order->ward->name." , ".$order->ward->district->name." , ".$order->ward->district->province->name;
+                $nestedData['shipping_fee'] = "$".number_format($order->shipping_fee) ;
+                $nestedData['coupon_id'] = "$".number_format(($order->coupon->number ?? 0));
+                $nestedData['amount'] = "$".number_format(($order->orderItem->sum('total_price')));
+                $nestedData['total'] = "$".number_format(($order->orderItem->sum('total_price') - ($order->coupon->number ?? 0) + $order->shipping_fee));
                 $nestedData['payment_method'] = $order->getPayment();
                 $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
                 $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
+                $nestedData['option_delete'] = $delete;                                 
                 $data[] = $nestedData;
             }
         }

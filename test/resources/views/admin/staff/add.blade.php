@@ -34,8 +34,10 @@
                   <label class="col-md-12 control-label" for="role">Roles</label>  
                   <div class="col-md-9 col-lg-6">
                      <select name="role" class="form-control">
-                        <option value="Inspector">Inspector</option>
-                        <option value="Staff">Staff</option>
+                        <option value="">Select Roles</option>
+                        <option value="1">1 - Admin</option>
+                        <option value="2">2 - Staff</option>
+                        <option value="3">3 - View</option>
                      </select>
                   </div>
                </div>

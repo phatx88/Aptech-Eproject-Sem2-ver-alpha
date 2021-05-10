@@ -152,6 +152,11 @@
     @yield('content')
 
     <footer class="ftco-footer">
+        
+        <div class="zalo-chat-widget" data-oaid="3571761673728426397" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="350" data-height="420"></div>
+
+        <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+       
         <div class="container">
             <div class="row mb-5">
                 <div class="col-sm-12 col-md">
@@ -283,10 +288,15 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                                <a href="#forgotPassword" data-dismiss="modal" data-toggle="modal"
+                                {{-- <a href="#forgotPassword" data-dismiss="modal" data-toggle="modal"
                                     style="display:block; position: absolute; right: 0;" title="">
                                     Forgot Password?
-                                </a>
+                                </a> --}}
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" style="display:block; position: absolute; right: 0;" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Password?') }}
+                                    </a>
+                                @endif
                             </div>
                             <div class="form-group pb-3">
                                 <div class="form-check">
@@ -300,11 +310,7 @@
                             </div>
                             <div class="form-group pt-2">
                                 <button class="btn btn-info form-control">{{ __('Login') }}</button>
-                                {{-- @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif --}}
+                                
                             </div>
                             <div class="form-group text-center pt-2 social-login">
                                 <h6>OR Continue with</h6>
@@ -395,7 +401,7 @@
             </div>
         </div>
         {{-- forget password Modal --}}
-        <div class="modal fade" id="forgotPassword">
+        {{-- <div class="modal fade" id="forgotPassword">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content form-wrapper">
                     <div class="close-box" data-dismiss="modal">
@@ -431,8 +437,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div> --}}
+        
     </footer>
 
 

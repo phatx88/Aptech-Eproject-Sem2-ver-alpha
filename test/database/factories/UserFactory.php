@@ -35,6 +35,7 @@ class UserFactory extends Factory
             'mobile' => $this->faker->e164PhoneNumber(),
             'housenumber_street' => $this->faker->streetAddress,
             'ward_id' => Ward::get()->pluck('id')->random(),
+            'last_login_at' => $this->faker->dateTimeBetween('-1 year -6 months', '+1 month')
         ];
     }
 
@@ -48,6 +49,20 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'email_verified_at' => null,
+            ];
+        });
+    }
+
+     /**
+     * Indicate that the model's email address should be unverified.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function randomLogin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'last_login_at' => $this->faker->dateTimeBetween('-1 year -6 months', '+1 month'),
             ];
         });
     }

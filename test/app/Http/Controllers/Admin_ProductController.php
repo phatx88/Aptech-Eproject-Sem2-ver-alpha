@@ -36,57 +36,7 @@ class Admin_ProductController extends Controller
             $name_product[] = substr($pro_count->name, 0, 15)."...";
             $count_product[] = $pro_count->view_count;
         }
-        // //Count order-item
-        // $order_count_product = session()->get('top_product');
-
-        // $product_order_count = OrderItem::all();
-
-        // $product_order_count_first = OrderItem::first();
-
-        // if($order_count_product == null){
-
-        //         $order_count_product[] = array(
-        //             'id' => $product_order_count_first->product_id,
-        //             'product_name' => $product_order_count_first->product->name,
-        //             'product_count' => $product_order_count_first->qty
-        //         );
-
-        // }
-        // $count = 0;
-        // foreach($order_count_product as $key => $value){
-        //     foreach ($product_order_count as  $pro_order){
-        //         if($pro_order->product_id == $value['id']){
-        //             $order_count_product[$key]['product_count'] += $pro_order->qty;
-        //         }else{
-        //             $order_count_product[] = array(
-        //                 'id' => $pro_order->product_id,
-        //                 'product_name' => $pro_order->product->name,
-        //                 'product_count' => $pro_order->qty
-        //             );
-        //         }
-        //     }
-        // }
-        // dd($order_count_product);
-        // for($i = 0 ; $i < count($order_count_product) - 1; $i++){
-        //     for($j = $i + 1; $j < count($order_count_product) ; $j++){
-        //         if($order_count_product[$i]['product_count'] < $order_count_product[$j]['product_count']){
-        //             $order_count_product[$i] = $order_count_product[$j];
-        //         }
-        //     }
-        // }
-        // $top5_seller = array();
-        // for($k = 0 ; $k < 5; $k++){
-        //     $top5_seller[] = $order_count_product[$k];
-        // }
-        // dd($top5_seller);
-
-        // $order_name = array();
-        // $order_count = array();
-        // for($i = 0; $i <= 5; $i++){
-        //     $order_name[] = $order_count[$i]['product_name'];
-        //     $order_count[] = $order_count[$i]['product_count'];
-        // }
-
+       
         $top_product = DB::table('top_seller_product')
         ->orderby('total_qty', 'DESC')
         ->limit(5)->get();
@@ -128,10 +78,19 @@ class Admin_ProductController extends Controller
     {
         $categories = Category::orderby('name', 'ASC')->get();
         $brands = Brand::orderby('name', 'ASC')->get();
-        return view('admin.product.add', [
-            'categories' => $categories,
-            'brands' => $brands,
-        ]);
+
+        $user = Auth::user();
+        if($user->can("create" , Product::class)){
+            // echo "có quyền";
+            return view('admin.product.add', [
+                'categories' => $categories,
+                'brands' => $brands,
+            ]);
+        }
+        else {
+           abort(403);
+        }
+        
     }
 
     /**
@@ -204,11 +163,19 @@ class Admin_ProductController extends Controller
     {
         $categories = Category::orderby('name', 'ASC')->get();
         $brands = Brand::orderby('name', 'ASC')->get();
-        return view('admin.product.edit', [
-            'categories' => $categories,
-            'brands' => $brands,
-            'product' => $product,
-        ]);
+
+        $user = Auth::user();
+        if($user->can("update" , Product::class)){
+            return view('admin.product.edit', [
+                'categories' => $categories,
+                'brands' => $brands,
+                'product' => $product,
+            ]);
+        }
+        else {
+           abort(403);
+        }
+     
     }
 
     /**
@@ -269,14 +236,16 @@ class Admin_ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $products
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
     public function destroy(Products $product)
     {
+        // SOFT DELETE 
         try {
-            $product->forceDelete();
-            request()->session()->put('success', "Deleted Product : {$product->name} / ID : {$product->id} Successfully");
+            $msg = 'Deleted Product : '.$product->name.' - ID : '.$product->id.' Successfully - <a href="'. url('admin/product/restore/'.$product->id.'') . '"> Undo Action</a>';
+            $product->delete();
+            request()->session()->put('success', $msg);
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 request()->session()->put('error', $e->getMessage());
@@ -284,6 +253,37 @@ class Admin_ProductController extends Controller
         }
         return redirect()->route("admin.product.index");
     }
+
+    public function showTrash()
+    {
+        $products = Products::onlyTrashed()->get();
+        return view('admin.product.trash', [
+            'products' => $products,
+            ]);
+    }
+
+    public function restore($id)
+    {
+        Products::onlyTrashed()->where('id' , $id)->restore();
+        $product = Products::find($id);
+        $msg = 'Restored Product : '.$product->name.' - ID : '.$product->id.' Successfully';
+        request()->session()->put('success', $msg);
+        return redirect()->back();
+    }
+
+    // public function forceDelete(Products $product)
+    // {
+    //     // HARD DELETE 
+    //     try {
+    //         // $product->forceDelete();
+    //         request()->session()->put('success', "Deleted Product : {$product->name} / ID : {$product->id} Successfully");
+    //     } catch (QueryException $e) {
+    //         if ($e->getCode() == 23000) {
+    //             request()->session()->put('error', $e->getMessage());
+    //         }
+    //     }
+    //     return redirect()->back();
+    // }
 
     public function fetchProduct(Request $request)
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class Admin_BrandController extends Controller
 {
@@ -91,9 +92,16 @@ class Admin_BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        Brand::find($id)->delete();
-        return redirect()->action([Admin_BrandController::class,'index']);
+        try {
+            $brand->forceDelete();
+            request()->session()->put('success', "Deleted Category : {$brand->id} - {$brand->name} Successfully");
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
     }
 }

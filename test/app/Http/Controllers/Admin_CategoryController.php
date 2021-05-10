@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Database\QueryException;
 
 class Admin_CategoryController extends Controller
 {
@@ -92,9 +93,16 @@ class Admin_CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        Category::find($id)->delete();
-        return redirect()->action([Admin_CategoryController::class,'index']);
+        try {
+            $category->forceDelete();
+            request()->session()->put('success', "Deleted Category : {$category->id} - {$category->name} Successfully");
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
     }
 }

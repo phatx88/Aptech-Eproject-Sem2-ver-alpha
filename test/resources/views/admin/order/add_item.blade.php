@@ -50,12 +50,13 @@
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" onclick="checkAll(this)"></th>
-                                        <th>Mã sản phẩm</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Hình ảnh</th>
-                                        <th>Giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Thành tiền</th>
+                                        <th>Product Id</th>
+                                        <th>Product Name</th>
+                                        <th>Featured Image</th>
+                                        <th>Unit Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -75,6 +76,16 @@
                                              value="{{ $item->qty }}"></td>
                                             <td><span id="total_price" data-value="">${{ $item->total_price }}</span>
                                             </td>
+                                            {{-- @can('delete', 'App\Models\OrderItem') --}}
+                                            <td>
+                                                <form action="{{ route('admin.order.item.destroy' , ['order' => $item->order_id , 'item' => $item->product_id]) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="submit" value="Delete"
+                                                    class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                                </form>
+                                            </td>
+                                            {{-- @endcan --}}
                                         </tr>
                                     @endforeach
                                 </tbody>

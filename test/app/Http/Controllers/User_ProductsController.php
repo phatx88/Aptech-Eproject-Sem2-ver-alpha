@@ -46,6 +46,7 @@ class User_ProductsController extends Controller
                         ->join('category', 'view_product.category_id', '=', 'category.id')
                         ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
                         ->whereColumn('price', '>', 'sale_price')
+                        ->where('deleted_at', null)
                         ->where('hidden', false)
                         ->paginate(9);
                     break;
@@ -56,6 +57,7 @@ class User_ProductsController extends Controller
                             ->select('*')
                             ->from('view_product')
                             ->whereIn('id', $bestSellingId)
+                            ->where('deleted_at', null)
                             ->where('hidden', false);
                     }, 'view_product')
                     ->join('brand', 'view_product.brand_id', '=', 'brand.id')
@@ -70,6 +72,7 @@ class User_ProductsController extends Controller
                         ->join('category', 'view_product.category_id', '=', 'category.id')
                         ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
                         ->where('created_date', '>', Carbon::now()->subDays(30))
+                        ->where('deleted_at', null)
                         ->where('hidden', false)
                         ->paginate(9);
                     break;
@@ -81,6 +84,7 @@ class User_ProductsController extends Controller
                         ->join('category', 'view_product.category_id', '=', 'category.id')
                         ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
                         ->where('category_id', $cate_id)
+                        ->where('deleted_at', null)
                         ->where('hidden', false)
                         ->paginate(9);
                     break;
@@ -94,6 +98,7 @@ class User_ProductsController extends Controller
                 ->join('category', 'view_product.category_id', '=', 'category.id')
                 ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
                 ->WhereBetween('price', [$price_from, $price_to])
+                ->where('deleted_at', null)
                 ->where('hidden', false)
                 ->paginate(9);
         }
@@ -105,6 +110,7 @@ class User_ProductsController extends Controller
                 return $query
                     ->select('*')
                     ->from('view_product')
+                    ->where('deleted_at', null)
                     ->where('hidden', false);
             }, 'view_product')
                 ->join('brand', 'view_product.brand_id', '=', 'brand.id')
@@ -156,7 +162,10 @@ class User_ProductsController extends Controller
             $category_id = $value->category_id;
         }
         $related_product = Product::orderby('created_date', 'DESC')
-            ->where('category_id', $category_id)->get();
+            ->where('category_id', $category_id)
+            ->where('deleted_at', null)
+            ->where('hidden', false)
+            ->get();
 
         $bestSelling = DB::table('top_seller_product')
         ->orderBy('total_qty' , 'DESC')
@@ -196,7 +205,6 @@ class User_ProductsController extends Controller
             $comment->save();
 
             } catch (Exception $e) {
-
                 return response()->json([$e->getMessage()], 400);
             }
         }

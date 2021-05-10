@@ -13,7 +13,7 @@
 @if (!empty($message))
     <div class="alert {{$alertClass}} text-center">
         <strong>
-            {{$message}}
+            {!! $message !!}
         </strong>
     </div>    
 @endif

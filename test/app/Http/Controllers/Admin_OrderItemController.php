@@ -18,7 +18,13 @@ class Admin_OrderItemController extends Controller
      */
     public function index(Order $order)
     {
-        //
+        $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
+        $products = Product::get();
+        return view('admin.order.add_item' , [
+            'order' => $order,
+            'products' => $products,
+            'orderItem' => $orderItem,
+        ]);
     }
 
     /**
@@ -28,13 +34,7 @@ class Admin_OrderItemController extends Controller
      */
     public function create(Order $order)
     {
-        $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
-        $products = Product::get();
-        return view('admin.order.add_item' , [
-            'order' => $order,
-            'products' => $products,
-            'orderItem' => $orderItem,
-        ]);
+      //
     }
 
     /**
@@ -61,7 +61,7 @@ class Admin_OrderItemController extends Controller
             request()->session()->put('error', $e->getMessage());
             return redirect()->back();
         }
-        return redirect()->route('admin.order.item.create' , ['order' => $order]);
+        return redirect()->route('admin.order.item.index' , ['order' => $order]);
     }
 
     /**
@@ -70,7 +70,7 @@ class Admin_OrderItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
         //
     }
@@ -113,8 +113,18 @@ class Admin_OrderItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($order, $item)
     {
-        //
+        // dd($item);
+        $orderItem = OrderItem::where('order_id' , $order)->where('product_id' , $item)->first();
+        try {
+            $orderItem->forceDelete();
+            request()->session()->put('success', "Deleted Order_id: {$order} / Product_id: {$item} Successfully");
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
     }
 }

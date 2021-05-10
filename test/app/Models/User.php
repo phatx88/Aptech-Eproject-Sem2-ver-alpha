@@ -16,6 +16,15 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
     protected $table = 'users';
     protected $primaryKey = "id";
+
+    protected $dates = [
+        'updated_at',
+        'created_at',
+        'deleted_at',
+        'email_verified_at',
+        'last_login_at',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -29,6 +38,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_staff',
         'provider',
         'provider_id',
+        'last_login_at',
+        'deleted_at',
     ];
 
     /**
@@ -50,20 +61,61 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    //separated user and staff
     public function role() {
         $role = [0 => "user", 1 => "staff"];
         return $role[$this->is_staff];
     }
 
-    public function hasRole($role) {
-        if ($this->role() == $role) {
-            return true;
+    //to connect to roles and permissions
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'staff', 'user_id' , 'role_id');
+    }
+
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('name', $role);
         }
+
         return false;
     }
 
-    public function ward(){
-        return $this->belongsTo(Ward::class, 'ward_id' , 'id');
+
+    public function assignRole($role_id)
+    {
+        return Staff::create([
+            'user_id' => $this->id,
+            'role_id' => $role_id,
+        ]);
+    }
+
+    public function hasPermission($permission = null)
+    {
+        if (is_null($permission)) {
+            return $this->getPermissions()->count();
+        }
+
+        if (is_string($permission)) {
+            return $this->getPermissions()->contains('name', $permission);
+        }
+
+        return false;
+    }
+
+    private function getPermissions()
+    {
+        $role = $this->roles->first();
+        if ($role) {
+            if (! $role->relationLoaded('permissions')) {
+                $this->roles->load('permissions');
+                
+            }
+            $this->permissionList = $this->roles->pluck('permissions')->flatten();
+        }
+        
+
+        return $this->permissionList ?? collect();
     }
 
     /**
@@ -74,6 +126,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function staff(): HasOne
     {
         return $this->hasOne(Staff::class, 'user_id', 'id');
+    }
+
+
+    /**
+     * Get all of the order for the User
+     *
+     * 
+     */
+    public function ward(){
+        return $this->belongsTo(Ward::class, 'ward_id' , 'id');
     }
 
     /**
@@ -91,13 +153,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class, 'authorId', 'id');
     }
 
-    public function assignRole($role)
-    {
-        return Staff::create([
-            'user_id' => $this->id,
-            'role' => $role,
-        ]);
-    }
+   
 
     public function postcomment()
     {
