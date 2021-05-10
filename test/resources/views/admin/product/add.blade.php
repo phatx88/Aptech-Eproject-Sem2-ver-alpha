@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item">
                   <a href="{{ route('admin.product.index') }}">Product</a>
               </li>
-                <li class="breadcrumb-item active">Add Product</li>
+                <li class="breadcrumb-item active">Add</li>
             </ol>
             <!-- /form -->
             @include('errors.error')

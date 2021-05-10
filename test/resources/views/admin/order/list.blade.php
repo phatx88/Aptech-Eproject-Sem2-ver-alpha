@@ -15,7 +15,7 @@
                 </li>
                 <li class="breadcrumb-item active">List</li>
             </ol>
-            @include('errors.message')
+            
             {{-- GOOGLE CALENDAR CHART --}}
 
             <div class="row mb-3">
@@ -32,19 +32,17 @@
                     </div>
                 </div>
             </div>
-
+            @include('errors.message')
             <!-- DataTables Example -->
-
-            <div class="action-bar">
-                <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm"
-                    name="add">Add</a>
-                <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
-            </div>
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
                     Order List
-                    <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm float-right">Export</a>
+                    <div class="float-right">
+                        <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm"
+                        name="add">Add</a>
+                        <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm">Export</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -66,8 +64,9 @@
                                     <th>Order Amount</th>
                                     <th>Total</th>
                                     <th>Payment Method</th>
-                                    <th></th>
                                     <th>Actions</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -86,8 +85,9 @@
                                     <th>Order Amount</th>
                                     <th>Total</th>
                                     <th>Payment Method</th>
-                                    <th></th>
                                     <th>Actions</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -139,7 +139,6 @@
                     var button = $(event.relatedTarget) // Button that triggered the modal
                     var description = button.data('description') // Extract info from data-* attributes
                     var title = button.data('title') // Extract info from data-* attributes
-                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                     var modal = $(this)
                     modal.find('.modal-title').text('Product Name : ' + title)
@@ -191,7 +190,7 @@
                             "data": "delivered_date"
                         },
                         {
-                            "data": "customer_name"
+                            "data": "customer_id"
                         },
                         {
                             "data": "shipping_fullname"
@@ -203,13 +202,13 @@
                             "data": "shipping_mobile"
                         },
                         {
-                            "data": "shipping_address"
+                            "data": "shipping_housenumber_street"
                         },
                         {
                             "data": "shipping_fee"
                         },
                         {
-                            "data": "coupon_discount"
+                            "data": "coupon_id"
                         },
                         {
                             "data": "amount"
@@ -225,6 +224,21 @@
                         },
                         {
                             "data": "option_edit"
+                        },
+                        {
+                            "data": "option_delete",
+                            render : function (data) {  
+                                return   ` @can('delete', 'App\Models\Order')
+                                                <td>
+                                                <form action='` + data + `' method='POST'>
+                                                    @csrf
+                                                    @method('delete')
+                                                    <input type='submit' value='Delete'
+                                                    class='btn btn-danger btn-sm' onclick="return confirm('Are You Sure?')">
+                                                </form>
+                                            @endcan
+                                            </td>`;
+                            }
                         }
                     ]
 

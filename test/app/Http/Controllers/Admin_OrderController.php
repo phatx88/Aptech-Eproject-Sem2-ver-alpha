@@ -186,15 +186,45 @@ class Admin_OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        // Hard DELETE
+        // try {
+        //     $order->forceDelete();
+        //     request()->session()->put('success', "Order ID : {$order->id} -- Created On : {$order->created_date} Deleted Successfully");
+        // } catch (QueryException $e) {
+        //     if ($e->getCode() == 23000) {
+        //         request()->session()->put('error', $e->getMessage());
+        //     }
+        // }
+        // return redirect()->route("admin.order.index");
+
+        //SOFT DELETE
         try {
-            $order->forceDelete();
-            request()->session()->put('success', "Order ID : {$order->id} -- Created On : {$order->created_date} Deleted Successfully");
+            $msg = 'Deleted Order ID : '.$order->id.' Successfully - <a href="'. url('admin/order/restore/'.$order->id.'') . '"> Undo Action</a>';
+            $order->delete();
+            request()->session()->put('success', $msg);
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
                 request()->session()->put('error', $e->getMessage());
             }
         }
         return redirect()->route("admin.order.index");
+    }
+
+    public function showTrash()
+    {
+        $orders = Order::onlyTrashed()->get();
+        return view('admin.order.trash', [
+            'orders' => $orders,
+            ]);
+    }
+
+    public function restore($id)
+    {
+        Order::onlyTrashed()->where('id' , $id)->restore();
+        $order = Order::find($id);
+        $msg = 'Deleted Order ID : '.$order->id.' Successfully';
+        request()->session()->put('success', $msg);
+        return redirect()->back();
     }
 
     public function shipping_fee(Request $request){

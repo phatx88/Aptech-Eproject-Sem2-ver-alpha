@@ -7,7 +7,10 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                 </li>
-                <li class="breadcrumb-item active">Product</li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('admin.product.index') }}">Product</a>
+                </li>
+                <li class="breadcrumb-item active">List</li>
             </ol>
              {{-- Chart Larapex --}}
                {{-- Chart Larapex --}}
@@ -38,16 +41,19 @@
             {{-- MESSAGE  --}}
             @include('errors.message')
             <!-- DataTables Example -->
-            <div class="action-bar">
-                <a href="{{ route('admin.product.create') }}" class="btn btn-primary btn-sm">Add</a>
-                <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
-                <a href="{{ route('admin.product.export') }}" class="btn btn-success btn-sm">Export</a>
-            </div>
+            
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
                     Product List
-                    <a type="button" href="{{ route('clear-cache') }}" class="btn btn-success btn-sm float-right">Refresh</a>
+                    <div class="float-right">
+                        @can('create', 'App\Models\Product')
+                        <a href="{{ route('admin.product.create') }}" 
+                        class="btn btn-primary btn-sm">Add</a>
+                        @endcan
+                        <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
+                        <a href="{{ route('admin.product.export') }}" class="btn btn-success btn-sm">Export</a>
+                    </div>
                  </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -70,11 +76,17 @@
                                     <th>Description</th>
                                     <th>Created Date</th>
                                     <th>Featured</th>
+                                    @can('update', 'App\Models\Product')
                                     <th>Hidden</th>
+                                    @endcan
                                     <th></th>
                                     <th></th>
+                                    @can('update', 'App\Models\Product')
                                     <th></th>
+                                    @endcan
+                                    @can('delete', 'App\Models\Product')
                                     <th></th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody >
@@ -105,21 +117,26 @@
                                                 data-title="{{ $product->name }}">Show</button></td>
                                         <td>{{ $product->created_date }}</td>
                                         <td>{{ $product->featured == 1 ? 'yes' : 'no' }}</td>
+                                        @can('update', 'App\Models\Product')
                                         <td>
                                             @if($product->hidden == 0)
-                                                <a class="btn btn-danger btn-sm" href="{{ url('admin/product/status/'.$product->id) }}">
-                                                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                                                </a>
+                                            <a class="btn btn-danger btn-sm" href="{{ url('admin/product/status/'.$product->id) }}">
+                                                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                                            </a>
                                             @else
-                                                <a class="btn btn-success btn-sm" href="{{ url('admin/product/status/'.$product->id) }}">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                </a>
+                                            <a class="btn btn-success btn-sm" href="{{ url('admin/product/status/'.$product->id) }}">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
                                             @endif
                                         </td>
+                                        @endcan
                                         <td><a href="{{ URL('admin/comment/'.$product->id) }}">Comments</a></td>
                                         <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
+                                        @can('update', 'App\Models\Product')
                                         <td><a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
-                                                class="btn btn-warning btn-sm">Edit</a></td>
+                                            class="btn btn-warning btn-sm">Edit</a></td>
+                                        @endcan
+                                        @can('delete', 'App\Models\Product')
                                         <td>
                                             <form action="{{ route('admin.product.destroy' , ['product' => $product->id]) }}" method="POST">
                                                 @csrf
@@ -128,6 +145,7 @@
                                                 class="btn btn-danger btn-sm">
                                             </form>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -136,6 +154,7 @@
                 </div>
             </div>
         </div>
+        
 
         {{-- Description Modal --}}
         <div class="modal fade" id="ModalDescription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

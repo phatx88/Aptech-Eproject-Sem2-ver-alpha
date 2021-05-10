@@ -82,7 +82,7 @@ class Admin_StaffController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'is_staff' => 'required',
-            'role' => 'required|in:Staff,Inspector',
+            'role' => 'required|between:1,3',
         ]);
     
         $input = $request->all();
@@ -90,7 +90,10 @@ class Admin_StaffController extends Controller
     
         $user = User::create($input);
         $user->assignRole($request->input('role'));
-
+        $user->email_verified_at = now();
+        $user->save();
+        
+        // dd($user);
         //Sending welcome message and set up new user password
         $username = $user->name;
         $useremail = $user->email;

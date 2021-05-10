@@ -33,7 +33,7 @@
                                     <th>Address </th>
                                     <th>Email </th>
                                     <th>Mobile </th>
-                                    <th>Role </th>
+                                    {{-- <th>Role </th> --}}
                                     <th>Active </th>
                                     <th></th>
                                     <th></th>
@@ -47,7 +47,7 @@
                                         <td>{{ $user->housenumber_street ?? "" }} , {{ $user->ward->name ?? "" }} , {{ $user->ward->district->name ?? "" }} , {{ $user->ward->district->province->name ?? "" }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->mobile  ?? ""}}</td>
-                                        <td>{{ $user->staff->role }}</td>
+                                        {{-- <td>{{ $user-> }}</td> --}}
                                         <td>{{ $user->is_active == true ? "Yes" : "No" }}</td>
                                         <td> <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $user->id]) }}"
                                                 class="btn btn-warning btn-sm">Edit</a></td>

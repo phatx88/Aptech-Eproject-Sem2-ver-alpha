@@ -17,6 +17,7 @@ class User_HomeController extends Controller
                 ->join('brand', 'view_product.brand_id', '=', 'brand.id')
                 ->join('category', 'view_product.category_id', '=', 'category.id')
                 ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
+                ->where('deleted_at', null)
                 ->where('hidden', false)
                 ->orderBy('view_count' , 'ASC')
                 ->get();

@@ -44,8 +44,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated() {
-        if (Auth::check() && Auth::user()->is_staff == 1) {
+    protected function authenticated(Request $request, $user) {
+        $user->update([
+            'last_login_at' => now()
+        ]);
+
+        if ($user->is_staff == 1) {
             return redirect()->route('admin.dashboard.index');
         } else {
             return redirect()->route('home.index');
@@ -147,6 +151,9 @@ class LoginController extends Controller
 
         }
 
+        $user->update([
+            'last_login_at' => now()
+        ]);
         Auth::login($user);
     }
 
