@@ -215,13 +215,17 @@
                                 <div class="modal fade" id="compare" tabindex="-1" role="dialog" style="overflow-y:hidden;">
                                     <div class="modal-dialog">
                                     <div class="modal-content" style="width: fit-content;
+                                    height: 850px;
                                     top: 100%;
                                     left: 50%;
-                                    margin-top: 450px;
+                                    margin-top: 440px;
                                     margin-right: -50%;
                                     transform: translate(-50%, -50%)">
                                         <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel"><span id="title-compare"></span></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true" style="background-color: white; color: red;">&times;</span>
+                                          </button>
                                         </div>
                                         <div class="modal-body">
                                             <div>
@@ -233,10 +237,10 @@
                                                     <th>Details</th>
                                                     <th>Delete</th>
                                                   </tr> --}}
-                                                <tr>
-                                                    <th width="33%">Item 1</th>
-                                                    <th width="33%">Item 2</th>
-                                                    <th width="33%">Item 3</th>
+                                                <tr height="20px">
+                                                    <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 1</th>
+                                                    <th style="margin: 0px; padding: 5px; text-align: center; " width="33%">Item 2</th>
+                                                    <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 3</th>
                                                 </tr>
                                                 <tr id="row_compare">
 
@@ -244,10 +248,10 @@
                                               </table>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        {{-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
                                         {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-                                        </div>
+                                        {{-- </div> --}}
                                     </div>
                                     </div>
                                 </div>
@@ -307,12 +311,12 @@
                     var url  = data[i].url;
                     $('#row_compare').append(`
 
-                            <td id="row_compare`+ id +`">
+                            <td id="row_compare`+ id +`" class="hover-compare-block">
                                 <div class="card">
                                     <img width="100%" height="350px" src="`+ image +`" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">`+ name.substr(0, 20) +`...</h5>
-                                        <p>Price: `+ price+`</p>
+                                        <p>Price: $ `+ price+`</p>
                                         <a class="btn btn-primary" href="`+ url +`">Details</a>
                                         <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
                                     </div>
@@ -360,12 +364,12 @@
                     old_data.push(newItem);
 
                     $('#row_compare').append(`
-                        <td id="row_compare`+ id +`">
-                                <div class="card">
+                        <td id="row_compare`+ id +`" class="hover-compare-block">
+                                <div class="card" >
                                     <img width="100%" height="350px" src="`+ newItem.image +`" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">`+ newItem.name.substr(0, 20) +`...</h5>
-                                        <p>Price: `+ price+`</p>
+                                        <p>Price: $ `+ price+`</p>
                                         <a href="`+ newItem.url +`" class="btn btn-primary">Details</a>
                                         <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
                                     </div>
