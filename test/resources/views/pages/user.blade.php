@@ -405,7 +405,7 @@
 
                                     <tr role="alert" class="alert">
                                         <th scope="row" class="p-1">
-                                            <img src="{{ asset('frontend/images/products/'.$product->product->featured_image) }}" alt=""
+                                            <img id="img_{{ $product->id }}" src="{{ asset('frontend/images/products/'.$product->product->featured_image) }}" alt=""
                                                 class="feature-img">
                                         </th>
                                         <td class="p-0">{{ $product->product->name }}</td>
@@ -421,9 +421,9 @@
                                                 <span aria-hidden="true"><i class="fa fa-shopping-cart"></i></span>
                                             </button>
                                             @else
-                                            <button type="button" class="bg-warning add-to-cart"  aria-label=""
+                                            <button type="button" class="bg-warning add-to-cart-details"  aria-label=""
                                             style="cursor: pointer;"
-                                            data-id_product="{{ $product->product_id }}"
+                                            data-id_product_details="{{ $product->product_id }}"
                                             >
                                                 <span aria-hidden="true"><i class="fa fa-shopping-cart"></i></span>
                                             </button>
