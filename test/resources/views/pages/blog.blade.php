@@ -27,7 +27,7 @@
                             </div>
                             <h3 class="heading mb-3"><a href="#">{{ $blog->title }}</a></h3>
                             <p>{{ $blog->summary }}</p>
-                            <a href="{{ url('/blog/details/'.$blog->slug) }}" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+                            <a href="{{  url('/blog/details/'.$blog->slug) }}" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
                         </div>
                     </div>

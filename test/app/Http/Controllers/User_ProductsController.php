@@ -13,6 +13,7 @@ use App\Models\Brand;
 use App\Models\Coupon;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\ImageItem;
 
 use Exception;
 
@@ -63,7 +64,7 @@ class User_ProductsController extends Controller
                     ->join('brand', 'view_product.brand_id', '=', 'brand.id')
                     ->join('category', 'view_product.category_id', '=', 'category.id')
                     ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
-                    ->paginate(9);                       
+                    ->paginate(9);
                     break;
 
                 case 'new':
@@ -155,6 +156,7 @@ class User_ProductsController extends Controller
     {
         $comments = Comment::where('product_id', $id)->orderby('created_date', 'DESC')->paginate(5);
         $product = Product::where('id', $id)->get();
+        $ImageItems = ImageItem::where('product_id', $id)->get();
         // dd($product);
         DB::table('product')->where('id', $id)->increment('view_count');
         $category_id = 0;
@@ -177,7 +179,8 @@ class User_ProductsController extends Controller
             ->with('product', $product)
             ->with('related_product', $related_product)
             ->with('comments', $comments)
-            ->with('bestSelling', $bestSelling);
+            ->with('bestSelling', $bestSelling)
+            ->with('ImageItems', $ImageItems);
     }
 
     public function postComment(Request $request, $id)
@@ -223,6 +226,8 @@ class User_ProductsController extends Controller
         endforeach;
         // dd ($data);
         echo json_encode($data);
+
+
 
     }
 }

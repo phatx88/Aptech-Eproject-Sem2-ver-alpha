@@ -40,7 +40,7 @@
                    <img src="{{ asset('frontend/images/profile/' . Auth::user()->profile_pic) }}" alt="Avatar" class="logo">
                 @else
                    <img src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="logo">
-                @endif                         
+                @endif
          </li>
          <li class="nav-item {{ Request::segment(2) == 'dashboard' ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('admin.dashboard.index') }}"><i class="fas fa-fw fa-tachometer-alt"></i> <span>Dash Board</span></a>
@@ -74,7 +74,7 @@
          <li class="nav-item dropdown {{ Request::segment(2) == 'image' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="far fa-image"></i> <span>Images</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('image-list')}}">List</a>
+               {{-- <a class="dropdown-item" href="{{URL('')}}">List</a> --}}
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'staff' ? 'active' : '' }}">
@@ -101,8 +101,8 @@
                {{-- <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Edit</a> --}}
             </div>
          </li>
-         
-         
+
+
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Shipping Fee</span></a>
             <div class="dropdown-menu" aria-labelledby="">
@@ -111,7 +111,7 @@
                <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Edit</a>
             </div>
          </li>
-        
+
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a>
             <div class="dropdown-menu" aria-labelledby="">
