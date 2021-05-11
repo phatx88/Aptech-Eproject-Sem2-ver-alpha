@@ -31,11 +31,19 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6 mb-5 ftco-animate">
+                        <div class="col-lg-6 mb-5 ftco-animate gallery">
                             <a href="{{ asset('frontend/images/products/' . $val->featured_image) }}"
-                                class="image-popup prod-img-bg"><img width="100%"
-                                    src="{{ asset('frontend/images/products/' . $val->featured_image) }}"
-                                    class="img-fluid" alt="Colorlib Template"></a>
+                                class="prod-img-bg">
+                            <img width="100%"
+                                src="{{ asset('frontend/images/products/' . $val->featured_image) }}"
+                                class="img-fluid" alt="Colorlib Template">
+                            </a>
+                            <a href="{{ asset('frontend/images/gallery/ChivasRegal-1.jpg') }}"
+                                class="">
+                            </a>
+                            <a href="{{ asset('frontend/images/gallery/ChivasRegal-2.jpg') }}"
+                                class="">
+                            </a>
                         </div>
                         <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                             <h3>{{ $val->name }}</h3>
