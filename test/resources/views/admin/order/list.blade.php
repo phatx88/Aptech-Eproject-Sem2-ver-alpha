@@ -32,6 +32,7 @@
                     </div>
                 </div>
             </div>
+            
             @include('errors.message')
             <!-- DataTables Example -->
             <div class="card mb-3">
@@ -47,7 +48,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="datatableAjax" class="table table-hover" style="width:100%">
+                        <table id="datatableAjax" class="table table-hover text-center" style="width:100%">
                             @csrf
                             <thead>
                                 <tr>
@@ -186,12 +187,6 @@
 
         <script>
             $(document).ready(function() {
-            //     $('#datatableAjax tfoot th').each( function () {
-            //         var title = $(this).text();
-            //         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-            //    } );
-
-
                 var table = $('#datatableAjax').DataTable({
                     "order": [
                         [0, "desc"]
@@ -280,29 +275,15 @@
                             }
                         }
                     ],
-                    // initComplete: function () {
-                    //     // Apply the search
-                    //     this.api().columns().every( function () {
-                    //         var that = this;
-            
-                    //         $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                    //             if ( that.search() !== this.value ) {
-                    //                 that
-                    //                     .search( this.value )
-                    //                     .draw();
-                    //             }
-                    //         } );
-                    //     } );
-                    // }
                 });
 
-                $('.filter-input').keyup(function () { 
+                $('.filter-input').on( 'keyup change' , function () { 
                         table.column( $(this).data('column') )
                         .search( $(this).val() )
                         .draw();
                     });
                    
-                $('.filter-select').change(function () { 
+                $('.filter-select').on( 'change', function () { 
                     table.column( $(this).data('column') )
                     .search( $(this).val() )
                     .draw();

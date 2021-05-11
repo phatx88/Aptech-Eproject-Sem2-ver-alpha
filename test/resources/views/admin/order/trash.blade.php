@@ -26,24 +26,24 @@
                  </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-hover text-center" id="dataTable-3" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>Actions</th>
-                                    <th>Order Id</th>
-                                    <th>Created Date</th>
-                                    <th>Order Status</th>
-                                    <th>Delivered Date</th>
-                                    <th>Registered User</th>
-                                    <th>Recipient Name</th>
-                                    <th>Recipient Email</th>
-                                    <th>Recipient Mobile</th>
-                                    <th>Recipient Address</th>
-                                    <th>Shipping Fee</th>
-                                    <th>Coupon Discount</th>
-                                    <th>Order Amount</th>
-                                    <th>Total</th>
-                                    <th>Payment Method</th>
+                                    <th class="filter-input">Order Id</th>
+                                    <th class="filter-input">Created Date</th>
+                                    <th class="filter-select">Order Status</th>
+                                    <th class="filter-input">Delivered Date</th>
+                                    <th class="filter-input">Registered User</th>
+                                    <th class="filter-input">Recipient Name</th>
+                                    <th class="filter-input">Recipient Email</th>
+                                    <th class="filter-input">Recipient Mobile</th>
+                                    <th class="filter-input">Recipient Address</th>
+                                    <th class="filter-input">Shipping Fee</th>
+                                    <th class="filter-input">Coupon Discount</th>
+                                    <th class="filter-input">Order Amount</th>
+                                    <th class="filter-input">Total</th>
+                                    <th class="filter-select">Payment Method</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -76,6 +76,25 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -89,6 +108,79 @@
         @include('admin.footer')
     </div>
     <!-- /.content-wrapper -->
+    @endsection
+    @section('scripts')
+    <script>
+        $(document).ready(function() {
+            var table = $('#dataTable-3').DataTable({
+                // flipping horizontal scroll bar in datatables refer to admin.css line 94
+                order: [
+                    [1, "asc"]
+                ],
+                autoWidth: 'TRUE',
+                scrollX: 'TRUE',
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+                columnDefs: [{
+                    targets: 2,
+                    render: $.fn.dataTable.render.ellipsis(15, true)
+                }],
+            });
+
+            //SEARCH INPUT BY COLUMNS// - put class on top of header
+
+            table.columns('.filter-input').every(function(i) {
+                var column = table.column(i);
+
+                // Create the select list and search operation
+                var input = $(`<input type='search' class='form-control form-control-sm' placeholder='Search'>`)
+                    .appendTo(
+                        this.footer()
+                    )
+                    .on('keyup change', function() {
+                        column
+                            .search($(this).val())
+                            .draw();
+                    });
+            });
+
+            //SEARCH INPUT BY COLUMNS//
+
+
+            //SEARCH SELECT BY COLUMNS//
+
+            table.columns('.filter-select').every(function(i) {
+                var column = table.column(i);
+
+                // Create the select list and search operation
+                var select = $(`<select class='form-control form-control-sm'/>`)
+                    .appendTo(
+                        this.footer()
+                    )
+                    .on('change', function() {
+                        column
+                            .search($(this).val())
+                            .draw();
+                    });
+
+                // Get the search data for the first column and add to the select list
+                select.append($('<option value="">Select</option>'));
+                this
+                    .cache('search')
+                    .sort()
+                    .unique()
+                    .each(function(d) {
+                        select.append($('<option value="' + d + '">' + d + '</option>'));
+                    });
+            });
+
+            //SEARCH SELECT BY COLUMNS//
+
+        });
+
+    </script>
     @endsection
 
 

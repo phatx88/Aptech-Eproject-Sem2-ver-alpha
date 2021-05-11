@@ -15,9 +15,11 @@ class Admin_UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_staff' , 0)->get();
+        $providers = User::where('is_staff' , 0)->pluck('provider')->unique();
+        $statuses = User::where('is_staff' , 0)->pluck('is_active')->unique();
         return view('admin.customer.list' , [
-            'users' => $users,
+            'providers' => $providers,
+            'statuses' => $statuses
         ]);
     }
 

@@ -25,16 +25,15 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-hover" id="dataTable-3" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" onclick="checkAll(this)"></th>
-                                    <th>Name </th>
-                                    <th>Address </th>
-                                    <th>Email </th>
-                                    <th>Mobile </th>
-                                    {{-- <th>Role </th> --}}
-                                    <th>Active </th>
+                                    <th class="filter-input">Staff Id</th>
+                                    <th class="filter-input">Name </th>
+                                    <th class="filter-input">Address </th>
+                                    <th class="filter-input">Email </th>
+                                    <th class="filter-input">Mobile </th>
+                                    <th class="filter-select">Active </th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -42,12 +41,11 @@
                             <tbody>
                                 @foreach ($staff_users as $user)
                                     <tr>
-                                        <td><input type="checkbox"></td>
+                                        <td>{{ $user->id }}</td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->housenumber_street ?? "" }} , {{ $user->ward->name ?? "" }} , {{ $user->ward->district->name ?? "" }} , {{ $user->ward->district->province->name ?? "" }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->mobile  ?? ""}}</td>
-                                        {{-- <td>{{ $user-> }}</td> --}}
                                         <td>{{ $user->is_active == true ? "Yes" : "No" }}</td>
                                         <td> <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $user->id]) }}"
                                                 class="btn btn-warning btn-sm">Edit</a></td>
@@ -56,6 +54,16 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -203,4 +211,76 @@
     });
       
     </script>
+
+<script>
+    $(document).ready(function() {
+        var table = $('#dataTable-3').DataTable({
+            // flipping horizontal scroll bar in datatables refer to admin.css line 94
+            order: [
+                [1, "asc"]
+            ],
+            autoWidth: 'TRUE',
+            scrollX: 'TRUE',
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "All"]
+            ],
+            columnDefs: [{
+                targets: 2,
+                render: $.fn.dataTable.render.ellipsis(15, true)
+            }],
+        });
+
+        //SEARCH INPUT BY COLUMNS// - put class on top of header
+
+        table.columns('.filter-input').every(function(i) {
+            var column = table.column(i);
+
+            // Create the select list and search operation
+            var input = $(`<input type='search' class='form-control form-control-sm' placeholder='Search'>`)
+                .appendTo(
+                    this.footer()
+                )
+                .on('keyup change', function() {
+                    column
+                        .search($(this).val())
+                        .draw();
+                });
+        });
+
+        //SEARCH INPUT BY COLUMNS//
+
+
+        //SEARCH SELECT BY COLUMNS//
+
+        table.columns('.filter-select').every(function(i) {
+            var column = table.column(i);
+
+            // Create the select list and search operation
+            var select = $(`<select class='form-control form-control-sm'/>`)
+                .appendTo(
+                    this.footer()
+                )
+                .on('change', function() {
+                    column
+                        .search($(this).val())
+                        .draw();
+                });
+
+            // Get the search data for the first column and add to the select list
+            select.append($('<option value="">Select</option>'));
+            this
+                .cache('search')
+                .sort()
+                .unique()
+                .each(function(d) {
+                    select.append($('<option value="' + d + '">' + d + '</option>'));
+                });
+        });
+
+        //SEARCH SELECT BY COLUMNS//
+
+    });
+
+</script>
 @endsection

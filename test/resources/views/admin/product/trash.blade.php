@@ -26,25 +26,25 @@
                  </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-hover text-center" id="dataTable-3" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
                                     {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
                                     <th>Action</th>
-                                    <th>ID</th>
-                                    <th style="width:50px">Name </th>
+                                    <th class="filter-input">Product Id</th>
+                                    <th class="filter-input">Product Name </th>
                                     <th>Featured Image</th>
-                                    <th>Price</th>
-                                    <th>% Discount</th>
-                                    <th>Sale Price</th>
-                                    <th>Discout Date From</th>
-                                    <th>Discout Date To</th>
-                                    <th>Inventory</th>
-                                    <th>Category</th>
-                                    <th>Brand</th>
+                                    <th class="filter-input">Product Price</th>
+                                    <th class="filter-input">% Discount</th>
+                                    <th class="filter-input">Sale Price</th>
+                                    <th class="filter-input">Discout Date From</th>
+                                    <th class="filter-input">Discout Date To</th>
+                                    <th class="filter-input">Inventory</th>
+                                    <th class="filter-select">Category</th>
+                                    <th class="filter-select">Brand</th>
                                     <th>Description</th>
-                                    <th>Created Date</th>
-                                    <th>Featured</th>
+                                    <th class="filter-input">Created Date</th>
+                                    <th class="filter-select">Featured</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -86,6 +86,26 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -145,6 +165,78 @@
 
 
       });
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#dataTable-3').DataTable({
+                // flipping horizontal scroll bar in datatables refer to admin.css line 94
+                order: [
+                    [1, "asc"]
+                ],
+                autoWidth: 'TRUE',
+                scrollX: 'TRUE',
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+                columnDefs: [{
+                    targets: 2,
+                    render: $.fn.dataTable.render.ellipsis(15, true)
+                }],
+            });
+
+            //SEARCH INPUT BY COLUMNS// - put class on top of header
+
+            table.columns('.filter-input').every(function(i) {
+                var column = table.column(i);
+
+                // Create the select list and search operation
+                var input = $(`<input type='search' class='form-control form-control-sm' placeholder='Search'>`)
+                    .appendTo(
+                        this.footer()
+                    )
+                    .on('keyup change', function() {
+                        column
+                            .search($(this).val())
+                            .draw();
+                    });
+            });
+
+            //SEARCH INPUT BY COLUMNS//
+
+
+            //SEARCH SELECT BY COLUMNS//
+
+            table.columns('.filter-select').every(function(i) {
+                var column = table.column(i);
+
+                // Create the select list and search operation
+                var select = $(`<select class='form-control form-control-sm'/>`)
+                    .appendTo(
+                        this.footer()
+                    )
+                    .on('change', function() {
+                        column
+                            .search($(this).val())
+                            .draw();
+                    });
+
+                // Get the search data for the first column and add to the select list
+                select.append($('<option value="">Select</option>'));
+                this
+                    .cache('search')
+                    .sort()
+                    .unique()
+                    .each(function(d) {
+                        select.append($('<option value="' + d + '">' + d + '</option>'));
+                    });
+            });
+
+            //SEARCH SELECT BY COLUMNS//
+
+        });
 
     </script>
     @endsection

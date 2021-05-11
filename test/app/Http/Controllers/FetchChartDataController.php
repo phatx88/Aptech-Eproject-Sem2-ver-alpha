@@ -60,9 +60,9 @@ class FetchChartDataController extends Controller
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        $columns = $request->input('columns');
-
+        
         //Search Individuall collumns
+        $columns = $request->input('columns');
         for ($i=0; $i < $totalFiltered; $i++) { 
             if( !empty($request->columns[$i]['search']['value']))
             {
@@ -162,9 +162,9 @@ class FetchChartDataController extends Controller
             6 => 'mobile',
             7 => 'profile_pic',
             8 => 'provider',
-            9 => 'is_active',
+            9 => 'last_login_at',
             10 => 'total_ordered',
-            11 => 'total_spent'
+            11 => 'amount_spent'
         );
 
         $totalData = DB::table('total_per_user')->where('is_staff' , 0)->count();
@@ -176,35 +176,59 @@ class FetchChartDataController extends Controller
         $order = $columns[$request->input('order.0.column')]; //arrange from order of collumn 0
         $dir = $request->input('order.0.dir');
 
+         //Search Individuall collumns
+         $columns = $request->input('columns');
+         for ($i=0; $i < $totalFiltered; $i++) { 
+             if( !empty($request->columns[$i]['search']['value']))
+             {
+                 $whereColumns = $request->columns[$i]['data'];
+                 $search = $request->columns[$i]['search']['value'];
+             }
+        }
+        if (empty($search)) {
         if (empty($request->input('search.value'))) {
             $users = DB::table('total_per_user')->where('is_staff' , 0)
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
                 ->get();
-        } else {
-            $search = $request->input('search.value');
+            } else {
+                $search = $request->input('search.value');
 
-            $users = DB::table('total_per_user')->where('is_staff' , 0)
-                ->where('id', 'LIKE', "%{$search}%")
-                ->orWhere('name', 'LIKE', "%{$search}%")
-                ->orWhere('email', 'LIKE', "%{$search}%")
-                ->orWhere('mobile', 'LIKE', "%{$search}%")
-                ->orWhere('provider', 'LIKE', "%{$search}%")
-                ->orWhere('created_at', 'LIKE', "%{$search}%")
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
+                $users = DB::table('total_per_user')->where('is_staff' , 0)
+                    ->where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('mobile', 'LIKE', "%{$search}%")
+                    ->orWhere('provider', 'LIKE', "%{$search}%")
+                    ->orWhere('created_at', 'LIKE', "%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
 
-            $totalFiltered = DB::table('total_per_user')->where('is_staff' , 0)
-                ->where('id', 'LIKE', "%{$search}%")
-                ->orWhere('name', 'LIKE', "%{$search}%")
-                ->orWhere('email', 'LIKE', "%{$search}%")
-                ->orWhere('mobile', 'LIKE', "%{$search}%")
-                ->orWhere('provider', 'LIKE', "%{$search}%")
-                ->orWhere('created_at', 'LIKE', "%{$search}%")
-                ->count();
+                $totalFiltered = DB::table('total_per_user')->where('is_staff' , 0)
+                    ->where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%")
+                    ->orWhere('mobile', 'LIKE', "%{$search}%")
+                    ->orWhere('provider', 'LIKE', "%{$search}%")
+                    ->orWhere('created_at', 'LIKE', "%{$search}%")
+                    ->count();
+            }
+        }  else {
+            $users = DB::table('total_per_user')
+                    ->where('is_staff' , 0)
+                    ->where($whereColumns, '=' , $search)
+                    ->orwhere($whereColumns,'LIKE',"%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+            $totalFiltered = DB::table('total_per_user')
+                            ->where('is_staff' , 0)
+                            ->where($whereColumns,'LIKE',"%{$search}%")->count();
         }
 
         $data = array();
@@ -223,8 +247,8 @@ class FetchChartDataController extends Controller
                 $nestedData['profile_pic'] = $user->profile_pic ?? "";
                 $nestedData['provider'] = $user->provider;
                 $nestedData['total_ordered'] = number_format($user->total_ordered ?? 0);
-                $nestedData['total_spent'] = "$".number_format($user->amount_spent ?? 0);
-                $nestedData['is_active'] = $user->is_active == 1 ? "Active" : "inActive" ;
+                $nestedData['amount_spent'] = "$".number_format($user->amount_spent ?? 0);
+                $nestedData['last_login_at'] = date($user->last_login_at ?? "") ;
                 $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
                 $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
                 $data[] = $nestedData;
