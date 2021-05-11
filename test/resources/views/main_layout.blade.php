@@ -401,6 +401,41 @@
             </div>
         </div>
 
+        {{-- Product Compare Modal --}}
+        <div class="modal fade" id="compare" tabindex="-1" role="dialog" style="overflow-y:hidden;">
+            <div class="modal-dialog">
+            <div class="modal-content" style="width: fit-content;
+            height: 850px;
+            top: 100%;
+            left: 50%;
+            margin-top: 440px;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span id="title-compare"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="background-color: white; color: red;">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <table class="table table-striped">
+                        
+                        <tr height="20px">
+                            <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 1</th>
+                            <th style="margin: 0px; padding: 5px; text-align: center; " width="33%">Item 2</th>
+                            <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 3</th>
+                        </tr>
+                        <tr id="row_compare">
+
+                        </tr>
+                      </table>
+                    </div>
+                </div>
+              
+            </div>
+            </div>
+        </div>
         
     </footer>
 
@@ -448,6 +483,7 @@
     @include('scripts.cart')
     @include('scripts.wishlist')
     @include('scripts.loginRegister')
+    @include('scripts.compare')
 
 
 </body>
