@@ -11,7 +11,7 @@
        </ol>
        <!-- DataTables Example -->
        <div class="action-bar">
-          
+
           <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
        </div>
        <div class="card mb-3">
@@ -22,20 +22,22 @@
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
                          <th>Hình ảnh</th>
+                         <th>Tên</th>
                          <th></th>
                       </tr>
                    </thead>
                    <tbody>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td><img src="../../images/suaTamSandrasShowerGel.jpg"></td>
-                         <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <td><input type="checkbox"></td>
-                         <td><img src="../../images/boKemTriMunSakura.jpg"></td>
-                         <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
+                       @foreach ($ImageItems as $ImageItem)
+                       <tr>
+                           <td><input type="checkbox"></td>
+                           <td><img width="60%"
+                            src="{{ asset('frontend/images/gallery/' . $ImageItem->name) }}"
+                            class=""></td>
+                            <td>{{ $ImageItem->name }}</td>
+                           <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
+                        </tr>
+                        @endforeach
+
                    </tbody>
                 </table>
              </div>
@@ -48,13 +50,13 @@
                 <label>Upload hình</label>
              </div>
           </div>
-          
+
           <div class="row form-group">
              <div class="col-md-12">
                 <input type="file" name="image" id="image" class="form-control">
              </div>
           </div>
-          <div class="row form-group"> 
+          <div class="row form-group">
              <div class="col-md-12">
                 <input type="submit" value="Upload" class="btn btn-primary btn-sm">
              </div>

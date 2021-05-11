@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin_BlogController;
 use App\Http\Controllers\Admin_CategoryBlogController;
 use App\Http\Controllers\Admin_CommentController;
 use App\Http\Controllers\Admin_UserController;
+use App\Http\Controllers\Admin_ImageItemController;
 
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
@@ -162,7 +163,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     // Dash Board
     Route::resource('dashboard' , Admin_DashboardController::class);
 
-    // Product 
+    // Product
     Route::get('product/export', [Admin_ProductController::class, 'export'])->name('product.export');
     Route::get('product/status/{id}', [Admin_ProductController::class, 'status'] );
     Route::get('product/restore/{id}', [Admin_ProductController::class, 'restore'] );
@@ -173,29 +174,32 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export');
     Route::resource('coupon', Admin_CouponController::class);
 
-    // Order 
-    Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export'); 
+    // Order
+    Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export');
     Route::get('order/restore/{id}', [Admin_OrderController::class, 'restore'] );
     Route::get('order/trash', [Admin_OrderController::class, 'showTrash'] );
     Route::resource('order', Admin_OrderController::class);
     Route::resource('order.item', Admin_OrderItemController::class);
-    
-    // Staff 
+
+    // Staff
     Route::post('staff/calendar/action', [Admin_StaffController::class, 'action']); //FullCalender Action
     Route::resource('staff', Admin_StaffController::class);
 
     // User
     Route::resource('user', Admin_UserController::class);
 
-    // Blog 
+
+    // Blog
     Route::resource('blog', Admin_BlogController::class);
     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
     Route::get('delete/{id}', [Admin_BlogController::class, 'delete']);
     Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
+    Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
 
-    // Misc 
+
+    // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 });

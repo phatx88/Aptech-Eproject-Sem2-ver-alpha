@@ -38,12 +38,11 @@
                                 src="{{ asset('frontend/images/products/' . $val->featured_image) }}"
                                 class="img-fluid" alt="Colorlib Template">
                             </a>
-                            <a href="{{ asset('frontend/images/gallery/ChivasRegal-1.jpg') }}"
-                                class="">
+                        @foreach ($ImageItems as $ImageItem)
+                            <a href="{{ asset('frontend/images/gallery/'. $ImageItem->name) }}"
+                            class="">
                             </a>
-                            <a href="{{ asset('frontend/images/gallery/ChivasRegal-2.jpg') }}"
-                                class="">
-                            </a>
+                         @endforeach
                         </div>
                         <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                             <h3>{{ $val->name }}</h3>

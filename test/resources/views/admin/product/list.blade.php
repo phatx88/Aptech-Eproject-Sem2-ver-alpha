@@ -41,14 +41,14 @@
             {{-- MESSAGE  --}}
             @include('errors.message')
             <!-- DataTables Example -->
-            
+
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-table"></i>
                     Product List
                     <div class="float-right">
                         @can('create', 'App\Models\Product')
-                        <a href="{{ route('admin.product.create') }}" 
+                        <a href="{{ route('admin.product.create') }}"
                         class="btn btn-primary btn-sm">Add</a>
                         @endcan
                         <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
@@ -131,7 +131,7 @@
                                         </td>
                                         @endcan
                                         <td><a href="{{ URL('admin/comment/'.$product->id) }}">Comments</a></td>
-                                        <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
+                                        <td><a href="{{ URL('admin/ImageItem/'. $product->id) }}">Hình ảnh</a></td>
                                         @can('update', 'App\Models\Product')
                                         <td><a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
                                             class="btn btn-warning btn-sm">Edit</a></td>
@@ -154,7 +154,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         {{-- Description Modal --}}
         <div class="modal fade" id="ModalDescription" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
