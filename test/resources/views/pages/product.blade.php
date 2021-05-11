@@ -134,6 +134,7 @@
                                         <input type="hidden" id="product_quantity_cart_{{ $product->id }}" class="product_quantity_cart_{{ $product->id }}" value="1">
                                         <input type="hidden" id="product_image_cart_{{ $product->id }}" class="product_image_cart_{{ $product->id }}"
                                             value="{{ $product->featured_image }}">
+                                        <input type="hidden" id="product_category_cart_{{ $product->id }}" value="{{ $product->category_name }}">
                                         <div class="img d-flex align-items-center justify-content-center image-products_{{ $product->id }}"
                                             style="background-image: url('{{ asset('frontend/images/products/' . $product->featured_image) }}');">
 
@@ -309,13 +310,15 @@
                     var price = data[i].price;
                     var image = data[i].image;
                     var url  = data[i].url;
+                    var category = data[i].category;
                     $('#row_compare').append(`
 
                             <td id="row_compare`+ id +`" class="hover-compare-block">
                                 <div class="card">
                                     <img width="100%" height="350px" src="`+ image +`" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">`+ name.substr(0, 20) +`...</h5>
+                                        <h4 class="card-title">`+ name.substr(0, 15) +`...</h4>
+                                        <h5>Category: `+ category +`</h5>
                                         <p>Price: $ `+ price+`</p>
                                         <a class="btn btn-primary" href="`+ url +`">Details</a>
                                         <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
@@ -337,13 +340,14 @@
             var price = document.getElementById('product_price_cart_'+id).value;
             var image = document.getElementById('img_'+id).src;
             var url = document.getElementById('product_detail_'+id).href;
-
+            var category = document.getElementById('product_category_cart_'+id).value;
             var newItem ={
                 'id': id,
                 'name':name,
                 'price':price,
                 'image':image,
-                'url':url
+                'url':url,
+                'category':category
             }
             // alert(newItem);
             if(localStorage.getItem('compare') == null){
@@ -368,8 +372,9 @@
                                 <div class="card" >
                                     <img width="100%" height="350px" src="`+ newItem.image +`" class="card-img-top" alt="...">
                                     <div class="card-body">
-                                        <h5 class="card-title">`+ newItem.name.substr(0, 20) +`...</h5>
-                                        <p>Price: $ `+ price+`</p>
+                                        <h4 class="card-title">`+ newItem.name.substr(0, 15) +`...</h4>
+                                        <h5>Category: `+ newItem.category +`</h5>
+                                        <p>Price: $ `+ newItem.price+`</p>
                                         <a href="`+ newItem.url +`" class="btn btn-primary">Details</a>
                                         <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
                                     </div>
