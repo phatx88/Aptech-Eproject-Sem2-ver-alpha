@@ -16,7 +16,6 @@
             <!-- DataTables Example -->
             <div class="action-bar">
                 <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm" >Add Employee</a>
-                <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
             </div>
             <div class="card mb-3">
                 <div class="card-header">

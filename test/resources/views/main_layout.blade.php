@@ -127,9 +127,9 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="{{ URL::to('home') }}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{{ URL::to('about') }}" class="nav-link">About</a></li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item {{ Request::segment(1) == 'home' ? 'active' : '' }}"><a href="{{ URL::to('home') }}" class="nav-link">Home</a></li>
+                    <li class="nav-item {{ Request::segment(1) == 'about' ? 'active' : '' }}"><a href="{{ URL::to('about') }}" class="nav-link">About</a></li>
+                    <li class="nav-item dropdown {{ Request::segment(2) == 'products' ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Products</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -141,8 +141,8 @@
 
                         </div>
                     </li>
-                    <li class="nav-item"><a href="{{ URL::to('blog') }}" class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="{{ URL::to('contact') }}" class="nav-link">Contact</a></li>
+                    <li class="nav-item {{ Request::segment(1) == 'blog' ? 'active' : '' }}"><a href="{{ URL::to('blog') }}" class="nav-link">Blog</a></li>
+                    <li class="nav-item {{ Request::segment(1) == 'contact' ? 'active' : '' }}"><a href="{{ URL::to('contact') }}" class="nav-link">Contact</a></li>
                 </ul>
             </div>
         </div>

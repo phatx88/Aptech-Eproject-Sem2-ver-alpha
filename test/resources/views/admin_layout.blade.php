@@ -106,7 +106,7 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Shipping Fee</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('transport-list')}}">List</a>
+               <a class="dropdown-item" href="{{ route('admin.transport.index')}}">List</a>
                <a class="dropdown-item" href="{{URL::to('transport-add')}}">Add</a>
                <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Edit</a>
             </div>

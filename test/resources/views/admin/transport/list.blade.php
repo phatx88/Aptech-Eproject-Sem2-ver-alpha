@@ -4,25 +4,34 @@
     <div class="container-fluid">
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">Giao hàng</li>
-       </ol>
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+         </li>
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.transport.index') }}">Transport</a>
+         </li>
+         <li class="breadcrumb-item active">List</li>
+     </ol>
+     @include('errors.message')
        <!-- DataTables Example -->
-       <div class="action-bar">
-          <input type="submit" class="btn btn-primary btn-sm" value="Thêm" name="add">
-          <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
-       </div>
        <div class="card mb-3">
+         <div class="card-header">
+            <i class="fas fa-table"></i>
+            Transport List
+            <div class="float-right">
+                <a href="{{ route('admin.transport.create') }}" class="btn btn-primary btn-sm">Add</a>
+                <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
+                <a href="#" class="btn btn-success btn-sm">Export</a>
+            </div>
+          </div>
           <div class="card-body">
              <div class="table-responsive">
-                <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-hover text-center" id="dataTable-3" width="100%" cellspacing="0">
                    <thead>
                       <tr>
-                         <th><input type="checkbox" onclick="checkAll(this)"></th>
-                         <th >Tỉnh/thành phố</th>
-                         <th >Phí giao hàng</th>
+                        <th class="filter-input">Transport Id</th>
+                        <th class="filter-input">Province/Cities</th>
+                         <th class="filter-input" >Shipping Fee</th>
                          <th>
                          </th>
                          <th>
@@ -30,28 +39,23 @@
                       </tr>
                    </thead>
                    <tbody>
+                      @foreach ($transports as $transport)
                       <tr>
-                         <td><input type="checkbox"></td>
-                         <td >Hà Nội</td>
-                         <td >30,000 đ</td>
-                         <td > <input type="button" onclick="Edit('1');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td > <input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <th><input type="checkbox">
-                         <td >TP.Hồ Chí Minh</td>
-                         <td >50,000 đ</td>
-                         <td > <input type="button" onclick="Edit('2');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td > <input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
-                      <tr>
-                         <th><input type="checkbox">
-                         <td >Long An</td>
-                         <td >50,000 đ</td>
-                         <td > <input type="button" onclick="Edit('2');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                         <td > <input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                      </tr>
+                         <td>{{ $transport->id }}</td>
+                        <td >{{ str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $transport->province->name) }}</td>
+                        <td >${{ $transport->price }}</td>
+                        <td > <input type="button" onclick="Edit('1');" value="Sửa" class="btn btn-warning btn-sm"></td>
+                        <td > <input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
+                     </tr>    
+                      @endforeach
                    </tbody>
+                   <tfoot>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                   </tfoot>
                 </table>
              </div>
           </div>
@@ -59,12 +63,79 @@
     </div>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-       <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-             <span>Copyright © Thầy Lộc 2017</span>
-          </div>
-       </div>
-    </footer>
+    @include('admin.footer')
  </div>
+@endsection
+@section('scripts')
+<script>
+   $(document).ready(function() {
+       var table = $('#dataTable-3').DataTable({
+           // flipping horizontal scroll bar in datatables refer to admin.css line 94
+           order: [
+               [1, "asc"]
+           ],
+           autoWidth: 'TRUE',
+           scrollX: 'TRUE',
+           lengthMenu: [
+               [5, 10, 25, 50, -1],
+               [5, 10, 25, 50, "All"]
+           ],
+           columnDefs: [{
+               targets: 2,
+               render: $.fn.dataTable.render.ellipsis(15, true)
+           }],
+       });
+
+       //SEARCH INPUT BY COLUMNS// - put class on top of header
+
+       table.columns('.filter-input').every(function(i) {
+           var column = table.column(i);
+
+           // Create the select list and search operation
+           var input = $(`<input type='search' class='form-control form-control-sm' placeholder='Search'>`)
+               .appendTo(
+                   this.footer()
+               )
+               .on('keyup change', function() {
+                   column
+                       .search($(this).val())
+                       .draw();
+               });
+       });
+
+       //SEARCH INPUT BY COLUMNS//
+
+
+       //SEARCH SELECT BY COLUMNS//
+
+       table.columns('.filter-select').every(function(i) {
+           var column = table.column(i);
+
+           // Create the select list and search operation
+           var select = $(`<select class='form-control form-control-sm'/>`)
+               .appendTo(
+                   this.footer()
+               )
+               .on('change', function() {
+                   column
+                       .search($(this).val())
+                       .draw();
+               });
+
+           // Get the search data for the first column and add to the select list
+           select.append($('<option value="">Select</option>'));
+           this
+               .cache('search')
+               .sort()
+               .unique()
+               .each(function(d) {
+                   select.append($('<option value="' + d + '">' + d + '</option>'));
+               });
+       });
+
+       //SEARCH SELECT BY COLUMNS//
+
+   });
+
+</script>
 @endsection

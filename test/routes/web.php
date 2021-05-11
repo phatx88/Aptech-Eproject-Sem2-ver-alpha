@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin_CategoryBlogController;
 use App\Http\Controllers\Admin_CommentController;
 use App\Http\Controllers\Admin_UserController;
 use App\Http\Controllers\Admin_ImageItemController;
+use App\Http\Controllers\Admin_TransportController;
 
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
@@ -197,6 +198,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
     Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
+
+    // Transport
+    Route::resource('transport', Admin_TransportController::class);
 
 
     // Misc
