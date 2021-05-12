@@ -103,9 +103,9 @@
          </li>
 
          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Authorization</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{URL::to('permission-roles-list')}}">Roles List</a>
+               <a class="dropdown-item" href="{{route('admin.role.index')}}"><i class="fas fa-list"></i> Roles List</a>
                <a class="dropdown-item" href="{{URL::to('permission-roles-add')}}">Roles Add</a>
                <a class="dropdown-item" href="{{URL::to('permission-roles-edit')}}">Roles Edit</a>
                <a class="dropdown-item" href="{{URL::to('permission-actions-list')}}">Actions List</a>
@@ -120,7 +120,7 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{URL::to('newsletter-list')}}">List</a>
-               <a class="dropdown-item" href="{{URL::to('newsletter-send')}}">Gởi mail</a>
+               <a class="dropdown-item" href="{{URL::to('newsletter-send')}}">Send mail</a>
             </div>
          </li>
       </ul>

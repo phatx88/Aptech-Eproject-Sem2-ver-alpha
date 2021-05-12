@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin_CommentController;
 use App\Http\Controllers\Admin_UserController;
 use App\Http\Controllers\Admin_ImageItemController;
 use App\Http\Controllers\Admin_TransportController;
+use App\Http\Controllers\Admin_RoleController;
 
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
@@ -204,6 +205,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('transport/trash', [Admin_TransportController::class, 'showTrash'] );
     Route::resource('transport', Admin_TransportController::class);
 
+    // Role 
+    Route::resource('role', Admin_RoleController::class);
 
     // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
