@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 
 class Admin_UserController extends Controller
 {
@@ -30,7 +31,7 @@ class Admin_UserController extends Controller
      */
     public function create()
     {
-        // return view('admin.customer.add');
+        return view('admin.customer.add');
     }
 
     /**

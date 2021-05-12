@@ -6,6 +6,7 @@ use App\Exports\CouponExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
+use Illuminate\Database\QueryException;
 
 use Maatwebsite\Excel\Facades\Excel;
 class Admin_CouponController extends Controller
@@ -48,7 +49,7 @@ class Admin_CouponController extends Controller
         $coupon->cpn_condition = $request->cpn_condition;
         $coupon->number = $request->number;
         $coupon->save();
-        return redirect()->action([Admin_CouponController::class,'index']);
+        return redirect()->route("admin.coupon.index")->with('success', "Added Coupon - {$coupon->id} Successfully");
     }
 
     /**
@@ -82,9 +83,15 @@ class Admin_CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Coupon $coupon)
     {
-        //
+        $coupon->name = $request->name;
+        $coupon->code = $request->code;
+        $coupon->time = $request->time;
+        $coupon->cpn_condition = $request->cpn_condition;
+        $coupon->number = $request->number;
+        $coupon->save();
+        return redirect()->route("admin.coupon.index")->with('success', "Updated Coupon - ID : {$coupon->id} Successfully");
     }
 
     /**
@@ -93,10 +100,18 @@ class Admin_CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Coupon $coupon)
     {
-        Coupon::find($id)->delete();
-        return redirect()->action([Admin_CouponController::class,'index']);
+        try {
+            $msg = 'Deleted Product : '.$coupon->name.' - ID : '.$coupon->id.' Successfully';
+            $coupon->delete();
+            request()->session()->put('success', $msg);
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.coupon.index");
     }
 
     public function export(){

@@ -8,7 +8,7 @@
                     <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('admin.product.index') }}">Product</a>
+                    <a href="{{ route('admin.transport.index') }}">Product</a>
                 </li>
                 <li class="breadcrumb-item active">Trash</li>
             </ol>
@@ -31,76 +31,22 @@
                                 <tr>
                                     {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
                                     <th>Action</th>
-                                    <th class="filter-input">Product Id</th>
-                                    <th class="filter-input">Product Name </th>
-                                    <th>Featured Image</th>
-                                    <th class="filter-input">Product Price</th>
-                                    <th class="filter-input">% Discount</th>
-                                    <th class="filter-input">Sale Price</th>
-                                    <th class="filter-input">Discout Date From</th>
-                                    <th class="filter-input">Discout Date To</th>
-                                    <th class="filter-input">Inventory</th>
-                                    <th class="filter-select">Category</th>
-                                    <th class="filter-select">Brand</th>
-                                    <th>Description</th>
-                                    <th class="filter-input">Created Date</th>
-                                    <th class="filter-select">Featured</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                                    <th class="filter-input">Transport Id</th>
+                                    <th class="filter-input">Province/Cities</th>
+                                    <th class="filter-input" >Shipping Fee</th>
                                 </tr>
                             </thead>
-                            <tbody >
-                                @php
-                                    $count = 0;
-                                @endphp
-                                @foreach ($products as $product)
-                                    <tr>
-                                        @can('restore', 'App/Models/Product')
-                                        <td><a class="btn btn-success btn-sm" href="{{ URL('admin/product/restore/'.$product->id) }}">Restore</a></td>
-                                        @endcan
-                                        <td>{{ $product->id }}</td>
-                                        <td>{{ $product->name }}</td>
-                                        <td><img src="{{ asset('frontend/images/products/' . $product->featured_image) }}">
-                                        </td>
-                                        <td>${{ $product->price }}</td>
-                                        <td>{{ $product->discount_percentage == 0 ? 'N/A' : $product->discount_percentage . '%' }}
-                                        </td>
-                                        <td>${{ round(($product->price * (100 - $product->discount_percentage)) / 100, 2) }}
-                                        </td>
-                                        <td>{{ $product->discount_from_date == 0 ? 'N/A' : $product->discount_from_date }}
-                                        </td>
-                                        <td>{{ $product->discount_to_date == 0 ? 'N/A' : $product->discount_to_date }}</td>
-
-                                        <td>{{ $product->inventory_qty }}</td>
-                                        <td>{{ $product->category->name }}</td>
-                                        <td>{{ $product->brand->name }}</td>
-                                        <td><button class="btn btn-info btn-sm m-auto" data-toggle="modal" data-target="#ModalDescription"
-                                                data-description="{{ $product->description }}"
-                                                data-title="{{ $product->name }}">Show</button></td>
-                                        <td>{{ $product->created_date }}</td>
-                                        <td>{{ $product->featured == 1 ? 'yes' : 'no' }}</td>
-                                        <td><a href="{{ URL('admin/comment/'.$product->id) }}">Comments</a></td>
-                                        <td><a href="../../pages/image/list.html">Hình ảnh</a></td>
-                                        <td></td>
-                                    </tr>
+                            <tbody>
+                                @foreach ($transports as $transport)
+                                <tr>
+                                  <td></td>
+                                  <td>{{ $transport->id }}</td>
+                                  <td>{{ str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $transport->province->name) }}</td>
+                                  <td>${{ $transport->price }}</td>
+                               </tr>    
                                 @endforeach
-                            </tbody>
+                             </tbody>
                             <tfoot>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>

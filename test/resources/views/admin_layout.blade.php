@@ -66,39 +66,29 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-gift"></i> <span>Coupons</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.coupon.index')}}">List</a>
-               <a class="dropdown-item" href="{{route('admin.coupon.create')}}">Add</a>
-               <a class="dropdown-item" href="{{URL::to('brand-edit')}}">Edit</a>
-            </div>
-         </li>
-         <li class="nav-item dropdown {{ Request::segment(2) == 'image' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="far fa-image"></i> <span>Images</span></a>
-            <div class="dropdown-menu" aria-labelledby="">
-               {{-- <a class="dropdown-item" href="{{URL('')}}">List</a> --}}
+               <a class="dropdown-item" href="{{route('admin.coupon.index')}}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{route('admin.coupon.create')}}"><i class="fas fa-plus"></i> Add</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'staff' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Staff</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.staff.index')}}">List</a>
-               <a class="dropdown-item" href="{{URL::to('staff-add')}}">Add</a>
-               <a class="dropdown-item" href="{{URL::to('staff-edit')}}">Edit</a>
+               <a class="dropdown-item" href="{{route('admin.staff.index')}}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{route('admin.staff.create')}}"><i class="fas fa-plus"></i> Add</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Users</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.user.index')}}">List</a>
-               {{-- <a class="dropdown-item" href="{{route('admin.user.add')}}">Add</a> --}}
-               <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Edit</a>
+               <a class="dropdown-item" href="{{route('admin.user.index')}}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{route('admin.user.create')}}"><i class="fas fa-plus"></i> Add</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'blog' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-blog"></i> <span>Blog</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('admin.blog.index') }}">List</a>
-               <a class="dropdown-item" href="{{ route('admin.blog.create') }}">Add</a>
-               {{-- <a class="dropdown-item" href="{{URL::tO('customer-edit')}}">Edit</a> --}}
+               <a class="dropdown-item" href="{{ route('admin.blog.index') }}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{ route('admin.blog.create') }}"><i class="fas fa-plus"></i> Add</a>
             </div>
          </li>
 
@@ -106,9 +96,9 @@
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Shipping Fee</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('admin.transport.index')}}">List</a>
-               <a class="dropdown-item" href="{{URL::to('transport-add')}}">Add</a>
-               <a class="dropdown-item" href="{{URL::to('transport-edit')}}">Edit</a>
+               <a class="dropdown-item" href="{{ route('admin.transport.index')}}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{ route('admin.transport.create')}}"><i class="fas fa-plus"></i> Add</a>
+               <a class="dropdown-item" href="{{url('admin/transport/trash')}}"><i class="fas fa-recycle"></i>  Restore</a>
             </div>
          </li>
 

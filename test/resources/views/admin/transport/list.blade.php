@@ -33,6 +33,7 @@
                         <th class="filter-input">Province/Cities</th>
                          <th class="filter-input" >Shipping Fee</th>
                          <th>
+                             Action
                          </th>
                          <th>
                          </th>
@@ -42,10 +43,18 @@
                       @foreach ($transports as $transport)
                       <tr>
                          <td>{{ $transport->id }}</td>
-                        <td >{{ str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $transport->province->name) }}</td>
-                        <td >${{ $transport->price }}</td>
-                        <td > <input type="button" onclick="Edit('1');" value="Sửa" class="btn btn-warning btn-sm"></td>
-                        <td > <input type="button" onclick="Delete('1');" value="Xóa" class="btn btn-danger btn-sm"></td>
+                        <td>{{ str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $transport->province->name) }}</td>
+                        <td>${{ $transport->price }}</td>
+                        <td><a href="{{ route('admin.transport.edit' , ['transport' => $transport->id]) }}" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td>
+                            <form
+                                action="{{ route('admin.transport.destroy', ['transport' => $transport->id]) }}"
+                                method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                            </form>
+                        </td>
                      </tr>    
                       @endforeach
                    </tbody>

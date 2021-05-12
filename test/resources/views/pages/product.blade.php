@@ -146,18 +146,16 @@
 
 @section('scripts')
 <script>
-    $(function () {
         var path = "{{ route('find') }}";
-            $('input.typeahead').typeahead({
-                source: function(query, process) {
-                    return $.get(path, {
-                        query: query
-                    }, function(data) {
-                        return process(data);
-                    });
-                }
-            });
-    });
+        $('input.typeahead').typeahead({
+            source: function(query, process) {
+                return $.get(path, {
+                    query: query
+                }, function(data) {
+                    return process(data);
+                });
+            }
+        });
 </script>
     
 @endsection

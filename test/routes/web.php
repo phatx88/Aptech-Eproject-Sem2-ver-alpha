@@ -200,6 +200,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
 
     // Transport
+    Route::get('transport/restore/{id}', [Admin_TransportController::class, 'restore'] );
+    Route::get('transport/trash', [Admin_TransportController::class, 'showTrash'] );
     Route::resource('transport', Admin_TransportController::class);
 
 

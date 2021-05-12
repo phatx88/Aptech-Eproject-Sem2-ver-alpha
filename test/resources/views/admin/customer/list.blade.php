@@ -9,6 +9,7 @@
                   </li>
                   <li class="breadcrumb-item active">User</li>
                </ol>
+               @include('errors.message')
                <!-- DataTables Example -->
                <div class="action-bar">
                   <input type="submit" class="btn btn-primary btn-sm" value="Thêm" name="add">
@@ -18,7 +19,6 @@
                   <div class="card-header">
                      <i class="fas fa-users"></i>
                      User List
-                     {{-- <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm float-right">Export</a> --}}
                  </div>
                   <div class="card-body">
                      <div class="table-responsive">
