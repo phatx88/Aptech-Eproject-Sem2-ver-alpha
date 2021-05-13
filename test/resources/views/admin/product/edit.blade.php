@@ -132,7 +132,7 @@
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="description">Description</label>
                     <div class="col-md-12">
-                        <textarea name="description" id="description" rows="10" cols="80"></textarea>
+                        <textarea name="description" id="description" rows="10" cols="80">{{ $product->description }}</textarea>
                     </div>
 
                 </div>
@@ -149,12 +149,6 @@
 </div>
 @endsection
 @section('scripts')
-<script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
-<script>
-    CKEDITOR.replace('description');
-    $('#description').html('{{ $product->description }}');
-
-</script>
 <script>
     $(document).ready(function() {
         $("#add_category").click(function(e) {

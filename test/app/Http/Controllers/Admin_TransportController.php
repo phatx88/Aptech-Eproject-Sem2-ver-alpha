@@ -6,6 +6,7 @@ use App\Models\Transport;
 use App\Models\Province;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class Admin_TransportController extends Controller
 {

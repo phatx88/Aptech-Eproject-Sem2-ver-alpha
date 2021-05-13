@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Ward;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class Admin_ShippingController extends Controller
 {

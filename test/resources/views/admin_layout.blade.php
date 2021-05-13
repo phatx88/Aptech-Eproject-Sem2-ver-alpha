@@ -50,7 +50,7 @@
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.order.index')}}"><i class="fas fa-list"></i> List</a>
                <a class="dropdown-item" href="{{route('admin.order.create')}}"><i class="fas fa-plus"></i> Add</a>
-               <a class="dropdown-item" href="{{url('admin/order/trash')}}"><i class="fas fa-recycle"></i>  Restore</a>
+               {{-- <a class="dropdown-item" href="{{url('admin/order/trash')}}"><i class="fas fa-recycle"></i>  Restore</a> --}}
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'product' ? 'active' : '' }}">
@@ -89,11 +89,12 @@
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{ route('admin.blog.index') }}"><i class="fas fa-list"></i> List</a>
                <a class="dropdown-item" href="{{ route('admin.blog.create') }}"><i class="fas fa-plus"></i> Add</a>
+               <a class="dropdown-item" href="{{url('admin/blog/trash')}}"><i class="fas fa-recycle"></i>  Restore</a>
             </div>
          </li>
 
 
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'transport' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Shipping Fee</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{ route('admin.transport.index')}}"><i class="fas fa-list"></i> List</a>
@@ -102,14 +103,14 @@
             </div>
          </li>
 
-         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Ward</span></a>
+         <li class="nav-item dropdown {{ in_array(Request::segment(2), ['shipping']) ? 'active' : '' }}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-map"></i> <span>Ward</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{ route('admin.shipping.index')}}"><i class="fas fa-list"></i> List</a>
             </div>
          </li>
 
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ in_array(Request::segment(2), ['role', 'permission' , 'permission-role']) ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Authorization</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.role.index')}}"><i class="fas fa-list"></i> Roles List</a>

@@ -22,11 +22,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+// use Mail;
+use Illuminate\Support\Facades\Mail;
 // use App\DataTables\OrderDataTable;
 
 class Admin_OrderController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -188,6 +189,26 @@ class Admin_OrderController extends Controller
         $order->delivered_date = $request->delivered_date;
         $order->staff_id = $request->staff_id;
         $order->save();
+
+        //Send mail when confirm
+        if ($order->order_status_id == 2) {
+            $order_mail = Order::where('id', $order->id)->get();
+            $order_details_mail = OrderItem::where('order_id', $order->id)->get();
+            $details[] = [
+                'user_name' => $request->shipping_fullname,
+                'order_mail' => $order_mail,
+                'order_details' => $order_details_mail
+            ];
+    
+            Mail::to($request->shipping_email)->send(new \App\Mail\MyTestMail($details));
+        }
+
+        if ($order->order_status_id == 5) {
+            foreach ($order->orderItem as $item) {
+                DB::table('product')->where('id' , $item->product_id)->decrement('inventory_qty' , $item->qty);
+            }
+        }
+
         request()->session()->put('success' ,"Order ID: {$order->id} -- Created On : {$order->created_date} Updated Successfully");
         return redirect()->route('admin.order.index');
     }
