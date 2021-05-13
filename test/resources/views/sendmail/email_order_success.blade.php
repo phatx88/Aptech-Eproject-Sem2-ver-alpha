@@ -167,7 +167,7 @@
                 <tr align="left">
                     <th>Product Name</th>
                     <th style="padding-left: 15px;">Featured Image</th>
-                    <th>Description</th>
+                    {{-- <th>Description</th> --}}
                     <th>Quantity</th>
                     <th>Total Price</th>
                 </tr>
@@ -179,9 +179,9 @@
                     <td valign="top" style="padding-left: 15px;">
                         <img width="100px" height="100px" src="{{$message->embed(asset('frontend/images/products/'.$or_details->product->featured_image))}}">
                     </td>
-                    <td valign="top" style="padding-left: 15px;">
-                        <h5 style="margin-top: 15px;">{{ $or_details->product->description }}</h5>
-                    </td>
+                    {{-- <td valign="top" style="padding-left: 15px;">
+                        <h5 style="margin-top: 15px;">{{ substr($or_details->product->description , 30) }}</h5>
+                    </td> --}}
                     <td valign="top" style="padding-left: 15px;">
 
                         <h5 style="font-size: 14px; color:#444;margin-top: 10px;">QTY :
