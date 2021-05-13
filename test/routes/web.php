@@ -216,7 +216,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 
     // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-    Route::post('fetch/product', Admin_ProductControlle r::class.'@fetchProduct');
+    Route::post('fetch/product', Admin_ProductControlle::class.'@fetchProduct');
 });
 
 
