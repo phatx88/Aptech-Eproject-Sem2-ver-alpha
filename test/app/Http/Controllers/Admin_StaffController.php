@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Staff;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Province;
@@ -36,7 +37,7 @@ class Admin_StaffController extends Controller
      */
     public function index(Request $request)
     {
-        $staff_users = User::where('is_staff' , 1)->get();
+        $staffs = Staff::get();
 
         //Full Calendar Integration
         if($request->ajax())
@@ -48,7 +49,7 @@ class Admin_StaffController extends Controller
     	}
 
         return view('admin.staff.list' , [
-            'staff_users' => $staff_users,
+            'staffs' => $staffs,
         ]);
     }
 
@@ -59,11 +60,9 @@ class Admin_StaffController extends Controller
      */
     public function create()
     {
-        $staff_users = User::where('is_staff' , 1)->get();
-        $staff_roles = Staff::get();
+        $staff_roles = Role::get();
         $provinces = Province::get();
         return view('admin.staff.add' , [
-            'staff_users' => $staff_users,
             'staff_roles' => $staff_roles,
             'provinces' => $provinces,
         ]);
@@ -83,6 +82,7 @@ class Admin_StaffController extends Controller
             'password' => 'required|same:confirm-password',
             'is_staff' => 'required',
             'role' => 'required|between:1,3',
+            'job_title' => 'required'
         ]);
     
         $input = $request->all();
@@ -92,8 +92,10 @@ class Admin_StaffController extends Controller
         $user->assignRole($request->input('role'));
         $user->email_verified_at = now();
         $user->save();
+
+        //updating job title
+        Staff::where('user_id' , $user->id)->update(['job_title' => $request->input('job_title')]);
         
-        // dd($user);
         //Sending welcome message and set up new user password
         $username = $user->name;
         $useremail = $user->email;
@@ -131,7 +133,7 @@ class Admin_StaffController extends Controller
     public function edit($id)
     {
         $staff_user = User::where('id' , $id)->first();
-        $staff_roles = Staff::get();
+        $staff_roles = Role::get();
         $provinces = Province::get();
         return view('admin.staff.edit' , [
             'staff_user' => $staff_user,
@@ -153,7 +155,6 @@ class Admin_StaffController extends Controller
             'name' => 'required',
             'is_staff' => 'required',
             'email' => 'prohibited', 
-            'role' => 'required|in:Staff,Inspector',
         ]);
 
         $user = User::where('id' , $id)->first();
@@ -163,9 +164,13 @@ class Admin_StaffController extends Controller
         $user->housenumber_street = $request->housenumber_street;
         $user->save();
 
-        $staff = Staff::where('user_id' , $id)->first();
-        $staff->role = $request->role;
-        $staff->save();
+        if(!empty($request->role) && !empty($request->job_title)){
+        Staff::where('user_id' , $id)->update([
+            'role_id' => $request->role,
+            'job_title' => $request->job_title
+        ]);
+        }
+        
 
         return redirect()->route('admin.staff.index')
                         ->with('success',"Staff : {$user->name} - {$user->email} Edit successfully");

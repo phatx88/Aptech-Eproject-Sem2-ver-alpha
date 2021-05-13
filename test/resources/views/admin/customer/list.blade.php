@@ -9,6 +9,7 @@
                   </li>
                   <li class="breadcrumb-item active">User</li>
                </ol>
+               @include('errors.message')
                <!-- DataTables Example -->
                <div class="action-bar">
                   <input type="submit" class="btn btn-primary btn-sm" value="Thêm" name="add">
@@ -18,23 +19,22 @@
                   <div class="card-header">
                      <i class="fas fa-users"></i>
                      User List
-                     {{-- <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm float-right">Export</a> --}}
                  </div>
                   <div class="card-body">
                      <div class="table-responsive">
-                        <table class="table table-hover" id="datatableAjax" width="100%" cellspacing="0">
+                        <table class="table table-hover text-center" id="datatableAjax" width="100%" cellspacing="0">
                            @csrf
 							<thead>
 							  <tr>
-                          <th>Id</th>
-                          <th>Name</th>
-                          <th>Email</th>
+                          <th>User Id</th>
+                          <th>User Name</th>
+                          <th>User Email</th>
                           <th>Verified At</th>
                           <th>Created At</th>
                           <th>Updated At</th>
                           <th>Mobile</th>
                           <th>Register From</th>
-                          <th>Status</th>
+                          <th>last_login_at</th>
                           <th>Total Order</th>
                           <th>Total Spent</th>
                           <th></th>
@@ -43,17 +43,43 @@
 							</thead>
 							<tfoot>
                         <tr>
-                           <th>Id</th>
-                           <th>Name</th>
-                           <th>Email</th>
-                           <th>Verified At</th>
-                           <th>Created At</th>
-                           <th>Updated At</th>
-                           <th>Mobile</th>
-                           <th>Register From</th>
-                           <th>Status</th>
-                           <th>Total Order</th>
-                           <th>Total Spent</th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="0" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="1" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="2" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="3" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="4" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="5" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="6" placeholder="Search">
+                           </th>
+                           <th>
+                            <select class="form-control form-control-sm filter-select" data-column="7">
+                                @foreach ($providers as $provider)
+                                <option value="{{ $provider }}">{{ $provider ?? 'Select'}}</option>
+                                @endforeach
+                            </select>
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="8" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="9" placeholder="Search">
+                           </th>
+                           <th>
+                            <input type="search" class="form-control form-control-sm filter-input" data-column="10" placeholder="Search">
+                           </th>
                            <th></th>
                            <th>Actions</th>
                         </tr>
@@ -72,7 +98,7 @@
 @section('scripts')
 <script>
    $(document).ready(function() {
-                $('#datatableAjax').DataTable({
+    var table = $('#datatableAjax').DataTable({
                     "order": [[ 0, "desc" ]],
                     "autoWidth": 'TRUE',
                     "scrollX": 'TRUE',
@@ -119,13 +145,13 @@
                             "data": "provider"
                         },
                         {
-                            "data": "is_active"
+                            "data": "last_login_at"
                         },
                         {
                             "data": "total_ordered"
                         },
                         {
-                            "data": "total_spent"
+                            "data": "amount_spent"
                         },
                         {
                             "data": "option_show"
@@ -136,6 +162,18 @@
                         
                     ]
 
+                });
+
+                $('.filter-input').on( 'keyup change' , function () { 
+                        table.column( $(this).data('column') )
+                        .search( $(this).val() )
+                        .draw();
+                    });
+                   
+                $('.filter-select').on( 'change', function () { 
+                    table.column( $(this).data('column') )
+                    .search( $(this).val() )
+                    .draw();
                 });
             });
 </script>

@@ -65,26 +65,10 @@ trait AuthenticatesUsers
      */
     protected function validateLogin(Request $request)
     {
-        $pattern = [
-            $this->username() => 'required|email|max:255',
-            'password' => 'required|min:8',
-            
-        ];
-       $messenger = [
-            'required' => ':attribute is not empty',
-            'email' => ':attribute must be in email format.',
-            'min' => ':attribute is not less than :min characters',
-            'max' => ':attribute is not greater than :max characters',
-         ];
-      
-        $customName = [
-            'email' => 'Email Address',
-            'password' => 'Password',
-            'confirm-password' => 'Confirm Password',
-         ];
-
-        $request->validate($pattern, $messenger, $customName);
-
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
     }
 
     /**

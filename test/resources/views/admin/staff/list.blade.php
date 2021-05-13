@@ -14,48 +14,70 @@
             </ol>
             @include('errors.message')
             <!-- DataTables Example -->
-            <div class="action-bar">
-                <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm" >Add Employee</a>
-                <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
-            </div>
+            
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-users"></i>
                     Staff Management 
+                    @if (Auth::user()->email == 'phat.x.luong@gmail.com')
+                    <div class="float-right">
+                        <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm" >Add Employee</a>
+                    </div>
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-hover" id="dataTable-3" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" onclick="checkAll(this)"></th>
-                                    <th>Name </th>
-                                    <th>Address </th>
-                                    <th>Email </th>
-                                    <th>Mobile </th>
-                                    {{-- <th>Role </th> --}}
-                                    <th>Active </th>
+                                    <th class="filter-input">Staff Id</th>
+                                    <th class="filter-input">User Id </th>
+                                    <th class="filter-input">Name </th>
+                                    <th class="filter-input">Email </th>
+                                    <th class="filter-select">Job Title </th>
+                                    <th class="filter-select">Role Id </th>
+                                    <th class="filter-select">Role Name </th>
                                     <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($staff_users as $user)
+                                @foreach ($staffs as $staff)
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->housenumber_street ?? "" }} , {{ $user->ward->name ?? "" }} , {{ $user->ward->district->name ?? "" }} , {{ $user->ward->district->province->name ?? "" }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->mobile  ?? ""}}</td>
-                                        {{-- <td>{{ $user-> }}</td> --}}
-                                        <td>{{ $user->is_active == true ? "Yes" : "No" }}</td>
-                                        <td> <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $user->id]) }}"
-                                                class="btn btn-warning btn-sm">Edit</a></td>
-                                        <td><input type="button" onclick="Delete('1');" value="Xóa"
-                                                class="btn btn-danger btn-sm"></td>
+                                        <td>{{ $staff->id }}</td>
+                                        <td>{{ $staff->user_id}}</td>
+                                        <td>{{ $staff->user->name }}</td>
+                                        <td>{{ $staff->user->email }}</td>
+                                        <td>{{ $staff->job_title }}</td>
+                                        <td>{{ $staff->role->id }}</td>
+                                        <td>{{ $staff->role->name }}</td>
+                                        <td> 
+                                            @if (Auth::user()->email == $staff->user->email || Auth::user()->email == 'phat.x.luong@gmail.com')
+                                            <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $staff->user_id]) }}"
+                                                class="btn btn-warning btn-sm">Edit</a>
+                                            @endif
+                                        </td>
+                                        
+                                        <td>
+                                            @if (Auth::user()->email == 'phat.x.luong@gmail.com' && Auth::user()->email != $staff->user->email)
+                                            <input type="button" onclick="Delete('1');" value="Xóa"
+                                                class="btn btn-danger btn-sm">
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -203,4 +225,76 @@
     });
       
     </script>
+
+<script>
+    $(document).ready(function() {
+        var table = $('#dataTable-3').DataTable({
+            // flipping horizontal scroll bar in datatables refer to admin.css line 94
+            order: [
+                [0, "asc"]
+            ],
+            autoWidth: 'TRUE',
+            scrollX: 'TRUE',
+            lengthMenu: [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "All"]
+            ],
+            columnDefs: [{
+                targets: 2,
+                render: $.fn.dataTable.render.ellipsis(15, true)
+            }],
+        });
+
+        //SEARCH INPUT BY COLUMNS// - put class on top of header
+
+        table.columns('.filter-input').every(function(i) {
+            var column = table.column(i);
+
+            // Create the select list and search operation
+            var input = $(`<input type='search' class='form-control form-control-sm' placeholder='Search'>`)
+                .appendTo(
+                    this.footer()
+                )
+                .on('keyup change', function() {
+                    column
+                        .search($(this).val())
+                        .draw();
+                });
+        });
+
+        //SEARCH INPUT BY COLUMNS//
+
+
+        //SEARCH SELECT BY COLUMNS//
+
+        table.columns('.filter-select').every(function(i) {
+            var column = table.column(i);
+
+            // Create the select list and search operation
+            var select = $(`<select class='form-control form-control-sm'/>`)
+                .appendTo(
+                    this.footer()
+                )
+                .on('change', function() {
+                    column
+                        .search($(this).val())
+                        .draw();
+                });
+
+            // Get the search data for the first column and add to the select list
+            select.append($('<option value="">Select</option>'));
+            this
+                .cache('search')
+                .sort()
+                .unique()
+                .each(function(d) {
+                    select.append($('<option value="' + d + '">' + d + '</option>'));
+                });
+        });
+
+        //SEARCH SELECT BY COLUMNS//
+
+    });
+
+</script>
 @endsection

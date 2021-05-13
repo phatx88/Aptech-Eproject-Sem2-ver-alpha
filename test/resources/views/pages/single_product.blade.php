@@ -200,87 +200,12 @@
                 <h2 class="text-center mb-5">Related Product</h2>
                 <div class="carousel-testimony owl-carousel ftco-owl">
                     <!-- Sản Phẩm Liên Quan  -->
-                    @foreach ($related_product as $key => $re_product)
+                    @foreach ($related_product as $product)
                         <div class="item">
                             <div class="d-flex">
-                                <div class="product ftco-animate items-products-related">
-                                    <form action="">
-                                        @csrf
-                                        <input type="hidden" class="product_name_cart_{{ $re_product->id }}"
-                                            value="{{ $re_product->name }}">
-                                        @if ($re_product->price != $re_product->sale_price)
-                                            <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
-                                                value="{{ $re_product->sale_price }}">
-                                        @else
-                                            <input type="hidden" class="product_price_cart_{{ $re_product->id }}"
-                                                value="{{ $re_product->price }}">
-                                        @endif
-                                        <input type="hidden" class="product_quantity_cart_{{ $re_product->id }}"
-                                            value="1">
-                                        <input type="hidden" class="product_image_cart_{{ $re_product->id }}"
-                                            value="{{ $re_product->featured_image }}">
-                                        <div class="img d-flex align-items-center justify-content-center"
-                                            style="background-image: url({{ asset('frontend/images/products/' . $re_product->featured_image) }});">
-                                            <img class="img_{{ $re_product->id }}" src="{{  asset('frontend/images/products/' . $re_product->featured_image)  }}" height="40px" width="40px" style="visibility: hidden; position: absolute;" alt="">
-                                            <div class="desc">
-                                                <p class="meta-prod d-flex">
-                                                    @if ($re_product->inventory_qty == 0)
-                                                        <a type="button" style="cursor: pointer;"
-                                                            data-id_product="{{ $re_product->id }}"
-                                                            class="d-flex align-items-center justify-content-center"
-                                                            onclick="notyf.error('Currently Out of Stock');"><span
-                                                                class="flaticon-shopping-bag"></span></a>
-                                                    @else
-                                                        <a type="button" style="cursor: pointer;"
-                                                            data-id_product="{{ $re_product->id }}"
-                                                            class="d-flex align-items-center justify-content-center add-to-cart-related"><span
-                                                                class="flaticon-shopping-bag"></span></a>
-                                                    @endif
-                                                    @if(Auth::check())
-                                                    <input type="hidden" class="user_id_wishlist_{{ $re_product->id }}"
-                                                    value="{{ Auth::user()->id }}">
-                                                        <a type="button" style="cursor: pointer;"
-                                                        data-id_product="{{ $re_product->id }}"
-                                                        class="d-flex align-items-center justify-content-center add-to-wishlist"
-                                                        ><span
-                                                            class="flaticon-heart
-                                                            "></span></a>
+                           
+                                @include('layouts.product')
 
-                                                    @else
-                                                    <a type="button"
-                                                        class="d-flex align-items-center justify-content-center" style="cursor: pointer;" onclick="notyf.error('You must login before adding to wishlist');"><span
-                                                            class="flaticon-heart
-                                                            "></span></a>
-                                                    @endif
-
-                                                    <a href="{{ url('home/single-product/' . $re_product->id) }}"
-                                                        class="d-flex align-items-center justify-content-center"><span
-                                                            class="flaticon-visibility"></span></a>
-                                                </p>
-                                            </div>
-
-                                        </div>
-                                        <div class="text text-center">
-                                            @if (strtotime($re_product->created_date) >= strtotime('-30 days'))
-                                                <span class="new">New Arrival</span>
-                                            @elseif (in_array($re_product->name , $bestSelling))
-                                            <span class="seller">Best Seller</span>
-                                            @elseif ($re_product->featured)
-                                                <span class="sale">Featured</span>
-                                            @endif
-
-                                            <span class="category">{{ $re_product->category->name }}</span>
-                                            <h2>{{ $re_product->name }}</h2>
-                                            <span class="price">$
-                                                @if ($re_product->price != $re_product->sale_price)
-                                                    {{ $re_product->sale_price }}
-                                                @else
-                                                    {{ $re_product->price }}
-                                                @endif
-                                            </span>
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     @endforeach

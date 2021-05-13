@@ -127,9 +127,9 @@
 
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="{{ URL::to('home') }}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{{ URL::to('about') }}" class="nav-link">About</a></li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item {{ Request::segment(1) == 'home' ? 'active' : '' }}"><a href="{{ URL::to('home') }}" class="nav-link">Home</a></li>
+                    <li class="nav-item {{ Request::segment(1) == 'about' ? 'active' : '' }}"><a href="{{ URL::to('about') }}" class="nav-link">About</a></li>
+                    <li class="nav-item dropdown {{ Request::segment(2) == 'products' ? 'active' : '' }}">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Products</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -141,8 +141,8 @@
 
                         </div>
                     </li>
-                    <li class="nav-item"><a href="{{ URL::to('blog') }}" class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="{{ URL::to('contact') }}" class="nav-link">Contact</a></li>
+                    <li class="nav-item {{ Request::segment(1) == 'blog' ? 'active' : '' }}"><a href="{{ URL::to('blog') }}" class="nav-link">Blog</a></li>
+                    <li class="nav-item {{ Request::segment(1) == 'contact' ? 'active' : '' }}"><a href="{{ URL::to('contact') }}" class="nav-link">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -401,6 +401,41 @@
             </div>
         </div>
 
+        {{-- Product Compare Modal --}}
+        <div class="modal fade" id="compare" tabindex="-1" role="dialog" style="overflow-y:hidden;">
+            <div class="modal-dialog">
+            <div class="modal-content" style="width: fit-content;
+            height: 850px;
+            top: 100%;
+            left: 50%;
+            margin-top: 440px;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span id="title-compare"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="background-color: white; color: red;">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <table class="table table-striped">
+                        
+                        <tr height="20px">
+                            <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 1</th>
+                            <th style="margin: 0px; padding: 5px; text-align: center; " width="33%">Item 2</th>
+                            <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 3</th>
+                        </tr>
+                        <tr id="row_compare">
+
+                        </tr>
+                      </table>
+                    </div>
+                </div>
+              
+            </div>
+            </div>
+        </div>
         
     </footer>
 
@@ -417,6 +452,7 @@
 
     <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery-migrate-3.0.1.min.js') }}"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
     <script src="{{ asset('frontend/js/popper.min.js') }}"></script>
     <script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
 
@@ -433,21 +469,22 @@
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
     <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js">
+    <script src="{{ asset('frontend/js/bootstrap3-typeahead.min.js') }}">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script src="{{ asset('frontend/js/form-validation.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.star-rating-svg.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
     <script src="{{ asset('frontend/js/check-box.js') }}"></script>
+    @yield('scripts')
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="{{ asset('frontend/js/cart_animation.js') }}"></script>
-    @yield('scripts')
     @include('scripts.notyf')
     @include('scripts.cart')
     @include('scripts.wishlist')
     @include('scripts.loginRegister')
+    @include('scripts.compare')
 
 
 </body>

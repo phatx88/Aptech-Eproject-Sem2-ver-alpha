@@ -82,11 +82,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    public function assignRole($role_id)
+    public function assignRole($role)
     {
         return Staff::create([
             'user_id' => $this->id,
-            'role_id' => $role_id,
+            'role_id' => $role,
         ]);
     }
 
