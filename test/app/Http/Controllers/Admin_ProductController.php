@@ -38,7 +38,7 @@ class Admin_ProductController extends Controller
             $name_product[] = substr($pro_count->name, 0, 15)."...";
             $count_product[] = $pro_count->view_count;
         }
-       
+
         $top_product = DB::table('top_seller_product')
         ->orderby('total_qty', 'DESC')
         ->limit(5)->get();
@@ -92,7 +92,7 @@ class Admin_ProductController extends Controller
         else {
            abort(403);
         }
-        
+
     }
 
     /**
@@ -177,7 +177,7 @@ class Admin_ProductController extends Controller
         else {
            abort(403);
         }
-     
+
     }
 
     /**
@@ -243,7 +243,7 @@ class Admin_ProductController extends Controller
      */
     public function destroy(Products $product)
     {
-        // SOFT DELETE 
+        // SOFT DELETE
         try {
             $msg = 'Deleted Product : '.$product->name.' - ID : '.$product->id.' Successfully - <a href="'. url('admin/product/restore/'.$product->id.'') . '"> Undo Action</a>';
             $product->delete();
@@ -275,7 +275,7 @@ class Admin_ProductController extends Controller
 
     // public function forceDelete(Products $product)
     // {
-    //     // HARD DELETE 
+    //     // HARD DELETE
     //     try {
     //         // $product->forceDelete();
     //         request()->session()->put('success', "Deleted Product : {$product->name} / ID : {$product->id} Successfully");
@@ -310,7 +310,7 @@ class Admin_ProductController extends Controller
             ]);
         }
         return redirect()->back()->with('success', 'Product Status Changed');
-        
+
     }
 
 

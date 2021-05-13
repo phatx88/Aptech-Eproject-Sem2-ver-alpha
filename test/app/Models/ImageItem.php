@@ -9,6 +9,7 @@ class ImageItem extends Model
 {
     use HasFactory;
     protected $table = 'image_item';
+    public $timestamps = false;
     public function Product(){
         return $this->belongsTo(Product::class,'product_id');
     }

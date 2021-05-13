@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin_CommentController;
 use App\Http\Controllers\Admin_UserController;
 use App\Http\Controllers\Admin_ImageItemController;
 use App\Http\Controllers\Admin_TransportController;
+use App\Http\Controllers\Admin_ShippingController;
 use App\Http\Controllers\Admin_RoleController;
 
 // FE CONTROLLER
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\FetchChartDataController;
+use App\Http\Controllers\ShippingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -199,18 +201,22 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
     Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
+    Route::post('ImageItem', [Admin_ImageItemController::class, 'store']);
+    // Route::post('ImageItem/destroy', [Admin_ImageItemController::class, 'destroy']);
 
     // Transport
     Route::get('transport/restore/{id}', [Admin_TransportController::class, 'restore'] );
     Route::get('transport/trash', [Admin_TransportController::class, 'showTrash'] );
     Route::resource('transport', Admin_TransportController::class);
 
-    // Role 
+    //ward
+    Route::resource('shipping', Admin_ShippingController::class );
+    // Role
     Route::resource('role', Admin_RoleController::class);
 
     // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+    Route::post('fetch/product', Admin_ProductControlle r::class.'@fetchProduct');
 });
 
 

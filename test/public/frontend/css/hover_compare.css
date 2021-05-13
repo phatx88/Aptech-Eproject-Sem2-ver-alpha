@@ -1,3 +1,7 @@
+/* .hover-compare-block{
+    display: block;
+    color: black;
+} */
 .hover-compare-block:hover {
     /* box-shadow: 0 0 0px 5px rgba(0, 0, 0, 0.5); */
     transform: scale(1.04) translateY(-5px);
@@ -6,6 +10,12 @@
 
 }
 .hover-compare-block:hover p {
+    /* background:linear-gradient(#DB7224, #F9B84A); */
+    color: red;
+    font-weight: bold;
+
+}
+.hover-compare-block:hover h4 {
     /* background:linear-gradient(#DB7224, #F9B84A); */
     color: red;
     font-weight: bold;

@@ -274,7 +274,13 @@
                         _token: _token
                     },
                     success: function(data) {
-                        location.reload();
+                        if(data === "0"){
+                            notyf.error('This item is not enough quantity!!!');
+                        }else if(data === "1"){
+                            notyf.error('You just can cart 10 quantity!!!');
+                        }else{
+                            location.reload();
+                        }
                     }
                 });
             });
