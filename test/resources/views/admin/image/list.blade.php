@@ -9,6 +9,7 @@
           </li>
           <li class="breadcrumb-item active">Hình ảnh</li>
        </ol>
+       @include('errors.error')
        <!-- DataTables Example -->
        <div class="action-bar">
 
@@ -34,7 +35,10 @@
                             src="{{ asset('frontend/images/gallery/' . $ImageItem->name) }}"
                             class=""></td>
                             <td>{{ $ImageItem->name }}</td>
-                           <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
+                            {{-- <form action="{{ URL('admin/ImageItem/destroy', ['ImageItem'=>$ImageItem->id]) }}" method="POST">
+                                @csrf @method('delete') --}}
+                                <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button></td>
+                            {{-- </form> --}}
                         </tr>
                         @endforeach
 
@@ -44,7 +48,8 @@
           </div>
 
        </div>
-       <form action="">
+       <form action="{{ url('admin/ImageItem') }}" method="POST" enctype="multipart/form-data">
+        @csrf
           <div class="row">
              <div class="col-md-12">
                 <label>Upload hình</label>
@@ -54,6 +59,7 @@
           <div class="row form-group">
              <div class="col-md-12">
                 <input type="file" name="image" id="image" class="form-control">
+                <input type="hidden" name="product_id" value="{{ $product_id }}" class="form-control">
              </div>
           </div>
           <div class="row form-group">

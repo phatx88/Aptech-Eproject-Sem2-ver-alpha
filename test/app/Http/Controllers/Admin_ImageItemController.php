@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ImageItem;
+use Illuminate\Support\Facades\File;
+use Illuminate\Database\QueryException;
+
 
 class Admin_ImageItemController extends Controller
 {
@@ -13,9 +16,9 @@ class Admin_ImageItemController extends Controller
     {
 
         $ImageItems = ImageItem::where('product_id', $id)->get();
-
         return view('admin.image.list',[
-            'ImageItems' => $ImageItems
+            'ImageItems' => $ImageItems,
+            'product_id' => $id
         ]);
     }
 
@@ -26,6 +29,7 @@ class Admin_ImageItemController extends Controller
      */
     public function create()
     {
+
         //
     }
 
@@ -37,7 +41,26 @@ class Admin_ImageItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'image' =>'bail|image|required|mimes:jpg,jpeg,png|max:2048',
+            'product_id'=>'bail|integer|required',
+            ]);
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $name = $file->getClientOriginalName();
+
+                //move file to folder
+                $file->move(public_path('frontend\images\gallery'), $name);
+            } else {
+               $name =  'image.jpg';
+            }
+            $ImageItems = new ImageItem();
+            $ImageItems->product_id = $request->product_id;
+
+            $ImageItems->name = $name;
+            $ImageItems->save();
+            return redirect('admin/ImageItem/' . $request->product_id);
     }
 
     /**
@@ -80,8 +103,18 @@ class Admin_ImageItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, ImageItem $ImageItems)
     {
-        //
+        // try{
+        //     $msg = 'Delete ID:'. $ImageItems->product_id. '- product: ' .$ImageItems->name. 'successfully';
+        //     $ImageItems->delete();
+        //     request()->session()->put('success', $msg);
+        // }
+        // catch(QueryException $e) {
+        //     if ($e->getCode() == 23000) {
+        //         request()->session()->put('error', $e->getMessage());
+        //     }
+        // }
+        // return redirect('admin/ImageItem/' . $request->product_id);
     }
 }

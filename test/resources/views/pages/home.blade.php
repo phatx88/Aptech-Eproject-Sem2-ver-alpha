@@ -152,7 +152,7 @@
 
 
             </div>
-            
+
             <div class="row justify-content-center">
                 <div class="col-md-4">
                     <a href="{{ URL::to('home/products') }}" class="btn btn-primary d-block">View All Products <span

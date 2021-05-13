@@ -83,6 +83,7 @@ class Admin_OrderController extends Controller
             'shipping_email' => 'email:rfc,dns|max:255',
             'payment_method' => 'required',
             'shipping_ward_id' => 'required',
+            'staff_id' => 'required'
         ]);
         
         $order = new Order($request->all());
@@ -127,18 +128,34 @@ class Admin_OrderController extends Controller
         $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
         $products = Product::with('order')->get();
         $provinces = Province::orderby('name', 'ASC')->get();
-        $statuses = ShippingStatus::get();
+        $statuses = ShippingStatus::where('id' , '>=' , $order->order_status_id)->get();
         $staffs = Staff::get();
         $users = User::with('ward' , 'order')->where('is_staff' , '0')->get();
-        return view('admin.order.edit' , [
-            'order' => $order,
-            'products' => $products,
-            'statuses' => $statuses,
-            'orderItem' => $orderItem,
-            'staffs' => $staffs,
-            'users' => $users,
-            'provinces' => $provinces,
-        ]);
+
+        if ($order->order_status_id == '5' || $order->order_status_id == '6') {
+            return view('admin.order.detail' , [
+                'order' => $order,
+                'products' => $products,
+                'orderItem' => $orderItem,
+                'statuses' => $statuses,
+                'staffs' => $staffs,
+                'users' => $users,
+                'provinces' => $provinces,
+            ]);
+        }
+         
+        else {
+            return view('admin.order.edit' , [
+                'order' => $order,
+                'products' => $products,
+                'orderItem' => $orderItem,
+                'statuses' => $statuses,
+                'staffs' => $staffs,
+                'users' => $users,
+                'provinces' => $provinces,
+            ]);
+        }
+       
     }
 
     /**
