@@ -1,6 +1,7 @@
 <div class="product ftco-animate items-products">
     <form>
         @csrf
+        <input type="hidden" id="product_description_{{ $product->id }}" value="{{ $product->description }}">
         <input type="hidden" id="product_name_cart_{{ $product->id }}" class="product_name_cart_{{ $product->id }}"
             value="{{ $product->name }}">
         @if ($product->price != $product->sale_price)

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin_UserController;
 use App\Http\Controllers\Admin_ImageItemController;
 use App\Http\Controllers\Admin_TransportController;
 use App\Http\Controllers\Admin_ShippingController;
+use App\Http\Controllers\Admin_RoleController;
 
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
@@ -210,10 +211,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 
     //ward
     Route::resource('shipping', Admin_ShippingController::class );
+    // Role
+    Route::resource('role', Admin_RoleController::class);
 
     // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+    Route::post('fetch/product', Admin_ProductControlle r::class.'@fetchProduct');
 });
 
 

@@ -14,13 +14,16 @@
             </ol>
             @include('errors.message')
             <!-- DataTables Example -->
-            <div class="action-bar">
-                <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm" >Add Employee</a>
-            </div>
+            
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-users"></i>
                     Staff Management 
+                    @if (Auth::user()->email == 'phat.x.luong@gmail.com')
+                    <div class="float-right">
+                        <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm" >Add Employee</a>
+                    </div>
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -28,32 +31,44 @@
                             <thead>
                                 <tr>
                                     <th class="filter-input">Staff Id</th>
+                                    <th class="filter-input">User Id </th>
                                     <th class="filter-input">Name </th>
-                                    <th class="filter-input">Address </th>
                                     <th class="filter-input">Email </th>
-                                    <th class="filter-input">Mobile </th>
-                                    <th class="filter-select">Active </th>
+                                    <th class="filter-select">Job Title </th>
+                                    <th class="filter-select">Role Id </th>
+                                    <th class="filter-select">Role Name </th>
                                     <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($staff_users as $user)
+                                @foreach ($staffs as $staff)
                                     <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->housenumber_street ?? "" }} , {{ $user->ward->name ?? "" }} , {{ $user->ward->district->name ?? "" }} , {{ $user->ward->district->province->name ?? "" }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->mobile  ?? ""}}</td>
-                                        <td>{{ $user->is_active == true ? "Yes" : "No" }}</td>
-                                        <td> <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $user->id]) }}"
-                                                class="btn btn-warning btn-sm">Edit</a></td>
-                                        <td><input type="button" onclick="Delete('1');" value="Xóa"
-                                                class="btn btn-danger btn-sm"></td>
+                                        <td>{{ $staff->id }}</td>
+                                        <td>{{ $staff->user_id}}</td>
+                                        <td>{{ $staff->user->name }}</td>
+                                        <td>{{ $staff->user->email }}</td>
+                                        <td>{{ $staff->job_title }}</td>
+                                        <td>{{ $staff->role->id }}</td>
+                                        <td>{{ $staff->role->name }}</td>
+                                        <td> 
+                                            @if (Auth::user()->email == $staff->user->email || Auth::user()->email == 'phat.x.luong@gmail.com')
+                                            <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $staff->user_id]) }}"
+                                                class="btn btn-warning btn-sm">Edit</a>
+                                            @endif
+                                        </td>
+                                        
+                                        <td>
+                                            @if (Auth::user()->email == 'phat.x.luong@gmail.com' && Auth::user()->email != $staff->user->email)
+                                            <input type="button" onclick="Delete('1');" value="Xóa"
+                                                class="btn btn-danger btn-sm">
+                                            @endif
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -216,7 +231,7 @@
         var table = $('#dataTable-3').DataTable({
             // flipping horizontal scroll bar in datatables refer to admin.css line 94
             order: [
-                [1, "asc"]
+                [0, "asc"]
             ],
             autoWidth: 'TRUE',
             scrollX: 'TRUE',

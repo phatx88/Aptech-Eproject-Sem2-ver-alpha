@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 trait RegistersUsers
 {
     use RedirectsUsers;
@@ -19,7 +18,7 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        return view('auth.login');
+        return view('auth.register');
     }
 
     /**
@@ -31,8 +30,6 @@ trait RegistersUsers
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-
-        // $this->validator($request->all())->stopOnFirstFailure()->validate();
 
         event(new Registered($user = $this->create($request->all())));
 

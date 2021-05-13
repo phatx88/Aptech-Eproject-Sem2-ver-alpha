@@ -114,15 +114,24 @@ class User_CartController extends Controller
         $data = $request->all();
         $cart = Session('cart');
         $cart_total = 0;
-        if($cart){
-            foreach($cart as $key => $val){
-                if($val['product_id'] == $data['id']){
-                    $cart[$key]['product_quantity'] = $data['quantity'];
+        $output = '';
+        $product_inventory = Product::where('id', $data['id'])->first();
+        if($product_inventory->inventory_qty >=  $data['quantity']){
+            $cart_total = 0;
+            if($data['quantity'] <= 10){
+                if($cart){
+                    foreach($cart as $key => $val){
+                        if($val['product_id'] == $data['id']){
+                            $cart[$key]['product_quantity'] = $data['quantity'];
+                        }
+                        $cart_total += $val['product_quantity'] * $val['product_price'];
+                    }
+
+
                 }
-                $cart_total += $val['product_quantity'] * $val['product_price'];
+            }else{
+                $cart_total = 1;
             }
-
-
         }
         session()->put('cart', $cart);
         session()->save();

@@ -23,6 +23,19 @@
                         <input name="name" id="fullname" type="text" value="{{ $staff_user->name }}" class="form-control">
                     </div>
                 </div>
+                @if (Auth::user()->email == 'phat.x.luong@gmail.com')
+                <div class="form-group row">
+                    <label class="col-md-12 control-label" for="job_title">Job Title</label>  
+                    <div class="col-md-9 col-lg-6">   
+                        @if (Auth::user()->id == $staff_user->id) 
+                        <input name="" id="job_title" type="text" value="{{ $staff_user->staff->job_title }}" class="form-control-plaintext" readonly>                      
+                        @else
+                        <input name="job_title" id="job_title" type="text" value="{{ $staff_user->staff->job_title }}" class="form-control" required>
+                        @endif                        
+                    </div>
+                 </div>
+                @endif
+                
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="email">Email</label>
                     <div class="col-md-9 col-lg-6">
@@ -35,16 +48,26 @@
                         <input name="mobile" id="mobile" type="text" value="{{ $staff_user->mobile }}" class="form-control">
                     </div>
                 </div>
+               
+                @if (Auth::user()->email == 'phat.x.luong@gmail.com')
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="role">Roles</label>
                     <div class="col-md-9 col-lg-6">
-                        <select name="role" class="form-control">
-                            <option value="" {{ $staff_user->staff->role == "Admin" ? "Selected" : "" }}></option>
-                            <option value="Inspector" {{ $staff_user->staff->role == "Inspector" ? "Selected" : "" }}>Inspector</option>
-                            <option value="Staff" {{ $staff_user->staff->role == "Staff" ? "Selected" : "" }}>Staff</option>
-                        </select>
+                        @if (Auth::user()->id == $staff_user->id) 
+                        <input type="text" value="1 - admin" class="form-control-plaintext" readonly>
+                        @else
+                        <select name="role" class="form-control" >
+                            <option value="">Select Roles</option>
+                            @foreach ($staff_roles as $role)
+                            <option value="{{ $role->id }}" {{ $staff_user->staff->role_id == $role->id ? 'selected' : '' }}>{{ $role->id }} - {{ $role->name }}</option>
+                            @endforeach
+                         </select>
+                        @endif
+                        
                     </div>
                 </div>
+                @endif
+                
                 <div class="form-row">
                     <label class="col-md-12 control-label" for="address">Address</label>
                     <div class="col-md-9 col-lg-6">
@@ -87,7 +110,7 @@
 
         </div>
         <div class="form-action">
-            <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+            <input type="submit" class="btn btn-primary btn-sm" value="Update">
         </div>
         </form>
         <!-- /form -->

@@ -31,13 +31,19 @@
                   </div>
                </div>
                <div class="form-group row">
+                  <label class="col-md-12 control-label" for="job_title">Job Title</label>  
+                  <div class="col-md-9 col-lg-6">                           
+                     <input name="job_title" id="job_title" type="text" value="" class="form-control" required>                      
+                  </div>
+               </div>
+               <div class="form-group row">
                   <label class="col-md-12 control-label" for="role">Roles</label>  
                   <div class="col-md-9 col-lg-6">
                      <select name="role" class="form-control">
                         <option value="">Select Roles</option>
-                        <option value="1">1 - Admin</option>
-                        <option value="2">2 - Staff</option>
-                        <option value="3">3 - View</option>
+                        @foreach ($staff_roles as $role)
+                        <option value="{{ $role->id }}">{{ $role->id }} - {{ $role->name }}</option>
+                        @endforeach
                      </select>
                   </div>
                </div>
