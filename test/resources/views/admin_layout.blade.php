@@ -103,6 +103,13 @@
          </li>
 
          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Ward</span></a>
+            <div class="dropdown-menu" aria-labelledby="">
+               <a class="dropdown-item" href="{{ route('admin.shipping.index')}}"><i class="fas fa-list"></i> List</a>
+            </div>
+         </li>
+
+         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{URL::to('permission-roles-list')}}">Roles List</a>
