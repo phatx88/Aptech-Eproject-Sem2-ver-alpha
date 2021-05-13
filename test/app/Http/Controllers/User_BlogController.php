@@ -18,7 +18,7 @@ use File;
 class User_BlogController extends Controller
 {
     public function index(){
-        $post = Post::where('hidden', 1)->paginate(6);
+        $post = Post::where('hidden', 1)->paginate(5);
         return view('pages.blog',[
             'post' => $post
         ]);

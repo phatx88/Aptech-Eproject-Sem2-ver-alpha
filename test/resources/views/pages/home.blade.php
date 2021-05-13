@@ -147,6 +147,7 @@
                         <div class="product ftco-animate items-products">
                             <form>
                                 @csrf
+                                <input type="hidden" id="product_description_{{ $product->id }}" value="{{ $product->description}}">
                                 <input type="hidden" id="product_name_cart_{{ $product->id }}" class="product_name_cart_{{ $product->id }}"
                                     value="{{ $product->name }}">
                                 @if ($product->price != $product->sale_price)
@@ -459,15 +460,17 @@
                     var image = data[i].image;
                     var url  = data[i].url;
                     var category = data[i].category;
+                    var description = data[i].description;
                     $('#row_compare').append(`
 
                             <td id="row_compare`+ id +`" class="hover-compare-block">
                                 <div class="card">
-                                    <img width="100%" height="350px" src="`+ image +`" class="card-img-top" alt="...">
+                                    <img width="100%" height="250px" src="`+ image +`" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h4 class="card-title">`+ name.substr(0, 15) +`...</h4>
                                         <h5>Category: `+ category +`</h5>
                                         <p>Price: $ `+ price+`</p>
+                                        <p>Description: `+ description.substr(0, 40) +`...</p>
                                         <a class="btn btn-primary" href="`+ url +`">Details</a>
                                         <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
                                     </div>
@@ -488,6 +491,7 @@
             var price = document.getElementById('product_price_cart_'+id).value;
             var image = document.getElementById('img_'+id).src;
             var url = document.getElementById('product_detail_'+id).href;
+            var description = document.getElementById('product_description_'+ id).value;
             var category = document.getElementById('product_category_cart_'+id).value;
             var newItem ={
                 'id': id,
@@ -495,7 +499,8 @@
                 'price':price,
                 'image':image,
                 'url':url,
-                'category':category
+                'category':category,
+                'description': description
             }
             // alert(newItem);
             if(localStorage.getItem('compare') == null){
@@ -518,11 +523,12 @@
                     $('#row_compare').append(`
                         <td id="row_compare`+ id +`" class="hover-compare-block">
                                 <div class="card" >
-                                    <img width="100%" height="350px" src="`+ newItem.image +`" class="card-img-top" alt="...">
+                                    <img width="100%" height="250px" src="`+ newItem.image +`" class="card-img-top" alt="...">
                                     <div class="card-body">
                                         <h4 class="card-title">`+ newItem.name.substr(0, 15) +`...</h4>
                                         <h5>Category: `+ newItem.category +`</h5>
                                         <p>Price: $ `+ newItem.price+`</p>
+                                        <p>Description: `+ newItem.description.substr(0, 40) +`...</p>
                                         <a href="`+ newItem.url +`" class="btn btn-primary">Details</a>
                                         <a class="btn btn-warning" style="cursor: pointer;" onclick="delete_compare(`+id+`)">Delete</a>
                                     </div>
