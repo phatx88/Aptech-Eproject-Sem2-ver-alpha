@@ -38,7 +38,7 @@ class Admin_ProductController extends Controller
             $name_product[] = substr($pro_count->name, 0, 15)."...";
             $count_product[] = $pro_count->view_count;
         }
-       
+
         $top_product = DB::table('top_seller_product')
         ->orderby('total_qty', 'DESC')
         ->limit(5)->get();
@@ -61,8 +61,6 @@ class Admin_ProductController extends Controller
         ->setSubtitle(now())
         ->addData($order_count)
         ->setLabels($order_name);
-
-
 
         return view('admin.product.list', [
             'products' => $products,
@@ -92,7 +90,7 @@ class Admin_ProductController extends Controller
         else {
            abort(403);
         }
-        
+
     }
 
     /**
@@ -107,9 +105,9 @@ class Admin_ProductController extends Controller
             'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
             'product_name' => 'bail|required|max:255',
             'price' => 'bail|numeric|required',
-            'discount_percentage' => 'bail|numeric',
-            'discount_from_date' => 'bail|date',
-            'discount_to_date' => 'bail|date',
+            'discount_percentage' => 'numeric|nullable',
+            'discount_from_date' => 'date|nullable',
+            'discount_to_date' => 'date|nullable',
             'inventory_qty' => 'bail|numeric|required',
             'category_id' => 'bail|integer|required',
             'brand_id' => 'bail|integer|required',
@@ -177,7 +175,7 @@ class Admin_ProductController extends Controller
         else {
            abort(403);
         }
-     
+
     }
 
     /**
@@ -193,30 +191,34 @@ class Admin_ProductController extends Controller
             'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
             'product_name' => 'bail|required|max:255',
             'price' => 'bail|numeric|required',
-            'discount_percentage' => 'bail|numeric',
-            'discount_from_date' => 'bail|date',
-            'discount_to_date' => 'bail|date',
+            'discount_percentage' => 'numeric|nullable',
+            'discount_from_date' => 'date|nullable',
+            'discount_to_date' => 'date|nullable',
             'inventory_qty' => 'bail|numeric|required',
             'category_id' => 'bail|integer|required',
             'brand_id' => 'bail|integer|required',
             'featured' => 'bail|integer',
         ]);
 
-        if ($request->hasFile('featured_image')) {
-            $file = $request->file('featured_image');
-            $imageName = $file->getClientOriginalName();
-
-            //move file to folder
-            $file->move(public_path('frontend\images\products'), $imageName);
-
-            //delete old pic
-            if ($product->featured_image != 'product-image-placeholder.jpg') {
-                $oldFile = public_path('frontend\images\products\\' . $product->featured_image);
-                File::delete($oldFile);
+        if (!empty($request->featured_image) && empty($product->featured_image)) {
+            if ($request->hasFile('featured_image')) {
+                $file = $request->file('featured_image');
+                $imageName = $file->getClientOriginalName();
+    
+                //move file to folder
+                $file->move(public_path('frontend\images\products'), $imageName);
+    
+                //delete old pic
+                if ($product->featured_image != 'product-image-placeholder.jpg') {
+                    $oldFile = public_path('frontend\images\products\\' . $product->featured_image);
+                    File::delete($oldFile);
+                }
+            } else {
+                $imageName = 'product-image-placeholder.jpg';
             }
-        } else {
-            $imageName = 'product-image-placeholder.jpg';
+            $product->featured_image = $imageName;
         }
+
         $product->barcode = $request->barcode ?? null;
         $product->sku = $request->sku ?? null;
         $product->name = $request->product_name;
@@ -224,7 +226,6 @@ class Admin_ProductController extends Controller
         $product->discount_percentage = $request->discount_percentage ?? 0;
         $product->discount_from_date = $request->discount_from_date ?? '2020-01-01';
         $product->discount_to_date = $request->discount_to_date ?? '2020-01-01';
-        $product->featured_image = $imageName;
         $product->inventory_qty = $request->inventory_qty;
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
@@ -243,7 +244,7 @@ class Admin_ProductController extends Controller
      */
     public function destroy(Products $product)
     {
-        // SOFT DELETE 
+        // SOFT DELETE
         try {
             $msg = 'Deleted Product : '.$product->name.' - ID : '.$product->id.' Successfully - <a href="'. url('admin/product/restore/'.$product->id.'') . '"> Undo Action</a>';
             $product->delete();
@@ -275,7 +276,7 @@ class Admin_ProductController extends Controller
 
     // public function forceDelete(Products $product)
     // {
-    //     // HARD DELETE 
+    //     // HARD DELETE
     //     try {
     //         // $product->forceDelete();
     //         request()->session()->put('success', "Deleted Product : {$product->name} / ID : {$product->id} Successfully");
@@ -310,7 +311,7 @@ class Admin_ProductController extends Controller
             ]);
         }
         return redirect()->back()->with('success', 'Product Status Changed');
-        
+
     }
 
 

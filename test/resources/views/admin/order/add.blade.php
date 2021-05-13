@@ -10,7 +10,7 @@
           <li class="breadcrumb-item">
             <a href="{{ route('admin.order.index') }}">Order</a>
          </li>
-          <li class="breadcrumb-item active">Thêm</li>
+          <li class="breadcrumb-item active">Add</li>
        </ol>
        <!-- /.row -->
        @include('errors.error')
@@ -18,11 +18,11 @@
          @csrf
       <div class="row ">
          <div class="col-sm-4 col-lg-2">
-            <label>Tên khách hàng:</label>  
+            <label>Registered User (Optional) : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
             <select class="form-control" name="customer_id">
-               <option value="">Khách Vãng Lai</option>
+               <option value="">Guest</option>
                @foreach ($users as $user)
                <option value="{{ $user->id }}" {{ $user->id == old('customer_id') ? "selected" : "" }}>{{ $user->name }}</option>
                @endforeach
@@ -32,46 +32,44 @@
       
       <div class="row">
          <div class="col-sm-4 col-lg-2 ">
-            <label>Trạng thái:</label>  
+            <label>Order Status:</label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
             <select name="order_status_id" class="form-control">  
-               @foreach ($statuses as $status)
-               <option value="{{ $status->id }}" {{ $status->id == old('order_status_id') ? "selected" : "" }}>{{ $status->name }}</option>   
-               @endforeach 
+               <option value="1">Ordered</option>   
              </select>
          </div>
       </div>
       
       <div class="row">
          <div class="col-sm-4 col-lg-2 ">
-            <label>Người nhận</label>  
+            <label>Recipient Name* : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <input type="text" name="shipping_fullname" value="{{ old('shipping_fullname') }}" class="form-control">                    
+            <input type="text" name="shipping_fullname" value="{{ old('shipping_fullname') }}" class="form-control" required>                    
          </div>
       </div>
       <div class="row">
          <div class="col-sm-4 col-lg-2 ">
-            <label>Số điện thoại người nhận</label>  
+            <label>Recipient Mobile* : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <input type="text" name="shipping_mobile" value="{{ old('shipping_mobile') }}" class="form-control">                    
+            <input type="text" name="shipping_mobile" value="{{ old('shipping_mobile') }}" class="form-control" required>                    
          </div>
       </div>
 
       <div class="row">
          <div class="col-sm-4 col-lg-2 ">
-            <label>Email người nhận</label>  
+            <label>Recipient Email* : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <input type="text" name="shipping_email" value="{{ old('shipping_email') }}" class="form-control">                    
+            <input type="text" name="shipping_email" value="{{ old('shipping_email') }}" class="form-control" required>                    
          </div>
       </div>
       
       <div class="row">
          <div class="col-sm-4 col-lg-2 ">
-            <label>Hình thức thanh toán</label>  
+            <label>Payment Method* : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
             <select name="payment_method" class="form-control">
@@ -84,15 +82,15 @@
       
       <div class="row">
          <div class="col-sm-4 col-lg-2">
-             <label>Địa chỉ giao hàng</label>  
+             <label>Recipient Address* : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
             <div class="row-sm mb-2">
-               <input type="text" name="shipping_housenumber_street" value="{{ old('shipping_housenumber_street') }}" placeholder="Enter House Street Number" class="form-control">
+               <input type="text" name="shipping_housenumber_street" value="{{ old('shipping_housenumber_street') }}" placeholder="Enter House Street Number" class="form-control" required>
             </div>
              <div class="row">
                  <div class="col-sm-4">
-                     <select class="form-control choose province" name="province" id="province">
+                     <select class="form-control choose province" name="province" id="province" required>
                       <option value="">--Chọn Thành phố---</option>
                         @foreach($provinces as $key => $pvin)
                           <option value="{{ $pvin->id }}">{{ str_replace(['Thành phố' , 'Tỉnh'], '', $pvin->name) }}</option>
@@ -100,12 +98,12 @@
                     </select>
                   </div>
                  <div class="col-sm-4">
-                     <select class="form-control choose district" name="district" id="district">
+                     <select class="form-control choose district" name="district" id="district" required>
                       <option value="">--Chọn quận huyện---</option>
                      </select>
                  </div>
                  <div class="col-sm-4">
-                     <select class="form-control ward" name="shipping_ward_id" id="ward">
+                     <select class="form-control ward" name="shipping_ward_id" id="ward" required>
                       <option value="">--Chọn xã phường---</option>
                      </select>
                  </div>
@@ -116,19 +114,10 @@
 
       <div class="row">
          <div class="col-sm-4 col-lg-2 ">
-            <label>Ngày giao hàng</label>  
+            <label>Responsible Staff* : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <input type="date" name="delivered_date" value="" class="form-control">
-         </div>
-      </div>
-      
-      <div class="row">
-         <div class="col-sm-4 col-lg-2 ">
-            <label>Nhân viên phụ trách</label>  
-         </div>
-         <div class="col-sm-8 col-lg-6"> 
-            <select name="staff_id" class="form-control">
+            <select name="staff_id" class="form-control" required>
              <option value=""></option>
              @foreach ($staffs as $staff)
              <option value="{{ $staff->id }}">{{ $staff->name }}</option>
@@ -138,7 +127,7 @@
       </div>
            
            <div class="form-action">
-               <input type="submit" class="btn btn-primary btn-sm" value="Add Order" name="save">
+               <input type="submit" class="btn btn-primary btn-sm" value="Add" name="save">
            </div>
            <br>
        </form>

@@ -12,7 +12,7 @@
              
          </div>
             {{-- MESSAGE  --}}
-            {{-- @include('errors.message') --}}
+            @include('errors.message')
             <!-- DataTables Example -->
             <div class="action-bar">
                 <a href="{{ route('admin.blog.create') }}" class="btn btn-primary btn-sm">Add</a>

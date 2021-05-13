@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
-use App\Models\Staff;
 use App\Http\Controllers\Controller;
+use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-class Admin_RoleController extends Controller
+class Admin_ShippingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +16,10 @@ class Admin_RoleController extends Controller
      */
     public function index()
     {
-        $staffs = Staff::get();
-        $roles = Role::get();
-        return view('admin.authorization.role.list' , [
-            'roles' => $roles,
-            'staffs' => $staffs
+        $shippings = Ward::get();
+        return view('admin.shipping.list_ward',[
+            'shippings' => $shippings
         ]);
-       
     }
 
     /**
@@ -50,10 +46,10 @@ class Admin_RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show($id)
     {
         //
     }
@@ -61,10 +57,10 @@ class Admin_RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($id)
     {
         //
     }
@@ -73,10 +69,10 @@ class Admin_RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -84,10 +80,10 @@ class Admin_RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
+    public function destroy($id)
     {
         //
     }

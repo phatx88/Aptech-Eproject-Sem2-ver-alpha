@@ -5,14 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ImageItem extends Model
+class Newsletter extends Model
 {
     use HasFactory;
-    protected $table = 'image_item';
+    protected $table = 'newsletter';
     public $timestamps = false;
-    public function Product(){
-        return $this->belongsTo(Product::class,'product_id');
-    }
-
-
 }

@@ -41,7 +41,7 @@
 
         h5{
             color:#444;
-            text-align:left;
+            text-align:center;
             font-weight:400;
         }
 
@@ -83,7 +83,7 @@
             border: unset !important;
         }
         .pad-left-right-space td{
-            padding: 5px 15px;
+            padding: 5px 95px;
         }
         .pad-left-right-space td p{
             margin: 0;
@@ -164,24 +164,24 @@
             </table>
 
             <table class="order-detail" border="0" cellpadding="0" cellspacing="0"  align="left" style="width: 100%;    margin-bottom: 50px;">
-                <tr align="left">
+                <tr class="pad-left-right-space " align="left">
                     <th>Product Name</th>
                     <th style="padding-left: 15px;">Featured Image</th>
-                    <th>Description</th>
+                    {{-- <th>Description</th> --}}
                     <th>Quantity</th>
                     <th>Total Price</th>
                 </tr>
                 @foreach($detail['order_details'] as $key => $or_details)
-                <tr>
+                <tr class="pad-left-right-space " style="text-align: center">
                     <td valign="top" style="padding-left: 15px;">
-                        <h5 style="margin-top: 15px;">{{ $or_details->product->name }}</h5>
+                        <h5 style="margin-top: 15px; font-size: 1.2em; font-weight: 600">{{ substr($or_details->product->name, 15) }}</h5>
                     </td>
                     <td valign="top" style="padding-left: 15px;">
                         <img width="100px" height="100px" src="{{$message->embed(asset('frontend/images/products/'.$or_details->product->featured_image))}}">
                     </td>
-                    <td valign="top" style="padding-left: 15px;">
-                        <h5 style="margin-top: 15px;">{{ $or_details->product->description }}</h5>
-                    </td>
+                    {{-- <td valign="top" style="padding-left: 15px;">
+                        <h5 style="margin-top: 15px;">{{ substr($or_details->product->description , 30) }}</h5>
+                    </td> --}}
                     <td valign="top" style="padding-left: 15px;">
 
                         <h5 style="font-size: 14px; color:#444;margin-top: 10px;">QTY :
@@ -203,22 +203,7 @@
                     <td class="m-t-5" colspan="2" align="right">
                         <b style>${{ $subtotal }}</b>
                     </td>
-                {{-- <tr class="pad-left-right-space">
-                    <td colspan="2" align="left">
-                        <p style="font-size: 14px;">TAX :</p>
-                    </td>
-                    <td colspan="2" align="right">
-                        <b>$5</b>
-                    </td>
-                </tr> --}}
-                {{-- <tr class="pad-left-right-space">
-                    <td colspan="2" align="left">
-                        <p style="font-size: 14px;">VAT :</p>
-                    </td>
-                    <td colspan="2" align="right">
-                        <b>$5</b>
-                    </td>
-                </tr> --}}
+            
                 <tr class="pad-left-right-space">
                     <td colspan="2" align="left">
                         <p style="font-size: 14px;">SHIPPING Charge :</p>
@@ -255,31 +240,7 @@
 <table class="main-b-g-light text-center top-0"  align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
         <td style="padding: 30px;">
-            {{-- <div>
-                <h4 class="title" style="margin:0;text-align: center;">Follow us</h4>
-            </div>
-            <table border="0" cellpadding="0" cellspacing="0" class="footer-social-icon" align="center" class="text-center" style="margin-top:20px;">
-                <tr>
-                    <td>
-                        <a href="#"><img src="../assets/images/email-temp/facebook.png" alt=""></a>
-                    </td>
-                    <td>
-                        <a href="#"><img src="../assets/images/email-temp/youtube.png" alt=""></a>
-                    </td>
-                    <td>
-                        <a href="#"><img src="../assets/images/email-temp/twitter.png" alt=""></a>
-                    </td>
-                    <td>
-                        <a href="#"><img src="../assets/images/email-temp/gplus.png" alt=""></a>
-                    </td>
-                    <td>
-                        <a href="#"><img src="../assets/images/email-temp/linkedin.png" alt=""></a>
-                    </td>
-                    <td>
-                        <a href="#"><img src="../assets/images/email-temp/pinterest.png" alt=""></a>
-                    </td>
-                </tr>
-            </table> --}}
+          
             <div style="border-top: 1px solid #ddd; margin: 20px auto 0;"></div>
             <table  border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 20px auto 0;" >
                 <tr>

@@ -54,11 +54,16 @@
                    <label>Order Status:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
-                   <select name="order_status_id" class="form-control">  
-                       @foreach ($statuses as $status)
-                       <option value="{{ $status->id }}" {{ $status->id == $order->status->id ? 'selected' : '' }}>{{ $status->name }}</option>   
-                       @endforeach 
-                     </select>
+                   <select name="order_status_id" class="form-control">
+                       @if ($order->order_status_id == 1)
+                       <option value="">Ordered</option>
+                        <option value="2">Confirmed</option>
+                       @else 
+                        @foreach ($statuses as $status)
+                        <option value="{{ $status->id }}" {{ $status->id == $order->status->id ? 'selected' : '' }}>{{ $status->name }}</option>   
+                        @endforeach 
+                    @endif  
+                    </select>
                </div>
            </div>
            <div class="row">
@@ -182,8 +187,10 @@
                <div class="col-sm-4 col-lg-2 ">
                    <label>Delivered Date:</label>  
                </div>
-               <div class="col-sm-8 col-lg-6"> 
-                   <input type="date" name="delivered_date" value="{{ $order->delivered_date ?? "" }}" class="form-control">
+               <div class="col-sm-8 col-lg-6">
+                   @unless ($order->order_status_id == 1)
+                   <input type="date" name="delivered_date" value="{{ $order->delivered_date ?? "" }}" class="form-control" required>
+                   @endunless
                </div>
            </div>
            
@@ -195,26 +202,28 @@
                    <select name="staff_id" class="form-control">
                        <option value=""></option>
                        @foreach ($staffs as $staff)
-                            <option {{ $staff->id === $order->staff_id ? "selected" : "" }} value="{{ $staff->id }}">{{ $staff->user->name }} / {{ $staff->role }}</option>                   
+                            <option {{ $staff->id === $order->staff_id ? "selected" : "" }} value="{{ $staff->id }}">{{ $staff->user->name }} / {{ $staff->job_title }}</option>                   
                        @endforeach
                  </select>						
                </div>
            </div>
 
            <label class="control-label">Product</label>  
+           @if ($order->order_status_id == 1)
            <div class="form-group">
-                <a class="btn btn-warning btn-sm" type="button" href="{{ route('admin.order.item.index' , ['order' => $order->id]) }}">Edit Order Item</a> 
-           </div>
+               <a class="btn btn-warning btn-sm" type="button" href="{{ route('admin.order.item.index' , ['order' => $order->id]) }}">Edit Order Item</a> 
+            </div>
+            @endif
            <div class="card mb-3">
                  <div class="card-body">
                     <div class="table-responsive">
                        <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                            <thead>
                               <tr>
-                                  <th><input type="checkbox" onclick="checkAll(this)"></th>
+                                  {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
                                   <th>Product ID</th>
-                                  <th>Product Name</th>
                                   <th>Featured Image</th>
+                                  <th>Product Name</th>
                                   <th>Unit Price</th>
                                   <th>Quantity</th>
                                   <th>Total Price</th>
@@ -223,10 +232,10 @@
                            <tbody>
                                @foreach ($orderItem as $item)                       
                                <tr>
-                                   <td><input type="checkbox"></td>
+                                   {{-- <td><input type="checkbox"></td> --}}
                                    <td >{{ $item->product_id }}</td>
-                                   <td>{{ $products->find($item->product_id)->name }}</td>
                                    <td><img src="{{ asset('frontend/images/products/'.$products->find($item->product_id)->featured_image) }}"></td>
+                                   <td>{{ $products->find($item->product_id)->name }}</td>
                                    <td>{{ $item->unit_price }}</td>
                                    <td><span>{{ $item->qty }}</span></td>
                                    <td><span>${{ $item->total_price }}</span></td>                                 
@@ -235,7 +244,6 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -250,13 +258,12 @@
            </div>
            
            <div class="form-action">
-               <input type="submit" class="btn btn-primary btn-sm" value="Save" name="edit">
+               <input type="submit" class="btn btn-primary btn-sm" value="Save" name="edit" onclick="return confirm('This will pernamently updated this Order. Are you Sure?')">
            </div>
            <br>
        </form>
    </div>
-       <!-- /.row -->
-       <!-- /.row -->
+
        
       <!-- /.row -->
    </div>
