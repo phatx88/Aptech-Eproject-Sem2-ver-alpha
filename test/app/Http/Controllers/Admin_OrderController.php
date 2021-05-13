@@ -200,7 +200,7 @@ class Admin_OrderController extends Controller
                 'order_details' => $order_details_mail
             ];
     
-            Mail::to($request->shipping_email)->send(new \App\Mail\MyTestMail($details));
+            Mail::to($request->shipping_email)->send(new \App\Mail\OrderConfirm($details));
         }
 
         if ($order->order_status_id == 5) {

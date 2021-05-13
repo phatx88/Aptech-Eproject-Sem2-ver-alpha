@@ -117,9 +117,10 @@
             @foreach($details as $key => $detail)
 
             <table align="left" border="0" cellpadding="0" cellspacing="0" style="text-align: left;" width="100%">
+                
                 <tr>
                     <td style="text-align: center;">
-                        <img width="250px" height="250px" src="{{$message->embed(asset('frontend/images/emails/about.jpg'))}}" style="border-radius: 50%">
+                         <img width="250px" height="250px" src="{{$message->embed(asset('frontend/images/emails/about.jpg'))}}" style="border-radius: 50%">
                     </td>
                 </tr>
                 <tr>
@@ -138,8 +139,14 @@
                             $coupon_fee = $order->coupon->number;
                             }
                         ?>
-                        <p style="font-size: 14px;">Thank you, we have received your order, please wait for confirmation!</p>
+                        <p style="font-size: 14px;">Order is confirmed and please allow us 3-4 business days to complete the delivery</p>
                         <p style="font-size: 14px;">Transaction ID : {{ $order->id }},</p>
+                        <p style="font-size: 14px;">Estimated Deliver Time : 3-4 business day</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <img width="300px" height="100px" src="{{$message->embed(asset('frontend/images/emails/track-your-order.png'))}}">
                     </td>
                 </tr>
             </table>
@@ -155,8 +162,9 @@
 
                         </p>
                     </td>
+                    {{-- <td><img src="../assets/images/email-temp/space.jpg" alt=" " height="25" width="30"></td> --}}
                     <td style="background-color: #fafafa;border: 1px solid #ddd;padding: 15px;letter-spacing: 0.3px;width: 50%;">
-                        <h5 style="font-size: 16px;font-weight: 600;color: #000; line-height: 16px; padding-bottom: 13px; border-bottom: 1px solid #e6e8eb; letter-spacing: -0.65px; margin-top:0; margin-bottom: 13px;">Payment method</h5>
+                        <h5 style="font-size: 16px;font-weight: 600;color: #000; line-height: 16px; padding-bottom: 13px; border-bottom: 1px solid #e6e8eb; letter-spacing: -0.65px; margin-top:0; margin-bottom: 13px;">Payment Method</h5>
                         <p style="text-align: center;font-weight: normal; font-size: 14px; color: #000000;line-height: 21px;    margin-top: 0;">
                             @if ($order->payment_method == 0)
                                 COD
@@ -262,6 +270,7 @@
                 </tr>
                 <tr>
                     <td>
+                        <a href='https://pngtree.com/so/scooter-clipart'>scooter clipart png from pngtree.com</a>
                         <a href="#" style="font-size:13px; margin:0;text-decoration: underline;">Unsubscribe</a>
                     </td>
                 </tr>

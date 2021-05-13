@@ -232,9 +232,9 @@ class Admin_BlogController extends Controller
     public function destroy($id)
     {
          // SOFT DELETE 
-         $post = Post::where('id', $id)->get();
          try {
-            $msg = 'Deleted Product : '.$post->name.' - ID : '.$post->id.' Successfully - <a href="'. url('admin/blog/restore/'.$post->id.'') . '"> Undo Action</a>';
+            $post = Post::where('id', $id)->first();
+            $msg = 'Deleted Post - ID : '.$post->id.' Successfully - <a href="'. url('admin/blog/restore/'.$post->id.'') . '"> Undo Action</a>';
             $post->delete();
             request()->session()->put('success', $msg);
         } catch (QueryException $e) {
@@ -279,5 +279,22 @@ class Admin_BlogController extends Controller
             'hidden' => 1
         ]);
         return redirect()->back()->with('message', 'Active Successfully');
+    }
+
+    public function showTrash()
+    {
+        $posts = Post::onlyTrashed()->get();
+        return view('admin.blog.trash', [
+            'posts' => $posts,
+            ]);
+    }
+
+    public function restore($id)
+    {
+        Post::onlyTrashed()->where('id' , $id)->restore();
+        $post = Post::find($id);
+        $msg = 'Deleted Post Id : '.$post->id.' Successfully';
+        request()->session()->put('success', $msg);
+        return redirect()->back();
     }
 }
