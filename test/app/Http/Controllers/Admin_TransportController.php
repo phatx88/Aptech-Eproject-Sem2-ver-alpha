@@ -46,7 +46,7 @@ class Admin_TransportController extends Controller
     {
         $request->validate([
             'province_id' => 'bail|unique:transport|required',
-            'price' => 'bail|required|max:255',        
+            'price' => 'bail|required|max:255',
         ]);
 
         $transport = new Transport();
@@ -92,7 +92,7 @@ class Admin_TransportController extends Controller
     public function update(Request $request, Transport $transport)
     {
         $request->validate([
-            'price' => 'bail|required|max:255',        
+            'price' => 'bail|required|max:255',
         ]);
 
         $transport->price = $request->price;
@@ -108,7 +108,7 @@ class Admin_TransportController extends Controller
      */
     public function destroy(Transport $transport)
     {
-        // SOFT DELETE 
+        // SOFT DELETE
         try {
             $msg = 'Deleted Product : '.$transport->name.' - ID : '.$transport->id.' Successfully - <a href="'. url('admin/transport/restore/'.$transport->id.'') . '"> Undo Action</a>';
             $transport->delete();

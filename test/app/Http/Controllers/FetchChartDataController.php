@@ -8,7 +8,7 @@ use App\Models\Order;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Ward;
 class FetchChartDataController extends Controller
 {
     public function fetchOrderByProvince()
@@ -60,10 +60,10 @@ class FetchChartDataController extends Controller
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        
+
         //Search Individuall collumns
         $columns = $request->input('columns');
-        for ($i=0; $i < $totalFiltered; $i++) { 
+        for ($i=0; $i < $totalFiltered; $i++) {
             if( !empty($request->columns[$i]['search']['value']))
             {
                 $whereColumns = $request->columns[$i]['data'];
@@ -79,7 +79,7 @@ class FetchChartDataController extends Controller
                     ->get();
             } else {
                 $search = $request->input('search.value');
-    
+
                 $orders =  Order::where('id', 'LIKE', "%{$search}%")
                     ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
                     ->orWhere('shipping_email', 'LIKE', "%{$search}%")
@@ -91,7 +91,7 @@ class FetchChartDataController extends Controller
                     ->limit($limit)
                     ->orderBy($order, $dir)
                     ->get();
-    
+
                 $totalFiltered = Order::where('id', 'LIKE', "%{$search}%")
                     ->orWhere('shipping_fullname', 'LIKE', "%{$search}%")
                     ->orWhere('shipping_email', 'LIKE', "%{$search}%")
@@ -135,7 +135,101 @@ class FetchChartDataController extends Controller
                 $nestedData['payment_method'] = $order->getPayment();
                 $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
                 $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
-                $nestedData['option_delete'] = $delete;                                 
+                $nestedData['option_delete'] = $delete;
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        echo json_encode($json_data);
+    }
+
+    public function fetchWard(Request $request)
+    {
+        $columns = array(
+            0 => 'id',
+            1 => 'name',
+            2 => 'type',
+            3 => 'district_id'
+        );
+
+        $totalData = Ward::count();
+
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+
+        //Search Individuall collumns
+        $columns = $request->input('columns');
+        for ($i=0; $i < $totalFiltered; $i++) {
+            if( !empty($request->columns[$i]['search']['value']))
+            {
+                $whereColumns = $request->columns[$i]['data'];
+                $search = $request->columns[$i]['search']['value'];
+            }
+        }
+        //if no search value get all
+        if (empty($search)) {
+            if (empty($request->input('search.value'))) {
+                $orders = Ward::offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+            } else {
+                $search = $request->input('search.value');
+
+                $orders =  Ward::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->orWhere('district_id', 'LIKE', "%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+                $totalFiltered = Ward::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->orWhere('district_id', 'LIKE', "%{$search}%")
+                    ->count();
+            }
+        } else {
+            $orders = Ward::where($whereColumns, '=' , $search)
+                    ->orwhere($whereColumns,'LIKE',"%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+            $totalFiltered = Ward::where($whereColumns,'LIKE',"%{$search}%")->count();
+        }
+
+        $data = array();
+        if (!empty($orders)) {
+            foreach ($orders as $order) {
+                $show =  route('admin.ward.show', $order->id);
+                $edit =  route('admin.ward.edit', $order->id);
+                $delete =  route('admin.ward.destroy', $order->id);
+
+                $nestedData['id'] = intval($order->id);
+                $nestedData['name'] = $order->name;
+                $nestedData['type'] = $order->type;
+                $nestedData['district_id'] = intval($order->district_id);
+
+
+                $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
+                $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
+                $nestedData['option_delete'] = $delete;
                 $data[] = $nestedData;
             }
         }
@@ -178,7 +272,7 @@ class FetchChartDataController extends Controller
 
          //Search Individuall collumns
          $columns = $request->input('columns');
-         for ($i=0; $i < $totalFiltered; $i++) { 
+         for ($i=0; $i < $totalFiltered; $i++) {
              if( !empty($request->columns[$i]['search']['value']))
              {
                  $whereColumns = $request->columns[$i]['data'];
@@ -232,7 +326,7 @@ class FetchChartDataController extends Controller
         }
 
         $data = array();
-        
+
         if (!empty($users)) {
             foreach ($users as $user) {
                 $show =  route('admin.user.show', $user->id);
