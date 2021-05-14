@@ -204,8 +204,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
     Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
+
     Route::post('ImageItem', [Admin_ImageItemController::class, 'store']);
-    // Route::post('ImageItem/destroy', [Admin_ImageItemController::class, 'destroy']);
+    Route::get('ImageItem/edit/{id}/{ImageItems}', [Admin_ImageItemController::class, 'edit']);
+    Route::post('ImageItem/update/{id}/{ImageItems}', [Admin_ImageItemController::class, 'update']);
 
     // Transport
     Route::get('transport/restore/{id}', [Admin_TransportController::class, 'restore'] );

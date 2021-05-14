@@ -35,6 +35,9 @@
                             src="{{ asset('frontend/images/gallery/' . $ImageItem->name) }}"
                             class=""></td>
                             <td>{{ $ImageItem->name }}</td>
+                            <td><a href="{{ URL('admin/ImageItem/edit/'.$product_id.'/'.$ImageItem->id) }}"
+                                class="btn btn-warning btn-sm">Edit</a></td>>
+
                             {{-- <form action="{{ URL('admin/ImageItem/destroy', ['ImageItem'=>$ImageItem->id]) }}" method="POST">
                                 @csrf @method('delete') --}}
                                 <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button></td>
