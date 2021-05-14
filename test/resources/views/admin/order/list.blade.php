@@ -58,7 +58,7 @@
                                     <th>Delivered Date</th>
                                     {{-- <th>Registered User</th> --}}
                                     <th>Recipient Name</th>
-                                    {{-- <th>Recipient Email</th> --}}
+                                    <th>Recipient Email</th>
                                     <th>Recipient Mobile</th>
                                     <th>Recipient Address</th>
                                     <th>Shipping Fee</th>
@@ -95,9 +95,6 @@
                                     <th>
                                         <input type="search" class="form-control form-control-sm filter-input" data-column="4" placeholder="Search">
                                     </th>
-                                    {{-- <th>
-                                        <input type="search" class="form-control form-control-sm filter-input" data-column="4" placeholder="Search">
-                                    </th> --}}
                                     <th>
                                         <input type="search" class="form-control form-control-sm filter-input" data-column="5" placeholder="Search">
                                     </th>
@@ -108,13 +105,16 @@
                                         <input type="search" class="form-control form-control-sm filter-input" data-column="7" placeholder="Search">
                                     </th>
                                     <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="8" placeholder="Search">
                                     </th>
                                     <th>
                                     </th>
                                     <th>
                                     </th>
                                     <th>
-                                        <select data-column="13" class="form-control form-control-sm filter-select">
+                                    </th>
+                                    <th>
+                                        <select data-column="12" class="form-control form-control-sm filter-select">
                                             <option value="">Select</option>
                                             <option value="0">COD</option>  
                                             <option value="1">BANK</option>  
@@ -198,7 +198,7 @@
                         [5, 10, 25, 50, 100, 500, 1000]
                     ],
                     "columnDefs": [{
-                        targets: 6,
+                        targets: 7,
                         render: $.fn.dataTable.render.ellipsis(30, true)
                     }],
                     "processing": true,
@@ -229,9 +229,9 @@
                         {
                             "data": "shipping_fullname"
                         },
-                        // {
-                        //     "data": "shipping_email"
-                        // },
+                        {
+                            "data": "shipping_email"
+                        },
                         {
                             "data": "shipping_mobile"
                         },

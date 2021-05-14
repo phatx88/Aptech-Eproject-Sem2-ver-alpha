@@ -13,6 +13,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
     protected $table = 'post';
+    protected $primaryKey = "id";
     public $timestamps = false;
 
     public function posttag() {

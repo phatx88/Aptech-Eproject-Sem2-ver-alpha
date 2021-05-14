@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Newsletter extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'email';
     protected $table = 'newsletter';
+    public $incrementing = false;
     public $timestamps = false;
 }

@@ -103,12 +103,18 @@
                             </form>
                             {{-- SEARCH BAR END --}}
                             <div class="form-group">
-                                <form action="">
+                                <form action="{{ url('home/products/') }}">
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                    <select name="orderBy" id="orderBy" class="form-control" onchange="this.form.submit()">
+                                    <select name="select" id="select" class="form-control" onchange="this.form.submit()">
                                         <option value="">Select</option>
-                                        <option value="ASC">Ascending</option>
-                                        <option value="DESC">Descending</option>
+                                        <option value="name-asc">Name Ascending</option>
+                                        <option value="name-desc">Name Descending</option>
+                                        <option value="sale_price-asc">Price Ascending</option>
+                                        <option value="sale_price-desc">Price Descending</option>
+                                        <option value="view_count-asc">View Higher</option>
+                                        <option value="view_count-desc">View Lower</option>
+                                        <option value="created_date-asc">Old to New</option>
+                                        <option value="created_date-desc">New to Old</option>
                                     </select>
                                 </form>
                             </div>
