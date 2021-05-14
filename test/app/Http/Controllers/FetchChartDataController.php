@@ -9,6 +9,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\Ward;
+use App\Models\District;
+use App\Models\Province;
 class FetchChartDataController extends Controller
 {
 
@@ -254,6 +256,197 @@ class FetchChartDataController extends Controller
 
         echo json_encode($json_data);
     }
+
+    public function fetchDistrict(Request $request)
+    {
+        $columns = array(
+            0 => 'id',
+            1 => 'name',
+            2 => 'type',
+            3 => 'province_id'
+        );
+
+        $totalData = District::count();
+
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+
+        //Search Individuall collumns
+        $columns = $request->input('columns');
+        for ($i=0; $i < $totalFiltered; $i++) {
+            if( !empty($request->columns[$i]['search']['value']))
+            {
+                $whereColumns = $request->columns[$i]['data'];
+                $search = $request->columns[$i]['search']['value'];
+            }
+        }
+        //if no search value get all
+        if (empty($search)) {
+            if (empty($request->input('search.value'))) {
+                $orders = District::offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+            } else {
+                $search = $request->input('search.value');
+
+                $orders =  District::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->orWhere('province_id', 'LIKE', "%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+                $totalFiltered = District::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->orWhere('province_id', 'LIKE', "%{$search}%")
+                    ->count();
+            }
+        } else {
+            $orders = District::where($whereColumns, '=' , $search)
+                    ->orwhere($whereColumns,'LIKE',"%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+            $totalFiltered = District::where($whereColumns,'LIKE',"%{$search}%")->count();
+        }
+
+        $data = array();
+        if (!empty($orders)) {
+            foreach ($orders as $order) {
+                $show =  route('admin.district.show', $order->id);
+                $edit =  route('admin.district.edit', $order->id);
+                $delete =  route('admin.district.destroy', $order->id);
+
+                $nestedData['id'] = intval($order->id);
+                $nestedData['name'] = $order->name;
+                $nestedData['type'] = $order->type;
+                $nestedData['province_id'] = intval($order->province_id);
+
+
+                $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
+                $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
+                $nestedData['option_delete'] = $delete;
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        echo json_encode($json_data);
+    }
+
+
+
+
+    public function fetchProvince(Request $request)
+    {
+        $columns = array(
+            0 => 'id',
+            1 => 'name',
+            2 => 'type',
+        );
+
+        $totalData = Province::count();
+
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$request->input('order.0.column')];
+        $dir = $request->input('order.0.dir');
+
+
+        //Search Individuall collumns
+        $columns = $request->input('columns');
+        for ($i=0; $i < $totalFiltered; $i++) {
+            if( !empty($request->columns[$i]['search']['value']))
+            {
+                $whereColumns = $request->columns[$i]['data'];
+                $search = $request->columns[$i]['search']['value'];
+            }
+        }
+        //if no search value get all
+        if (empty($search)) {
+            if (empty($request->input('search.value'))) {
+                $orders = Province::offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+            } else {
+                $search = $request->input('search.value');
+
+                $orders =  Province::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+                $totalFiltered = Province::where('id', 'LIKE', "%{$search}%")
+                    ->orWhere('name', 'LIKE', "%{$search}%")
+                    ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->count();
+            }
+        } else {
+            $orders = Province::where($whereColumns, '=' , $search)
+                    ->orwhere($whereColumns,'LIKE',"%{$search}%")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+            $totalFiltered = Province::where($whereColumns,'LIKE',"%{$search}%")->count();
+        }
+
+        $data = array();
+        if (!empty($orders)) {
+            foreach ($orders as $order) {
+                $show =  route('admin.province.show', $order->id);
+                $edit =  route('admin.province.edit', $order->id);
+                $delete =  route('admin.province.destroy', $order->id);
+
+                $nestedData['id'] = intval($order->id);
+                $nestedData['name'] = $order->name;
+                $nestedData['type'] = $order->type;
+
+
+                $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
+                $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
+                $nestedData['option_delete'] = $delete;
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        echo json_encode($json_data);
+    }
+
+
+
+
 
     public function fetchUser(Request $request)
     {
