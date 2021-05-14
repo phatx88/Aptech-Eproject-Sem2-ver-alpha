@@ -383,6 +383,10 @@
                 chart.draw(dataTable, options);
             }
 
+            $(window).resize(function(){
+            drawChart();
+            });
+
         </script>
 
     @endsection

@@ -18,7 +18,8 @@ use App\Http\Controllers\Admin_TransportController;
 use App\Http\Controllers\Admin_WardController;
 use App\Http\Controllers\Admin_RoleController;
 use App\Http\Controllers\Admin_NewsletterController;
-
+use App\Http\Controllers\Admin_DistrictController;
+use App\Http\Controllers\Admin_ProvinceController;
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
 use App\Http\Controllers\User_AccountController;
@@ -142,11 +143,14 @@ Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwor
 Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
 Route::get('/fetch-daily-order-data', [FetchChartDataController::class,'fetchDailyOrder']);
 Route::get('/fetch-product-sale-data', [FetchChartDataController::class,'fetchSalesPerProduct']);
+Route::get('/fetch-users-value-data', [FetchChartDataController::class,'fetchValuePerUser']);
 
 // FETCH DATA FOR DATATABLE
 Route::post('/fetch-order', [FetchChartDataController::class,'fetchOrder']);
 Route::post('/fetch-user', [FetchChartDataController::class,'fetchUser']);
 Route::post('/fetch-ward', [FetchChartDataController::class,'fetchWard']);
+Route::post('/fetch-district', [FetchChartDataController::class,'fetchDistrict']);
+Route::post('/fetch-province', [FetchChartDataController::class,'fetchProvince']);
 
 
 //BACK END
@@ -204,6 +208,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
+    Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
+
+    Route::post('ImageItem', [Admin_ImageItemController::class, 'store']);
+    Route::get('ImageItem/edit/{id}/{ImageItems}', [Admin_ImageItemController::class, 'edit']);
+    Route::post('ImageItem/update/{id}/{ImageItems}', [Admin_ImageItemController::class, 'update']);
     Route::resource('blog', Admin_BlogController::class);
 
 
@@ -214,6 +223,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 
     //ward
     Route::resource('ward', Admin_WardController::class );
+
+    //District
+    Route::resource('district', Admin_DistrictController::class );
+
+    //Province
+    Route::resource('province', Admin_ProvinceController::class );
+
     // Role
     Route::resource('role', Admin_RoleController::class);
 

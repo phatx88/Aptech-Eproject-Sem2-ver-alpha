@@ -107,6 +107,8 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-map"></i> <span>Ward</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{ route('admin.ward.index')}}"><i class="fas fa-list"></i> List Ward</a>
+               <a class="dropdown-item" href="{{ route('admin.district.index')}}"><i class="fas fa-list"></i> List District</a>
+               <a class="dropdown-item" href="{{ route('admin.province.index')}}"><i class="fas fa-list"></i> List Province</a>
             </div>
          </li>
 

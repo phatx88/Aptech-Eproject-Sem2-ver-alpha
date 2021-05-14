@@ -29,6 +29,8 @@
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
                          <th>Email</th>
                          <th></th>
+                         <th></th>
+                         <th></th>
                       </tr>
                    </thead>
                    <tbody>
@@ -36,6 +38,7 @@
                        <tr>
                         <td><input type="checkbox"></td>
                         <td>{{$email->email}}</td>
+                        <td></td>
                         <td><a href="{{ route('admin.newsletter.edit' , ['newsletter' => $email->email]) }}" class="btn btn-warning btn-sm">Edit</a></td>
                         <td>
                             <form

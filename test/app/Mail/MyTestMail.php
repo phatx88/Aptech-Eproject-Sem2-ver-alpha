@@ -24,7 +24,7 @@ class MyTestMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Order Confirmation')
+        return $this->subject('Order Received')
         ->view('sendmail.email_order_success');
     }
 }
