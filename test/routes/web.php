@@ -419,3 +419,6 @@ Route::post('/delete-button-wishlist', [User_WishListController::class, 'delete_
 Route::get('email-success', function () {
     view('sendmail.email_order_success');
 });
+
+//Subscribe Email Address
+Route::post('/subscribe-email', [User_HomeController::class, 'subscribe_email']);

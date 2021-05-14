@@ -397,7 +397,7 @@
             </div>
         </div>
 
-        {{-- Product Compare Modal --}}
+        <!-- Product Compare Modal -->
         <div class="modal fade" id="compare" tabindex="-1" role="dialog" style="overflow-y:hidden;">
             <div class="modal-dialog">
             <div class="modal-content" style="width: fit-content;
@@ -416,7 +416,7 @@
                 <div class="modal-body">
                     <div>
                         <table class="table table-striped">
-                        
+
                         <tr height="20px">
                             <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 1</th>
                             <th style="margin: 0px; padding: 5px; text-align: center; " width="33%">Item 2</th>
@@ -428,11 +428,11 @@
                       </table>
                     </div>
                 </div>
-              
+
             </div>
             </div>
         </div>
-        
+        <!-- Product Compare Modal -->
     </footer>
 
 
