@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MyTestMail extends Mailable
+class OrderConfirm extends Mailable
 {
     use Queueable, SerializesModels;
     public $details;
@@ -24,7 +24,7 @@ class MyTestMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Order Received')
-        ->view('sendmail.email_order_success');
+        return $this->subject('Order Confirmation')
+        ->view('sendmail.email_order_confirmed');
     }
 }

@@ -117,7 +117,7 @@
             <label>Responsible Staff* : </label>  
          </div>
          <div class="col-sm-8 col-lg-6"> 
-            <select name="staff_id" class="form-control" required>
+            <select name="staff_id" class="form-control" oninvalid="this.setCustomValidity('Select Responsible Staff')" required>
              <option value=""></option>
              @foreach ($staffs as $staff)
              <option value="{{ $staff->id }}">{{ $staff->name }}</option>

@@ -60,8 +60,13 @@
                                         
                                         <td>
                                             @if (Auth::user()->email == 'phat.x.luong@gmail.com' && Auth::user()->email != $staff->user->email)
-                                            <input type="button" onclick="Delete('1');" value="Xóa"
-                                                class="btn btn-danger btn-sm">
+                                            <form
+                                            action="{{ route('admin.staff.destroy', ['staff' => $staff->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onsubmit="return Confirm('Delete will remove user from Staff list. Are you sure?')">
+                                            </form>
                                             @endif
                                         </td>
                                     </tr>

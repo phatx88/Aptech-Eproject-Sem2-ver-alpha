@@ -80,9 +80,12 @@ class Admin_ImageItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($product_id, ImageItem $ImageItems)
     {
-        //
+        return view('admin.image.edit',[
+            'ImageItems' => $ImageItems,
+            'product_id' => $product_id
+        ]);
     }
 
     /**
@@ -92,9 +95,26 @@ class Admin_ImageItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $product_id, ImageItem $ImageItems)
     {
-        //
+        $request->validate([
+            'image' =>'bail|image|required|mimes:jpg,jpeg,png|max:2048',
+            'product_id'=>'bail|integer|required',
+            ]);
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $name = $file->getClientOriginalName();
+
+                //move file to folder
+                $file->move(public_path('frontend\images\gallery'), $name);
+            } else {
+               $name =  'image.jpg';
+            }
+
+            $ImageItems->product_id = $product_id;
+            $ImageItems->name = $name;
+            $ImageItems->save();
+            return redirect('admin/ImageItem/' . $request->product_id);
     }
 
     /**

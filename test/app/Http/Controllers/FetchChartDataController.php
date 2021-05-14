@@ -13,6 +13,8 @@ use App\Models\District;
 use App\Models\Province;
 class FetchChartDataController extends Controller
 {
+
+    //Fetch data for Charts
     public function fetchOrderByProvince()
     {
         $data = DB::table('total_order_by_regions')->select('type', 'order_count', 'total_sales')->get();
@@ -33,6 +35,15 @@ class FetchChartDataController extends Controller
         //fix vietnamese to json issues
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
+
+    public function fetchValuePerUser()
+    {
+        $data = DB::table('total_per_user')->select('name','amount_spent')->orderBy('amount_spent' , 'desc')->get();
+        //fix vietnamese to json issues
+        echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    //Fetchdata for Datatables
 
     public function fetchOrder(Request $request)
     {

@@ -9254,8 +9254,8 @@ textarea.form-control {
     .ftco-footer .ftco-footer-widget .btn-primary:hover {
       background: #fff;
       border: 2px solid #fff !important; }
-  .ftco-footer p {
-    color: rgba(255, 255, 255, 0.9); }
+  /* .ftco-footer p {
+    color: rgba(255, 255, 255, 0.9); } */
   .ftco-footer a {
     color: #fff; }
     .ftco-footer a:hover {
@@ -10294,5 +10294,9 @@ textarea.form-control {
     width: 90%;
     margin-left: 10px;
   }
+
+ 
+
+  
 
 

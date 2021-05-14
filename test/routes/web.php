@@ -88,11 +88,6 @@ Route::get('login/twitter', [App\Http\Controllers\Auth\LoginController::class, '
 Route::get('login/twitter/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleTwitterCallback']);
 
 
-// Social login
-// Route::get('login/{$provider}', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])->name('login.social');
-// Route::get('login/{$provider}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback']);
-
-
 //Another Address
 Route::get('/another-address', [User_CheckOutController::class, 'another_address']);
 
@@ -148,6 +143,7 @@ Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwor
 Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
 Route::get('/fetch-daily-order-data', [FetchChartDataController::class,'fetchDailyOrder']);
 Route::get('/fetch-product-sale-data', [FetchChartDataController::class,'fetchSalesPerProduct']);
+Route::get('/fetch-users-value-data', [FetchChartDataController::class,'fetchValuePerUser']);
 
 // FETCH DATA FOR DATATABLE
 Route::post('/fetch-order', [FetchChartDataController::class,'fetchOrder']);
@@ -184,6 +180,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export');
     Route::resource('coupon', Admin_CouponController::class);
 
+    // Image Item
+    Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
+    Route::post('ImageItem', [Admin_ImageItemController::class, 'store']);
+    // Route::post('ImageItem/destroy', [Admin_ImageItemController::class, 'destroy']);
+
     // Order
     Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export');
     Route::get('order/restore/{id}', [Admin_OrderController::class, 'restore'] );
@@ -200,15 +201,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 
 
     // Blog
-    Route::resource('blog', Admin_BlogController::class);
     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
-    Route::get('delete/{id}', [Admin_BlogController::class, 'delete']);
+    Route::get('delete/{id}', [Admin_BlogController::class, 'destroy']);
+    Route::get('blog/restore/{id}', [Admin_BlogController::class, 'restore'] );
+    Route::get('blog/trash', [Admin_BlogController::class, 'showTrash'] );
     Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
     Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
+
     Route::post('ImageItem', [Admin_ImageItemController::class, 'store']);
-    // Route::post('ImageItem/destroy', [Admin_ImageItemController::class, 'destroy']);
+    Route::get('ImageItem/edit/{id}/{ImageItems}', [Admin_ImageItemController::class, 'edit']);
+    Route::post('ImageItem/update/{id}/{ImageItems}', [Admin_ImageItemController::class, 'update']);
+    Route::resource('blog', Admin_BlogController::class);
+
 
     // Transport
     Route::get('transport/restore/{id}', [Admin_TransportController::class, 'restore'] );
@@ -425,3 +431,7 @@ Route::post('/add-to-wishlist', [User_WishListController::class, 'add_to_wishlis
 Route::post('/roll-button-wishlist', [User_WishListController::class, 'roll_button_wishlist']);
 
 Route::post('/delete-button-wishlist', [User_WishListController::class, 'delete_button_wishlist']);
+
+Route::get('email-success', function () {
+    view('sendmail.email_order_success');
+});

@@ -79,7 +79,7 @@ class Admin_StaffController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'password' => 'required|same:confirm-password',
             'is_staff' => 'required',
             'role' => 'required|between:1,3',
@@ -89,7 +89,10 @@ class Admin_StaffController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
     
-        $user = User::create($input);
+        $user = User::where('email' , $request->input('email'))->first();
+        if (!$user) {
+            $user = User::create($input);
+        }
         $user->assignRole($request->input('role'));
         $user->email_verified_at = now();
         $user->save();
@@ -183,9 +186,18 @@ class Admin_StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Staff $staff)
     {
-        //
+        try {
+            $msg = 'Deleted Product : '.$staff->user->name.' - Staff Id : '.$staff->id.' Successfully';
+            $staff->delete();
+            request()->session()->put('success', $msg);
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.staff.index");
     }
 
     //full Calendar Action
