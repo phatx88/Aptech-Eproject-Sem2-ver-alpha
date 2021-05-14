@@ -87,11 +87,6 @@ Route::get('login/twitter', [App\Http\Controllers\Auth\LoginController::class, '
 Route::get('login/twitter/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleTwitterCallback']);
 
 
-// Social login
-// Route::get('login/{$provider}', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])->name('login.social');
-// Route::get('login/{$provider}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback']);
-
-
 //Another Address
 Route::get('/another-address', [User_CheckOutController::class, 'another_address']);
 

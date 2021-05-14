@@ -21,7 +21,6 @@ class User_ProductsController extends Controller
 {
     public function index(Request $request, $id = null)
     {
-
         $search = $request->input("search");
         $price_from = $request->price_from;
         $price_to = $request->price_to;
@@ -105,6 +104,20 @@ class User_ProductsController extends Controller
         }
 
         // SEARCH ALL OR BY NAME
+        else if (!empty($select = $request->input("select"))) {
+            list($column, $ordeBy) = explode( "-" ,$select); 
+            
+            $products = DB::table('view_product')
+            ->join('brand', 'view_product.brand_id', '=', 'brand.id')
+            ->join('category', 'view_product.category_id', '=', 'category.id')
+            ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
+            ->where('deleted_at', null)
+            ->where('hidden', false)
+            ->orderBy($column , $ordeBy)
+            ->paginate(9);
+                    
+        }
+        
         else {
 
             $products = DB::table(function ($query) {
