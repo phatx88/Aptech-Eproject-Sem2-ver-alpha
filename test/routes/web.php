@@ -18,7 +18,8 @@ use App\Http\Controllers\Admin_TransportController;
 use App\Http\Controllers\Admin_WardController;
 use App\Http\Controllers\Admin_RoleController;
 use App\Http\Controllers\Admin_NewsletterController;
-
+use App\Http\Controllers\Admin_DistrictController;
+use App\Http\Controllers\Admin_ProvinceController;
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
 use App\Http\Controllers\User_AccountController;
@@ -152,6 +153,8 @@ Route::get('/fetch-product-sale-data', [FetchChartDataController::class,'fetchSa
 Route::post('/fetch-order', [FetchChartDataController::class,'fetchOrder']);
 Route::post('/fetch-user', [FetchChartDataController::class,'fetchUser']);
 Route::post('/fetch-ward', [FetchChartDataController::class,'fetchWard']);
+Route::post('/fetch-district', [FetchChartDataController::class,'fetchDistrict']);
+Route::post('/fetch-province', [FetchChartDataController::class,'fetchProvince']);
 
 
 //BACK END
@@ -214,6 +217,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 
     //ward
     Route::resource('ward', Admin_WardController::class );
+
+    //District
+    Route::resource('district', Admin_DistrictController::class );
+
+    //Province
+    Route::resource('province', Admin_ProvinceController::class );
+
     // Role
     Route::resource('role', Admin_RoleController::class);
 

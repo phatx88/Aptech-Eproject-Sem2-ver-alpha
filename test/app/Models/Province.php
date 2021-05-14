@@ -10,6 +10,7 @@ class Province extends Model
     use HasFactory;
 
     protected $table = 'province';
+    protected $primaryKey = "id";
     public $timestamps = false;
 
     public function transport() {
