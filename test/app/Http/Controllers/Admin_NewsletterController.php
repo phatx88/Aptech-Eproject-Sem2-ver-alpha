@@ -28,7 +28,7 @@ class Admin_NewsletterController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.newsletter.add');
     }
 
     /**
@@ -39,7 +39,15 @@ class Admin_NewsletterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|unique:newsletter|max:255'
+        ]);
+
+        $newsletter = new Newsletter();
+        $newsletter->email = $request->email;
+        $newsletter->save();
+        return redirect()->route("admin.newsletter.index")->with('success', "Added Newletter Fee for Province Id - {$newsletter->email} Successfully");
+
     }
 
     /**
@@ -61,7 +69,10 @@ class Admin_NewsletterController extends Controller
      */
     public function edit(Newsletter $newsletter)
     {
-        //
+
+        return view('admin.newsletter.edit' , [
+            'newsletter' => $newsletter
+        ]);
     }
 
     /**
@@ -73,7 +84,12 @@ class Admin_NewsletterController extends Controller
      */
     public function update(Request $request, Newsletter $newsletter)
     {
-        //
+        $request->validate([
+            'email' => 'required|unique:newsletter|max:255'
+        ]);
+        $newsletter->email = $request->email;
+        $newsletter->save();
+        return redirect()->route("admin.newsletter.index")->with('success', "Updated Email - {$newsletter->email} Successfully");
     }
 
     /**

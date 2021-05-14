@@ -9,12 +9,18 @@
           </li>
           <li class="breadcrumb-item active">News letter</li>
        </ol>
+       @include('errors.error')
        <!-- DataTables Example -->
-       <div class="action-bar">
-
-          <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
-       </div>
        <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Transport List
+            <div class="float-right">
+                <a href="{{ route('admin.newsletter.create') }}" class="btn btn-primary btn-sm">Add</a>
+                <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
+                <a href="#" class="btn btn-success btn-sm">Export</a>
+            </div>
+          </div>
           <div class="card-body">
              <div class="table-responsive">
                 <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
@@ -30,8 +36,17 @@
                        <tr>
                         <td><input type="checkbox"></td>
                         <td>{{$email->email}}</td>
-                        <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
-                     </tr>
+                        <td><a href="{{ route('admin.newsletter.edit' , ['newsletter' => $email->email]) }}" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td>
+                            <form
+                                action="{{ route('admin.newsletter.destroy', ['newsletter' => $email->email]) }}"
+                                method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                            </form>
+                        </td>
+                    </tr>
                        @endforeach
                    </tbody>
                 </table>
@@ -42,12 +57,6 @@
     </div>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-       <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-             <span>Copyright © Thầy Lộc 2017</span>
-          </div>
-       </div>
-    </footer>
+    @include('admin.footer');
  </div>
 @endsection
