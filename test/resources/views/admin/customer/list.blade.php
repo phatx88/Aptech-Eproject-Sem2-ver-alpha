@@ -10,6 +10,22 @@
                   <li class="breadcrumb-item active">User</li>
                </ol>
                @include('errors.message')
+                {{-- GOOGLE CALENDAR CHART --}}
+
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                Revenue Per Customer Report
+                            </div>
+                            <div class="card-body">
+                                <div id="piechart_3d" style="width: 100%; height: 500px;"
+                                data-url="{{ url('fetch-users-value-data') }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                <!-- DataTables Example -->
                <div class="action-bar">
                   <input type="submit" class="btn btn-primary btn-sm" value="Thêm" name="add">
@@ -96,6 +112,63 @@
          <!-- /.content-wrapper -->
 @endsection
 @section('scripts')
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var url = $('#piechart_3d').data('url');
+        //step 1 : Get data from laravel controller via route
+        var jsonData = $.ajax({
+            url: url,
+            dataType: "json",
+            async: false
+        }).responseText;
+        //step 2 : parse JSON to js Array of Obj
+        var arrObj = JSON.parse(jsonData);
+        var arrdata = [];
+        //step 3 : loop through each obj convert into array of value : value
+        $.each(arrObj, function(k, obj) {
+            var data = Object.keys(obj).map(function(key) {
+                return obj[key];
+            });
+            //step 4 : insert each array(v,v) to array of data
+            arrdata.push(data);
+        });
+        // console.log(arrdata);
+         // Step 5 : change element of array to desired type 
+         $.each(arrdata, function(k, v) {
+                    v[1] = Number(v[1]);
+        });
+        
+
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn({
+            type: 'string',
+            id: 'Users'
+        });
+        dataTable.addColumn({
+            type: 'number',
+            id: 'Dollars Spend'
+        });
+        dataTable.addRows(arrdata);
+
+    var options = {
+      title: 'Most Valuable Customers (in $)',
+      sliceVisibilityThreshold: .01,
+      is3D: true,
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+    chart.draw(dataTable, options);
+  }
+
+  $(window).resize(function(){
+            drawChart();
+            });
+</script>
+
 <script>
    $(document).ready(function() {
     var table = $('#datatableAjax').DataTable({
@@ -177,4 +250,5 @@
                 });
             });
 </script>
+
 @endsection

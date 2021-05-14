@@ -142,6 +142,7 @@ Route::get('/auth/passwordset/{token}', [PasswordSetupController::class,'passwor
 Route::get('/fetch-order-data', [FetchChartDataController::class,'fetchOrderByProvince']);
 Route::get('/fetch-daily-order-data', [FetchChartDataController::class,'fetchDailyOrder']);
 Route::get('/fetch-product-sale-data', [FetchChartDataController::class,'fetchSalesPerProduct']);
+Route::get('/fetch-users-value-data', [FetchChartDataController::class,'fetchValuePerUser']);
 
 // FETCH DATA FOR DATATABLE
 Route::post('/fetch-order', [FetchChartDataController::class,'fetchOrder']);
