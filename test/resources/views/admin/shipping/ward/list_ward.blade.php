@@ -8,21 +8,21 @@
              <a href="{{ route('admin.dashboard.index') }}">Admin</a>
          </li>
          <li class="breadcrumb-item">
-             <a href="{{ route('admin.shipping.index') }}">Shipping</a>
+             <a href="{{ route('admin.ward.index') }}">Shipping</a>
          </li>
          <li class="breadcrumb-item active">List</li>
      </ol>
      @include('errors.message')
        <!-- DataTables Example -->
-       <div class="card mb-3">
+       {{-- <div class="card mb-3">
          <div class="card-header">
             <i class="fas fa-table"></i>
             Shipping
-            {{-- <div class="float-right">
+            <div class="float-right">
                 <a href="{{ route('admin.transport.create') }}" class="btn btn-primary btn-sm">Add</a>
                 <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
                 <a href="#" class="btn btn-success btn-sm">Export</a>
-            </div> --}}
+            </div>
           </div>
           <div class="card-body">
              <div class="table-responsive">
@@ -58,7 +58,67 @@
                 </table>
              </div>
           </div>
-       </div>
+       </div> --}}
+
+       <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Order List
+            <div class="float-right">
+                <a type="button" href="{{ route('admin.ward.create') }}" class="btn btn-primary btn-sm" value="Thêm"
+                name="add">Add</a>
+                <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
+                <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm">Export</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="datatableAjax" class="table table-hover text-center" style="width:100%">
+                    @csrf
+                    <thead>
+                        <tr>
+                            <th>Ward Id</th>
+                            <th>Ward Name</th>
+                            <th>Ward Type</th>
+                            <th>Ward District</th>
+
+                            <th>Actions</th>
+
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>
+                                <input type="search" class="form-control form-control-sm filter-input" data-column="0" placeholder="Search">
+                            </th>
+                            <th>
+                                <input type="search" class="form-control form-control-sm filter-input" data-column="1" placeholder="Search">
+                            </th>
+                            <th>
+                                <select data-column="2" class="form-control form-control-sm filter-select">
+                                    <option value="">Select</option>
+                                    <option value="Xã">Xã</option>
+                                    <option value="Thị Trấn">Thị Trấn</option>
+                                    <option value="Phường">Phường</option>
+                                </select>
+                            </th>
+                            <th>
+                                <input type="search" class="form-control form-control-sm filter-input" data-column="3" placeholder="Search">
+                            </th>
+
+                            <th></th>
+
+
+                        </tr>
+                    </tfoot>
+                </table>
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </div>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
@@ -66,7 +126,7 @@
  </div>
 @endsection
 @section('scripts')
-<script>
+{{-- <script>
    $(document).ready(function() {
        var table = $('#dataTable-3').DataTable({
            // flipping horizontal scroll bar in datatables refer to admin.css line 94
@@ -135,6 +195,68 @@
        //SEARCH SELECT BY COLUMNS//
 
    });
+
+</script> --}}
+<script>
+    $(document).ready(function() {
+        var table = $('#datatableAjax').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "autoWidth": 'TRUE',
+            "scrollX": 'TRUE',
+            "lengthMenu": [
+                [5, 10, 25, 50, 100, 500, 1000],
+                [5, 10, 25, 50, 100, 500, 1000]
+            ],
+            "columnDefs": [{
+                // targets: 8,
+                // render: $.fn.dataTable.render.ellipsis(30, true)
+            }],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "{{ url('fetch-ward') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data": {
+                    _token: "{{ csrf_token() }}"
+                }
+            },
+            "columns": [
+                {
+                    "data": "id"
+                },
+                {
+                    "data": "name"
+                },
+                {
+                    "data": "type"
+                },
+                {
+                    "data": "district_id"
+                },
+                {
+                    "data": "option_edit"
+                },
+
+
+            ],
+        });
+
+        $('.filter-input').on( 'keyup change' , function () {
+                table.column( $(this).data('column') )
+                .search( $(this).val() )
+                .draw();
+            });
+
+        $('.filter-select').on( 'change', function () {
+            table.column( $(this).data('column') )
+            .search( $(this).val() )
+            .draw();
+        });
+
+    });
 
 </script>
 @endsection

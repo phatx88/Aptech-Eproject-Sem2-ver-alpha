@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 
-class Admin_ShippingController extends Controller
+class Admin_WardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class Admin_ShippingController extends Controller
     public function index()
     {
         $shippings = Ward::get();
-        return view('admin.shipping.list_ward',[
+        return view('admin.shipping.ward.list_ward',[
             'shippings' => $shippings
         ]);
     }

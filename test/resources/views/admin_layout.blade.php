@@ -103,9 +103,9 @@
          </li>
 
          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Ward</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-shipping-fast"></i> <span>Shipping</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('admin.shipping.index')}}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{ route('admin.ward.index')}}"><i class="fas fa-list"></i> List Ward</a>
             </div>
          </li>
 
