@@ -12,7 +12,10 @@
     <link rel="shortcut icon" href="../assets/images/favicon/favicon.png" type="image/x-icon">
 
     <!--Google font-->
-    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
+   <!--Google font-->
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 
     <!--page css-->
     <style type="text/css">
@@ -102,6 +105,9 @@
             margin-left:5px;
             margin-right:5px;
         }
+        .dancing-script{
+            font-family: 'Dancing Script', cursive;
+        }
     </style>
 </head>
 <body style="margin: 20px auto;">
@@ -125,7 +131,7 @@
                 </tr>
                 <tr>
                     <td style="text-align: center;">
-                        <h3 style="font-size: 24px;">Liquore Store</h3>
+                        <h3 style="font-size: 24px;" class="dancing-script">Liquore Store</h3>
                     </td>
                 </tr>
                 <tr>
