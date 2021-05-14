@@ -14,6 +14,7 @@ use App\Models\PostComment;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use File;
+use Illuminate\Database\QueryException;
 
 class Admin_BlogController extends Controller
 {
@@ -230,7 +231,18 @@ class Admin_BlogController extends Controller
      */
     public function destroy($id)
     {
-
+         // SOFT DELETE 
+         $post = Post::where('id', $id)->get();
+         try {
+            $msg = 'Deleted Product : '.$post->name.' - ID : '.$post->id.' Successfully - <a href="'. url('admin/blog/restore/'.$post->id.'') . '"> Undo Action</a>';
+            $post->delete();
+            request()->session()->put('success', $msg);
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
     }
 
     public function delete($id){

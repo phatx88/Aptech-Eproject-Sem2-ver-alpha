@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin_ImageItemController;
 use App\Http\Controllers\Admin_TransportController;
 use App\Http\Controllers\Admin_WardController;
 use App\Http\Controllers\Admin_RoleController;
+use App\Http\Controllers\Admin_NewsletterController;
 
 // FE CONTROLLER
 use App\Http\Controllers\User_HomeController;
@@ -215,6 +216,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::resource('ward', Admin_WardController::class );
     // Role
     Route::resource('role', Admin_RoleController::class);
+
+    //Newsletter
+    Route::resource('newsletter', Admin_NewsletterController::class);
+
 
     // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);

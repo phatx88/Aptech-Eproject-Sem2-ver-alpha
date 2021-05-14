@@ -310,22 +310,17 @@
                 switch ($order->order_status_id) {
                     case 1: $output .= '<hr class="flex-fill"></span>
                                         <hr class="flex-fill">
-                                        <hr class="flex-fill">
+
                                         <hr class="flex-fill"></div>';
                                 break;
                     case 2: $output.= ' <hr class="flex-fill track-line"><span class="dot"></span>
-                                        <hr class="flex-fill">
+
                                         <hr class="flex-fill">
                                         <hr class="flex-fill"></div>';
                             break;
-                    case 3: $output.= ' <hr class="flex-fill track-line"><span class="dot"></span>
+                    case 4: $output.= ' <hr class="flex-fill track-line"><span class="dot"></span>
                                         <hr class="flex-fill track-line"><span class="dot"></span>
-                                        <hr class="flex-fill"></span>
-                                        <hr class="flex-fill"></div>';
-                            break;
-                    case 4: $output.= '<hr class="flex-fill track-line"><span class="dot"></span>
-                                        <hr class="flex-fill track-line"><span class="dot"></span>
-                                        <hr class="flex-fill track-line"><span class="dot"></span>
+
                                         <hr class="flex-fill"></div>';
                             break;
                     case 5: $output.= '<hr class="flex-fill track-line"><span class="dot"></span>
@@ -349,7 +344,6 @@
                                                                             <div class="d-flex flex-row justify-content-between align-items-center">
                                                                                 <div class="d-flex flex-column align-items-start"><span>{{ date_format($order->created_date, 'd-m-Y ') }}</span><span>Ordered</span></div>
                                                                                 <div class="d-flex flex-column justify-content-center"><span></span><span>Confirmed</span></div>
-                                                                                <div class="d-flex flex-column justify-content-center align-items-center"><span></span><span>Packaged</span></div>
                                                                                 <div class="d-flex flex-column align-items-center"><span></span><span>Shipping</span></div>
                                                                                 @if($order->order_status_id == 5)
                                                                                 <div class="d-flex flex-column align-items-end"><span>{{ date_format(new DateTime($order->delivered_date), 'd-m-Y ') }}</span><span>Delivered</span></div>

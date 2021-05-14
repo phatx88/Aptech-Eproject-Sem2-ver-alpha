@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Staff;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class Admin_RoleController extends Controller
 {

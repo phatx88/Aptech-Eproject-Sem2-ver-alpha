@@ -22,11 +22,12 @@ use Maatwebsite\Excel\Facades\Excel;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+// use Mail;
+use Illuminate\Support\Facades\Mail;
 // use App\DataTables\OrderDataTable;
 
 class Admin_OrderController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -83,6 +84,7 @@ class Admin_OrderController extends Controller
             'shipping_email' => 'email:rfc,dns|max:255',
             'payment_method' => 'required',
             'shipping_ward_id' => 'required',
+            'staff_id' => 'required'
         ]);
         
         $order = new Order($request->all());
@@ -127,18 +129,34 @@ class Admin_OrderController extends Controller
         $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
         $products = Product::with('order')->get();
         $provinces = Province::orderby('name', 'ASC')->get();
-        $statuses = ShippingStatus::get();
+        $statuses = ShippingStatus::where('id' , '>=' , $order->order_status_id)->get();
         $staffs = Staff::get();
         $users = User::with('ward' , 'order')->where('is_staff' , '0')->get();
-        return view('admin.order.edit' , [
-            'order' => $order,
-            'products' => $products,
-            'statuses' => $statuses,
-            'orderItem' => $orderItem,
-            'staffs' => $staffs,
-            'users' => $users,
-            'provinces' => $provinces,
-        ]);
+
+        if ($order->order_status_id == '5' || $order->order_status_id == '6') {
+            return view('admin.order.detail' , [
+                'order' => $order,
+                'products' => $products,
+                'orderItem' => $orderItem,
+                'statuses' => $statuses,
+                'staffs' => $staffs,
+                'users' => $users,
+                'provinces' => $provinces,
+            ]);
+        }
+         
+        else {
+            return view('admin.order.edit' , [
+                'order' => $order,
+                'products' => $products,
+                'orderItem' => $orderItem,
+                'statuses' => $statuses,
+                'staffs' => $staffs,
+                'users' => $users,
+                'provinces' => $provinces,
+            ]);
+        }
+       
     }
 
     /**
@@ -171,6 +189,26 @@ class Admin_OrderController extends Controller
         $order->delivered_date = $request->delivered_date;
         $order->staff_id = $request->staff_id;
         $order->save();
+
+        //Send mail when confirm
+        if ($order->order_status_id == 2) {
+            $order_mail = Order::where('id', $order->id)->get();
+            $order_details_mail = OrderItem::where('order_id', $order->id)->get();
+            $details[] = [
+                'user_name' => $request->shipping_fullname,
+                'order_mail' => $order_mail,
+                'order_details' => $order_details_mail
+            ];
+    
+            Mail::to($request->shipping_email)->send(new \App\Mail\MyTestMail($details));
+        }
+
+        if ($order->order_status_id == 5) {
+            foreach ($order->orderItem as $item) {
+                DB::table('product')->where('id' , $item->product_id)->decrement('inventory_qty' , $item->qty);
+            }
+        }
+
         request()->session()->put('success' ,"Order ID: {$order->id} -- Created On : {$order->created_date} Updated Successfully");
         return redirect()->route('admin.order.index');
     }

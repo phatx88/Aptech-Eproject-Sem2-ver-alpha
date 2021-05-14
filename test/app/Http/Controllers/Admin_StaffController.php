@@ -14,6 +14,7 @@ use App\Mail\StaffWelcome;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\QueryException;
 
 class Admin_StaffController extends Controller
 {

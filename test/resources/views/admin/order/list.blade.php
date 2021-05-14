@@ -56,9 +56,9 @@
                                     <th>Created Date</th>
                                     <th>Order Status</th>
                                     <th>Delivered Date</th>
-                                    <th>Registered User</th>
+                                    {{-- <th>Registered User</th> --}}
                                     <th>Recipient Name</th>
-                                    <th>Recipient Email</th>
+                                    {{-- <th>Recipient Email</th> --}}
                                     <th>Recipient Mobile</th>
                                     <th>Recipient Address</th>
                                     <th>Shipping Fee</th>
@@ -68,7 +68,7 @@
                                     <th>Payment Method</th>
                                     <th>Actions</th>
                                     <th></th>
-                                    <th></th>
+                                    {{-- <th></th> --}}
                                 </tr>
                             </thead>
                             <tfoot>
@@ -90,8 +90,14 @@
                                     <th>
                                         <input type="search" class="form-control form-control-sm filter-input" data-column="3" placeholder="Search">
                                     </th>
+                                    {{-- <th>
+                                    </th> --}}
                                     <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="4" placeholder="Search">
                                     </th>
+                                    {{-- <th>
+                                        <input type="search" class="form-control form-control-sm filter-input" data-column="4" placeholder="Search">
+                                    </th> --}}
                                     <th>
                                         <input type="search" class="form-control form-control-sm filter-input" data-column="5" placeholder="Search">
                                     </th>
@@ -100,12 +106,6 @@
                                     </th>
                                     <th>
                                         <input type="search" class="form-control form-control-sm filter-input" data-column="7" placeholder="Search">
-                                    </th>
-                                    <th>
-                                        <input type="search" class="form-control form-control-sm filter-input" data-column="8" placeholder="Search">
-                                    </th>
-                                    <th>
-                                        <input type="search" class="form-control form-control-sm filter-input" data-column="9" placeholder="Search">
                                     </th>
                                     <th>
                                     </th>
@@ -122,7 +122,7 @@
                                     </th>
                                     <th></th>
                                     <th></th>
-                                    <th></th>
+                                    {{-- <th></th> --}}
                                 </tr>
                             </tfoot>
                         </table>
@@ -180,7 +180,7 @@
                     modal.find('#description').val(description)
                 })
 
-
+            
             });
 
         </script>
@@ -198,7 +198,7 @@
                         [5, 10, 25, 50, 100, 500, 1000]
                     ],
                     "columnDefs": [{
-                        targets: 8,
+                        targets: 6,
                         render: $.fn.dataTable.render.ellipsis(30, true)
                     }],
                     "processing": true,
@@ -223,15 +223,15 @@
                         {
                             "data": "delivered_date"
                         },
-                        {
-                            "data": "customer_id"
-                        },
+                        // {
+                        //     "data": "customer_id"
+                        // },
                         {
                             "data": "shipping_fullname"
                         },
-                        {
-                            "data": "shipping_email"
-                        },
+                        // {
+                        //     "data": "shipping_email"
+                        // },
                         {
                             "data": "shipping_mobile"
                         },
@@ -259,21 +259,21 @@
                         {
                             "data": "option_edit"
                         },
-                        {
-                            "data": "option_delete",
-                            render : function (data) {  
-                                return   ` @can('delete', 'App\Models\Order')
-                                                <td>
-                                                <form action='` + data + `' method='POST'>
-                                                    @csrf
-                                                    @method('delete')
-                                                    <input type='submit' value='Delete'
-                                                    class='btn btn-danger btn-sm' onclick="return confirm('Are You Sure?')">
-                                                </form>
-                                            @endcan
-                                            </td>`;
-                            }
-                        }
+                        // {
+                        //     "data": "option_delete",
+                        //     render : function (data) {  
+                        //         return   ` @can('delete', 'App\Models\Order')
+                        //                         <td>
+                        //                         <form action='` + data + `' method='POST'>
+                        //                             @csrf
+                        //                             @method('delete')
+                        //                             <input type='submit' value='Delete'
+                        //                             class='btn btn-danger btn-sm' onclick="return confirm('Are You Sure?')">
+                        //                         </form>
+                        //                     @endcan
+                        //                     </td>`;
+                        //     }
+                        // }
                     ],
                 });
 
