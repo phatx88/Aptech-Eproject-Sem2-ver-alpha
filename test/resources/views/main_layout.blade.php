@@ -153,10 +153,6 @@
 
     <footer class="ftco-footer">
 
-        <div class="zalo-chat-widget" data-oaid="3571761673728426397" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="350" data-height="420"></div>
-
-        <script src="https://sp.zalo.me/plugins/sdk.js"></script>
-
         <div class="container">
             <div class="row mb-5">
                 <div class="col-sm-12 col-md">

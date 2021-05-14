@@ -57,7 +57,7 @@
                    <select name="order_status_id" class="form-control">
                        @if ($order->order_status_id == 1)
                        <option value="">Ordered</option>
-                        <option value="2">Confirmed</option>
+                        <option value="2" {{ old($order->order_status_id == 2 ? 'selected' : '') }}>Confirmed</option>
                        @else 
                         @foreach ($statuses as $status)
                         <option value="{{ $status->id }}" {{ $status->id == $order->status->id ? 'selected' : '' }}>{{ $status->name }}</option>   
@@ -199,7 +199,7 @@
                    <label>Responsible staff:</label>  
                </div>
                <div class="col-sm-8 col-lg-6"> 
-                   <select name="staff_id" class="form-control">
+                   <select name="staff_id" class="form-control" required>
                        <option value=""></option>
                        @foreach ($staffs as $staff)
                             <option {{ $staff->id === $order->staff_id ? "selected" : "" }} value="{{ $staff->id }}">{{ $staff->user->name }} / {{ $staff->job_title }}</option>                   

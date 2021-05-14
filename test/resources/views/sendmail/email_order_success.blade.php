@@ -129,7 +129,7 @@
                 </tr>
                 <tr>
                     <td style="text-align: center;">
-                        <h3 style="font-size: 24px; " class="dancing-script">Liquore Store</h3>
+                        <h3 style="font-size: 36px; font-weight: 600" class="dancing-script">Liquore <span style="color: red">Store</span> </h3>
                     </td>
                 </tr>
                 <tr>
