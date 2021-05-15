@@ -354,12 +354,14 @@ class FetchChartDataController extends Controller
 
 
 
+
     public function fetchProvince(Request $request)
     {
         $columns = array(
             0 => 'id',
             1 => 'name',
             2 => 'type',
+            3 => 'order_count'
         );
 
         $totalData = Province::count();
@@ -394,6 +396,7 @@ class FetchChartDataController extends Controller
                 $orders =  Province::where('id', 'LIKE', "%{$search}%")
                     ->orWhere('name', 'LIKE', "%{$search}%")
                     ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->orWhere('province_id', 'LIKE', "%{$search}%")
                     ->offset($start)
                     ->limit($limit)
                     ->orderBy($order, $dir)
@@ -402,6 +405,7 @@ class FetchChartDataController extends Controller
                 $totalFiltered = Province::where('id', 'LIKE', "%{$search}%")
                     ->orWhere('name', 'LIKE', "%{$search}%")
                     ->orWhere('type', 'LIKE', "%{$search}%")
+                    ->orWhere('province_id', 'LIKE', "%{$search}%")
                     ->count();
             }
         } else {
@@ -425,6 +429,7 @@ class FetchChartDataController extends Controller
                 $nestedData['id'] = intval($order->id);
                 $nestedData['name'] = $order->name;
                 $nestedData['type'] = $order->type;
+                $nestedData['province_id'] = intval($order->province_id);
 
 
                 $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
@@ -443,6 +448,12 @@ class FetchChartDataController extends Controller
 
         echo json_encode($json_data);
     }
+
+
+
+
+
+
 
 
 
