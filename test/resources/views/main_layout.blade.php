@@ -397,7 +397,7 @@
             </div>
         </div>
 
-        {{-- Product Compare Modal --}}
+        <!-- Product Compare Modal -->
         <div class="modal fade" id="compare" tabindex="-1" role="dialog" style="overflow-y:hidden;">
             <div class="modal-dialog">
             <div class="modal-content" style="width: fit-content;
@@ -432,7 +432,7 @@
             </div>
             </div>
         </div>
-
+        <!-- Product Compare Modal -->
     </footer>
 
 

@@ -308,7 +308,89 @@
             </div>
         </div>
     </section>
+<!-- Newsletter modal popup start -->
+<div class="container" id="newsletter-block">
+        <form>
+            @csrf
+            <div class="modal fade" style="overflow-y:hidden;" id="newsletter-id" tabindex="-1" role="dialog" aria-hidden="true">-->
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content" style="margin: 0; padding: 0;">
+                    <div class="modal-body row" style="margin: 0; padding: 0; height: 450px">
+                                {{-- <div class="row"> --}}
+                                        <div class="col-md-5" style="text-align: center;">
+
+                                        <h2 style="padding-top: 20px;">NEWSLATTER</h2>
+                                        <p>Subscribe to our website mailling list <br> and get a Offer, Just for you!</p>
+
+                                            <div class="form-group mx-sm-3">
+                                            <input type="email" class="form-control" name="EMAIL" id="email-subcribe" placeholder="Enter your email" required="required">
+                                            <button type="button" class="btn btn-theme btn-normal btn-sm " id="submit-subscribe" style="padding: 18px 45px; letter-spacing: 0.05em;display: inline-block;text-transform: uppercase; margin-top: 15px" >subscribe</button>
+                                            </div>
+
+                                        </div>
+
+                                    <div class="col-md-7" style="margin: 0; padding: 0;">
+                                        <img style="margin: 0; padding: 0; padding-right: 0px" height="450px" width="465.49px" src="{{ asset('frontend\images\products\Absolut_Vodka.jpg') }}" alt="newsletterimg" class=" bg-img">
+                                    </div>
+                                {{-- </div> --}}
+                </div>
+                </div>
+            </div>
+            </div>
+        </form>
+</div>
+<!-- Newsletter modal popup EnDDDDDDDDĐ -->
 @endsection
 @section('scripts')
+<script type="text/javascript">
+        (function($) {
+        "use strict";
+        if(sessionStorage.getItem('PopupShown') == null){
+            $(window).on('load', function() {
+                $('#newsletter-id').modal('show');
+            });
+        }
 
+    })(jQuery);
+
+    function dismiss(){
+        document.getElementById('newsletter-id').modal('hide');
+    };
+
+    $(document).ready(function(){
+        $('#submit-subscribe').click(function(){
+            var modal = $('#newsletter-id');
+            var _token = $('input[name="_token"]').val();
+            var email = $('#email-subcribe').val();
+            var patt1 = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$");
+            if(patt1.test(email) === false) {
+                notyf.error('Please enter a valid email address!!!');
+            }else{
+                $.ajax({
+                    url: '{{ url('/subscribe-email') }}',
+                    method: "POST",
+                    data: {
+                        email:email,
+                        _token: _token
+                    },
+                    success: function(data) {
+                        if(data == ""){
+                            notyf.success('Subcribed Email Successfully!!!');
+                            sessionStorage.setItem("PopupShown", 'yes');
+                                $('#newsletter-block').hide();
+                                // $('#newsletter-id').modal('hide');
+                                $('.modal-backdrop').remove();
+                                // dismiss();
+                                // modal.modal().hide();
+
+                        }else{
+                            notyf.error(data);
+                        }
+                    }
+                });
+            }
+
+        });
+    });
+</script>
 @endsection

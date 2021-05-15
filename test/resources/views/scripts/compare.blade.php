@@ -51,6 +51,7 @@
        function add_compare(product_id) {
            // $('#compare').modal();
            // alert(product_id);
+           $('.modal-backdrop.fade.show').hide();
            document.getElementById('title-compare').innerHTML ='Comparison';
            var id = product_id;
            var name = document.getElementById('product_name_cart_'+id).value;

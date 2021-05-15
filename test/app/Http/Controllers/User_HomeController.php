@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;  //Lay du lieu tu DB
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Post;
-
+use App\Models\Newsletter;
 class User_HomeController extends Controller
 {
     public function index()
@@ -36,5 +36,19 @@ class User_HomeController extends Controller
             'bestSelling' => $bestSelling,
             'post' => $post
             ]);
+    }
+
+    public function subscribe_email(Request $request){
+        $data = $request->all();
+        $output = '';
+        $email = Newsletter::where('email', $data['email'])->first();
+        if($email){
+            $output .= 'Email existed!!!';
+        }else{
+            $new_email = new Newsletter();
+            $new_email->email = $data['email'];
+            $new_email->save();
+        }
+        echo $output;
     }
 }
