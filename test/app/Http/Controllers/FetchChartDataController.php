@@ -353,7 +353,6 @@ class FetchChartDataController extends Controller
 
 
 
-
     public function fetchProvince(Request $request)
     {
         $columns = array(
@@ -443,8 +442,6 @@ class FetchChartDataController extends Controller
 
         echo json_encode($json_data);
     }
-
-
 
 
 
