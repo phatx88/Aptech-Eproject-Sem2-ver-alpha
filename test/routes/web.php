@@ -202,18 +202,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 
     // Blog
     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
+    Route::post('comment/delete/{id}', [Admin_CommentController::class, 'delete']);
+
     Route::get('delete/{id}', [Admin_BlogController::class, 'destroy']);
     Route::get('blog/restore/{id}', [Admin_BlogController::class, 'restore'] );
     Route::get('blog/trash', [Admin_BlogController::class, 'showTrash'] );
     Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
-    Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
+    Route::resource('blog', Admin_BlogController::class);
 
+    Route::get('ImageItem/{id}', [Admin_ImageItemController::class, 'index']);
     Route::post('ImageItem', [Admin_ImageItemController::class, 'store']);
     Route::get('ImageItem/edit/{id}/{ImageItems}', [Admin_ImageItemController::class, 'edit']);
     Route::post('ImageItem/update/{id}/{ImageItems}', [Admin_ImageItemController::class, 'update']);
-    Route::resource('blog', Admin_BlogController::class);
+    Route::post('ImageItem/delete/{id}/{ImageItem_id}', [Admin_ImageItemController::class, 'delete']);
 
 
     // Transport

@@ -9,6 +9,16 @@
           </li>
           <li class="breadcrumb-item active">Hình ảnh</li>
        </ol>
+       <?php
+            if(session()->get('success')){
+                echo "<span style='color: red; font-weight: 15px;'>".session()->get('success')."</span>";
+                session()->put('success','');
+            }
+            if(session()->get('error')){
+                echo "<span style='color: red; font-weight: 15px;'>".session()->get('error')."</span>";
+                session()->put('error','');
+            }
+       ?>
        @include('errors.error')
        <!-- DataTables Example -->
        <div class="action-bar">
@@ -38,10 +48,10 @@
                             <td><a href="{{ URL('admin/ImageItem/edit/'.$product_id.'/'.$ImageItem->id) }}"
                                 class="btn btn-warning btn-sm">Edit</a></td>>
 
-                            {{-- <form action="{{ URL('admin/ImageItem/destroy', ['ImageItem'=>$ImageItem->id]) }}" method="POST">
-                                @csrf @method('delete') --}}
+                            <form action="{{ URL('admin/ImageItem/delete/'. $product_id.'/'.$ImageItem->id) }}" method="POST">
+                                @csrf
                                 <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button></td>
-                            {{-- </form> --}}
+                            </form>
                         </tr>
                         @endforeach
 

@@ -39,7 +39,10 @@
                          <td>{{ $comment->star }}</td>
                          <td>{{ $comment->created }}</td>
                          <td>{{ $comment->description }}</td>
-                         <td><input type="button" onclick="Delete('25');" value="Xóa" class="btn btn-danger btn-sm"></td>
+                         <form action="{{ URL('admin/comment/delete', ['comment'=>$comment->id]) }}" method="POST">
+                            @csrf
+                            <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button></td>
+                        </form>
                       </tr>
 
                       @endforeach
