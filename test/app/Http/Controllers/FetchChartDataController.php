@@ -448,6 +448,7 @@ class FetchChartDataController extends Controller
 
 
 
+
     public function fetchUser(Request $request)
     {
         $columns = array(

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Liquor Store</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- CSRF Token -->
@@ -238,7 +238,7 @@
 
                             </script> All rights reserved | This template is made with <i
                                 class="fa fa-heart color-danger" aria-hidden="true"></i> by <a
-                                href="https://colorlib.com" target="_blank">Colorlib.com</a>
+                                href="#" target="_blank">Liquor Store Team</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>
@@ -416,7 +416,7 @@
                 <div class="modal-body">
                     <div>
                         <table class="table table-striped">
-                        
+
                         <tr height="20px">
                             <th style="margin: 0px; padding: 5px; text-align: center;" width="33%">Item 1</th>
                             <th style="margin: 0px; padding: 5px; text-align: center; " width="33%">Item 2</th>
@@ -428,11 +428,11 @@
                       </table>
                     </div>
                 </div>
-              
+
             </div>
             </div>
         </div>
-        
+
     </footer>
 
 

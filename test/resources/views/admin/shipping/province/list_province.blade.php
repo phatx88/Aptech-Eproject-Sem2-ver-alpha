@@ -80,8 +80,11 @@
                             <th>Province Id</th>
                             <th>Province Name</th>
                             <th>Province Type</th>
-                            <th></th>
-                            <th></th>
+                            <th>Province Order_count</th>
+                            <th>Province Delivered_count</th>
+                            <th>Actions</th>
+
+
                         </tr>
                     </thead>
                     <tfoot>
@@ -95,13 +98,12 @@
                             <th>
                                 <select data-column="2" class="form-control form-control-sm filter-select">
                                     <option value="">Select</option>
-                                    <option value="Quận">Quận</option>
-                                    <option value="Huyện">Huyện</option>
-                                    <option value="Thành Phố">City</option>
+                                    <option value="Thành Phố">Thành Phố</option>
+                                    <option value="Tỉnh">Tỉnh</option>
                                 </select>
                             </th>
                             <th>
-
+                                <input type="search" class="form-control form-control-sm filter-input" data-column="3" placeholder="Search">
                             </th>
 
                             <th></th>
@@ -231,8 +233,15 @@
                     "data": "type"
                 },
                 {
+                    "data": "order_count"
+                },
+                {
+                    "data": "delivered_count"
+                },
+                {
                     "data": "option_edit"
                 },
+
 
             ],
         });
