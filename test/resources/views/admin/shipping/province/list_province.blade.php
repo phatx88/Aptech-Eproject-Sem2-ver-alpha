@@ -80,8 +80,8 @@
                             <th>Province Id</th>
                             <th>Province Name</th>
                             <th>Province Type</th>
-                            <th>Province Order_count</th>
-                            <th>Province Delivered_count</th>
+                            {{-- <th>Province Order_count</th>
+                            <th>Province Delivered_count</th> --}}
                             <th>Actions</th>
 
 
@@ -96,15 +96,11 @@
                                 <input type="search" class="form-control form-control-sm filter-input" data-column="1" placeholder="Search">
                             </th>
                             <th>
-                                <select data-column="2" class="form-control form-control-sm filter-select">
-                                    <option value="">Select</option>
-                                    <option value="Thành Phố">Thành Phố</option>
-                                    <option value="Tỉnh">Tỉnh</option>
-                                </select>
+                                <input type="search" class="form-control form-control-sm filter-input" data-column="2" placeholder="Search">
                             </th>
-                            <th>
+                            {{-- <th>
                                 <input type="search" class="form-control form-control-sm filter-input" data-column="3" placeholder="Search">
-                            </th>
+                            </th> --}}
 
                             <th></th>
 
@@ -232,12 +228,12 @@
                 {
                     "data": "type"
                 },
-                {
-                    "data": "order_count"
-                },
-                {
-                    "data": "delivered_count"
-                },
+                // {
+                //     "data": "order_count"
+                // },
+                // {
+                //     "data": "delivered_count"
+                // },
                 {
                     "data": "option_edit"
                 },
