@@ -28,7 +28,7 @@ class OrderPolicy
      * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function view(User $user, Order $order)
+    public function view(User $user)
     {
         //
     }
@@ -51,7 +51,7 @@ class OrderPolicy
      * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function update(User $user, Order $order)
+    public function update(User $user)
     {
         //
     }
@@ -75,7 +75,7 @@ class OrderPolicy
      * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function restore(User $user, Order $order)
+    public function restore(User $user)
     {
         return $user->hasPermission("restore_order");
     }
@@ -87,7 +87,7 @@ class OrderPolicy
      * @param  \App\Models\Order  $order
      * @return mixed
      */
-    public function forceDelete(User $user, Order $order)
+    public function forceDelete(User $user)
     {
         //
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Gate;
 
 class Admin_CategoryController extends Controller
 {
@@ -40,6 +41,9 @@ class Admin_CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows("create-product")) {
+            abort(403);
+        }      
         $request->validate([
             'name' => 'required|unique:category|max:255',
         ]);

@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin_ImageItemController;
 use App\Http\Controllers\Admin_TransportController;
 use App\Http\Controllers\Admin_WardController;
 use App\Http\Controllers\Admin_RoleController;
+use App\Http\Controllers\Admin_PermissionController;
+use App\Http\Controllers\Admin_PermissionRoleController;
 use App\Http\Controllers\Admin_NewsletterController;
 use App\Http\Controllers\Admin_DistrictController;
 use App\Http\Controllers\Admin_ProvinceController;
@@ -230,8 +232,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     //Province
     Route::resource('province', Admin_ProvinceController::class );
 
-    // Role
+    // Authorization
     Route::resource('role', Admin_RoleController::class);
+
+    Route::resource('permission', Admin_PermissionController::class);
+
+    Route::get('permission_role/list', [Admin_PermissionRoleController::class, 'index'])->name('permission_role.index');
+    Route::post('permission_role/list', [Admin_PermissionRoleController::class, 'index'])->name('permission_role.index');
+    Route::get('permission_role/create/{role_id?}', [Admin_PermissionRoleController::class, 'create'])->name('permission_role.create');
+    Route::post('permission_role/create', [Admin_PermissionRoleController::class, 'store'])->name('permission_role.store');
+    // Route::resource('permission_role', Admin_PermissionRoleController::class);
 
     //Newsletter
     Route::resource('newsletter', Admin_NewsletterController::class);
@@ -239,7 +249,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 
     // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-    Route::post('fetch/product', Admin_ProductControlle ::class.'@fetchProduct');
+    Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 });
 
 

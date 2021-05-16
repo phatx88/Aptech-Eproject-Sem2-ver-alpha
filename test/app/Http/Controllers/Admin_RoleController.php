@@ -33,7 +33,10 @@ class Admin_RoleController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::get();
+        return view('admin.authorization.role.add' , [
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -44,7 +47,14 @@ class Admin_RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'bail|unique:roles|required',
+        ]);
+
+        $role = new Role();
+        $role->name = $request->name;
+        $role->save();
+        return redirect()->route("admin.role.index")->with('success', "Added New Role for {$role->name} Successfully");
     }
 
     /**
@@ -66,7 +76,9 @@ class Admin_RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('admin.authorization.role.edit' , [
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -78,7 +90,13 @@ class Admin_RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'name' => 'bail|unique:roles|required',
+        ]);
+
+        $role->name = $request->name;
+        $role->save();
+        return redirect()->route("admin.role.index")->with('success', "Eddited Role for {$role->name} Successfully");
     }
 
     /**
@@ -89,6 +107,15 @@ class Admin_RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        try {
+            $msg = 'Deleted Role : '.$role->name.' - ID : '.$role->id.' Successfully ';
+            $role->delete();
+            request()->session()->put('success', $msg);
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.role.index");
     }
 }

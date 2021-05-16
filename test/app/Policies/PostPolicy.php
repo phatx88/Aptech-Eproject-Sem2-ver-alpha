@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Models\Product;
+use App\Models\Post;
 use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ProductPolicy
+class PostPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,12 @@ class ProductPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function view(User $user)
     {
-        return $user->hasPermission("view_product");
+        return $user->hasPermission("view_post");
     }
 
     /**
@@ -41,55 +41,54 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermission("create_product");
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function update(User $user)
     {
-        // return $user->id == $product->user_id || $user->hasPermission("update_product");
-        return $user->hasPermission("update_product");
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function delete(User $user)
     {
-        return $user->hasPermission("delete_product");
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function restore(User $user)
     {
-        return $user->hasPermission("restore_product");
+        //
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function forceDelete(User $user)
     {
-        return $user->hasPermission("force_delete_product");
+        //
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -158,6 +159,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function postcomment()
     {
         return $this->hasMany(PostComment::class, 'user_id', 'id');
+    }
+
+    public function isAdministrator()
+    {
+        $user = Auth::user();
+        if ($user->email == env('Admin_email')) {
+            return true;
+        }
+        return false;
     }
 
 

@@ -8,56 +8,42 @@
              <a href="{{ route('admin.dashboard.index') }}">Admin</a>
          </li>
          <li class="breadcrumb-item">
-             <a href="{{ route('admin.role.index') }}">Role</a>
+             <a href="{{ route('admin.permission.index') }}">Permission</a>
          </li>
          <li class="breadcrumb-item active">List</li>
      </ol>
      @include('errors.message')
-       <!-- DataTables Example -->
+       <!-- DataTables Example -->>
        <div class="card mb-3">
          <div class="card-header">
             <i class="fas fa-table"></i>
-            Role List
+            Permissions List
             <div class="float-right">
-                <a href="{{ route('admin.role.create') }}" class="btn btn-primary btn-sm">Add</a>
+                <a href="{{ route('admin.permission.create') }}" class="btn btn-primary btn-sm">Add</a>
                 <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
             </div>
           </div>
           <div class="card-body">
              <div class="table-responsive">
                 <table class="table table-hover text-center" id="dataTable-3" width="100%" cellspacing="0">
-                   <thead>
-                      <tr>
-                        <th class="filter-input">Role Id</th>
-                         <th class="filter-input" >Role Name</th>
-                        <th>Action</th>
-                        <th></th>
-                      </tr>
-                   </thead>
-                   <tbody>
-                      @foreach ($roles as $role)
-                      <tr>
-                        <td>{{ $role->id }}</td>
-                        <td>{{ $role->name }}</td>
-                        <td><a href="{{ route('admin.role.edit' , ['role' => $role->id]) }}" class="btn btn-warning btn-sm">Edit</a></td>
-                        <td>
-                            <form
-                                action="{{ route('admin.role.destroy', ['role' => $role->id]) }}"
-                                method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you Sure?')">
-                            </form>
-                        </td>
-                     </tr>    
-                      @endforeach
-                   </tbody>
-                   <tfoot>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                      <th></th>
-                   </tfoot>
+                    <thead>
+                       <tr>
+                          <th>Id </th>
+                          <th></th>
+                          <th>Name</th>
+                          <th></th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                       @foreach ($permissions as $permission)
+                       <tr>
+                        <td>{{ $permission->id }}</td>
+                        <td></td>
+                        <td>{{ $permission->name }}</td>
+                        <td><a type="button" href ="{{ route('admin.permission.edit' , ['permission' => $permission->id]) }}" class="btn btn-warning btn-sm">Edit</a></td>
+                        </tr>
+                       @endforeach
+                    </tbody>
                 </table>
              </div>
           </div>
@@ -67,6 +53,7 @@
     <!-- Sticky Footer -->
     @include('admin.footer')
  </div>
+ <!-- /.content-wrapper -->
 @endsection
 @section('scripts')
 <script>

@@ -9,6 +9,7 @@ use App\Models\Brand;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\QueryException;
@@ -30,6 +31,9 @@ class Admin_ProductController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows("view-product")) {
+            abort(403);
+        }
         $products = Products::orderby('id', 'DESC')->get();
         $product_view_count = DB::table('product')->orderby('view_count', 'DESC')->limit(5)->get();
         $name_product = array();
@@ -76,20 +80,30 @@ class Admin_ProductController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows("create-product")) {
+            abort(403);
+        }
+        
         $categories = Category::orderby('name', 'ASC')->get();
         $brands = Brand::orderby('name', 'ASC')->get();
 
-        $user = Auth::user();
-        if($user->can("create" , Product::class)){
-            // echo "có quyền";
-            return view('admin.product.add', [
-                'categories' => $categories,
-                'brands' => $brands,
-            ]);
-        }
-        else {
-           abort(403);
-        }
+        // $user = Auth::user();
+        // if($user->can("create" , Product::class)){
+        //     return view('admin.product.add', [
+        //         'categories' => $categories,
+        //         'brands' => $brands,
+        //     ]);
+        // }
+        // else {
+        //    abort(403);
+        // }
+
+        
+        return view('admin.product.add', [
+            'categories' => $categories,
+            'brands' => $brands,
+        ]);
+
 
     }
 
@@ -101,6 +115,10 @@ class Admin_ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows("create-product")) {
+            abort(403);
+        }
+
         $request->validate([
             'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
             'product_name' => 'bail|required|max:255',
@@ -161,20 +179,30 @@ class Admin_ProductController extends Controller
      */
     public function edit(Products $product)
     {
+        // if (!Gate::allows("update-product")) {
+        //     abort(403);
+        // }
+
         $categories = Category::orderby('name', 'ASC')->get();
         $brands = Brand::orderby('name', 'ASC')->get();
 
-        $user = Auth::user();
-        if($user->can("update" , Product::class)){
-            return view('admin.product.edit', [
-                'categories' => $categories,
-                'brands' => $brands,
-                'product' => $product,
-            ]);
-        }
-        else {
-           abort(403);
-        }
+        // $user = Auth::user();
+        // if($user->can("update" , Product::class)){
+        //     return view('admin.product.edit', [
+        //         'categories' => $categories,
+        //         'brands' => $brands,
+        //         'product' => $product,
+        //     ]);
+        // }
+        // else {
+        //    abort(403);
+        // }
+
+        return view('admin.product.edit', [
+            'categories' => $categories,
+            'brands' => $brands,
+            'product' => $product,
+        ]);
 
     }
 
@@ -187,6 +215,9 @@ class Admin_ProductController extends Controller
      */
     public function update(Request $request, Products $product)
     {
+        // if (!Gate::allows("update-product")) {
+        //     abort(403);
+        // }
         $request->validate([
             'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
             'product_name' => 'bail|required|max:255',
@@ -245,6 +276,9 @@ class Admin_ProductController extends Controller
     public function destroy(Products $product)
     {
         // SOFT DELETE
+        // if (!Gate::allows("delete-product")) {
+        //     abort(403);
+        // }
         try {
             $msg = 'Deleted Product : '.$product->name.' - ID : '.$product->id.' Successfully - <a href="'. url('admin/product/restore/'.$product->id.'') . '"> Undo Action</a>';
             $product->delete();

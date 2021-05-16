@@ -13,6 +13,7 @@ use App\Models\CategoryBlog;
 use App\Models\PostComment;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use File;
 use Illuminate\Database\QueryException;
 
@@ -25,6 +26,10 @@ class Admin_BlogController extends Controller
      */
     public function index()
     {
+        
+        if (!Gate::allows("view-post")) {
+            abort(403);
+        }
         $posts = Post::all();
         return view('admin.blog.list',['posts' => $posts]);
     }

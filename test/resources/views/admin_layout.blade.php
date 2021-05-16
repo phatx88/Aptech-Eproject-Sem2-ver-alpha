@@ -115,13 +115,9 @@
          <li class="nav-item dropdown {{ in_array(Request::segment(2), ['role', 'permission' , 'permission-role']) ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Authorization</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.role.index')}}"><i class="fas fa-list"></i> Roles List</a>
-               <a class="dropdown-item" href="{{URL::to('permission-roles-add')}}">Roles Add</a>
-               <a class="dropdown-item" href="{{URL::to('permission-roles-edit')}}">Roles Edit</a>
-               <a class="dropdown-item" href="{{URL::to('permission-actions-list')}}">Actions List</a>
-               <a class="dropdown-item" href="{{URL::to('permission-actions-edit')}}">Actions Edit</a>
-               <a class="dropdown-item" href="{{URL::to('permission-role_action-list')}}">Role-Action-List</a>
-               <a class="dropdown-item" href="{{URL::to('permission-role_action-add')}}">Role-Action-Add</a>
+               <a class="dropdown-item" href="{{route('admin.role.index')}}"><i class="fas fa-user-tie"></i> Roles List</a>
+               <a class="dropdown-item" href="{{route('admin.permission_role.index')}}"><i class="fas fa-list"></i> Permissions-Roles List</a>
+               <a class="dropdown-item" href="{{route('admin.permission.index')}}"><i class="fas fa-user-clock"></i> Permissions List</a>
 
 
             </div>
