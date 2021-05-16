@@ -308,18 +308,18 @@
             </div>
         </div>
     </section>
-<!-- Newsletter modal popup start -->
+
 <div class="container" id="newsletter-block">
         <form>
             @csrf
-            <div class="modal fade" style="overflow-y:hidden;" id="newsletter-id" tabindex="-1" role="dialog" aria-hidden="true">-->
+            <div class="modal fade" style="overflow-y:hidden;" id="newsletter-id" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content" style="margin: 0; padding: 0;">
                     <div class="modal-body row" style="margin: 0; padding: 0; height: 450px">
                                 {{-- <div class="row"> --}}
                                         <div class="col-md-5" style="text-align: center;">
 
-                                        <h2 style="padding-top: 20px;">NEWSLATTER</h2>
+                                        <h2 style="padding-top: 20px;">NEWSLETTER</h2>
                                         <p>Subscribe to our website mailling list <br> and get a Offer, Just for you!</p>
 
                                             <div class="form-group mx-sm-3">
@@ -339,7 +339,7 @@
             </div>
         </form>
 </div>
-<!-- Newsletter modal popup EnDDDDDDDDĐ -->
+
 @endsection
 @section('scripts')
 <script type="text/javascript">

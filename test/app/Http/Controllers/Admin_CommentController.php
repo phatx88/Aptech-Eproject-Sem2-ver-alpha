@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Database\QueryException;
 
 class Admin_CommentController extends Controller
 {
@@ -83,8 +84,30 @@ class Admin_CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,Comment $comment)
     {
-        //
+        try{
+            $msg = 'Delete ID:'. $comment->id. ' comment successfully';
+            $comment->delete();
+            request()->session()->put('success', $msg);
+        }catch(QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.comment.index");
+    }
+    public function delete(Request $request,Comment $comment, $id){
+        try{
+            $msg = 'Delete ID:'. $comment->id. ' comment successfully';
+            Comment::where('id', $id)->delete();
+            request()->session()->put('success', $msg);
+        }catch(QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
+
     }
 }
