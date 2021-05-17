@@ -433,6 +433,9 @@
             </div>
         </div>
         <!-- Product Compare Modal -->
+
+        {{-- V-chat --}}
+        <script lang="javascript">var __vnp = {code : 6411,key:'', secret : '170dedd063185dcce9fc10208a31f91c'};(function() {var ga = document.createElement('script');ga.type = 'text/javascript';ga.async=true; ga.defer=true;ga.src = '//core.vchat.vn/code/tracking.js';var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>
     </footer>
 
 

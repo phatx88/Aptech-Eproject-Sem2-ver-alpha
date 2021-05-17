@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item active">Detail</li>
             </ol>
             <!-- /.row -->
-
+            
             <div class="row">
                 <div class="col-sm-12 ">
                     <label for="name" class="control-label">Order: #{{ $order->id }}</label>
@@ -106,6 +106,7 @@
                         @php
                             $sum = 0;
                             $coupon = 0;
+                            $shippingfee = 0;
                             $total = 0;
                             foreach ($orderItem as $item) {
                                 $sum += $item->total_price;
@@ -121,7 +122,16 @@
                     <label>Shipping Fee:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
-                    <span>$ {{ $order->shipping_fee }}</span>
+                    <span>$ {{ $shippingfee += ($order->shipping_fee ?? 0)}}</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 col-lg-2">
+                    <label>Coupon Discount:</label>
+                </div>
+                <div class="col-sm-8 col-lg-10">
+                    <span>$ {{ $coupon += ($order->coupon->number ?? 0) }}</span>
                 </div>
             </div>
 
@@ -130,7 +140,7 @@
                     <label>Total:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
-                    <span>$ {{ $sum + $order->shipping_fee }}</span>
+                    <span>$ {{ $sum + $shippingfee - $coupon}}</span>
                 </div>
             </div>
 
@@ -148,7 +158,7 @@
                     <label>Responsible staff:</label>
                 </div>
                 <div class="col-sm-8 col-lg-10">
-                    <span>{{ $order->staff->user->name ?? "" }}</span>
+                    <span>{{ $order->staff->id.' - ' ?? "" }}{{ $order->staff->user->name.' - ' ?? "" }}{{ $order->staff->job_title ?? "" }}</span>
                 </div>
             </div>
             <label class="control-label">Product</label>

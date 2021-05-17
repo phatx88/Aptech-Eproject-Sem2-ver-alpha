@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Coupon;
 use App\Models\ShippingStatus;
 use App\Models\Ward;
 use App\Models\Staff;
@@ -24,6 +25,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 // use Mail;
 use Illuminate\Support\Facades\Mail;
+use phpDocumentor\Reflection\Types\Nullable;
+
 // use App\DataTables\OrderDataTable;
 
 class Admin_OrderController extends Controller
@@ -41,9 +44,9 @@ class Admin_OrderController extends Controller
 
         return view('admin.order.list', [
             'statuses' => $statuses,
-            'orderTotals' => $orderTotals,      
-            ]);
-        
+            'orderTotals' => $orderTotals,
+        ]);
+
         // return $dataTable->render('admin.order.list');
     }
 
@@ -57,8 +60,8 @@ class Admin_OrderController extends Controller
         $products = Product::get();
         $provinces = Province::orderby('name', 'ASC')->get();
         $statuses = ShippingStatus::get();
-        $staffs = User::where('is_staff' , '1')->get();
-        $users = User::where('is_staff' , '0')->get();
+        $staffs = User::where('is_staff', '1')->get();
+        $users = User::where('is_staff', '0')->get();
         return view('admin.order.add', [
             'products' => $products,
             'statuses' => $statuses,
@@ -86,10 +89,10 @@ class Admin_OrderController extends Controller
             'shipping_ward_id' => 'required',
             'staff_id' => 'required'
         ]);
-        
+
         $order = new Order($request->all());
         $order->save();
-        $request->session()->put('success' ,"Order ID: {$order->id} -- Created On : {$order->created_date} Added Successfully");
+        $request->session()->put('success', "Order ID: {$order->id} -- Created On : {$order->created_date} Added Successfully");
         return redirect()->route('admin.order.index');
     }
 
@@ -105,9 +108,9 @@ class Admin_OrderController extends Controller
         $products = Product::get();
         $provinces = Province::orderby('name', 'ASC')->get();
         $statuses = ShippingStatus::get();
-        $staffs = User::where('is_staff' , '1')->get();
-        $users = User::where('is_staff' , '0')->get();
-        return view('admin.order.detail' , [
+        $staffs = User::where('is_staff', '1')->get();
+        $users = User::where('is_staff', '0')->get();
+        return view('admin.order.detail', [
             'order' => $order,
             'products' => $products,
             'orderItem' => $orderItem,
@@ -128,13 +131,14 @@ class Admin_OrderController extends Controller
     {
         $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
         $products = Product::with('order')->get();
+        $coupons = Coupon::select('id' , 'code' , 'number')->get();
         $provinces = Province::orderby('name', 'ASC')->get();
-        $statuses = ShippingStatus::where('id' , '>=' , $order->order_status_id)->get();
+        $statuses = ShippingStatus::where('id', '>=', $order->order_status_id)->get();
         $staffs = Staff::get();
-        $users = User::with('ward' , 'order')->where('is_staff' , '0')->get();
+        $users = User::with('ward', 'order')->where('is_staff', '0')->get();
 
         if ($order->order_status_id == '5' || $order->order_status_id == '6') {
-            return view('admin.order.detail' , [
+            return view('admin.order.detail', [
                 'order' => $order,
                 'products' => $products,
                 'orderItem' => $orderItem,
@@ -142,11 +146,10 @@ class Admin_OrderController extends Controller
                 'staffs' => $staffs,
                 'users' => $users,
                 'provinces' => $provinces,
+                'coupons' => $coupons,
             ]);
-        }
-         
-        else {
-            return view('admin.order.edit' , [
+        } else {
+            return view('admin.order.edit', [
                 'order' => $order,
                 'products' => $products,
                 'orderItem' => $orderItem,
@@ -154,9 +157,9 @@ class Admin_OrderController extends Controller
                 'staffs' => $staffs,
                 'users' => $users,
                 'provinces' => $provinces,
+                'coupons' => $coupons,
             ]);
         }
-       
     }
 
     /**
@@ -175,6 +178,7 @@ class Admin_OrderController extends Controller
             'shipping_mobile' => 'required',
             'shipping_email' => 'email|max:255',
             'payment_method' => 'required',
+            'coupon_id' => 'nullable',
             'shipping_ward_id' => 'required',
             'delivered_date' => 'date'
         ]);
@@ -184,14 +188,29 @@ class Admin_OrderController extends Controller
         $order->shipping_mobile = $request->shipping_mobile;
         $order->shipping_email = $request->shipping_email;
         $order->payment_method = $request->payment_method;
+        $order->coupon_id = $request->coupon_id;
         $order->shipping_ward_id = $request->shipping_ward_id;
         $order->shipping_fee = $request->shipping_fee;
         $order->delivered_date = $request->delivered_date;
         $order->staff_id = $request->staff_id;
         $order->save();
+        request()->session()->put('success', "Order ID: {$order->id} -- Created On : {$order->created_date} Updated Successfully");
 
-        //Send mail when confirm
+        //Send mail when confirm and deduce to inventory
         if ($order->order_status_id == 2) {
+            foreach ($order->orderItem as $item) {
+                if ($item->qty > $item->product->inventory_qty) {
+                    request()->session()->put('error', "Not enough product {$item->product->name} on hand (Ordered: {$item->qty} vs IOH: {$item->product->inventory_qty})");
+                    $order->order_status_id = 1;
+                    $order->save();
+                    return redirect()->back();
+                }
+            }
+
+            foreach ($order->orderItem as $item) {
+                DB::table('product')->where('id', $item->product_id)->decrement('inventory_qty', $item->qty);
+            }
+
             $order_mail = Order::where('id', $order->id)->get();
             $order_details_mail = OrderItem::where('order_id', $order->id)->get();
             $details[] = [
@@ -199,17 +218,19 @@ class Admin_OrderController extends Controller
                 'order_mail' => $order_mail,
                 'order_details' => $order_details_mail
             ];
-    
+
             Mail::to($request->shipping_email)->send(new \App\Mail\OrderConfirm($details));
+            request()->session()->put('success', "Order ID: {$order->id} -- Created On : {$order->created_date} Has been Confirmed");
         }
 
-        if ($order->order_status_id == 5) {
+        //return to inventory if order is cancelled
+        if ($order->order_status_id == 6) {
             foreach ($order->orderItem as $item) {
-                DB::table('product')->where('id' , $item->product_id)->decrement('inventory_qty' , $item->qty);
+                DB::table('product')->where('id', $item->product_id)->increment('inventory_qty', $item->qty);
             }
+            request()->session()->put('error', "Order ID: {$order->id} -- Created On : {$order->created_date} Has been Cancelled");
         }
 
-        request()->session()->put('success' ,"Order ID: {$order->id} -- Created On : {$order->created_date} Updated Successfully");
         return redirect()->route('admin.order.index');
     }
 
@@ -234,7 +255,7 @@ class Admin_OrderController extends Controller
 
         //SOFT DELETE
         try {
-            $msg = 'Deleted Order ID : '.$order->id.' Successfully - <a href="'. url('admin/order/restore/'.$order->id.'') . '"> Undo Action</a>';
+            $msg = 'Deleted Order ID : ' . $order->id . ' Successfully - <a href="' . url('admin/order/restore/' . $order->id . '') . '"> Undo Action</a>';
             $order->delete();
             request()->session()->put('success', $msg);
         } catch (QueryException $e) {
@@ -250,28 +271,28 @@ class Admin_OrderController extends Controller
         $orders = Order::onlyTrashed()->get();
         return view('admin.order.trash', [
             'orders' => $orders,
-            ]);
+        ]);
     }
 
     public function restore($id)
     {
-        Order::onlyTrashed()->where('id' , $id)->restore();
+        Order::onlyTrashed()->where('id', $id)->restore();
         $order = Order::find($id);
-        $msg = 'Deleted Order ID : '.$order->id.' Successfully';
+        $msg = 'Deleted Order ID : ' . $order->id . ' Successfully';
         request()->session()->put('success', $msg);
         return redirect()->back();
     }
 
-    public function shipping_fee(Request $request){
+    public function shipping_fee(Request $request)
+    {
 
         $transport = Transport::where('province_id', $request->province_id)->get();
         // $shipping = $transport->price;
         echo json_encode($transport);
-    
     }
 
-    public function export() 
+    public function export()
     {
         return Excel::download(new OrderExport, 'orders.xlsx');
-    } 
+    }
 }

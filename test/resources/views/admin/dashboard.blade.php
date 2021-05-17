@@ -163,7 +163,8 @@
                                           {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
                                           <th>Id</th>
                                           <th style="width:50px">Created Date </th>
-                                          <th>Shipping Fee</th>
+                                          <th>Shipping</th>
+                                          <th>Discount</th>
                                           <th>Total</th>
                                           <th>Action</th>
                                       </tr>
@@ -177,6 +178,7 @@
                                               <td>{{ $order->order_id }}</td>
                                               <td>{{ $order->created_date }}</td>
                                               <td>{{ $order->shipping_fee }}</td>
+                                              <td>{{ $order->discount }}</td>
                                               <td>${{ $order->total }}</td>
                                               <td> 
                                                   <a type="button" href="{{ route('admin.order.edit' , ['order' => $order->order_id]) }}" value=""

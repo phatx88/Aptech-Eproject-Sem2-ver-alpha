@@ -101,7 +101,7 @@ class Admin_DashboardController extends Controller
         ->setColors(['#FF5722', '#303F9F']);
 
         $products = Product::select('id' , 'name', 'featured_image', 'price' , 'inventory_qty', 'sale_price')->get();
-        $orders = DB::table('total_per_order')->orderBy('created_date' , 'DESC')->limit(100)->get();
+        $orders = DB::table('total_per_order')->orderBy('order_id' , 'DESC')->limit(100)->get();
         $totalOrder = Order::count();
         $totalSales = DB::table('total_per_order')->sum('total');
         
