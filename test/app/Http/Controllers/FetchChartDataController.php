@@ -532,6 +532,7 @@ class FetchChartDataController extends Controller
             foreach ($users as $user) {
                 $show =  route('admin.user.show', $user->id);
                 $edit =  route('admin.user.edit', $user->id);
+                $delete =  route('admin.user.destroy', $user->id);
                 $nestedData['id'] = $user->id;
                 $nestedData['name'] = $user->name;
                 $nestedData['email'] = $user->email;
@@ -546,6 +547,7 @@ class FetchChartDataController extends Controller
                 $nestedData['last_login_at'] = date($user->last_login_at ?? "") ;
                 $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
                 $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
+                $nestedData['option_delete'] = $delete;
                 $data[] = $nestedData;
             }
         }

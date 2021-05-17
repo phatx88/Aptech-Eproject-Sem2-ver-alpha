@@ -7,13 +7,16 @@
                   <li class="breadcrumb-item">
                      <a href="{{ route('admin.dashboard.index') }}">Admin</a>
                   </li>
-                  <li class="breadcrumb-item active">User</li>
+                  <li class="breadcrumb-item">
+                    <a href="{{ route('admin.user.index') }}">User</a>
+                 </li>
+                  <li class="breadcrumb-item active">List</li>
                </ol>
                @include('errors.message')
                 {{-- GOOGLE CALENDAR CHART --}}
 
                 <div class="row mb-3">
-                    <div class="col-12">
+                    <div class="col-12 col-md-7">
                         <div class="card">
                             <div class="card-header">
                                 <i class="fas fa-file-invoice-dollar"></i>
@@ -25,16 +28,60 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12 col-md-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-user-ninja"></i>
+                                Unverified Users
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="dataTable-3" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th>Id</th>
+                                                <th>Email</th>
+                                                <th>Created_at</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $count = 0;
+                                            @endphp
+                                            @foreach ($users as $user)
+                                                <tr class="text-center">
+                                                    <td>{{ $user->id }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td>{{ $user->created_at }}</td>
+                                                    <td>
+                                                        <form
+                                                        action="{{ route('admin.user.destroy', ['user' => $user->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you Sure?')">
+                                                    </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                <!-- DataTables Example -->
-               <div class="action-bar">
-                  <input type="submit" class="btn btn-primary btn-sm" value="Thêm" name="add">
-                  <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
-               </div>
                <div class="card mb-3">
                   <div class="card-header">
                      <i class="fas fa-users"></i>
                      User List
+                     <div class="float-right">
+                        <a href="{{ route('admin.user.create') }}" class="btn btn-primary btn-sm">Add</a>
+                        <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
+                    </div>
                  </div>
                   <div class="card-body">
                      <div class="table-responsive">
@@ -53,7 +100,6 @@
                           <th>last_login_at</th>
                           <th>Total Order</th>
                           <th>Total Spent</th>
-                          <th></th>
                           <th>Actions</th>
                        </tr>
 							</thead>
@@ -96,7 +142,6 @@
                            <th>
                             <input type="search" class="form-control form-control-sm filter-input" data-column="10" placeholder="Search">
                            </th>
-                           <th></th>
                            <th>Actions</th>
                         </tr>
                      </tfoot>
@@ -170,6 +215,78 @@
 </script>
 
 <script>
+    $(document).ready(function() {
+        var table = $('#dataTable-3').DataTable({
+            // flipping horizontal scroll bar in datatables refer to admin.css line 94
+            order: [
+                [0, "asc"]
+            ],
+            autoWidth: 'TRUE',
+            scrollX: 'TRUE',
+            lengthMenu: [
+                [6, 25, 50, -1],
+                [6, 25, 50, "All"]
+            ],
+            columnDefs: [{
+                targets: [1,2],
+                render: $.fn.dataTable.render.ellipsis(15, true)
+            }],
+        });
+ 
+        //SEARCH INPUT BY COLUMNS// - put class on top of header
+ 
+        table.columns('.filter-input').every(function(i) {
+            var column = table.column(i);
+ 
+            // Create the select list and search operation
+            var input = $(`<input type='search' class='form-control form-control-sm' placeholder='Search'>`)
+                .appendTo(
+                    this.footer()
+                )
+                .on('keyup change', function() {
+                    column
+                        .search($(this).val())
+                        .draw();
+                });
+        });
+ 
+        //SEARCH INPUT BY COLUMNS//
+ 
+ 
+        //SEARCH SELECT BY COLUMNS//
+ 
+        table.columns('.filter-select').every(function(i) {
+            var column = table.column(i);
+ 
+            // Create the select list and search operation
+            var select = $(`<select class='form-control form-control-sm'/>`)
+                .appendTo(
+                    this.footer()
+                )
+                .on('change', function() {
+                    column
+                        .search($(this).val())
+                        .draw();
+                });
+ 
+            // Get the search data for the first column and add to the select list
+            select.append($('<option value="">Select</option>'));
+            this
+                .cache('search')
+                .sort()
+                .unique()
+                .each(function(d) {
+                    select.append($('<option value="' + d + '">' + d + '</option>'));
+                });
+        });
+ 
+        //SEARCH SELECT BY COLUMNS//
+ 
+    });
+ 
+ </script>
+
+<script>
    $(document).ready(function() {
     var table = $('#datatableAjax').DataTable({
                     "order": [[ 0, "desc" ]],
@@ -227,11 +344,24 @@
                             "data": "amount_spent"
                         },
                         {
-                            "data": "option_show"
-                        },
-                        {
                             "data": "option_edit"
                         },
+                        // {
+                        //     "data": "option_delete",
+                        //     render : function (data) {  
+                        //         return  ` 
+                        //                     <td>
+                        //                     <form action='` + data + `' method='POST'>
+                        //                         @csrf
+                        //                         @method('delete')
+                        //                         <input type='submit' value='Delete'
+                        //                         class='btn btn-danger btn-sm' onclick="return confirm('Are You Sure?')">
+                        //                     </form>
+                        //                     </td>
+                                           
+                        //                 `;
+                        //     }
+                        
                         
                     ]
 
@@ -250,5 +380,6 @@
                 });
             });
 </script>
+
 
 @endsection

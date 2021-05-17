@@ -10,11 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
     protected $table = 'users';
     protected $primaryKey = "id";
 
@@ -40,6 +40,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'provider',
         'provider_id',
         'last_login_at',
+        'housenumber_street',
+        'ward_id',
         'deleted_at',
     ];
 

@@ -244,6 +244,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::post('permission_role/list', [Admin_PermissionRoleController::class, 'index'])->name('permission_role.index');
     Route::get('permission_role/create/{role_id?}', [Admin_PermissionRoleController::class, 'create'])->name('permission_role.create');
     Route::post('permission_role/create', [Admin_PermissionRoleController::class, 'store'])->name('permission_role.store');
+    Route::delete('permission_role/delete/{role_id}&{permission_id}', [Admin_PermissionRoleController::class, 'destroy'])->name('permission_role.destroy');
     // Route::resource('permission_role', Admin_PermissionRoleController::class);
 
     //Newsletter

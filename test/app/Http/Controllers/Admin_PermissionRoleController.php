@@ -114,8 +114,18 @@ class Admin_PermissionRoleController extends Controller
      * @param  \App\Models\PermissionRole  $permissionRole
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PermissionRole $permissionRole)
+    public function destroy($role_id, $permission_id)
     {
-        //
+          $permission_role = PermissionRole::where('role_id' , $role_id)->where('permission_id' , $permission_id)->first();
+        //   dd($permission_role);
+          try {
+              $permission_role->forceDelete();
+              request()->session()->put('success', "Deleted role_id: {$role_id} / permission_id: {$permission_id} Successfully");
+          } catch (QueryException $e) {
+              if ($e->getCode() == 23000) {
+                  request()->session()->put('error', $e->getMessage());
+              }
+          }
+          return redirect()->back();
     }
 }

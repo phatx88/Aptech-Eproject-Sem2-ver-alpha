@@ -51,8 +51,14 @@
                                        <td>{{ $permission_role->permission_id }}</td>
                                        <td>{{ $permission_role->permission->name }}</td>
                                        <td></td>
-                                       <td> <input type="button" onclick="Delete('1');" value="Delete"
-                                               class="btn btn-danger btn-sm"></td>
+                                        <td>
+                                            <form action="{{ route('admin.permission_role.destroy' , ['role_id' => $permission_role->role_id , 'permission_id' => $permission_role->permission_id]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="submit" value="Delete"
+                                                class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
+                                            </form>
+                                        </td>
                                    </tr>
 
                                     @endforeach

@@ -10,17 +10,15 @@
                 <li class="breadcrumb-item">
                     <a href="{{ route('admin.user.index') }}">User</a>
                 </li>
-                <li class="breadcrumb-item active">Edit</li>
+                <li class="breadcrumb-item active">Readonly</li>
             </ol>
             @include('errors.error')
             <!-- /form -->
-            <form method="post" action="{{ route('admin.user.store') }}" enctype="multipart/form-data">
-                @csrf
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="fullname">Name</label>
                     <div class="col-md-9 col-lg-6">
                         <input type="hidden" name="is_staff" value="0" class="form-control">
-                        <input name="name" id="name" type="text" value="{{ $user->name }}" class="form-control" required>
+                        <input name="name" id="name" type="text" value="{{ $user->name }}" class="form-control" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -32,59 +30,23 @@
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="mobile">Mobile</label>
                     <div class="col-md-9 col-lg-6">
-                        <input name="mobile" id="mobile" type="text" value="{{ $user->mobile ?? "" }}" class="form-control">
+                        <input name="mobile" id="mobile" type="text" value="{{ $user->mobile ?? "" }}" class="form-control" readonly>
                     </div>
                 </div>
                
                 <div class="form-group row">
                      <label class="col-md-12 control-label" for="housenumber_street">Address* :</label>
                     <div class="col-md-9 col-lg-6">
-                            <input type="text" name="housenumber_street" value="{{ $user->housenumber_street ?? "" }}"
-                                placeholder="Enter House Street Number" class="form-control" required>
+                        <span>{{ $user->housenumber_street ?? "" }}</span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-sm-4">
-                        <select class="form-control choose province" name="province" id="province" required>
-                           @if ($user->ward->district != null)
-                           <option value="{{ $user->ward->district->province }}">
-                               {{ $user->ward->district->province->name }}</option>
-                           @else
-                                 <option value="">--Chọn Thành phố---</option>
-                           @endif
-                            @foreach ($provinces as $key => $pvin)
-                                <option value="{{ $pvin->id }}">
-                                    {{ str_replace(['Thành phố', 'Tỉnh'], '', $pvin->name) }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control choose district" name="district" id="district" required>
-                           @if ($user->ward->district != null)
-                           <option value="{{ $user->ward->district }}">
-                               {{ $user->ward->district->name }}</option>
-                           @else
-                                 <option value="">--Chọn quận huyện---</option>
-                           @endif
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-control ward" name="ward_id" id="ward" required>
-                           @if ($user->ward_id != null)
-                           <option value="{{ $user->shipping_ward_id }}">{{ $user->ward->name }}
-                           </option>
-                           @else
-                                 <option value="">--Chọn xã phường---</option>
-                           @endif
-                        </select>
+                    <label class="col-md-12 control-label" for="housenumber_street">City* :</label>
+                    <div class="col-md-9 col-lg-6">
+                           <span>{{ $user->ward->name.' / ' ?? "" }}{{ $user->ward->district->name.' / ' ?? "" }}{{ $user->ward->district->province->name ?? "" }}</span>
                     </div>
                 </div>
 
-
-                <div class="form-action">
-                    <input type="submit" class="btn btn-primary btn-sm" value="Edit" name="update">
-                </div>
-            </form>
             <!-- /form -->
         </div>
         <!-- /.container-fluid -->
