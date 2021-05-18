@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\FetchChartDataController;
 use App\Http\Controllers\ShippingController;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -256,7 +257,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
 });
 
-
+Route::get('backup', function () {
+    // $directory = public_path('frontend/images');
+    return $files = Storage::files('public');
+});
 
 
 // KO Verify - Development Only

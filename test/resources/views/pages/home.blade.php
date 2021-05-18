@@ -155,7 +155,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <a href="{{ URL::to('home/products') }}" class="btn btn-primary d-block">View All Products <span
+                    <a href="{{ route('home.products.index') }}" class="btn btn-primary d-block">View All Products <span
                             class="fa fa-long-arrow-right"></span></a>
                 </div>
             </div>
@@ -286,7 +286,7 @@
                     <h2>Recent Blog</h2>
                 </div>
             </div>
-            <div class="row d-flex">
+            <div class="row d-flex mb-5">
                 @foreach ($post as $post)
 
                 <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
@@ -306,6 +306,13 @@
             </div>
             @endforeach
             </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <a href="{{ URL::to('blog') }}" class="btn btn-primary d-block">View All Blogs <span
+                            class="fa fa-long-arrow-right"></span></a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -314,7 +321,7 @@
             @csrf
             <div class="modal fade" style="overflow-y:hidden;" id="newsletter-id" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content" style="margin: 0; padding: 0;">
+                <div class="modal-content" style="margin: 0; padding: 0; border-radius: 0;">
                     <div class="modal-body row" style="margin: 0; padding: 0; height: 450px">
                                 {{-- <div class="row"> --}}
                                         <div class="col-md-5" style="text-align: center;">

@@ -8,7 +8,7 @@
              <a href="{{ route('admin.dashboard.index') }}">Admin</a>
          </li>
          <li class="breadcrumb-item">
-             <a href="{{ route('admin.newsletter.index') }}">Transport</a>
+             <a href="{{ route('admin.newsletter.index') }}">Newsletter</a>
          </li>
          <li class="breadcrumb-item active">Edit</li>
      </ol>

@@ -107,14 +107,14 @@
                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                     <select name="select" id="select" class="form-control" onchange="this.form.submit()">
                                         <option value="">Select</option>
-                                        <option value="name-asc">Name Ascending</option>
-                                        <option value="name-desc">Name Descending</option>
-                                        <option value="sale_price-asc">Price Ascending</option>
-                                        <option value="sale_price-desc">Price Descending</option>
-                                        <option value="view_count-asc">View Higher</option>
-                                        <option value="view_count-desc">View Lower</option>
-                                        <option value="created_date-asc">Old to New</option>
-                                        <option value="created_date-desc">New to Old</option>
+                                        <option value="name-asc" {{ Request::input('select') == "name-asc" ? 'selected' : '' }}>Name Ascending</option>
+                                        <option value="name-desc" {{ Request::input('select')== "name-desc" ? 'selected' : '' }}>Name Descending</option>
+                                        <option value="sale_price-asc" {{ Request::input('select') == "sale_price-asc" ? 'selected' : '' }}>Price Ascending</option>
+                                        <option value="sale_price-desc" {{ Request::input('select') == "sale_price-desc" ? 'selected' : '' }}>Price Descending</option>
+                                        <option value="view_count-asc" {{ Request::input('select') == "view_count-asc" ? 'selected' : '' }}>View Higher</option>
+                                        <option value="view_count-desc" {{ Request::input('select') == "view_count-desc" ? 'selected' : '' }}>View Lower</option>
+                                        <option value="created_date-asc" {{ Request::input('select') == "created_date-asc" ? 'selected' : '' }}>Old to New</option>
+                                        <option value="created_date-desc" {{ Request::input('select') == "created_date-desc" ? 'selected' : '' }}>New to Old</option>
                                     </select>
                                 </form>
                             </div>

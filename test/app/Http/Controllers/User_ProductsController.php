@@ -133,7 +133,8 @@ class User_ProductsController extends Controller
                 ->orwhere("brand.name", "LIKE", "%$search%")
                 ->orWhere("category.name", "LIKE", "%$search%")
                 ->orWhere("view_product.name", "LIKE", "%$search%")
-                ->paginate(9);
+                ->paginate(9)
+                ;
         }
 
         $bestSelling = DB::table('top_seller_product')
@@ -152,7 +153,7 @@ class User_ProductsController extends Controller
             'price_from' => $price_from,
             'price_to' => $price_to,
             'product_top_view' => $product_top_view,
-            'bestSelling' => $bestSelling
+            'bestSelling' => $bestSelling,
         ]);
     }
 

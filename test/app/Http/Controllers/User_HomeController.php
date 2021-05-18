@@ -20,6 +20,7 @@ class User_HomeController extends Controller
                 ->where('deleted_at', null)
                 ->where('hidden', false)
                 ->orderBy('view_count' , 'ASC')
+                ->limit(24)
                 ->get();
 
         $bestSelling = DB::table('top_seller_product')
@@ -28,7 +29,7 @@ class User_HomeController extends Controller
         ->pluck('name')
         ->toArray();
 
-        $post = Post::all();
+        $post = Post::orderBy('createdAt' , 'Desc')->limit(6)->get();
         // dd ($bestSelling);
 
         return view('pages.home', [
