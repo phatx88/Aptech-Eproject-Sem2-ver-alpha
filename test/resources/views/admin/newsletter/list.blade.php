@@ -3,12 +3,16 @@
 <div id="content-wrapper">
     <div class="container-fluid">
        <!-- Breadcrumbs-->
+       <!-- Breadcrumbs-->
        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">News letter</li>
-       </ol>
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+         </li>
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.newsletter.index') }}">Newsletter</a>
+         </li>
+         <li class="breadcrumb-item active">List</li>
+     </ol>
        @include('errors.error')
        <!-- DataTables Example -->
        <div class="card mb-3">

@@ -71,14 +71,14 @@
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'staff' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Staff</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-tie"></i> <span>Staff</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.staff.index')}}"><i class="fas fa-list"></i> List</a>
                <a class="dropdown-item" href="{{route('admin.staff.create')}}"><i class="fas fa-plus"></i> Add</a>
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-alt"></i> <span>Users</span></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-users"></i> <span>Users</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.user.index')}}"><i class="fas fa-list"></i> List</a>
                <a class="dropdown-item" href="{{route('admin.user.create')}}"><i class="fas fa-plus"></i> Add</a>
@@ -103,26 +103,26 @@
             </div>
          </li>
 
-         <li class="nav-item dropdown {{ in_array(Request::segment(2), ['shipping']) ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-map"></i> <span>Ward</span></a>
+         <li class="nav-item dropdown {{ in_array(Request::segment(2), ['ward' , 'district' , 'province']) ? 'active' : '' }}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-map"></i> <span>Destinations</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{ route('admin.ward.index')}}"><i class="fas fa-list"></i> List Ward</a>
-               <a class="dropdown-item" href="{{ route('admin.district.index')}}"><i class="fas fa-list"></i> List District</a>
-               <a class="dropdown-item" href="{{ route('admin.province.index')}}"><i class="fas fa-list"></i> List Province</a>
+               <a class="dropdown-item" href="{{ route('admin.ward.index')}}"><i class="fas fa-address-card"></i> List Wards</a>
+               <a class="dropdown-item" href="{{ route('admin.district.index')}}"><i class="fas fa-address-book"></i> List Districts</a>
+               <a class="dropdown-item" href="{{ route('admin.province.index')}}"><i class="fas fa-city"></i> List Provinces/Cities</a>
             </div>
          </li>
 
          <li class="nav-item dropdown {{ in_array(Request::segment(2), ['role', 'permission' , 'permission-role']) ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Authorization</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.role.index')}}"><i class="fas fa-user-tie"></i> Roles List</a>
+               <a class="dropdown-item" href="{{route('admin.role.index')}}"><i class="fas fa-user-tag"></i> Roles List</a>
                <a class="dropdown-item" href="{{route('admin.permission_role.index')}}"><i class="fas fa-list"></i> Permissions-Roles List</a>
                <a class="dropdown-item" href="{{route('admin.permission.index')}}"><i class="fas fa-user-clock"></i> Permissions List</a>
 
 
             </div>
          </li>
-         <li class="nav-item dropdown">
+         <li class="nav-item dropdown {{ Request::segment(2) == 'newsletter' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.newsletter.index')}}">List</a>

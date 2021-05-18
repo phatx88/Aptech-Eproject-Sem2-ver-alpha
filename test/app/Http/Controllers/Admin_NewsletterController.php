@@ -46,7 +46,7 @@ class Admin_NewsletterController extends Controller
         $newsletter = new Newsletter();
         $newsletter->email = $request->email;
         $newsletter->save();
-        return redirect()->route("admin.newsletter.index")->with('success', "Added Newletter Fee for Province Id - {$newsletter->email} Successfully");
+        return redirect()->route("admin.newsletter.index")->with('success', "Added Newletter  - {$newsletter->email} Successfully");
 
     }
 

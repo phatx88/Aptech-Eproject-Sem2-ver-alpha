@@ -22,7 +22,7 @@
                             <div class="mr-5">{{ number_format($totalOrder) }} Orders</div>
                         </div>
                         <a class="card-footer text-white clearfix small z-1" href="{{ route('admin.order.index') }}">
-                            <span class="float-left">Chi tiết</span>
+                            <span class="float-left">Details</span>
                             <span class="float-right">
                                 <i class="fas fa-angle-right"></i>
                             </span>
@@ -37,8 +37,8 @@
                             </div>
                             <div class="mr-5">${{ number_format($totalSales) }} in Sales</div>
                         </div>
-                        <a class="card-footer text-white clearfix small z-1" href="#">
-                            <span class="float-left">Chi tiết</span>
+                        <a class="card-footer text-white clearfix small z-1" href="{{ route('admin.user.index') }}">
+                            <span class="float-left">Details</span>
                             <span class="float-right">
                                 <i class="fas fa-angle-right"></i>
                             </span>
@@ -51,10 +51,10 @@
                             <div class="card-body-icon">
                                 <i class="fas fa-fw fa-life-ring"></i>
                             </div>
-                            <div class="mr-5">1 đơn hàng bị hủy</div>
+                            <div class="mr-5">{{ $lowInvProducts }} Products low IOH</div>
                         </div>
-                        <a class="card-footer text-white clearfix small z-1" href="#">
-                            <span class="float-left">Chi tiết</span>
+                        <a class="card-footer text-white clearfix small z-1" href="{{ route('admin.product.index') }}">
+                            <span class="float-left">Details</span>
                             <span class="float-right">
                                 <i class="fas fa-angle-right"></i>
                             </span>
