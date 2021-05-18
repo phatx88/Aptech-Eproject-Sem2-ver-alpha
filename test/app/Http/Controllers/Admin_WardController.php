@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\District;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
@@ -29,7 +30,11 @@ class Admin_WardController extends Controller
      */
     public function create()
     {
-        //
+        $shippings = Ward::get();
+        $districts = District::get();
+        return view('admin.shipping.ward.add' , [
+            'districts' => $districts,
+        ]);
     }
 
     /**
@@ -40,7 +45,7 @@ class Admin_WardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -60,9 +65,14 @@ class Admin_WardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ward $ward)
     {
-        //
+        $shippings = Ward::get();
+        return view('admin.shipping.ward.edit' , [
+            'shippings' => $shippings,
+            'ward' => $ward
+
+        ]);
     }
 
     /**
@@ -72,9 +82,14 @@ class Admin_WardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ward $ward)
     {
-        //
+
+
+        $ward->name = $request->name;
+        $ward->save();
+        return redirect()->route("admin.ward.index")->with('success', "Updated Transport Fee for Province Id - {$ward->id} Successfully");
+
     }
 
     /**
