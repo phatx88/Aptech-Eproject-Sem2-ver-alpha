@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\District;
+use Illuminate\Support\Facades\Gate;
 
 class Admin_DistrictController extends Controller
 {
@@ -15,6 +16,9 @@ class Admin_DistrictController extends Controller
      */
     public function index()
     {
+        if (!Gate::any(['view_order', 'view_product'])) {
+            abort(403);
+        }
         $shippings = District::get();
         return view('admin.shipping.district.list_district',[
             'shippings' => $shippings

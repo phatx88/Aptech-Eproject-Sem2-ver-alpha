@@ -41,6 +41,9 @@ class Admin_BlogController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows("create-post")) {
+            abort(403);
+        }
         $sesion_tags = session()->get('tags');
         if($sesion_tags){
             session()->forget('tags');
@@ -56,6 +59,9 @@ class Admin_BlogController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows("create-post")) {
+            abort(403);
+        }
         $imageName = '';
         if ($request->file('image')) {
             // $file = $request->file('featured_image');
@@ -123,6 +129,9 @@ class Admin_BlogController extends Controller
      */
     public function show($id)
     {
+        if (!Gate::allows("update-post")) {
+            abort(403);
+        }
         $post = Post::where('id', $id)->first();
         $post_tag = PostTag::where('postId', $post->id)->get();
         $tag = session()->get('tags');
@@ -163,7 +172,9 @@ class Admin_BlogController extends Controller
 
     public function update(Request $request, Post $blog)
     {
-
+        if (!Gate::allows("update-post")) {
+            abort(403);
+        }
         // $postOld = Post::where('id', $blog->id)->first();
         // $id = $postOld->id;
         if ($request->file('image')) {
@@ -236,7 +247,10 @@ class Admin_BlogController extends Controller
      */
     public function destroy($id)
     {
-         // SOFT DELETE 
+         // SOFT DELETE
+         if (!Gate::allows("delete-post")) {
+            abort(403);
+        } 
          try {
             $post = Post::where('id', $id)->first();
             $msg = 'Deleted Post - ID : '.$post->id.' Successfully - <a href="'. url('admin/blog/restore/'.$post->id.'') . '"> Undo Action</a>';
@@ -253,6 +267,9 @@ class Admin_BlogController extends Controller
     public function forceDelete($id)
     {
          // HARD DELETE 
+         if (!Gate::allows("force_delete-post")) {
+            abort(403);
+        } 
          try {
             $post = Post::onlyTrashed()->find($id);
             $msg = 'Pernamently Deleted Post - ID : '.$post->id.' From Record';
@@ -275,6 +292,9 @@ class Admin_BlogController extends Controller
 
     }
     public function published_blog($id){
+        if (!Gate::allows("update-post")) {
+            abort(403);
+        } 
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         Post::where('id', $id)->update([
             'published' => 1,
@@ -285,6 +305,9 @@ class Admin_BlogController extends Controller
     }
 
     public function hidden($id){
+        if (!Gate::allows("update-post")) {
+            abort(403);
+        } 
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         Post::where('id', $id)->update([
             'updatedAt' => now(),
@@ -294,6 +317,9 @@ class Admin_BlogController extends Controller
     }
 
     public function unhidden($id){
+        if (!Gate::allows("update-post")) {
+            abort(403);
+        } 
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         Post::where('id', $id)->update([
             'updatedAt' => now(),
@@ -304,6 +330,9 @@ class Admin_BlogController extends Controller
 
     public function showTrash()
     {
+        if (!Gate::allows("restore-post")) {
+            abort(403);
+        } 
         $posts = Post::onlyTrashed()->get();
         return view('admin.blog.trash', [
             'posts' => $posts,
@@ -312,6 +341,9 @@ class Admin_BlogController extends Controller
 
     public function restore($id)
     {
+        if (!Gate::allows("restore-post")) {
+            abort(403);
+        } 
         Post::onlyTrashed()->where('id' , $id)->restore();
         $post = Post::find($id);
         $msg = 'Deleted Post Id : '.$post->id.' Successfully';

@@ -263,15 +263,10 @@
                             render : function(data) {
                                 return   `  
                                             <td>
-                                                 @can('delete', 'App\Models\Order')
-                                                 <form action='` + data + `' method='POST'>
-                                                    @csrf
-                                                   @method('delete')
-                                                     <input type='submit' value='Delete'
-                                                   class='btn btn-danger btn-sm' onclick="return confirm('Are You Sure?')">
-                                                </form>
+                                                @can('edit', 'App\Models\Order')
+                                                <a href='` + data + `' title='EDIT' class='btn btn-warning btn-sm'>Edit</i></a>
+                                                @endcan
                                             </td>
-                                           @endcan
                                             `;
                             }
                         },

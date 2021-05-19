@@ -34,7 +34,7 @@ class OrderFactory extends Factory
             $province_id = $ward->district->province->id;
             DB::table('province')->where('id', $province_id)->increment('order_count');
             return [
-                'created_date' => $date = $this->faker->dateTimeBetween('-1 year -6 months', '+4 weeks'),
+                'created_date' => $date = $this->faker->dateTimeBetween('-6 months', '+4 weeks'),
                 'order_status_id' => ShippingStatus::find(5),
                 'customer_id' => null,
                 'shipping_fullname' => $this->faker->name,

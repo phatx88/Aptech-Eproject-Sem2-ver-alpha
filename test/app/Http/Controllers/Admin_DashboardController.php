@@ -38,9 +38,9 @@ class Admin_DashboardController extends Controller
             ->setMarkers(['#ff455f'], 5, 10);
 
         // APEX CHART MOST VISITED BY DATE
-        $dateRange = Visitor::distinct('date_visited')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('date_visited')->toArray();
-        $nonRegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
-        $RegHits = Visitor::selectRaw('date_visited, Sum(hits)')->groupBy('date_visited')->whereNotNull('user_id')->whereDate('date_visited', '>=' , Carbon::now()->subDays(7))->pluck('Sum(hits)')->toArray();
+        $dateRange = Visitor::distinct('date_visited')->orderBy('date_visited', 'asc')->whereBetween('date_visited', [Carbon::now()->subDays(7) , Carbon::now()])->groupBy(DB::raw('DATE(date_visited)'))->pluck('date_visited')->toArray();
+        $nonRegHits = Visitor::distinct('date_visited')->orderBy('date_visited', 'asc')->whereNull('user_id')->selectRaw('count(ip), date_visited')->whereBetween('date_visited', [Carbon::now()->subDays(7) , Carbon::now()])->groupBy(DB::raw('DATE(date_visited)'))->pluck('count(ip)')->toArray();
+        $RegHits = Visitor::distinct('date_visited')->orderBy('date_visited', 'asc')->whereNotNull('user_id')->selectRaw('count(user_id), date_visited')->whereBetween('date_visited', [Carbon::now()->subDays(7) , Carbon::now()])->groupBy(DB::raw('DATE(date_visited)'))->pluck('count(user_id)')->toArray();
         $visitChart = (new LarapexChart)->barChart()
             ->setTitle('Visitors by Date.')
             ->setSubtitle('Hits during last 7 days.')

@@ -7,6 +7,8 @@ use App\Models\Province;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Gate;
+
 
 class Admin_TransportController extends Controller
 {
@@ -17,6 +19,9 @@ class Admin_TransportController extends Controller
      */
     public function index()
     {
+        if (!Gate::any(['view_order', 'view_product'])) {
+            abort(403);
+        }
         $transports = Transport::get();
         return view('admin.transport.list' , [
             'transports' => $transports,
@@ -30,6 +35,9 @@ class Admin_TransportController extends Controller
      */
     public function create()
     {
+        if (!Gate::any(['create_order', 'create_product'])) {
+            abort(403);
+        } 
         $provinces = Province::get();
         return view('admin.transport.add' , [
             'provinces' => $provinces,
@@ -44,6 +52,9 @@ class Admin_TransportController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::any(['create_order', 'create_product'])) {
+            abort(403);
+        } 
         $request->validate([
             'province_id' => 'bail|unique:transport|required',
             'price' => 'bail|required|max:255',
@@ -75,6 +86,9 @@ class Admin_TransportController extends Controller
      */
     public function edit(Transport $transport)
     {
+        if (!Gate::any(['update_order', 'update_product'])) {
+            abort(403);
+        } 
         $provinces = Province::get();
         return view('admin.transport.edit' , [
             'transport' => $transport,
@@ -91,6 +105,9 @@ class Admin_TransportController extends Controller
      */
     public function update(Request $request, Transport $transport)
     {
+        if (!Gate::any(['update_order', 'update_product'])) {
+            abort(403);
+        }
         $request->validate([
             'price' => 'bail|required|max:255',
         ]);
@@ -109,6 +126,9 @@ class Admin_TransportController extends Controller
     public function destroy(Transport $transport)
     {
         // SOFT DELETE
+        if (!Gate::any(['delete_order', 'delete_product'])) {
+            abort(403);
+        } 
         try {
             $msg = 'Deleted Product : '.$transport->name.' - ID : '.$transport->id.' Successfully - <a href="'. url('admin/transport/restore/'.$transport->id.'') . '"> Undo Action</a>';
             $transport->delete();
@@ -123,6 +143,9 @@ class Admin_TransportController extends Controller
 
     public function showTrash()
     {
+        if (!Gate::any(['restore_order', 'restore_product'])) {
+            abort(403);
+        }  
         $transports = Transport::onlyTrashed()->get();
         return view('admin.transport.trash', [
             'transports' => $transports,
@@ -131,6 +154,9 @@ class Admin_TransportController extends Controller
 
     public function restore($id)
     {
+        if (!Gate::any(['restore_order', 'restore_product'])) {
+            abort(403);
+        } 
         Transport::onlyTrashed()->where('id' , $id)->restore();
         $transport = Transport::find($id);
         $msg = 'Restored Transport Fee : '.$transport->name.' - ID : '.$transport->id.' Successfully';

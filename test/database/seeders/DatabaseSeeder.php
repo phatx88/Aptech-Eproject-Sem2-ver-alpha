@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Visitor;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
+        // User::factory(100)->create();
         // Order::factory(10)->create();
         
         // CREATE ORDER WITH RANDOM SPECIFIC USER 
@@ -31,10 +32,10 @@ class DatabaseSeeder extends Seeder
 
         // CREATE ORDER WITH RANDOM USERS 
         // Magic method - has many 
-        // Order::factory()
-        //     ->count(1000)
-        //     ->has(OrderItem::factory()->count(1))
-        //     ->create();
+        Order::factory()
+            ->count(1000)
+            ->has(OrderItem::factory()->count(1))
+            ->create();
         
         //User->Order->OrderItem
         // $user =  User::factory()->create();
@@ -51,5 +52,10 @@ class DatabaseSeeder extends Seeder
         //         'last_login_at' => Carbon::now()->subDays(rand(1, 365))
         //     ]);
         // }
+
+        //RANDOM VISITOR DATA
+        // Visitor::factory()
+        // ->count(100)
+        // ->create();
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Province;
+use Illuminate\Support\Facades\Gate;
+
 
 class Admin_ProvinceController extends Controller
 {
@@ -15,6 +17,9 @@ class Admin_ProvinceController extends Controller
      */
     public function index()
     {
+        if (!Gate::any(['view_order', 'view_product'])) {
+            abort(403);
+        } 
         $shippings = Province::get();
         return view('admin.shipping.province.list_province',[
             'shippings' => $shippings

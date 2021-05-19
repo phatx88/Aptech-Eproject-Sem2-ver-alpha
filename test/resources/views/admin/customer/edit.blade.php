@@ -14,13 +14,14 @@
             </ol>
             @include('errors.error')
             <!-- /form -->
-            <form method="post" action="{{ route('admin.user.store') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('admin.user.update' , ['user' => $user->id]) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="fullname">Name</label>
                     <div class="col-md-9 col-lg-6">
                         <input type="hidden" name="is_staff" value="0" class="form-control">
-                        <input name="name" id="name" type="text" value="{{ $user->name }}" class="form-control" required>
+                        <input name="name" id="name" type="text" value="{{ $user->name }}" class="form-control" >
                     </div>
                 </div>
                 <div class="form-group row">
@@ -40,12 +41,12 @@
                      <label class="col-md-12 control-label" for="housenumber_street">Address* :</label>
                     <div class="col-md-9 col-lg-6">
                             <input type="text" name="housenumber_street" value="{{ $user->housenumber_street ?? "" }}"
-                                placeholder="Enter House Street Number" class="form-control" required>
+                                placeholder="Enter House Street Number" class="form-control" >
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-4">
-                        <select class="form-control choose province" name="province" id="province" required>
+                        <select class="form-control choose province" name="province" id="province" >
                            @if ($user->ward->district != null)
                            <option value="{{ $user->ward->district->province }}">
                                {{ $user->ward->district->province->name }}</option>
@@ -59,7 +60,7 @@
                         </select>
                     </div>
                     <div class="col-sm-4">
-                        <select class="form-control choose district" name="district" id="district" required>
+                        <select class="form-control choose district" name="district" id="district" >
                            @if ($user->ward->district != null)
                            <option value="{{ $user->ward->district }}">
                                {{ $user->ward->district->name }}</option>
@@ -69,7 +70,7 @@
                         </select>
                     </div>
                     <div class="col-sm-4">
-                        <select class="form-control ward" name="ward_id" id="ward" required>
+                        <select class="form-control ward" name="ward_id" id="ward" >
                            @if ($user->ward_id != null)
                            <option value="{{ $user->shipping_ward_id }}">{{ $user->ward->name }}
                            </option>

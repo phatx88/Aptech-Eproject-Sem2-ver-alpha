@@ -161,7 +161,7 @@ Route::post('/fetch-province', [FetchChartDataController::class,'fetchProvince']
 
 // Có VErify
 // User Dashboard
-Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user,staff'])->group(function() {
+Route::prefix('home')->middleware(['auth' , 'verified', 'countVisitor' ,'checkRoles:user,staff'])->group(function() {
     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
@@ -169,7 +169,7 @@ Route::prefix('home')->middleware(['auth' , 'verified', 'checkRoles:user,staff']
 
 
 //Admin Dashboard
-Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth' , 'countVisitor' ,'checkRoles:staff'])->group(function () {
     // Dash Board
     Route::resource('dashboard' , Admin_DashboardController::class);
 

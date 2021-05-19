@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\QueryException;
+
+
 
 class Admin_NewsletterController extends Controller
 {
@@ -14,6 +18,9 @@ class Admin_NewsletterController extends Controller
      */
     public function index()
     {
+        if (!Gate::any(['view_order', 'view_product'])) {
+            abort(403);
+        }
         $emails = Newsletter::get();
 
         return view('admin.newsletter.list', [
@@ -28,6 +35,9 @@ class Admin_NewsletterController extends Controller
      */
     public function create()
     {
+        if (!Gate::any(['create_order', 'create_product'])) {
+            abort(403);
+        }
         return view('admin.newsletter.add');
     }
 
@@ -39,6 +49,9 @@ class Admin_NewsletterController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::any(['create_order', 'create_product'])) {
+            abort(403);
+        }
         $request->validate([
             'email' => 'required|unique:newsletter|max:255'
         ]);
@@ -69,7 +82,9 @@ class Admin_NewsletterController extends Controller
      */
     public function edit(Newsletter $newsletter)
     {
-
+        if (!Gate::any(['update_order', 'update_product'])) {
+            abort(403);
+        }
         return view('admin.newsletter.edit' , [
             'newsletter' => $newsletter
         ]);
@@ -84,6 +99,9 @@ class Admin_NewsletterController extends Controller
      */
     public function update(Request $request, Newsletter $newsletter)
     {
+        if (!Gate::any(['update_order', 'update_product'])) {
+            abort(403);
+        }
         $request->validate([
             'email' => 'required|unique:newsletter|max:255'
         ]);
@@ -100,6 +118,18 @@ class Admin_NewsletterController extends Controller
      */
     public function destroy(Newsletter $newsletter)
     {
-        //
+        if (!Gate::any(['delete_order', 'delete_product'])) {
+            abort(403);
+        } 
+        try {
+            $msg = 'Deleted Product : '.$newsletter->email.'';
+            $newsletter->delete();
+            request()->session()->put('success', $msg);
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.transport.index");
     }
 }

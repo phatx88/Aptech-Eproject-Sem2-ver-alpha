@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Province;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Gate;
 
 class Admin_UserController extends Controller
 {
@@ -18,6 +19,9 @@ class Admin_UserController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows("view-users")) {
+            abort(403);
+        }
         $providers = User::where('is_staff' , 0)->pluck('provider')->unique();
         $statuses = User::where('is_staff' , 0)->pluck('is_active')->unique();
         $users = User::where('email_verified_at' , null)->get();
@@ -35,6 +39,9 @@ class Admin_UserController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows("create-users")) {
+            abort(403);
+        }
         $provinces = Province::get();
         return view('admin.customer.add' , [
             'provinces' => $provinces,
@@ -49,6 +56,9 @@ class Admin_UserController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows("create-users")) {
+            abort(403);
+        }
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -63,7 +73,7 @@ class Admin_UserController extends Controller
     
         if($user = User::create($input)){
             return redirect()->route('admin.user.index')
-            ->with('success',"Staff : {$user->name} - {$user->email} created successfully");
+            ->with('success',"User : {$user->name} - {$user->email} created successfully");
         }
         
     }
@@ -87,6 +97,9 @@ class Admin_UserController extends Controller
      */
     public function edit($id)
     {
+        if (!Gate::allows("update-users")) {
+            abort(403);
+        }
         $user = User::find($id);
         $provinces = Province::get();
         if ($user->email_verified_at == null) {
@@ -109,9 +122,24 @@ class Admin_UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'prohibited',
+            'mobile' => 'nullable',
+            'housenumber_street' => 'nullable',
+            'ward_id' => 'nullable', 
+        ]);
+
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->ward_id = $request->ward_id;
+        $user->housenumber_street = $request->housenumber_street;
+        $user->save();
+
+        return redirect()->route('admin.user.index')
+        ->with('success',"User : {$user->name} - {$user->email} Edited successfully");
     }
 
     /**
@@ -122,6 +150,9 @@ class Admin_UserController extends Controller
      */
     public function destroy($id)
     {
+        if (!Gate::allows("delete-users")) {
+            abort(403);
+        }
         try {
             $user = User::find($id);
             $msg = 'Deleted User ID : ' . $user->id . ' / '. $user->email .' Successfully ';
