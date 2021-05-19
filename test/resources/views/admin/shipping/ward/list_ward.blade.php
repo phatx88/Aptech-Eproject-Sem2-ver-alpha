@@ -80,8 +80,7 @@
                             <th>Ward Id</th>
                             <th>Ward Name</th>
                             <th>Ward Type</th>
-                            <th>Ward District</th>
-
+                            <th>District ID</th>
                             <th>Actions</th>
 
 
