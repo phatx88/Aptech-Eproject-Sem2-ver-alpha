@@ -178,6 +178,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::get('product/status/{id}', [Admin_ProductController::class, 'status'] );
     Route::get('product/restore/{id}', [Admin_ProductController::class, 'restore'] );
     Route::get('product/trash', [Admin_ProductController::class, 'showTrash'] );
+    Route::get('product/trash/{id}', [Admin_ProductController::class, 'forceDelete'] )->name('product.trash.forceDelete');
     Route::resource('product', Admin_ProductController::class);
     Route::resource('category', Admin_CategoryController::class);
     Route::resource('brand', Admin_BrandController::class);
@@ -209,6 +210,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
     Route::post('comment/delete/{id}', [Admin_CommentController::class, 'delete']);
 
     Route::get('delete/{id}', [Admin_BlogController::class, 'destroy']);
+    Route::get('blog/trash/{id}', [Admin_BlogController::class, 'forceDelete'] )->name('blog.trash.forceDelete');
     Route::get('blog/restore/{id}', [Admin_BlogController::class, 'restore'] );
     Route::get('blog/trash', [Admin_BlogController::class, 'showTrash'] );
     Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Gate;
+
 
 class Admin_BrandController extends Controller
 {
@@ -16,6 +18,9 @@ class Admin_BrandController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows("view-product")) {
+            abort(403);
+        }
         $brands = Brand::get();
         return view('admin.brand.list',[
             'brands' => $brands
@@ -40,6 +45,9 @@ class Admin_BrandController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows("create-product")) {
+            abort(403);
+        }
         $request->validate([
             'name' => 'required|unique:brand|max:255',
         ]);
@@ -81,9 +89,19 @@ class Admin_BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Brand $brand)
     {
-        //
+        if (!Gate::allows("update-product")) {
+            abort(403);
+        }
+
+        $request->validate([
+            'name' => 'required|unique:brand|max:255',
+        ]);
+
+        $brand->name = $request->name;
+        $brand->save();
+        return redirect()->action([Admin_BrandController::class,'index']);
     }
 
     /**
@@ -94,6 +112,10 @@ class Admin_BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
+        if (!Gate::allows("delete-product")) {
+            abort(403);
+        }
+
         try {
             $brand->forceDelete();
             request()->session()->put('success', "Deleted Category : {$brand->id} - {$brand->name} Successfully");

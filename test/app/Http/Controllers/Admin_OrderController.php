@@ -23,6 +23,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 // use Mail;
 use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\Types\Nullable;
@@ -38,7 +39,9 @@ class Admin_OrderController extends Controller
      */
     public function index()
     {
-
+        if (!Gate::allows("view-order")) {
+            abort(403);
+        }
         $orderTotals = DB::table('total_per_order')->get();
         $statuses = ShippingStatus::get();
 
@@ -57,6 +60,9 @@ class Admin_OrderController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows("create-order")) {
+            abort(403);
+        }
         $products = Product::get();
         $provinces = Province::orderby('name', 'ASC')->get();
         $statuses = ShippingStatus::get();
@@ -79,6 +85,9 @@ class Admin_OrderController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows("create-order")) {
+            abort(403);
+        }
         $request->validate([
             'customer_id' => 'max:255',
             'order_status_id' => 'required',
@@ -129,6 +138,9 @@ class Admin_OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        if (!Gate::allows("update-order")) {
+            abort(403);
+        }
         $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
         $products = Product::with('order')->get();
         $coupons = Coupon::select('id' , 'code' , 'number')->get();
@@ -171,6 +183,9 @@ class Admin_OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        if (!Gate::allows("update-order")) {
+            abort(403);
+        }
         $request->validate([
             'customer_id' => 'max:255',
             'order_status_id' => 'required',
@@ -242,6 +257,9 @@ class Admin_OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        if (!Gate::allows("delete-order")) {
+            abort(403);
+        }
         // Hard DELETE
         // try {
         //     $order->forceDelete();
@@ -276,6 +294,9 @@ class Admin_OrderController extends Controller
 
     public function restore($id)
     {
+        if (!Gate::allows("restore-order")) {
+            abort(403);
+        }
         Order::onlyTrashed()->where('id', $id)->restore();
         $order = Order::find($id);
         $msg = 'Deleted Order ID : ' . $order->id . ' Successfully';

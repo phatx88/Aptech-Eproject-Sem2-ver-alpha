@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Gate;
 
 use Maatwebsite\Excel\Facades\Excel;
 class Admin_CouponController extends Controller
@@ -18,6 +19,9 @@ class Admin_CouponController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows("view-order")) {
+            abort(403);
+        }
         $coupons = Coupon::get();
         return view('admin.coupon.list',[
             'coupons' => $coupons
@@ -31,6 +35,9 @@ class Admin_CouponController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows("create-order")) {
+            abort(403);
+        }
         return view('admin.coupon.add');
     }
 
@@ -42,6 +49,9 @@ class Admin_CouponController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Gate::allows("create-order")) {
+            abort(403);
+        }
         $coupon = new Coupon();
         $coupon->name = $request->name;
         $coupon->code = $request->code;
@@ -71,7 +81,10 @@ class Admin_CouponController extends Controller
      */
     public function edit(Coupon $coupon)
     {
-       return view('admin.coupon.edit',[
+        if (!Gate::allows("update-order")) {
+            abort(403);
+        }
+        return view('admin.coupon.edit',[
             'coupon' => $coupon
        ]) ;
     }
@@ -85,6 +98,9 @@ class Admin_CouponController extends Controller
      */
     public function update(Request $request, Coupon $coupon)
     {
+        if (!Gate::allows("update-order")) {
+            abort(403);
+        }
         $coupon->name = $request->name;
         $coupon->code = $request->code;
         $coupon->time = $request->time;
@@ -102,6 +118,9 @@ class Admin_CouponController extends Controller
      */
     public function destroy(Coupon $coupon)
     {
+        if (!Gate::allows("delete-order")) {
+            abort(403);
+        }
         try {
             $msg = 'Deleted Product : '.$coupon->name.' - ID : '.$coupon->id.' Successfully';
             $coupon->delete();

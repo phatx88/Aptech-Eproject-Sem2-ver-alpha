@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Gate;
 
 class Admin_OrderItemController extends Controller
 {
@@ -18,6 +19,9 @@ class Admin_OrderItemController extends Controller
      */
     public function index(Order $order)
     {
+        if (!Gate::allows("view-order")) {
+            abort(403);
+        }
         $orderItem = Order::find($order->id)->orderItem; //hasMany result Array 
         $products = Product::get();
         return view('admin.order.add_item' , [
@@ -45,6 +49,9 @@ class Admin_OrderItemController extends Controller
      */
     public function store(Request $request, Order $order)
     {
+        if (!Gate::allows("create-order")) {
+            abort(403);
+        }
         $request->validate([
             'product_id' => 'required|max:255',
         ]);
@@ -95,6 +102,9 @@ class Admin_OrderItemController extends Controller
      */
     public function update(Request $request, $order, $item)
     {
+        if (!Gate::allows("update-order")) {
+            abort(403);
+        }
         $orderItem = OrderItem::where('order_id' , $order)->where('product_id' , $item)->first();
         $unit_price = $request->unit_price;
         $orderItem->unit_price = $unit_price;
@@ -115,7 +125,9 @@ class Admin_OrderItemController extends Controller
      */
     public function destroy($order, $item)
     {
-        // dd($item);
+        if (!Gate::allows("delete-order")) {
+            abort(403);
+        }
         $orderItem = OrderItem::where('order_id' , $order)->where('product_id' , $item)->first();
         try {
             $orderItem->forceDelete();

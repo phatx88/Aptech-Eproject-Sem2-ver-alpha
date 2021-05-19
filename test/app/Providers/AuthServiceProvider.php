@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Policies\ProductPolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\PostPolicy;
+use App\Policies\UserPolicy;
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -25,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         Order::class => OrderPolicy::class,
         Post::class => PostPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -66,6 +68,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('delete-post', [PostPolicy::class, 'delete']);
         Gate::define('restore-post', [PostPolicy::class, 'restore']);
         Gate::define('force-delete-post', [PostPolicy::class, 'forceDelete']);
+
+         // User 
+         Gate::define('view-users', [PostPolicy::class, 'view']);
+         Gate::define('create-users', [PostPolicy::class, 'create']);
+         Gate::define('update-users', [PostPolicy::class, 'update']);
+         Gate::define('delete-users', [PostPolicy::class, 'delete']);
+         Gate::define('restore-users', [PostPolicy::class, 'restore']);
+         Gate::define('force-delete-users', [PostPolicy::class, 'forceDelete']);
     }
 
     

@@ -75,17 +75,11 @@
                                     <th>Description</th>
                                     <th class="filter-input">Created Date</th>
                                     <th class="filter-select">Featured</th>
-                                    @can('update', 'App\Models\Product')
-                                        <th>Hidden</th>
-                                    @endcan
+                                    <th>Hidden</th>
                                     <th></th>
                                     <th></th>
-                                    @can('update', 'App\Models\Product')
-                                        <th></th>
-                                    @endcan
-                                    @can('delete', 'App\Models\Product')
-                                        <th></th>
-                                    @endcan
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -118,8 +112,8 @@
                                                 data-title="{{ $product->name }}">Show</button></td>
                                         <td>{{ $product->created_date }}</td>
                                         <td>{{ $product->featured == 1 ? 'yes' : 'no' }}</td>
-                                        @can('update', 'App\Models\Product')
-                                            <td>
+                                        <td>
+                                                @can('update', 'App\Models\Product')
                                                 @if ($product->hidden == 0)
                                                     <a class="btn btn-danger btn-sm"
                                                         href="{{ url('admin/product/status/' . $product->id) }}">
@@ -131,16 +125,18 @@
                                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                                     </a>
                                                 @endif
-                                            </td>
-                                        @endcan
+                                                @endcan
+                                        </td>
                                         <td><a href="{{ URL('admin/comment/' . $product->id) }}">Comments</a></td>
-                                        <td><a href="{{ URL('admin/ImageItem/' . $product->id) }}">Hình ảnh</a></td>
-                                        @can('update', 'App\Models\Product')
-                                            <td><a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
-                                                    class="btn btn-warning btn-sm">Edit</a></td>
-                                        @endcan
-                                        @can('delete', 'App\Models\Product')
-                                            <td>
+                                        <td><a href="{{ URL('admin/ImageItem/' . $product->id) }}">Images</a></td>
+                                        <td>
+                                                @can('update', 'App\Models\Product')
+                                                <a href="{{ route('admin.product.edit', ['product' => $product->id]) }}"
+                                                    class="btn btn-warning btn-sm">Edit</a>
+                                                    @endcan
+                                        </td>
+                                        <td>
+                                                @can('delete', 'App\Models\Product')
                                                 <form
                                                     action="{{ route('admin.product.destroy', ['product' => $product->id]) }}"
                                                     method="POST">
@@ -148,44 +144,34 @@
                                                     @method('DELETE')
                                                     <input type="submit" value="Delete" class="btn btn-danger btn-sm">
                                                 </form>
-                                            </td>
-                                        @endcan
+                                                @endcan
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th> </th>
-                                    <th> </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-
-                                    </th>
-                                    <th>
-                                    </th>
-                                    <th>
-
-                                    </th>
-                                    <th>
-                                    </th>
+                                    {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                        <th></th>
+                                    <th></th>
+                                    <th></th>
+                                        <th></th>
+                                        <th></th>
                                 </tr>
                             </tfoot>
                         </table>

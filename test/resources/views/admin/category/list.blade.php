@@ -18,7 +18,9 @@
          <div class="card-header">
             <i class="fas fa-table"></i>
             Category
+            @can('create', 'App\Models\Product')
             <a href="{{ route('admin.category.create')}}" class="btn btn-primary btn-sm float-right">Add</a>
+            @endcan
          </div>
           <div class="card-body">
              <div class="table-responsive">
@@ -40,10 +42,19 @@
                         <td>{{ $category->id }}</td>
                         <td >{{ $category->name }}</td>
                         <td></td>
-                        <td><a href="{{ route('admin.category.edit', ['category'=>$category->id]) }}" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td>
+                        @can('update', 'App\Models\Product')
+                           <a href="{{ route('admin.category.edit', ['category'=>$category->id]) }}" class="btn btn-warning btn-sm">Edit</a>
+                        @endcan
+                        </td>
+
                         <form action="{{ route('admin.category.destroy', ['category'=>$category->id]) }}" method="POST">
-                            @csrf @method('delete')
-                            <td><button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button></td>
+                           @csrf @method('delete')
+                           <td>
+                           @can('delete', 'App\Models\Product')
+                               <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button>
+                           @endcan
+                            </td>
                         </form>
                         </tr>
                        @endforeach

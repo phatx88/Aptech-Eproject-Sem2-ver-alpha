@@ -30,7 +30,7 @@ class OrderPolicy
      */
     public function view(User $user)
     {
-        //
+        return $user->hasPermission("view_order");
     }
 
     /**
@@ -41,7 +41,7 @@ class OrderPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermission("create_order");
     }
 
     /**
@@ -53,7 +53,7 @@ class OrderPolicy
      */
     public function update(User $user)
     {
-        //
+        return $user->hasPermission("update_order");
     }
 
     /**
@@ -89,6 +89,6 @@ class OrderPolicy
      */
     public function forceDelete(User $user)
     {
-        //
+        return $user->hasPermission("force_delete_order");
     }
 }

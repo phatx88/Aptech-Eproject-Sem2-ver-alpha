@@ -179,9 +179,9 @@ class Admin_ProductController extends Controller
      */
     public function edit(Products $product)
     {
-        // if (!Gate::allows("update-product")) {
-        //     abort(403);
-        // }
+        if (!Gate::allows("update-product")) {
+            abort(403);
+        }
 
         $categories = Category::orderby('name', 'ASC')->get();
         $brands = Brand::orderby('name', 'ASC')->get();
@@ -215,9 +215,9 @@ class Admin_ProductController extends Controller
      */
     public function update(Request $request, Products $product)
     {
-        // if (!Gate::allows("update-product")) {
-        //     abort(403);
-        // }
+        if (!Gate::allows("update-product")) {
+            abort(403);
+        }
         $request->validate([
             'featured_image' => 'bail|image|mimes:jpeg,png,jpg,gif,svg|unique:product|max:2048',
             'product_name' => 'bail|required|max:255',
@@ -276,9 +276,9 @@ class Admin_ProductController extends Controller
     public function destroy(Products $product)
     {
         // SOFT DELETE
-        // if (!Gate::allows("delete-product")) {
-        //     abort(403);
-        // }
+        if (!Gate::allows("delete-product")) {
+            abort(403);
+        }
         try {
             $msg = 'Deleted Product : '.$product->name.' - ID : '.$product->id.' Successfully - <a href="'. url('admin/product/restore/'.$product->id.'') . '"> Undo Action</a>';
             $product->delete();
@@ -293,6 +293,9 @@ class Admin_ProductController extends Controller
 
     public function showTrash()
     {
+        if (!Gate::allows("restore_product")) {
+            abort(403);
+        }
         $products = Products::onlyTrashed()->get();
         return view('admin.product.trash', [
             'products' => $products,
@@ -301,6 +304,9 @@ class Admin_ProductController extends Controller
 
     public function restore($id)
     {
+        if (!Gate::allows("restore_product")) {
+            abort(403);
+        }
         Products::onlyTrashed()->where('id' , $id)->restore();
         $product = Products::find($id);
         $msg = 'Restored Product : '.$product->name.' - ID : '.$product->id.' Successfully';
@@ -308,19 +314,24 @@ class Admin_ProductController extends Controller
         return redirect()->back();
     }
 
-    // public function forceDelete(Products $product)
-    // {
-    //     // HARD DELETE
-    //     try {
-    //         // $product->forceDelete();
-    //         request()->session()->put('success', "Deleted Product : {$product->name} / ID : {$product->id} Successfully");
-    //     } catch (QueryException $e) {
-    //         if ($e->getCode() == 23000) {
-    //             request()->session()->put('error', $e->getMessage());
-    //         }
-    //     }
-    //     return redirect()->back();
-    // }
+    public function forceDelete($id)
+    {
+        // HARD DELETE
+        if (!Gate::allows("force_delete_product")) {
+            abort(403);
+        }
+
+        try {
+            $product = Products::onlyTrashed()->find($id);
+            $product->forceDelete();
+            request()->session()->put('success', "Pernamently Deleted Product : {$product->name} / ID : {$product->id} From Record");
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
+    }
 
     public function fetchProduct(Request $request)
     {

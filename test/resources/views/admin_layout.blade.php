@@ -74,7 +74,9 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-tie"></i> <span>Staff</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.staff.index')}}"><i class="fas fa-list"></i> List</a>
+               @if (Auth::user()->email == env('Admin_email'))
                <a class="dropdown-item" href="{{route('admin.staff.create')}}"><i class="fas fa-plus"></i> Add</a>
+               @endif
             </div>
          </li>
          <li class="nav-item dropdown {{ Request::segment(2) == 'customer' ? 'active' : '' }}">
@@ -112,16 +114,19 @@
             </div>
          </li>
 
+         @if (Auth::user()->email == env('Admin_email'))
+             
          <li class="nav-item dropdown {{ in_array(Request::segment(2), ['role', 'permission' , 'permission-role']) ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-user-shield"></i> <span>Authorization</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.role.index')}}"><i class="fas fa-user-tag"></i> Roles List</a>
                <a class="dropdown-item" href="{{route('admin.permission_role.index')}}"><i class="fas fa-list"></i> Permissions-Roles List</a>
                <a class="dropdown-item" href="{{route('admin.permission.index')}}"><i class="fas fa-user-clock"></i> Permissions List</a>
-
-
             </div>
          </li>
+
+         @endif
+
          <li class="nav-item dropdown {{ Request::segment(2) == 'newsletter' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
             <div class="dropdown-menu" aria-labelledby="">

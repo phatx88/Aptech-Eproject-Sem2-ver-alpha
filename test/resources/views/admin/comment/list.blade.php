@@ -12,7 +12,6 @@
        <!-- DataTables Example -->
        <div class="action-bar">
 
-          <input type="submit" class="btn btn-danger btn-sm" value="Xóa" name="delete">
        </div>
        <div class="card mb-3">
           <div class="card-body">

@@ -55,6 +55,7 @@
                                   
                                     <th></th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,9 +64,11 @@
                                 @endphp
                                 @foreach ($products as $product)
                                     <tr>
-                                        @can('restore', 'App/Models/Product')
-                                        <td><a class="btn btn-success btn-sm" href="{{ URL('admin/product/restore/'.$product->id) }}">Restore</a></td>
-                                        @endcan
+                                        <td>
+                                            @can('restore', 'App/Models/Product')
+                                            <a class="btn btn-success btn-sm" href="{{ URL('admin/product/restore/'.$product->id) }}">Restore</a>
+                                            @endcan
+                                        </td>
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->name }}</td>
                                         <td><img class="d-block m-auto"
@@ -92,6 +95,17 @@
                                     
                                         <td><a href="{{ URL('admin/comment/' . $product->id) }}">Comments</a></td>
                                         <td><a href="{{ URL('admin/ImageItem/' . $product->id) }}">Hình ảnh</a></td>
+                                        <td>
+                                            @can('delete', 'App\Models\Product')
+                                            <form
+                                                action="{{ route('admin.product.trash.forceDelete' , ['id' => $product->id]) }}"
+                                                method="get">
+                                                {{-- @csrf
+                                                @method('DELETE') --}}
+                                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                            </td>
+                                            </form>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -122,6 +136,7 @@
                                     </th>
                                     <th>
                                     </th>
+                                    <th></th>
                                     <th></th>
                                     <th></th>
                                     <th></th>

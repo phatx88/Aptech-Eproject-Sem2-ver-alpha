@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Post;
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
-class PostPolicy
+class ProductPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +24,11 @@ class PostPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function view(User $user)
     {
-        return $user->hasPermission("view_post");
+        return $user->hasPermission("view_users");
     }
 
     /**
@@ -41,54 +39,51 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermission("create_post");
+        return $user->hasPermission("create_users");
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function update(User $user)
     {
-        return $user->hasPermission("update_post");
+        // return $user->id == $product->user_id || $user->hasPermission("update_product");
+        return $user->hasPermission("update_users");
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function delete(User $user)
     {
-        return $user->hasPermission("delete_post");
+        return $user->hasPermission("delete_users");
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function restore(User $user)
     {
-        return $user->hasPermission("restore_post");
+        return $user->hasPermission("restore_users");
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Post  $post
      * @return mixed
      */
     public function forceDelete(User $user)
     {
-        return $user->hasPermission("force_delete_post");
+        return $user->hasPermission("force_delete_users");
     }
 }

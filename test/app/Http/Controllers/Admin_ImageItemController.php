@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 use App\Models\ImageItem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Gate;
 
 
 class Admin_ImageItemController extends Controller
 {
-
+    
     public function index($id)
     {
-
+        if (!Gate::allows("view-product")) {
+            abort(403);
+        }
         $ImageItems = ImageItem::where('product_id', $id)->get();
         return view('admin.image.list',[
             'ImageItems' => $ImageItems,
@@ -41,7 +44,9 @@ class Admin_ImageItemController extends Controller
      */
     public function store(Request $request)
     {
-
+        if (!Gate::allows("create-product")) {
+            abort(403);
+        }
         $request->validate([
             'image' =>'bail|image|required|mimes:jpg,jpeg,png|max:2048',
             'product_id'=>'bail|integer|required',
@@ -86,6 +91,9 @@ class Admin_ImageItemController extends Controller
      */
     public function edit($product_id, ImageItem $ImageItems)
     {
+        if (!Gate::allows("update-product")) {
+            abort(403);
+        }
         return view('admin.image.edit',[
             'ImageItems' => $ImageItems,
             'product_id' => $product_id
@@ -101,6 +109,9 @@ class Admin_ImageItemController extends Controller
      */
     public function update(Request $request, $product_id, ImageItem $ImageItems)
     {
+        if (!Gate::allows("update-product")) {
+            abort(403);
+        }
         $request->validate([
             'image' =>'bail|image|required|mimes:jpg,jpeg,png|max:2048',
             'product_id'=>'bail|integer|required',
@@ -129,6 +140,9 @@ class Admin_ImageItemController extends Controller
      */
     public function destroy(Request $request, ImageItem $ImageItems)
     {
+        if (!Gate::allows("delete-product")) {
+            abort(403);
+        }
         try{
             $msg = 'Delete ID:'. $ImageItems->product_id. '- product: ' .$ImageItems->name. 'successfully';
             $ImageItems->delete();
@@ -143,6 +157,9 @@ class Admin_ImageItemController extends Controller
     }
 
     public function delete(Request $request,$id, $ImageItem_id){
+        if (!Gate::allows("delete-product")) {
+            abort(403);
+        }
         try{
             $msg = 'Delete ID:'. $ImageItem_id. '- product successfully';
             ImageItem::where('id', $ImageItem_id)->where('product_id', $id)->delete();

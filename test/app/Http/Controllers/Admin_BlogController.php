@@ -250,6 +250,22 @@ class Admin_BlogController extends Controller
         return redirect()->back();
     }
 
+    public function forceDelete($id)
+    {
+         // HARD DELETE 
+         try {
+            $post = Post::onlyTrashed()->find($id);
+            $msg = 'Pernamently Deleted Post - ID : '.$post->id.' From Record';
+            $post->forceDelete();
+            request()->session()->put('success', $msg);
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->back();
+    }
+
     public function delete($id){
         PostTag::where('postId', $id)->delete();
         Post::where('id', $id)->delete();

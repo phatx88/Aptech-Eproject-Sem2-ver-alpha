@@ -51,6 +51,7 @@
                                     <th>CreatedAt</th>
                                     <th>UpdatedAt</th>
                                     <th>PublishedAt</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody >
@@ -94,6 +95,17 @@
                                             <p>{{ $post->publishedAt }}</p>
                                             @endif
                                         </td>
+                                        @can('delete', 'App\Models\Post')
+                                        <td>
+                                            <form
+                                                action="{{ route('admin.blog.trash.forceDelete' , ['id' => $post->id]) }}"
+                                                method="get">
+                                                {{-- @csrf
+                                                @method('DELETE') --}}
+                                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                            </form>
+                                        </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -40,8 +40,10 @@
                     <i class="fas fa-table"></i>
                     Order List
                     <div class="float-right">
+                        @can('create', 'App\Models\Order')
                         <a type="button" href="{{ route('admin.order.create') }}" class="btn btn-primary btn-sm" value="Thêm"
                         name="add">Add</a>
+                        @endcan
                         <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
                         <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm">Export</a>
                     </div>
@@ -257,7 +259,21 @@
                             "data": "option_show"
                         },
                         {
-                            "data": "option_edit"
+                            "data": "option_edit",
+                            render : function(data) {
+                                return   `  
+                                            <td>
+                                                 @can('delete', 'App\Models\Order')
+                                                 <form action='` + data + `' method='POST'>
+                                                    @csrf
+                                                   @method('delete')
+                                                     <input type='submit' value='Delete'
+                                                   class='btn btn-danger btn-sm' onclick="return confirm('Are You Sure?')">
+                                                </form>
+                                            </td>
+                                           @endcan
+                                            `;
+                            }
                         },
                         // {
                         //     "data": "option_delete",

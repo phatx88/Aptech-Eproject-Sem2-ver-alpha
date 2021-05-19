@@ -17,6 +17,9 @@ class Admin_CategoryController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows("view-product")) {
+            abort(403);
+        }
         $categories = Category::get();
         return view('admin.category.list',[
             'categories' => $categories
@@ -86,9 +89,18 @@ class Admin_CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        if (!Gate::allows("update-product")) {
+            abort(403);
+        }      
+        $request->validate([
+            'name' => 'required|unique:category|max:255',
+        ]);
+
+        $category->name = $request->name;
+        $category->save();
+        return redirect()->action([Admin_CategoryController::class,'index']);
     }
 
     /**
@@ -99,6 +111,10 @@ class Admin_CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if (!Gate::allows("delete-product")) {
+            abort(403);
+        }
+
         try {
             $category->forceDelete();
             request()->session()->put('success', "Deleted Category : {$category->id} - {$category->name} Successfully");

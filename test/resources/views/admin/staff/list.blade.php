@@ -19,7 +19,7 @@
                 <div class="card-header">
                     <i class="fas fa-users"></i>
                     Staff Management 
-                    @if (Auth::user()->email == 'phat.x.luong@gmail.com')
+                    @if (Auth::user()->email == env('Admin_email'))
                     <div class="float-right">
                         <a href="{{ route('admin.staff.create') }}" class="btn btn-primary btn-sm" >Add Employee</a>
                     </div>
@@ -35,8 +35,10 @@
                                     <th class="filter-input">Name </th>
                                     <th class="filter-input">Email </th>
                                     <th class="filter-select">Job Title </th>
+                                    @if (Auth::user()->email == env('Admin_email'))
                                     <th class="filter-select">Role Id </th>
                                     <th class="filter-select">Role Name </th>
+                                    @endif
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -49,17 +51,19 @@
                                         <td>{{ $staff->user->name }}</td>
                                         <td>{{ $staff->user->email }}</td>
                                         <td>{{ $staff->job_title }}</td>
+                                        @if (Auth::user()->email == env('Admin_email'))
                                         <td>{{ $staff->role->id }}</td>
                                         <td>{{ $staff->role->name }}</td>
+                                        @endif
                                         <td> 
-                                            @if (Auth::user()->email == $staff->user->email || Auth::user()->email == 'phat.x.luong@gmail.com')
+                                            @if (Auth::user()->email == $staff->user->email || Auth::user()->email == env('Admin_email'))
                                             <a type="button" href="{{ route('admin.staff.edit' , ['staff' => $staff->user_id]) }}"
                                                 class="btn btn-warning btn-sm">Edit</a>
                                             @endif
                                         </td>
                                         
                                         <td>
-                                            @if (Auth::user()->email == 'phat.x.luong@gmail.com' && Auth::user()->email != $staff->user->email)
+                                            @if (Auth::user()->email == env('Admin_email') && Auth::user()->email != $staff->user->email)
                                             <form
                                             action="{{ route('admin.staff.destroy', ['staff' => $staff->id]) }}"
                                             method="POST">
@@ -78,8 +82,10 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
+                                @if (Auth::user()->email == env('Admin_email'))
                                 <th></th>
                                 <th></th>
+                                @endif
                                 <th></th>
                                 <th></th>
                             </tfoot>
