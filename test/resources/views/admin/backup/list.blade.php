@@ -18,9 +18,9 @@
        <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Transport List
+            Backup
             <div class="float-right">
-                <a href="{{ route('admin.newsletter.create') }}" class="btn btn-primary btn-sm">Add</a>
+                <a href="{{ route('admin.newsletter.create') }}" class="btn btn-primary btn-sm">Create Backup</a>
                 <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
                 <a href="#" class="btn btn-success btn-sm">Export</a>
             </div>
@@ -30,8 +30,8 @@
                 <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                    <thead>
                       <tr>
-                         <th><input type="checkbox" onclick="checkAll(this)"></th>
-                         <th>Email</th>
+                         <th></th>
+                         <th>File name</th>
                          <th></th>
                          <th></th>
                          <th></th>
@@ -40,13 +40,14 @@
                    <tbody>
                        @foreach ($emails as $email)
                        <tr>
-                        <td><input type="checkbox"></td>
-                        <td>{{$email->email}}</td>
                         <td></td>
-                        <td><a href="{{ route('admin.newsletter.edit' , ['newsletter' => $email->email]) }}" class="btn btn-warning btn-sm">Edit</a></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="#" class="btn btn-warning btn-sm">Download</a></td>
                         <td>
                             <form
-                                action="{{ route('admin.newsletter.destroy', ['newsletter' => $email->email]) }}"
+                                action=""
                                 method="POST">
                                 @csrf
                                 @method('DELETE')

@@ -41,6 +41,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\FetchChartDataController;
 use App\Http\Controllers\ShippingController;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 /*
 |--------------------------------------------------------------------------
@@ -258,46 +259,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'checkRoles:staff']
 });
 
 Route::get('backup', function () {
-    // $directory = public_path('frontend/images');
-    return $files = Storage::files('public');
+    $path = storage_path('app/LiquoreStore/');
+    $file = basename($path);
+    return $file;
 });
 
-
-// KO Verify - Development Only
-// User Dashboard
-// Route::prefix('home')->group(function() {
-//     Route::get('user/account', [User_AccountController::class , 'index'])->name('account.index');
-//     Route::post('user/account/upload', [User_AccountController::class , 'upload'])->name('account.upload');
-//     Route::post('user/account/update', [User_AccountController::class , 'update'])->name('account.update');
-// });
-
-// Admin Dashboard
-// Route::prefix('admin')->name('admin.')->group(function () {
-//     Route::get('order/export', [Admin_OrderController::class, 'export'])->name('order.export'); //must be before route resource
-//     Route::get('coupon/export', [Admin_CouponController::class, 'export'])->name('coupon.export');
-//     Route::get('product/export', [Admin_ProductController::class, 'export'])->name('product.export');
-//     //must be before route resource
-//     Route::resource('dashboard' , Admin_DashboardController::class);
-//     Route::get('product/status/{id}', [Admin_ProductController::class, 'status'] );
-//     Route::resource('product', Admin_ProductController::class);
-//     Route::resource('order', Admin_OrderController::class);
-//     Route::resource('order.item', Admin_OrderItemController::class);
-//     Route::resource('category', Admin_CategoryController::class);
-//     Route::resource('brand', Admin_BrandController::class);
-//     Route::resource('coupon', Admin_CouponController::class);
-//     Route::post('staff/calendar/action', [Admin_StaffController::class, 'action']); //FullCalender Action
-//     Route::resource('staff', Admin_StaffController::class);
-//     Route::resource('user', Admin_UserController::class);
-//     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
-//     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
-//     Route::resource('blog', Admin_BlogController::class);
-//     Route::get('comment/{id}', [Admin_CommentController::class, 'index']);
-//     Route::get('delete/{id}', [Admin_BlogController::class, 'delete']);
-//     Route::get('published-blog/{id}', [Admin_BlogController::class, 'published_blog']);
-//     Route::get('unhidden/{id}', [Admin_BlogController::class, 'unhidden'] );
-//     Route::get('hidden/{id}', [Admin_BlogController::class, 'hidden'] );
-
-// });
+Route::get('invoice', function () {
+    return view('admin.order.invoice');
+});
 
 Route::get('clear-cache', function () {
     Artisan::call('cache:clear');

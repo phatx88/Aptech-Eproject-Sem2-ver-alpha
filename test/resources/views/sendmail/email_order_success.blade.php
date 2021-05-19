@@ -186,7 +186,7 @@
                 @foreach($detail['order_details'] as $key => $or_details)
                 <tr class="pad-left-right-space " style="text-align: center">
                     <td valign="top">
-                        <h5 style="margin-top: 15px; font-size: 1.2em; font-weight: 600">{{ substr($or_details->product->name, 0 , 24) }}</h5>
+                        <h5 style="margin-top: 15px; font-size: 1.2em; font-weight: 600">{{ substr($or_details->product->name, 0 , strpos($or_details->product->name, ' ' , 15)) }}</h5>
                     </td>
                     <td valign="top">
                         <img width="100px" height="100px" src="{{$message->embed(asset('frontend/images/products/'.$or_details->product->featured_image))}}">

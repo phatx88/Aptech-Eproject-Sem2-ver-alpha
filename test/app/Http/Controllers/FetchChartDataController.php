@@ -146,7 +146,7 @@ class FetchChartDataController extends Controller
                 $nestedData['amount'] = "$".number_format(($order->orderItem->sum('total_price')));
                 $nestedData['total'] = "$".number_format(($order->orderItem->sum('total_price') - ($order->coupon->number ?? 0) + $order->shipping_fee));
                 $nestedData['payment_method'] = $order->getPayment();
-                $nestedData['option_show'] = "<a href='{$show}' title='SHOW' class='btn btn-primary btn-sm'>Show</a>";
+                $nestedData['option_show'] = "<a href='{$show}' title='INVOICE' class='btn btn-success btn-sm'><i class='fas fa-file-invoice'></i></a>";
                 $nestedData['option_edit'] = "<a href='{$edit}' title='EDIT' class='btn btn-warning btn-sm'>Edit</a>";
                 $nestedData['option_delete'] = $delete;
                 $data[] = $nestedData;

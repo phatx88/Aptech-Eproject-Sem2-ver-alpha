@@ -110,7 +110,7 @@ class Admin_OrderController extends Controller
         $statuses = ShippingStatus::get();
         $staffs = User::where('is_staff', '1')->get();
         $users = User::where('is_staff', '0')->get();
-        return view('admin.order.detail', [
+        return view('admin.order.invoice', [
             'order' => $order,
             'products' => $products,
             'orderItem' => $orderItem,
