@@ -130,10 +130,11 @@
                                         <ul></ul>
                                     </div>
                                     {{-- AJax load error messages --}}
-
+                                    @if(Auth::check())
                                     <form action="{{ route('home.post', ['id' => $product[0]->id]) }}" method="POST"
                                         id="postComment">
                                         @csrf
+                                        
                                         {{-- <input type="hidden" name="product_id" value="{{  }}"> --}}
 
                                         <span class="my-rating"></span> <span class="live-rating-span"></span>
@@ -142,12 +143,14 @@
 
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <input type="text" name="fullname" class="form-control mt-4"
-                                                    placeholder="Name*">
+                                                <input type="hidden" name="fullname" class="form-control mt-4"
+                                                    value="{{ Auth::user()->name }}">
+                                                    <input type="hidden" name="profile_pic" class="form-control mt-4"
+                                                    value="{{ Auth::user()->profile_pic }}">
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" name="email" class="form-control mt-4"
-                                                    placeholder="Email*">
+                                                <input type="hidden" name="email" class="form-control mt-4"
+                                                    value="{{ Auth::user()->email }}">
                                             </div>
                                             <div class="col-12">
                                                 <textarea name="description" class="form-control mt-4"
@@ -155,8 +158,10 @@
                                             </div>
                                         </div>
 
+                                        <input class="btn btn-primary mt-4" id="submitPost" value="Post">
+
                                     </form>
-                                    <input class="btn btn-primary mt-4" id="submitPost" value="Post">
+                                    @endif  
                                 </div>
                             </div>
                         </div>
@@ -166,22 +171,26 @@
                                 {{ $comments->total() }} Reviews</h3>
                             <div class="review" id="comment-review">
                                 @foreach ($comments as $comment)
-
-                                    {{-- USER IMAGE --}}
-                                    {{-- <div class="user-img"
-                                            style="background-image: url(frontend/images/person_1.jpg)">
-                                            </div> --}}
-                                    <div class="desc">
-                                        <h4>
-                                            <span class="text-left">{{ $comment->fullname }}</span>
-                                            <span
-                                                class="text-right">{{ date('Y-m-d', strtotime($comment->created_date)) }}</span>
-                                        </h4>
-                                        <p class="star">
-                                        <div class="my-rating-posted" data-rating="{{ $comment->star }}">
+                                    <div class="row desc">
+                                        <div class="col-1">
+                                            @if ($comment->profile_pic)
+                                            <img style="display:block ; margin: 0.5rem 0;" src="{{ asset('frontend/images/profile/' . $comment->profile_pic) }}" alt="Avatar" class="user-img">
+                                            @else 
+                                            <img style="display:block ; margin: 0.5rem 0;" src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="user-img">
+                                            @endif
                                         </div>
-                                        </p>
-                                        <p>{{ $comment->description }}</p>
+                                        <div class="col-11">
+                                            <h4>
+                                                <span class="text-left">{{ $comment->fullname }}</span>
+                                                <span
+                                                class="text-right">{{ date('Y-m-d', strtotime($comment->created_date)) }}</span>
+                                            </h4>
+                                            <p class="star">
+                                                <div class="my-rating-posted" data-rating="{{ $comment->star }}">
+                                                </div>
+                                            </p>
+                                            <p>{{ $comment->description }}</p>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
@@ -221,6 +230,7 @@
 @endsection
 @section('scripts')
     {{-- Ajax loading Comment Section --}}
+
     <script>
         $(document).ready(function() {
             updateAnsweredRating();
@@ -282,16 +292,35 @@
                         //append foreach
                         $(comments).each(function(key, value) {
                             var output =
-                                `<div class="desc">
-                                <h4>
-                                <span class="text-left">` + value.fullname + `</span>
-                                <span class="text-right">` + value.created_date + `</span>
-                                </h4>
-                                    <p class="star">
-                                        <div class="my-rating-posted" data-rating="` + value.star + `"></div>
-                                    </p>
-                                    <p>` + value.description + `</p>
-                                </div>`;
+                            `
+                                <div class="row desc">
+                                        <div class="col-1">
+                                            <img style="display:block ; margin: 0.5rem 0;" src="http://localhost/Aptech-Eproject-Sem2-ver-alpha/test/public/frontend/images/profile/` + value.profile_pic + `" alt="Avatar" class="user-img">
+                                        </div>
+                                        <div class="col-11">
+                                            <h4>
+                                                <span class="text-left">` + value.fullname + `</span>
+                                                <span
+                                                class="text-right">` + value.created_date + `</span>
+                                            </h4>
+                                            <p class="star">
+                                                <div class="my-rating-posted" data-rating="` + value.star + `">
+                                                </div>
+                                            </p>
+                                            <p>` + value.description + `</p>
+                                        </div>
+                                </div>
+                            `;
+                                // `<div class="col-11">
+                                // <h4>
+                                // <span class="text-left">` + value.fullname + `</span>
+                                // <span class="text-right">` + value.created_date + `</span>
+                                // </h4>
+                                //     <p class="star">
+                                //         <div class="my-rating-posted" data-rating="` + value.star + `"></div>
+                                //     </p>
+                                //     <p>` + value.description + `</p>
+                                // </div>`;
                             $("#comment-review").append(output);
                         });
                         updateAnsweredRating();

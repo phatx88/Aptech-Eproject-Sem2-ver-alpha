@@ -43,10 +43,11 @@ class Admin_DashboardController extends Controller
         $RegHits = Visitor::distinct('date_visited')->orderBy('date_visited', 'asc')->whereNotNull('user_id')->selectRaw('count(user_id), date_visited')->whereBetween('date_visited', [Carbon::now()->subDays(7) , Carbon::now()])->groupBy(DB::raw('DATE(date_visited)'))->pluck('count(user_id)')->toArray();
         $visitChart = (new LarapexChart)->barChart()
             ->setTitle('Visitors by Date.')
-            ->setSubtitle('Hits during last 7 days.')
-            ->addData('Non-registered', $nonRegHits)
+            ->setSubtitle('Unique ip previous 7 days.')
             ->addData('Registered', $RegHits)
-            ->setXAxis($dateRange);
+            ->addData('Non-registered', $nonRegHits)
+            ->setXAxis($dateRange)
+            ->setColors(['#FFC107', '#303F9F']);
 
         // APEX CHART SALE FIGURES 
         $lastYear = DB::table('total_sales_per_month')
@@ -92,7 +93,7 @@ class Admin_DashboardController extends Controller
             ->setXAxis(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
             ->setColors(['#FFC107', '#303F9F']);
 
-        $salebar = (new LarapexChart)->horizontalBarChart()
+        $salebar = (new LarapexChart)->barChart()
         ->setTitle('Monthly Sales.')
         ->setSubtitle('This Year Sales vs Last Year Sales.')
         ->addData('This Year Sales', $thisYear)

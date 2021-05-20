@@ -24,8 +24,8 @@ class OrderItemFactory extends Factory
      */
     public function definition()
     {
-        $product_id = Product::whereBetween('id' , [6,12])->pluck('id')->random();
-        // $product_id = Product::all()->pluck('id')->random();
+        // $product_id = Product::whereBetween('id' , [6,12])->pluck('id')->random();
+        $product_id = Product::all()->pluck('id')->random();
         $qty = $this->faker->numberBetween(1, 3);
         $unit_price = Product::where('id' , $product_id)->value('sale_price');
         $total_price = $unit_price * $qty;

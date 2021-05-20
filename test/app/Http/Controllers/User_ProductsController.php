@@ -202,6 +202,7 @@ class User_ProductsController extends Controller
         $validator = Validator::make($request->all(), [
             'star' => 'required',
             'fullname' => 'required',
+            'profile_pic' => 'nullable',
             'email' => 'required',
             'description' => 'required',
         ]);
@@ -217,6 +218,7 @@ class User_ProductsController extends Controller
             $comment->product_id = $id;
             $comment->star = $request->star;
             $comment->email = $request->email;
+            $comment->profile_pic = $request->profile_pic;
             $comment->fullname = $request->fullname;
             $comment->description = $request->description;
             $comment->save();
@@ -233,6 +235,7 @@ class User_ProductsController extends Controller
                 'id' => $comment->id ,
                 'fullname' => $comment->fullname,
                 'email' => $comment->email,
+                'profile_pic' => $comment->profile_pic,
                 'star' => $comment->star,
                 'description' => $comment->description,
                 'created_date' => $comment->created_date

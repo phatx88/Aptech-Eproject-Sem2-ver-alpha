@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         // CREATE ORDER WITH RANDOM USERS 
         // Magic method - has many 
         Order::factory()
-            ->count(1000)
+            ->count(100)
             ->has(OrderItem::factory()->count(1))
             ->create();
         

@@ -13,7 +13,6 @@
                 <li class="breadcrumb-item active">List</li>
             </ol>
             {{-- Chart Larapex --}}
-            {{-- Chart Larapex --}}
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="card">
@@ -178,6 +177,22 @@
                     </div>
                 </div>
             </div>
+
+             {{-- Chart Larapex --}}
+             <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-store"></i>
+                            Inventory Heat Map
+                        </div>
+                        <div class="card-body">
+                            {!! $inventoryChart->container() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 
@@ -209,6 +224,7 @@
             </div>
         </div>
         <!-- /.container-fluid -->
+        
         <!-- Sticky Footer -->
         @include('admin.footer')
     </div>
@@ -310,4 +326,9 @@
         });
 
     </script>
+
+
+    {{ $inventoryChart->script() }}
+    
+
 @endsection

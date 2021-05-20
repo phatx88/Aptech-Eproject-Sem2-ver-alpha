@@ -154,7 +154,7 @@
                                     {{-- đăng nhập rồi thì có thể reset info ship cho người khác  --}}
                                     @auth
                                         <div class="radio">
-                                            <a href="{{ url('another-address') }}" class="btn btn-primary mr-3" value="Ship To Another Address" id="reset">Ship To Another Address</a>
+                                            <a type="button" class="btn btn-primary mr-3 check-shipping-fee" id="">Confirm Shipping Fee</a>
                                         </div>
 
                                     @endauth

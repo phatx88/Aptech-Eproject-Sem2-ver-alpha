@@ -66,10 +66,90 @@ class Admin_ProductController extends Controller
         ->addData($order_count)
         ->setLabels($order_name);
 
+        //HEAT MAP
+        $product_id = DB::table('product')->orderBy('id' , 'asc')->pluck('id')->toArray();
+        //item ordered
+        $ordered_count = DB::table('order_item')
+                        ->join('order', 'order_item.order_id' , '=' ,'order.id')
+                        ->where('order.order_status_id' , '=' , 1)
+                        ->selectRaw('order_item.product_id, sum(qty) as qty')
+                        ->groupByRaw('order_item.product_id')
+                        ->get();
+        //MAPPING ITEM CANCEL TO HEAT MAP  
+        foreach ($product_id as $value) {
+            $flag = false;
+            foreach ($ordered_count as $v) {
+                if($value == $v->product_id) {
+                    $ordered_qty[] = $v->qty;
+                    $flag = true;
+                }  
+            }
+            if (!$flag) {
+                $ordered_qty[] = 0;
+            }
+        }
+
+        //item Confirmed
+        $confirmed_count = DB::table('order_item')
+                        ->join('order', 'order_item.order_id' , '=' ,'order.id')
+                        ->where('order.order_status_id' , '=' , 2)
+                        ->selectRaw('order_item.product_id, sum(qty) as qty')
+                        ->groupByRaw('order_item.product_id')
+                        ->get();
+        //MAPPING ITEM CANCEL TO HEAT MAP  
+        foreach ($product_id as $value) {
+            $flag = false;
+            foreach ($confirmed_count as $v) {
+                if($value == $v->product_id) {
+                    $confirmed_qty[] = $v->qty;
+                    $flag = true;
+                }  
+            }
+            if (!$flag) {
+                $confirmed_qty[] = 0;
+            }
+        }
+
+        //item canceled
+        $canceled_count = DB::table('order_item')
+                        ->join('order', 'order_item.order_id' , '=' ,'order.id')
+                        ->where('order.order_status_id' , '=' , 6)
+                        ->selectRaw('order_item.product_id, sum(qty) as qty')
+                        ->groupByRaw('order_item.product_id')
+                        ->get();
+        // dd($canceled_count);
+        //MAPPING ITEM CANCEL TO HEAT MAP          
+        foreach ($product_id as $value) {
+            $flag = false;
+            foreach ($canceled_count as $v) {
+                if($value == $v->product_id) {
+                    $canceled_qty[] = $v->qty;
+                    $flag = true;
+                }  
+            }
+            if (!$flag) {
+                $canceled_qty[] = 0;
+            }
+        } 
+
+        // dd($canceled_qty);
+        $product_count = DB::table('product')->orderBy('id' , 'asc')->pluck('inventory_qty')->toArray();
+        $inventoryChart = (new LarapexChart)->heatMapChart()
+        ->setTitle('Inventory On Hand.')
+        ->setSubtitle('As of : '. now())
+        ->addHeat('On Hand', $product_count)
+        ->addHeat('Ordered', $ordered_qty)
+        ->addHeat('Confirmed', $confirmed_qty)
+        ->addHeat('Canceled', $canceled_qty)
+        ->setColors(['#4F46E5' , '#F111BB' , '#FFA41B' , '#D32F2F'])
+        ->setXAxis($product_id);
+
+
         return view('admin.product.list', [
             'products' => $products,
             'productChart' => $productChart,
-            'orderChart' => $orderChart
+            'orderChart' => $orderChart,
+            'inventoryChart' => $inventoryChart
             ]);
     }
 
