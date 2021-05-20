@@ -216,6 +216,10 @@ class ComposerStaticInite1e9443dbc9abf5f5efc015d07c807b7
         array (
             'KitLoong\\MigrationsGenerator\\' => 29,
         ),
+        'J' => 
+        array (
+            'Jenssegers\\Date\\' => 16,
+        ),
         'I' => 
         array (
             'Illuminate\\Support\\' => 19,
@@ -555,6 +559,10 @@ class ComposerStaticInite1e9443dbc9abf5f5efc015d07c807b7
         array (
             0 => __DIR__ . '/..' . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator',
         ),
+        'Jenssegers\\Date\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jenssegers/date/src',
+        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -749,6 +757,7 @@ class ComposerStaticInite1e9443dbc9abf5f5efc015d07c807b7
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
+        'App\\Http\\Controllers\\BackupController' => __DIR__ . '/../..' . '/app/Http/Controllers/BackupController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\FetchChartDataController' => __DIR__ . '/../..' . '/app/Http/Controllers/FetchChartDataController.php',
         'App\\Http\\Controllers\\FullCalenderController' => __DIR__ . '/../..' . '/app/Http/Controllers/FullCalenderController.php',
@@ -986,6 +995,7 @@ class ComposerStaticInite1e9443dbc9abf5f5efc015d07c807b7
         'Database\\Factories\\OrderFactory' => __DIR__ . '/../..' . '/database/factories/OrderFactory.php',
         'Database\\Factories\\OrderItemFactory' => __DIR__ . '/../..' . '/database/factories/OrderItemFactory.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
+        'Database\\Factories\\VisitorFactory' => __DIR__ . '/../..' . '/database/factories/VisitorFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'DebugBar\\Bridge\\CacheCacheCollector' => __DIR__ . '/..' . '/maximebf/debugbar/src/DebugBar/Bridge/CacheCacheCollector.php',
         'DebugBar\\Bridge\\DoctrineCollector' => __DIR__ . '/..' . '/maximebf/debugbar/src/DebugBar/Bridge/DoctrineCollector.php',
@@ -3558,6 +3568,8 @@ class ComposerStaticInite1e9443dbc9abf5f5efc015d07c807b7
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Jenssegers\\Date\\Date' => __DIR__ . '/..' . '/jenssegers/date/src/Date.php',
+        'Jenssegers\\Date\\DateServiceProvider' => __DIR__ . '/..' . '/jenssegers/date/src/DateServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'KitLoong\\MigrationsGenerator\\Generators\\BooleanField' => __DIR__ . '/..' . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator/Generators/BooleanField.php',
         'KitLoong\\MigrationsGenerator\\Generators\\DatetimeField' => __DIR__ . '/..' . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator/Generators/DatetimeField.php',

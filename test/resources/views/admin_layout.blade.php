@@ -114,6 +114,14 @@
             </div>
          </li>
 
+         <li class="nav-item dropdown {{ Request::segment(2) == 'newsletter' ? 'active' : '' }}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
+            <div class="dropdown-menu" aria-labelledby="">
+               <a class="dropdown-item" href="{{route('admin.newsletter.index')}}">List</a>
+               <a class="dropdown-item" href="{{URL::to('newsletter-send')}}">Send mail</a>
+            </div>
+         </li>
+
          @if (Auth::user()->email == env('Admin_email'))
              
          <li class="nav-item dropdown {{ in_array(Request::segment(2), ['role', 'permission' , 'permission-role']) ? 'active' : '' }}">
@@ -125,15 +133,16 @@
             </div>
          </li>
 
-         @endif
-
-         <li class="nav-item dropdown {{ Request::segment(2) == 'newsletter' ? 'active' : '' }}">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
+         <li class="nav-item dropdown {{ Request::segment(2) == 'backup' ? 'active' : '' }}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-database"></i> <span>DataBase</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.newsletter.index')}}">List</a>
-               <a class="dropdown-item" href="{{URL::to('newsletter-send')}}">Send mail</a>
+               <a class="dropdown-item" href="{{url('admin/backup')}}"><i class="fas fa-save"></i> Back Up</a>
             </div>
          </li>
+
+         @endif
+
+         
       </ul>
 
       @yield('admin_content')

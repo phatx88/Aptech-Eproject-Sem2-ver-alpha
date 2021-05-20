@@ -74,6 +74,7 @@ return array(
     'Laravel\\Socialite\\' => array($vendorDir . '/laravel/socialite/src'),
     'Laravel\\Sail\\' => array($vendorDir . '/laravel/sail/src'),
     'KitLoong\\MigrationsGenerator\\' => array($vendorDir . '/kitloong/laravel-migrations-generator/src/KitLoong/MigrationsGenerator'),
+    'Jenssegers\\Date\\' => array($vendorDir . '/jenssegers/date/src'),
     'Illuminate\\Support\\' => array($vendorDir . '/laravel/framework/src/Illuminate/Macroable', $vendorDir . '/laravel/framework/src/Illuminate/Collections'),
     'Illuminate\\Foundation\\Auth\\' => array($vendorDir . '/laravel/ui/auth-backend'),
     'Illuminate\\' => array($vendorDir . '/laravel/framework/src/Illuminate'),

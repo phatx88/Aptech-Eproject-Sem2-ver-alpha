@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\FetchChartDataController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\ShippingController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
@@ -258,17 +259,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'countVisitor' ,'ch
     // Misc
     Route::post('order/calculate-fee',[Admin_OrderController::class, 'shipping_fee']);
     Route::post('fetch/product', Admin_ProductController::class.'@fetchProduct');
+
+    // Backup routes
+    Route::get('backup', BackupController::class.'@index');
+    Route::get('backup/create', BackupController::class.'@create');
+    Route::get('backup/download/{file_name}', BackupController::class.'@download');
+    Route::get('backup/delete/{file_name}', BackupController::class.'@delete');
 });
 
-Route::get('backup', function () {
-    $path = storage_path('app/LiquoreStore/');
-    $file = basename($path);
-    return $file;
-});
 
-Route::get('invoice', function () {
-    return view('admin.order.invoice');
-});
 
 Route::get('clear-cache', function () {
     Artisan::call('cache:clear');
