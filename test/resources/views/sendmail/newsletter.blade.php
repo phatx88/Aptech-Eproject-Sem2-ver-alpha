@@ -85,7 +85,7 @@
                 <td style="width:145px;" align="left" valign="top">
                 <![endif]-->
                 <div class="col-sml" style="display:inline-block;width:100%;max-width:145px;vertical-align:top;text-align:left;font-family:Arial,sans-serif;font-size:14px;color:#363636;">
-                  <img src="https://i.ibb.co/8Pztq5v/Whiskey-Sour-113.jpg" width="115" alt="" style="width:80%;max-width:115px;margin-bottom:20px;border-radius:50%">
+                  <img src="https://i.ibb.co/xjLjcd5/delivery-2.png" width="115" alt="" style="width:80%;max-width:115px;margin-bottom:20px;border-radius:50%">
                 </div>
                 <!--[if mso]>
                 </td>
