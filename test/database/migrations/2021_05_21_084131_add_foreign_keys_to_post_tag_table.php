@@ -14,7 +14,7 @@ class AddForeignKeysToPostTagTable extends Migration
     public function up()
     {
         Schema::table('post_tag', function (Blueprint $table) {
-            $table->foreign('postId', 'post_post_tag')->references('id')->on('post')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+            $table->foreign('postId', 'post_post_tag')->references('id')->on('post')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->foreign('tagId', 'tag_post_tag')->references('id')->on('tag')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }

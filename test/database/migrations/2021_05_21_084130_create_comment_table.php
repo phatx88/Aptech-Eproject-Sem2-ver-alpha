@@ -18,6 +18,7 @@ class CreateCommentTable extends Migration
             $table->integer('product_id')->index('product_id');
             $table->string('email', 100);
             $table->string('fullname', 100);
+            $table->string('profile_pic')->nullable()->default('avatar.jpg');
             $table->float('star', 10, 0);
             $table->dateTime('created_date')->useCurrent();
             $table->text('description')->nullable();

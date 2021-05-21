@@ -19,9 +19,9 @@ class CreateProductTable extends Migration
             $table->string('sku', 20)->nullable();
             $table->string('name', 300);
             $table->decimal('price', 10);
-            $table->integer('discount_percentage')->default(0);
-            $table->date('discount_from_date')->nullable();
-            $table->date('discount_to_date')->nullable();
+            $table->integer('discount_percentage');
+            $table->date('discount_from_date');
+            $table->date('discount_to_date');
             $table->string('featured_image', 100);
             $table->integer('inventory_qty');
             $table->integer('category_id')->index('product_category_fk_1');

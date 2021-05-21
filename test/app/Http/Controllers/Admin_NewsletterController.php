@@ -6,8 +6,8 @@ use App\Models\Newsletter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Database\QueryException;
-
-
+use App\Jobs\SendQueueEmail;
+use App\Models\Coupon;
 
 class Admin_NewsletterController extends Controller
 {
@@ -130,6 +130,37 @@ class Admin_NewsletterController extends Controller
                 request()->session()->put('error', $e->getMessage());
             }
         }
-        return redirect()->route("admin.transport.index");
+        return redirect()->route("admin.newsletter.index");
+    }
+
+    public function list_send_mail()
+    {
+        if (!Gate::any(['view_order', 'view_product'])) {
+            abort(403);
+        }
+        $emails = Newsletter::get();
+        $coupons = Coupon::get();
+
+        return view('admin.newsletter.send', [
+            'emails' => $emails,
+            'coupons' => $coupons
+            ]);
+    }
+
+    public function send_mail(Request $request)
+    {
+        // dd($request->checkboxes);
+    	$details = [
+    		'subject' => $request->subject,
+            'body' => $request->body,
+            'checkboxes' => $request->checkboxes,
+    	];
+    	
+        $job = (new SendQueueEmail($details))
+            	->delay(now()->addSeconds(2)); 
+
+        dispatch($job);
+        request()->session()->put('success', 'Sending Newsletters');
+        return redirect()->back();
     }
 }

@@ -28,6 +28,7 @@ class CreatePostTable extends Migration
             $table->dateTime('publishedAt')->nullable();
             $table->text('content');
             $table->integer('hidden')->default(0);
+            $table->softDeletes();
         });
     }
 

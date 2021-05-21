@@ -3,7 +3,6 @@
 <div id="content-wrapper">
     <div class="container-fluid">
        <!-- Breadcrumbs-->
-       <!-- Breadcrumbs-->
        <ol class="breadcrumb">
          <li class="breadcrumb-item">
              <a href="{{ route('admin.dashboard.index') }}">Admin</a>
@@ -13,12 +12,12 @@
          </li>
          <li class="breadcrumb-item active">List</li>
      </ol>
-       @include('errors.error')
+       @include('errors.message')
        <!-- DataTables Example -->
        <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Transport List
+            NewsLetter List
             <div class="float-right">
                 <a href="{{ route('admin.newsletter.create') }}" class="btn btn-primary btn-sm">Add</a>
                 <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>

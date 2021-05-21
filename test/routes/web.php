@@ -253,6 +253,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'countVisitor' ,'ch
     // Route::resource('permission_role', Admin_PermissionRoleController::class);
 
     //Newsletter
+    Route::get('/newsletter/listsendmail', Admin_NewsletterController::class.'@list_send_mail');
+    Route::post('/newsletter/sendmail', Admin_NewsletterController::class.'@send_mail');
     Route::resource('newsletter', Admin_NewsletterController::class);
 
 
@@ -266,6 +268,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'countVisitor' ,'ch
     Route::get('backup/download/{file_name}', BackupController::class.'@download');
     Route::get('backup/delete/{file_name}', BackupController::class.'@delete');
 });
+
+
 
 
 

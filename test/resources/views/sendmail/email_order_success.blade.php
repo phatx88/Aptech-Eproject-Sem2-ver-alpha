@@ -262,7 +262,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <p style="font-size:13px; margin:0;">2018 - 19 Copy Right by Themeforest powerd by Pixel Strap</p>
+                        <p style="font-size:13px; margin:0;">2018 - 19 phat.x.luong</p>
                     </td>
                 </tr>
                 <tr>

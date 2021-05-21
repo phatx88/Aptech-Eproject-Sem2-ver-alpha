@@ -118,7 +118,7 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
             <div class="dropdown-menu" aria-labelledby="">
                <a class="dropdown-item" href="{{route('admin.newsletter.index')}}">List</a>
-               <a class="dropdown-item" href="{{URL::to('newsletter-send')}}">Send mail</a>
+               <a class="dropdown-item" href="{{url('admin/newsletter/listsendmail')}}">Send mail</a>
             </div>
          </li>
 

@@ -16,7 +16,7 @@ class CreateStaffTable extends Migration
         Schema::create('staff', function (Blueprint $table) {
             $table->integer('id', true);
             $table->unsignedBigInteger('user_id')->index('staff_user_fk_1');
-            $table->string('role', 100)->default('staff');
+            $table->string('job_title', 100)->default('Staff');
             $table->unsignedInteger('role_id')->index('role_user_role_id_foreign');
         });
     }

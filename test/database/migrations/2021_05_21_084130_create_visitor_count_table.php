@@ -16,7 +16,7 @@ class CreateVisitorCountTable extends Migration
         Schema::create('visitor_count', function (Blueprint $table) {
             $table->integer('hits')->default(0);
             $table->string('ip')->nullable();
-            $table->date('date_visited')->nullable()->default('CURRENT_TIMESTAMP');
+            $table->timestamp('date_visited')->nullable()->useCurrent();
             $table->unsignedBigInteger('user_id')->nullable()->index('user_id_fk');
         });
     }

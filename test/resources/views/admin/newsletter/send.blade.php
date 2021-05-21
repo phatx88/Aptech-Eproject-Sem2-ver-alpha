@@ -3,56 +3,128 @@
 <div id="content-wrapper">
     <div class="container-fluid">
        <!-- Breadcrumbs-->
-       <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">News letter</li>
-       </ol>
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+         </li>
+         <li class="breadcrumb-item">
+             <a href="{{ route('admin.newsletter.index') }}">Newsletter</a>
+         </li>
+         <li class="breadcrumb-item active">List</li>
+     </ol>
+       @include('errors.message')
        <!-- DataTables Example -->
-       
-       <form action="">
-          <div class="card mb-3">
+       <div class="row mb-5">
+          {{-- NewsLetter --}}
+       <div class="col-12 col-md-6">
+      <form action="{{ url('admin/newsletter/sendmail') }}" method="POST" id="NewsLetter">
+         <div class="card">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                NewsLetter List
+                <div class="float-right">
+                    <a href="{{ route('admin.newsletter.index') }}" class="btn btn-primary btn-sm">View</a>
+                    <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
+                    <a href="#" class="btn btn-success btn-sm">Export</a>
+                </div>
+              </div>
+              <div class="card-body">
+                 <div class="table-responsive">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                       <thead>
+                          <tr>
+                             {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
+                             <th></th>
+                             <th>Email</th>
+                             <th></th>
+                             <th></th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                           @foreach ($emails as $email)
+                           <tr>
+                            <td><input type="checkbox" name="checkboxes[]" value="{{ $email->email }}"></td>
+                            <td>{{$email->email}}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                           @endforeach
+                       </tbody>
+                    </table>
+                 </div>
+              </div>
+           </div>
+       </div>
+
+       {{-- Coupon --}}
+       <div class="col-12 col-md-6">
+         <div class="card mb-3">
+            <div class="card-header">
+               <i class="fas fa-gift"></i>
+               Coupon List
+               <div class="float-right">
+                  <a href="{{ route('admin.coupon.index') }}" class="btn btn-primary btn-sm text-white">View </a>
+                  <a href="{{ route('admin.coupon.export') }}"><input type="button" class="btn btn-success btn-sm" value="Export" name="export"></a>
+               </div>
+           </div>
              <div class="card-body">
                 <div class="table-responsive">
-                   <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
+                   <table class="table table-hover" id="dataTable_2" width="100%" cellspacing="0">
                       <thead>
                          <tr>
-                            <th><input type="checkbox" onclick="checkAll(this)"></th>
-                            <th>Email</th>
+   
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                              Name
+                            </th>
+                            <th>
+                               Code
+                           </th>
+                           <th>
+                               Number
+                           </th>
+                         
                          </tr>
                       </thead>
                       <tbody>
-                         <tr>
-                            <td><input type="checkbox"></td>
-                            <td>a@gmail.com</td>
-                            
-                         </tr>
-                         <tr>
-                            <td><input type="checkbox"></td>
-                            <td>b@gmail.com</td>
-                            
-                         </tr>
+                          @foreach ($coupons as $coupon)
+                          <tr>
+                           <td >{{ $coupon->id }}</td>
+                           <td >{{ $coupon->name }}</td>
+                           <td >{{ $coupon->code }}</td>
+                           <td >{{ $coupon->number }}</td>
+                       </tr>
+                          @endforeach
                       </tbody>
                    </table>
                 </div>
              </div>
-
           </div>
+       </div>
+
+      </div>
+      
+      <h2 class="mb-5">Send NewsLetter</h2>
+       
+         @csrf
+          
           <div class="row form-group">
              <div class="col-md-9 col-lg-6">
-                <input class="form-control" type="text" name="subject" placeholder="Chủ đề">
+                <input class="form-control" type="text" name="subject" placeholder="Subject*" required>
              </div>
           </div>
           <div class="row form-group">
              <div class="col-md-12">
-                <textarea class="form-control" name="description" id="description" rows="10" cols="80" placeholder="Nội dung">
+                <textarea class="form-control" name="body" id="description" rows="10" cols="80" placeholder="Body Message*" required>
                 </textarea>
              </div>
           </div>
           <div class="row form-group">
              <div class="col-md-12 text-center">
-                <input type="submit" value="Gởi mail" class="btn btn-primary btn-sm">
+                <input type="button" value="Send Mail" class="btn btn-primary btn-sm" id="sendMail">
              </div>
           </div>      
          
@@ -61,17 +133,36 @@
        
 
     </div>
-    <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
-    <script>CKEDITOR.replace('description');</script>
+    {{-- <script type="text/javascript" src="{{ asset('backend/vendor/ckeditor/ckeditor.js') }}"></script>
+    <script>CKEDITOR.replace('description');</script> --}}
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-       <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-             <span>Copyright © Thầy Lộc 2017</span>
-          </div>
-       </div>
-    </footer>
+    @include('admin.footer')
  </div>
  <!-- /.content-wrapper -->
+@endsection
+
+@section('scripts')
+    <script>
+        $("input#sendMail").click(function(event) {
+            event.preventDefault();
+            var post_url = $("form#NewsLetter").attr("action");
+            var request_method = $("form#NewsLetter").attr("method");
+            var form_data = $("form#NewsLetter").serialize();
+            // console.log(form_data);
+
+            $.ajax({
+                url: post_url,
+                type: request_method,
+                data: form_data,
+                success: function() {
+                        notyf.success('NewsLetter Send');
+                },
+                error: function() {
+                    notyf.error('Sending Error!');
+                }
+            });
+        });
+
+    </script>
 @endsection
