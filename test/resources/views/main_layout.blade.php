@@ -26,7 +26,7 @@
     {{-- <link rel="stylesheet" href="{{ asset('frontend/css/content-styles.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/track-order.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/hover_compare.css') }}">
-
+    {{-- {!! RecaptchaV3::initJs() !!} --}}
 </head>
 
 <body>
@@ -334,7 +334,6 @@
                             @csrf
                             <div class="form-group text-center pb-2 heading-section">
                                 <h2 id="registerModal">{{ __('Register') }}</h2>
-                                <span>Register now to receive $10 coupon on first purchase</span>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col">
@@ -376,12 +375,12 @@
                                 <div class="form-group col">
                                     <label for="password-confirm" >{{ __('Confirm Password') }}</label>
 
-                        <div >
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                        </div>
+                                <div >
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                </div>
                                 </div>
                             </div>
-
+                            {{-- {!! RecaptchaV3::field('register') !!} --}}
                             <div class="form-group">
                                 <button id="submitRegistration" class="btn btn-info form-control">{{ __('Register') }}</button>
                             </div>
@@ -436,6 +435,10 @@
 
         {{-- V-chat --}}
         <script lang="javascript">var __vnp = {code : 6411,key:'', secret : '170dedd063185dcce9fc10208a31f91c'};(function() {var ga = document.createElement('script');ga.type = 'text/javascript';ga.async=true; ga.defer=true;ga.src = '//core.vchat.vn/code/tracking.js';var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>
+   
+        {{-- Google ReCapcha V3 --}}
+       
+   
     </footer>
 
 

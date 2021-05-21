@@ -18,6 +18,7 @@ class RegisterController extends Controller
         'password_confirmation' => 'required|min:8',
         'is_staff' => 'prohibited',
         'is_active' => 'prohibited',
+        // 'g-recaptcha-response' => 'required|recaptchav3:register,0.5',
     ];
 
     protected $messenger = [

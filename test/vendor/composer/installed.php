@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '29e530f66e602fb2bf612d6b07de83d51fdda5c9',
+    'reference' => 'fd7ee7abaf529772b76ff171f7efc82492b48af9',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -485,6 +485,15 @@
       ),
       'reference' => '506f86096e0b512f9ece6ad0ccae62b03c125771',
     ),
+    'josiasmontag/laravel-recaptchav3' => 
+    array (
+      'pretty_version' => '0.6.0',
+      'version' => '0.6.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '558752d507009d8b24bd460708ba41037b739572',
+    ),
     'kitloong/laravel-migrations-generator' => 
     array (
       'pretty_version' => '4.4.2',
@@ -517,7 +526,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '29e530f66e602fb2bf612d6b07de83d51fdda5c9',
+      'reference' => 'fd7ee7abaf529772b76ff171f7efc82492b48af9',
     ),
     'laravel/sail' => 
     array (
