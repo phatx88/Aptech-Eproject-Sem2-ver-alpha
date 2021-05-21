@@ -117,8 +117,8 @@
          <li class="nav-item dropdown {{ Request::segment(2) == 'newsletter' ? 'active' : '' }}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id=""><i class="fas fa-file-alt"></i> <span>News letter</span></a>
             <div class="dropdown-menu" aria-labelledby="">
-               <a class="dropdown-item" href="{{route('admin.newsletter.index')}}">List</a>
-               <a class="dropdown-item" href="{{url('admin/newsletter/listsendmail')}}">Send mail</a>
+               <a class="dropdown-item" href="{{route('admin.newsletter.index')}}"><i class="fas fa-list"></i> List</a>
+               <a class="dropdown-item" href="{{url('admin/newsletter/listsendmail')}}"><i class="fas fa-envelope"></i> Send mail</a>
             </div>
          </li>
 

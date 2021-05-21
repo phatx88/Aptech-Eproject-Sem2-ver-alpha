@@ -19,6 +19,7 @@
           {{-- NewsLetter --}}
        <div class="col-12 col-md-6">
       <form action="{{ url('admin/newsletter/sendmail') }}" method="POST" id="NewsLetter">
+         @csrf
          <div class="card">
             <div class="card-header">
                 <i class="fas fa-table"></i>
@@ -108,9 +109,11 @@
       </div>
       
       <h2 class="mb-5">Send NewsLetter</h2>
-       
-         @csrf
-          
+       {{-- AJax load error messages --}}
+       <div class="alert alert-danger print-error-msg" style="display:none">
+         <ul class="m-0 p-2"></ul>
+         </div>
+     {{-- AJax load error messages --}}
           <div class="row form-group">
              <div class="col-md-9 col-lg-6">
                 <input class="form-control" type="text" name="subject" placeholder="Subject*" required>
@@ -150,6 +153,9 @@
             var request_method = $("form#NewsLetter").attr("method");
             var form_data = $("form#NewsLetter").serialize();
             // console.log(form_data);
+              // Clear Error Message
+            $(".print-error-msg").find("ul").html('');
+            $(".print-error-msg").css('display', 'none');
 
             $.ajax({
                 url: post_url,
@@ -157,12 +163,30 @@
                 data: form_data,
                 success: function() {
                         notyf.success('NewsLetter Send');
+                        setTimeout(() => {
+                           window.location.reload();
+                        }, 2000);
                 },
-                error: function() {
+                error: function(data) {
+                    // Chuyển từ json về array có key và value
+                    var errors = data.responseJSON;
+                    printErrorMsg(errors);
                     notyf.error('Sending Error!');
                 }
             });
         });
+
+        //nhận báo lội từ server qua phương thức Validator bằng Ajax
+        function printErrorMsg(msg) {
+
+         //Display Error HTML
+         $(".print-error-msg").find("ul").html('');
+         $(".print-error-msg").css('display', 'block');
+         $.each(msg, function(key, value) {
+            var errors = `<li>` + value + `</li>`;
+            $(".print-error-msg").find("ul").append(errors);
+         });
+         }
 
     </script>
 @endsection

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Database\QueryException;
 use App\Jobs\SendQueueEmail;
 use App\Models\Coupon;
+use Illuminate\Database\QueryException;
+use Carbon\Carbon;
+use Validator;
 
 class Admin_NewsletterController extends Controller
 {
@@ -150,17 +152,29 @@ class Admin_NewsletterController extends Controller
     public function send_mail(Request $request)
     {
         // dd($request->checkboxes);
-    	$details = [
-    		'subject' => $request->subject,
-            'body' => $request->body,
-            'checkboxes' => $request->checkboxes,
-    	];
-    	
-        $job = (new SendQueueEmail($details))
+        $validator = Validator::make($request->all(), [
+            'subject' => 'required',
+            'body' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+			return response()->json($validator->errors()->all() , 400);
+        }
+        else {
+            try {
+                $details = [
+                    'subject' => $request->subject,
+                    'body' => $request->body,
+                    'checkboxes' => $request->checkboxes,
+                ];
+
+                $job = (new SendQueueEmail($details))
             	->delay(now()->addSeconds(2)); 
 
-        dispatch($job);
-        request()->session()->put('success', 'Sending Newsletters');
-        return redirect()->back();
+                 dispatch($job);
+            } catch (Exception $e) {
+                return response()->json([$e->getMessage()], 400);
+            }
+        }
     }
 }
