@@ -161,16 +161,21 @@
                 type: request_method,
                 data: form_data,
                 success: function() {
+                        NProgress.done();
                         notyf.success('NewsLetter Send');
                         setTimeout(() => {
                            window.location.reload();
-                        }, 2000);
+                        }, 3000);
                 },
                 error: function(data) {
                     // Chuyển từ json về array có key và value
                     var errors = data.responseJSON;
                     printErrorMsg(errors);
+                    NProgress.done();
                     notyf.error('Sending Error!');
+                    setTimeout(() => {
+                        $('input#sendMail').attr('disabled', false);
+                        }, 3000);
                 }
             });
         });
@@ -187,6 +192,14 @@
          });
          }
 
+    </script>
+    
+    <script>
+       $( document ).ajaxStart(function() {
+         NProgress.start();
+         notyf.success('Sending emails');
+         $('input#sendMail').attr('disabled', true);
+       });
     </script>
 
    <script language="JavaScript">

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/nouislider.min.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/sweetalert.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css'/>
     <link rel="stylesheet" href="{{ asset('frontend/css/star-rating-svg.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('frontend/css/content-styles.css') }}"> --}}
@@ -470,6 +471,7 @@
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
     <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
+    <script src='https://unpkg.com/nprogress@0.2.0/nprogress.js'></script>
     <script src="{{ asset('frontend/js/bootstrap3-typeahead.min.js') }}">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>

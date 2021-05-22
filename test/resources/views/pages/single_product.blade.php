@@ -158,7 +158,7 @@
                                             </div>
                                         </div>
 
-                                        <input class="btn btn-primary mt-4" id="submitPost" value="Post">
+                                        <button class="btn btn-primary mt-4" id="submitPost">Post</button>
 
                                     </form>
                                     @endif  
@@ -251,8 +251,9 @@
             },
         });
 
-        $("input#submitPost").click(function(event) {
+        $("button#submitPost").click(function(event) {
             event.preventDefault();
+
             var post_url = $("form#postComment").attr("action");
             var request_method = $("form#postComment").attr("method");
             var form_data = $("form#postComment").serialize();
@@ -260,14 +261,18 @@
             // Clear Error Message
             $(".print-error-msg").find("ul").html('');
             $(".print-error-msg").css('display', 'none');
-
-           //display Sweet Alert...
+   
+            NProgress.start();
+            notyf.success('Posting Comment');
+            // $("button#submitPost").('disabled');
+            $("button#submitPost").attr('disabled', true);
 
             $.ajax({
                 url: post_url,
                 type: request_method,
                 data: form_data,
                 success: function(data) {
+                    NProgress.done();
                     //create object with key of the array
                     var comments = JSON.parse(data);
                     // console.log(comments);
@@ -327,14 +332,20 @@
 
                          // Notify success
                         notyf.success('Comment Posted');
-                    }, 2000);
 
+                        
+
+                    }, 3000);
+
+                    
                 },
                 error: function(data) {
+                    NProgress.done();
                     // Chuyển từ json về array có key và value
                     var errors = data.responseJSON;
                     printErrorMsg(errors);
                     notyf.error('Posting Error!');
+                    $("button#submitPost").attr('disabled', false);
                 }
             });
         });
@@ -361,5 +372,7 @@
         }
 
     </script>
+
+
 
 @endsection

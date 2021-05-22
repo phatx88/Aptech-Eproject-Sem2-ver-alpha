@@ -24,6 +24,8 @@
       <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css">
       {{-- Full Calendar  --}}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+      {{-- nprogress.js  --}}
+      <link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css'/>
       <!-- Custom styles for this template-->
       <link href="{{asset('backend/css/sb-admin.css')}}" rel="stylesheet">
       <link href="{{asset('backend/css/admin.css')}}" rel="stylesheet">
@@ -176,6 +178,8 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
  {{-- Chart JS  --}}
  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+ {{-- nprogress.js  --}}
+ <script src='https://unpkg.com/nprogress@0.2.0/nprogress.js'></script>
  <!-- Demo scripts for this page-->
  <script src="{{asset('backend/js/demo/datatables-demo.js')}}"></script>
  <script src="{{asset('backend/js/admin.js')}}"></script>
