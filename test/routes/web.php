@@ -253,6 +253,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth' , 'countVisitor' ,'ch
     // Route::resource('permission_role', Admin_PermissionRoleController::class);
 
     //Newsletter
+    Route::post('/newsletter/delete', Admin_NewsletterController::class.'@delete');
     Route::get('/newsletter/listsendmail', Admin_NewsletterController::class.'@list_send_mail');
     Route::post('/newsletter/sendmail', Admin_NewsletterController::class.'@send_mail');
     Route::resource('newsletter', Admin_NewsletterController::class);

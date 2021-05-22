@@ -161,7 +161,7 @@
                                 method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">
                             </form>
                         </td>
                      </tr>    

@@ -9,7 +9,7 @@
       <!-- CSRF Token -->
       <meta name="csrf-token" content="{{ csrf_token() }}">
 
-      <title>Tổng quan</title>
+      <title>Liquore Store Admin</title>
       <!-- Create favicon -->
       <link rel="shortcut icon" type="image/x-icon" href="{{asset('backend/images/logo.jpg')}}" />
       <!-- Custom fonts for this template-->

@@ -20,13 +20,13 @@
 
 
           <div class="form-group">
-             <label class="col-md-9 col-lg-6 control-label" for="price">Email</label>
+             <label class="col-md-9 col-lg-6 control-label" for="email">Email</label>
              <div class="col-md-9 col-lg-6">
-                <input name="email" id="price" type="text" min="0" class="form-control">
+                <input name="email" id="email" type="email" class="form-control" required>
              </div>
           </div>
           <div class="form-action">
-             <input type="submit" class="btn btn-primary btn-sm" value="Lưu" name="save">
+             <input type="submit" class="btn btn-primary btn-sm" value="Save" name="save">
           </div>
        </form>
        <!-- /form -->

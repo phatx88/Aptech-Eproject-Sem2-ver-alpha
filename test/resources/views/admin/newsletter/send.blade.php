@@ -35,8 +35,7 @@
                     <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                        <thead>
                           <tr>
-                             {{-- <th><input type="checkbox" onclick="checkAll(this)"></th> --}}
-                             <th></th>
+                             <th><input type="checkbox" onclick="checkAll(this)"></th>
                              <th>Email</th>
                              <th></th>
                              <th></th>
@@ -127,7 +126,7 @@
           </div>
           <div class="row form-group">
              <div class="col-md-12 text-center">
-                <input type="button" value="Send Mail" class="btn btn-primary btn-sm" id="sendMail">
+                <input type="button" value="Send Mail" class="btn btn-primary btn-sm" id="sendMail" title="Send All if nothing is selected">
              </div>
           </div>      
          
@@ -189,4 +188,14 @@
          }
 
     </script>
+
+   <script language="JavaScript">
+      function checkAll(source) {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != source)
+               checkboxes[i].checked = source.checked;
+      }
+      }
+   </script>  
 @endsection

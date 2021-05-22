@@ -124,8 +124,35 @@ class Admin_NewsletterController extends Controller
             abort(403);
         } 
         try {
-            $msg = 'Deleted Product : '.$newsletter->email.'';
+            // dd($request->checkboxes);
+            $msg = 'Deleted email subscription : '.$newsletter->email.'';
             $newsletter->delete();
+            request()->session()->put('success', $msg);
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                request()->session()->put('error', $e->getMessage());
+            }
+        }
+        return redirect()->route("admin.newsletter.index");
+    }
+
+    public function delete(Request $request)
+    {
+        if (!Gate::any(['delete_order', 'delete_product'])) {
+            abort(403);
+        }
+        if($request->checkboxes == null) {
+            request()->session()->put('error', 'No Emails Selected');
+            return redirect()->route("admin.newsletter.index");
+        } 
+        try {
+            $emails = $request->checkboxes;
+            // dd($emails);
+            foreach ($emails as $email) {
+                $newsletter = Newsletter::where('email', $email)->first();
+                $newsletter->delete();
+            }
+            $msg = 'Deleted Emails Successfully';
             request()->session()->put('success', $msg);
         } catch (QueryException $e) {
             if ($e->getCode() == 23000) {
@@ -170,7 +197,6 @@ class Admin_NewsletterController extends Controller
 
                 $job = (new SendQueueEmail($details))
             	->delay(now()->addSeconds(2)); 
-
                  dispatch($job);
             } catch (Exception $e) {
                 return response()->json([$e->getMessage()], 400);

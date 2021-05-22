@@ -20,6 +20,7 @@
             NewsLetter List
             <div class="float-right">
                 <a href="{{ route('admin.newsletter.create') }}" class="btn btn-primary btn-sm">Add</a>
+                <button form="deleteAll" type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete will remove email from record. Are you sure?')">Select Delete</button>
                 <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
                 <a href="#" class="btn btn-success btn-sm">Export</a>
             </div>
@@ -36,25 +37,28 @@
                          <th></th>
                       </tr>
                    </thead>
-                   <tbody>
-                       @foreach ($emails as $email)
-                       <tr>
-                        <td><input type="checkbox"></td>
-                        <td>{{$email->email}}</td>
-                        <td></td>
-                        <td><a href="{{ route('admin.newsletter.edit' , ['newsletter' => $email->email]) }}" class="btn btn-warning btn-sm">Edit</a></td>
-                        <td>
-                            <form
-                                action="{{ route('admin.newsletter.destroy', ['newsletter' => $email->email]) }}"
-                                method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                            </form>
-                        </td>
-                    </tr>
-                       @endforeach
-                   </tbody>
+                       <tbody>
+                           @foreach ($emails as $email)
+                           <tr>
+                               <td><input type="checkbox" name="checkboxes[]" value="{{ $email->email }}" form="deleteAll"></td>
+                               <td>{{$email->email}}</td>
+                               <td></td>
+                               <td><a href="{{ route('admin.newsletter.edit' , ['newsletter' => $email->email]) }}" class="btn btn-warning btn-sm">Edit</a></td>
+                               <td>
+                                   <form
+                                   action="{{ route('admin.newsletter.destroy', ['newsletter' => $email->email]) }}"
+                                   method="POST" id="delete">
+                                   @csrf
+                                   @method('DELETE')
+                                   <input type="submit" value="Delete" class="btn btn-danger btn-sm" form="delete">
+                                   </form>
+                               </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <form action="{{ url('admin/newsletter/delete') }}" id="deleteAll" method="Post">
+                    @csrf
+                    </form>
                 </table>
              </div>
           </div>
@@ -65,4 +69,15 @@
     <!-- Sticky Footer -->
     @include('admin.footer')
  </div>
+@endsection
+@section('scripts')
+<script language="JavaScript">
+    function checkAll(source) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] != source)
+            checkboxes[i].checked = source.checked;
+    }
+    }
+    </script>  
 @endsection

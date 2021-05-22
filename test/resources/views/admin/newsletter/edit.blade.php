@@ -21,7 +21,7 @@
           <div class="form-group">
              <label class="col-md-9 col-lg-6 control-label" for="price">Email</label>
              <div class="col-md-9 col-lg-6">
-                <input name="email" id="price" type="text" value="{{ $newsletter->email }}" class="form-control">
+                <input name="email" id="email" type="email" value="{{ $newsletter->email }}" class="form-control">
              </div>
           </div>
           <div class="form-action">
