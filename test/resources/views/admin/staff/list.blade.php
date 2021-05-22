@@ -69,7 +69,7 @@
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onsubmit="return Confirm('Delete will remove user from Staff list. Are you sure?')">
+                                            <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="return confirm('Are you Sure?')">
                                             </form>
                                             @endif
                                         </td>

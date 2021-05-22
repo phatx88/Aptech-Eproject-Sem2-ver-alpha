@@ -88,7 +88,7 @@
          </li>
          <li class="breadcrumb-item active">List</li>
      </ol>
-     @include('errors.message')
+     
      
          <div class="row mb-3">
             <div class="col-12">
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-
+        @include('errors.message')
        <!-- DataTables Example -->
        <div class="card mb-3">
          <div class="card-header">

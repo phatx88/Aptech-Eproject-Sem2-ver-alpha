@@ -50,7 +50,7 @@
                                    method="POST" id="delete">
                                    @csrf
                                    @method('DELETE')
-                                   <input type="submit" value="Delete" class="btn btn-danger btn-sm" form="delete">
+                                   <input type="submit" value="Delete" class="btn btn-danger btn-sm" form="delete" onclick="return confirm('Are you sure?')">
                                    </form>
                                </td>
                         </tr>

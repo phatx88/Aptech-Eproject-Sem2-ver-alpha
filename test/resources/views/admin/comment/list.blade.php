@@ -4,11 +4,12 @@
     <div class="container-fluid">
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">Đánh giá</li>
-       </ol>
+         <li class="breadcrumb-item">
+            <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+         </li>
+         <li class="breadcrumb-item active">Comment</li>
+      </ol>
+      @include('errors.message')
        <!-- DataTables Example -->
        <div class="action-bar">
 
@@ -21,10 +22,10 @@
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
                          <th>Email</th>
-                         <th>Tên </th>
-                         <th>Số sao</th>
-                         <th>Ngày tạo</th>
-                         <th>Nội dung</th>
+                         <th>Name </th>
+                         <th>Star</th>
+                         <th>Created Date</th>
+                         <th>Content</th>
                          <th></th>
                       </tr>
                    </thead>
@@ -54,12 +55,6 @@
     </div>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-       <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-             <span>Copyright © Thầy Lộc 2017</span>
-          </div>
-       </div>
-    </footer>
+    @include('admin.footer')
  </div>
 @endsection

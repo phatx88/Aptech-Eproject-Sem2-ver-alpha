@@ -39,7 +39,11 @@
                             <tbody>
                                 @foreach ($transports as $transport)
                                 <tr>
-                                  <td></td>
+                                  <td>
+                                    @can('restore', 'App/Models/Order')
+                                    <a class="btn btn-success btn-sm" href="{{ URL('admin/transport/restore/'.$transport->id) }}">Restore</a>
+                                    @endcan
+                                  </td>
                                   <td>{{ $transport->id }}</td>
                                   <td>{{ str_replace(['Thành phố' , 'Thị xã', 'Huyện', 'Quận'], ['','','',''], $transport->province->name) }}</td>
                                   <td>${{ $transport->price }}</td>

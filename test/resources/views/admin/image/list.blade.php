@@ -4,11 +4,11 @@
     <div class="container-fluid">
        <!-- Breadcrumbs-->
        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="#">Quản lý</a>
-          </li>
-          <li class="breadcrumb-item active">Hình ảnh</li>
-       </ol>
+         <li class="breadcrumb-item">
+            <a href="{{ route('admin.dashboard.index') }}">Admin</a>
+         </li>
+         <li class="breadcrumb-item active">Images</li>
+      </ol>
        <?php
             if(session()->get('success')){
                 echo "<span style='color: red; font-weight: 15px;'>".session()->get('success')."</span>";
@@ -32,8 +32,8 @@
                    <thead>
                       <tr>
                          <th><input type="checkbox" onclick="checkAll(this)"></th>
-                         <th>Hình ảnh</th>
-                         <th>Tên</th>
+                         <th>Images</th>
+                         <th>Images File Names</th>
                          <th></th>
                       </tr>
                    </thead>
@@ -65,7 +65,7 @@
         @csrf
           <div class="row">
              <div class="col-md-12">
-                <label>Upload hình</label>
+                <label>Upload Image</label>
              </div>
           </div>
 
@@ -84,13 +84,7 @@
     </div>
     <!-- /.container-fluid -->
     <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-       <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-             <span>Copyright © Thầy Lộc 2017</span>
-          </div>
-       </div>
-    </footer>
+   @include('admin.footer')
  </div>
  <!-- /.content-wrapper -->
 @endsection
