@@ -25,7 +25,10 @@
                             <h3>Product Types</h3>
                             <ul class="p-0">
                                 @foreach ($all_cate as $cate)
-                                    <li><a href="{{ route('home.products.index', ['id' => $cate->id]) }}">{{ $cate->name }}
+                                    @php
+                                        $slug = "{$cate->name}-{$cate->id}";    
+                                    @endphp
+                                    <li><a href="{{ route('home.products.index', ['id' => $slug]) }}">{{ $cate->name }}
                                             <span class="fa fa-chevron-right"></span></a></li>
                                 @endforeach
                             </ul>
@@ -78,7 +81,11 @@
                             <a class="blog-img mr-4"
                             style="background-image: url('{{ asset('frontend/images/products/' . $view_product->featured_image) }}');"></a>
                             <div class="text">
-                                <h3 class="heading"><a href="{{ url('home/single-product/' . $view_product->id) }}">{{ $view_product->name }}</a></h3>
+                                @php
+                                $productName = Str::slug($view_product->name);
+                                $slug = "{$productName}-{$view_product->id}";    
+                                @endphp
+                                <h3 class="heading"><a href="{{ url('home/single-product/' . $slug) }}">{{ $view_product->name }}</a></h3>
                             </div>
                         </div>
                         @endforeach
@@ -151,20 +158,21 @@
 @endsection
 
 @section('scripts')
+<script>
+    var path = "{{ route('find') }}";
+    $('input.typeahead').typeahead({
+        source: function(query, process) {
+            return $.get(path, {
+                query: query
+            }, function(data) {
+                return process(data);
+            });
+        }
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="{{ asset('frontend/js/cart_animation.js') }}"></script>
-<script>
-        var path = "{{ route('find') }}";
-        $('input.typeahead').typeahead({
-            source: function(query, process) {
-                return $.get(path, {
-                    query: query
-                }, function(data) {
-                    return process(data);
-                });
-            }
-        });
-</script>
+
 
 @endsection

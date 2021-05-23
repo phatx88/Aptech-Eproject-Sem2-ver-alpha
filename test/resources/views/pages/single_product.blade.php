@@ -263,7 +263,7 @@
             $(".print-error-msg").css('display', 'none');
    
             NProgress.start();
-            notyf.success('Posting Comment');
+            // notyf.success('Posting Comment');
             // $("button#submitPost").('disabled');
             $("button#submitPost").attr('disabled', true);
 

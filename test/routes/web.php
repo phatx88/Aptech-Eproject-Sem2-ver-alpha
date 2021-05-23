@@ -130,7 +130,7 @@ Route::prefix('home')->name('home.')->group(function () {
     ->name('products.index'); //Show chi tiết sản phẩm bên trang products của home
 
 
-    Route::get('single-product/{id}', [User_ProductsController::class, 'single_product'])
+    Route::get('single-product/{id?}', [User_ProductsController::class, 'single_product'])
     ->name('single_product');
 
     Route::post('single-product/{id}/post', [User_ProductsController::class, 'postComment'])
@@ -285,108 +285,8 @@ Route::get('/about', function () {
     return view('pages.about');
 });
 
-
-Route::get('/single-blog', function () {
-    return view('pages.single_blog');
-});
-
 Route::get('/contact', function () {
     return view('pages.contact');
-});
-
-
-
-Route::get('/check-out', function () {
-    return view('pages.checkout');
-});
-
-
-//customer
-Route::get('/customer-list', function () {
-    return view('admin.customer.list');
-});
-Route::get('/customer-add', function () {
-    return view('admin.customer.add');
-});
-Route::get('/customer-edit', function () {
-    return view('admin.customer.edit');
-});
-
-//comment
-Route::get('/comment-list', function () {
-    return view('admin.comment.list');
-});
-
-//admin
-Route::get('/image-list', function () {
-    return view('admin.image.list');
-});
-
-//staff
-Route::get('/staff-add', function () {
-    return view('admin.staff.add');
-});
-Route::get('/staff-list', function () {
-    return view('admin.staff.list');
-});
-Route::get('/staff-edit', function () {
-    return view('admin.staff.edit');
-});
-
-//transport
-Route::get('/transport-add', function () {
-    return view('admin.transport.add');
-});
-Route::get('/transport-list', function () {
-    return view('admin.transport.list');
-});
-Route::get('/transport-edit', function () {
-    return view('admin.transport.edit');
-});
-
-//newsletter
-Route::get('/newsletter-list', function () {
-    return view('admin.newsletter.list');
-});
-Route::get('/newsletter-send', function () {
-    return view('admin.newsletter.send');
-});
-
-// order_status
-Route::get('/order_status-list', function () {
-    return view('admin.order_status.list');
-});
-Route::get('/order_status-edit', function () {
-    return view('admin.order_status.edit');
-});
-
-// permission
-
-// roles
-Route::get('/permission-roles-list', function () {
-    return view('admin.permission..roles.roles');
-});
-Route::get('/permission-roles-add', function () {
-    return view('admin.permission.roles.add_role');
-});
-Route::get('/permission-roles-edit', function () {
-    return view('admin.permission.roles.edit_role');
-});
-
-// actions
-Route::get('/permission-actions-list', function () {
-    return view('admin.permission.action.actions');
-});
-Route::get('/permission-actions-edit', function () {
-    return view('admin.permission.action.edit_action');
-});
-
-// role_action
-Route::get('/permission-role_action-list', function () {
-    return view('admin.permission.role_action.role_action');
-});
-Route::get('/permission-role_action-add', function () {
-    return view('admin.permission.role_action.add_role_action');
 });
 
 

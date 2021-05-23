@@ -50,7 +50,11 @@
                             class="flaticon-heart
                             "></span></a>
                     @endif
-                    <a id="product_detail_{{ $product->id }}" href="{{ url('home/single-product/' . $product->id) }}"
+                    @php
+                        $productName = Str::slug($product->name);
+                        $slug = "{$productName}-{$product->id}";    
+                    @endphp
+                    <a id="product_detail_{{ $product->id }}" href="{{ url('home/single-product/' . $slug) }}"
                         class="d-flex align-items-center justify-content-center"><span
                             class="flaticon-visibility"></span></a>
                     <a style="cursor: pointer;" class="d-flex align-items-center justify-content-center" onclick="add_compare({{ $product->id }})" data-toggle="modal" data-target="#compare"><span

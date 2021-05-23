@@ -19,7 +19,7 @@ use Exception;
 
 class User_ProductsController extends Controller
 {
-    public function index(Request $request, $id = null)
+    public function index(Request $request, $slug= null)
     {
         $search = $request->input("search");
         $price_from = $request->price_from;
@@ -38,8 +38,8 @@ class User_ProductsController extends Controller
         ->toArray();
 
         //SEARCH BY CATE_ID & FEATURED
-        if ($id != null) {
-            switch ($id) {
+        if ($slug != null) {
+            switch ($slug) {
                 case 'sale':
                     $products = DB::table('view_product')
                         ->join('brand', 'view_product.brand_id', '=', 'brand.id')
@@ -78,12 +78,17 @@ class User_ProductsController extends Controller
                     break;
 
                 default:
-                    $cate_id = $id;
+                    $cate_id = null;
+                    if ($slug) {
+                        $tmp = explode('-' , $slug);
+                        $cate_id = array_pop($tmp);
+                        $conds[] = ["category_id", "=" , $cate_id];
+                    }
                     $products = DB::table('view_product')
                         ->join('brand', 'view_product.brand_id', '=', 'brand.id')
                         ->join('category', 'view_product.category_id', '=', 'category.id')
                         ->select('view_product.*', 'brand.name as brand_name', 'category.name as category_name')
-                        ->where('category_id', $cate_id)
+                        ->where($conds)
                         ->where('deleted_at', null)
                         ->where('hidden', false)
                         ->paginate(9);
@@ -137,12 +142,6 @@ class User_ProductsController extends Controller
                 ;
         }
 
-        $bestSelling = DB::table('top_seller_product')
-        ->orderBy('total_qty' , 'DESC')
-        ->limit(10)
-        ->pluck('name')
-        ->toArray();
-
         //Get all category id
         $all_cate = DB::table('category')->get();
         $product_top_view = DB::table('product')->orderby('view_count', 'DESC')->limit(5)->get();
@@ -166,8 +165,13 @@ class User_ProductsController extends Controller
         return response()->json($brands);
     }
 
-    public function single_product($id)
+    public function single_product($slug = null)
     {
+        $id = null;
+        if ($slug) {
+            $tmp = explode('-' , $slug);
+            $id = array_pop($tmp);
+        }
         $comments = Comment::where('product_id', $id)->orderby('created_date', 'DESC')->paginate(5);
         $product = Product::where('id', $id)->get();
         $ImageItems = ImageItem::where('product_id', $id)->get();

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Newsletter;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Visitor;
@@ -32,10 +33,10 @@ class DatabaseSeeder extends Seeder
 
         // CREATE ORDER WITH RANDOM USERS 
         // Magic method - has many 
-        Order::factory()
-            ->count(100)
-            ->has(OrderItem::factory()->count(1))
-            ->create();
+        // Order::factory()
+        //     ->count(100)
+        //     ->has(OrderItem::factory()->count(1))
+        //     ->create();
         
         //User->Order->OrderItem
         // $user =  User::factory()->create();
@@ -57,5 +58,7 @@ class DatabaseSeeder extends Seeder
         // Visitor::factory()
         // ->count(100)
         // ->create();
+
+        // Newsletter::factory()->count(10)->create();
     }
 }
