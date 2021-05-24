@@ -119,6 +119,8 @@
       <excludeFolder url="file://$MODULE_DIR$/test/vendor/phpoption/phpoption" />
       <excludeFolder url="file://$MODULE_DIR$/test/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/test/vendor/laravel/ui" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/arielmejiadev/larapex-charts" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
