@@ -135,7 +135,7 @@ class Admin_ProductController extends Controller
         // dd($canceled_qty);
         $product_count = DB::table('product')->orderBy('id' , 'asc')->pluck('inventory_qty')->toArray();
         $inventoryChart = (new LarapexChart)->heatMapChart()
-        ->setTitle('Inventory On Hand.')
+        ->setTitle('Product Statistics.')
         ->setSubtitle('As of : '. now())
         ->addHeat('On Hand', $product_count)
         ->addHeat('Ordered', $ordered_qty)

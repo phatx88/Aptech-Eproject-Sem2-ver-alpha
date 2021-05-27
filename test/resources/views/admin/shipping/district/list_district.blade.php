@@ -63,7 +63,7 @@
        <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Order List
+            District List
             <div class="float-right">
                 {{-- <a type="button" href="{{ route('admin.district.create') }}" class="btn btn-primary btn-sm" value="Thêm"
                 name="add">Add</a> --}}

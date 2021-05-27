@@ -90,23 +90,43 @@
                         <p class="d-flex">
                             <span>City</span>
                             <select class="form-control input-sm m-bot15 choose province" name="province" id="province" >
+                                @if(isset($ward))
+                                    @foreach($ward as $key => $war)
+                                    <option value="{{ $war->district->province->id }}">
+                                    {{ $war->district->province->name }}</option>
+                                    @endforeach
+                                @endif
                                 <option value="">--Chọn Thành phố---</option>
                                 @foreach($province as $key => $pvin)
                                 <option value="{{ $pvin->id }}">{{ str_replace(['Thành phố' , 'Tỉnh'], '', $pvin->name) }}</option>
                                 @endforeach
+
                             </select>
                         </p>
                         <p class="d-flex">
                             <span>District</span>
                             <select class="form-control input-sm m-bot15 choose district" name="district" id="district">
-                                <option value="">--Chọn quận huyện---</option>
+                                @if(isset($ward))
+                                    @foreach($ward as $key => $war)
+                                        <option value="{{ $war->district->id }}">
+                                        {{ $war->district->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">--Chọn quận huyện---</option>
+                                @endif
                             </select>
                         </p>
                         <p class="d-flex">
                             <span>Ward</span>
                             <select class="form-control input-sm m-bot15 ward" name="ward" id="ward">
-                                <option value="">--Chọn xã phường---</option>
-
+                                @if(isset($ward))
+                                    @foreach($ward as $key => $war)
+                                        <option value="{{ $war->id }}">
+                                        {{ $war->name }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">--Chọn xã phường---</option>
+                                @endif
                             </select>
                         </p>
                         <p>
@@ -156,7 +176,7 @@
                             <span>${{ $shipping_fee }}</span>
                         </p>
                         @endforeach
-                        @endif  
+                        @endif
                         @if(Session('coupon'))
                         @foreach(Session('coupon') as $key => $cou)
                         @php $coupon_fee = $cou->number @endphp
@@ -185,3 +205,4 @@
         </div>
     </section>
 @endsection
+

@@ -231,7 +231,7 @@
                     <div class="col-sm-8 col-lg-6">
                         @unless($order->order_status_id == 1)
                             <input type="date" name="delivered_date" value="{{ $order->delivered_date ?? '' }}"
-                                class="form-control" required>
+                                class="form-control" min='' id="delivered_date" required>
                         @endunless
                     </div>
                 </div>
@@ -400,5 +400,24 @@
             $('#total').html('$ ' + total);
         }
 
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                    dd='0'+dd
+                } 
+                if(mm<10){
+                    mm='0'+mm
+                } 
+
+            today = yyyy+'-'+mm+'-'+dd;
+            document.getElementById("delivered_date").setAttribute("min", today);
+        });
+       
     </script>
 @endsection

@@ -184,7 +184,7 @@
                     <div class="card">
                         <div class="card-header">
                             <i class="fas fa-store"></i>
-                            Inventory Heat Map
+                            Product statistic
                         </div>
                         <div class="card-body">
                             {!! $inventoryChart->container() !!}

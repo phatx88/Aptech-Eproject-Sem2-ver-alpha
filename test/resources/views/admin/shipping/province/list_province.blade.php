@@ -63,7 +63,7 @@
        <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Order List
+            Province List
             <div class="float-right">
                 {{-- <a type="button" href="{{ route('admin.province.create') }}" class="btn btn-primary btn-sm" value="Thêm"
                 name="add">Add</a> --}}

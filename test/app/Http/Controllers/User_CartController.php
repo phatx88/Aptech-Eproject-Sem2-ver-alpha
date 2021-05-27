@@ -21,6 +21,7 @@ class User_CartController extends Controller
     public function add_to_cart(Request $request)
     {
         $qty = 0;
+        $total_qty = 0;
         $data = $request->all();
         $product_cart = Product::where('id', $data['id'])->get();
         foreach($product_cart as $key => $pro){
@@ -29,10 +30,15 @@ class User_CartController extends Controller
         $product_id = $data['id'];
 
        DB::table('product')->where('id', $data['id'])->increment('view_count');
-
+        if(session()->get('cart')){
+            foreach(session()->get('cart') as $item){
+                $total_qty += $item['product_quantity'];
+            }
+        }
         $cart = Session('cart');
         $output = '';
         if($qty >= $data['product_quantity']){
+        if($total_qty < 5){
             if($cart != null) {
                 $is_available = 0;
                 foreach($cart as $key => $val){
@@ -102,23 +108,37 @@ class User_CartController extends Controller
                     </a>
                 </div>
             ';
+        }else{
+            $output .= 'You just can cart 5 item';
+        }
         }
         echo $output;
     }
     public function view_cart(){
         $province = Province::orderby('name', 'ASC')->get();
+        if(session()->get('ward_id')){
+            $ward_id = session()->get('ward_id');
+            $ward = Ward::where('id', $ward_id)->get();
+            return view('pages/cart')->with(compact('province'))->with(compact('ward'));
+        }
         return view('pages/cart')->with(compact('province'));
     }
 
     public function update_cart_quantity(Request $request){
         $data = $request->all();
         $cart = Session('cart');
+        $total_qty = 0;
+        if(session()->get('cart')){
+            foreach(session()->get('cart') as $item){
+                $total_qty += $item['product_quantity'];
+            }
+        }
         $cart_total = 0;
         $output = '';
         $product_inventory = Product::where('id', $data['id'])->first();
         if($product_inventory->inventory_qty >=  $data['quantity']){
             $cart_total = 0;
-            if($data['quantity'] <= 10){
+            if($total_qty < 5){
                 if($cart){
                     foreach($cart as $key => $val){
                         if($val['product_id'] == $data['id']){
@@ -130,7 +150,7 @@ class User_CartController extends Controller
 
                 }
             }else{
-                $cart_total = 1;
+                $cart_total = -1;
             }
         }
         session()->put('cart', $cart);

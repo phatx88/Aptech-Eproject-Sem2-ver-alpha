@@ -52,7 +52,7 @@
                     @endif
                     @php
                         $productName = Str::slug($product->name);
-                        $slug = "{$productName}-{$product->id}";    
+                        $slug = "{$productName}-{$product->id}";
                     @endphp
                     <a id="product_detail_{{ $product->id }}" href="{{ url('home/single-product/' . $slug) }}"
                         class="d-flex align-items-center justify-content-center"><span

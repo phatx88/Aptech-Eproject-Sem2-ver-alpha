@@ -134,7 +134,7 @@
                                     <form action="{{ route('home.post', ['id' => $product[0]->id]) }}" method="POST"
                                         id="postComment">
                                         @csrf
-                                        
+
                                         {{-- <input type="hidden" name="product_id" value="{{  }}"> --}}
 
                                         <span class="my-rating"></span> <span class="live-rating-span"></span>
@@ -161,7 +161,7 @@
                                         <button class="btn btn-primary mt-4" id="submitPost">Post</button>
 
                                     </form>
-                                    @endif  
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -175,7 +175,7 @@
                                         <div class="col-1">
                                             @if ($comment->profile_pic)
                                             <img style="display:block ; margin: 0.5rem 0;" src="{{ asset('frontend/images/profile/' . $comment->profile_pic) }}" alt="Avatar" class="user-img">
-                                            @else 
+                                            @else
                                             <img style="display:block ; margin: 0.5rem 0;" src="{{ asset('frontend/images/profile/avatar.jpg') }}" alt="Avatar" class="user-img">
                                             @endif
                                         </div>
@@ -204,7 +204,7 @@
         </div>
         @endforeach
 
-        <div class="row mt-5">
+        <div class="row mt-5" id="related_product">
             <div class="col-md-12">
                 <h2 class="text-center mb-5">Related Product</h2>
                 <div class="carousel-testimony owl-carousel ftco-owl">
@@ -212,7 +212,7 @@
                     @foreach ($related_product as $product)
                         <div class="item">
                             <div class="d-flex">
-                           
+
                                 @include('layouts.product')
 
                             </div>
@@ -261,7 +261,7 @@
             // Clear Error Message
             $(".print-error-msg").find("ul").html('');
             $(".print-error-msg").css('display', 'none');
-   
+
             NProgress.start();
             // notyf.success('Posting Comment');
             // $("button#submitPost").('disabled');
@@ -333,11 +333,11 @@
                          // Notify success
                         notyf.success('Comment Posted');
 
-                        
+
 
                     }, 3000);
 
-                    
+
                 },
                 error: function(data) {
                     NProgress.done();
