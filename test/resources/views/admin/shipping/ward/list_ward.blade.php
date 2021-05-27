@@ -63,7 +63,7 @@
        <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Order List
+            Ward List
             <div class="float-right">
                 <a type="button" href="{{ route('admin.ward.create') }}" class="btn btn-primary btn-sm" value="Thêm"
                 name="add">Add</a>
@@ -82,8 +82,6 @@
                             <th>Ward Type</th>
                             <th>District ID</th>
                             <th>Actions</th>
-
-
                         </tr>
                     </thead>
                     <tfoot>
