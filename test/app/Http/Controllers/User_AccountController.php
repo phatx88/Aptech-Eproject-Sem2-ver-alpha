@@ -38,7 +38,7 @@ class User_AccountController extends Controller
         $province = Province::orderby('id', 'ASC')->get();
         $order_list = array();
         //Order History
-        $order_user = Order::where('customer_id', $user->id)->get();
+        $order_user = Order::where('customer_id', $user->id)->orderBy('id', 'DESC')->get();
         $order_count = $order_user->count();
         if ($order_count > 0) {
             foreach ($order_user as $key => $order) {

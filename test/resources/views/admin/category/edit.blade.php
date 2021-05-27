@@ -14,9 +14,9 @@
      </ol>
      @include('errors.error')
        <!-- /form -->
-       <form method="post" action="{{ route('admin.brand.update' , ['category' => $category->id]) }}" enctype="multipart/form-data">
+       <form method="post" action="{{ route('admin.category.update' , ['category' => $category->id]) }}" enctype="multipart/form-data">
          @csrf
-         @method('PUT') 
+         @method('PUT')
          <div class="form-group row">
              <label class="col-md-12 control-label" for="name">CategoryName</label>
              <div class="col-md-9 col-lg-6">
