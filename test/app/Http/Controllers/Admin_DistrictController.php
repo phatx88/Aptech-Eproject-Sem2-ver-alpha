@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\District;
-use Illuminate\Support\Facades\Gate;
+use App\Models\Province;
 
 class Admin_DistrictController extends Controller
 {
@@ -16,9 +16,7 @@ class Admin_DistrictController extends Controller
      */
     public function index()
     {
-        if (!Gate::any(['view_order', 'view_product'])) {
-            abort(403);
-        }
+
         $shippings = District::get();
         return view('admin.shipping.district.list_district',[
             'shippings' => $shippings
@@ -33,7 +31,11 @@ class Admin_DistrictController extends Controller
      */
     public function create()
     {
-        //
+        // $shippings = District::get();
+        // $provinces = Province::get();
+        // return view('admin.shipping.district.add' , [
+        //     'provinces' => $provinces,
+        // ]);
     }
 
     /**
@@ -44,7 +46,11 @@ class Admin_DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $shippings = District::get();
+        $provinces = Province::get();
+        return view('admin.shipping.district.add' , [
+            'provinces' => $provinces,
+        ]);
     }
 
     /**
@@ -64,9 +70,14 @@ class Admin_DistrictController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(District $district)
     {
-        //
+        $shippings = District::get();
+        return view('admin.shipping.district.edit' , [
+            'shippings' => $shippings,
+            'district' => $district
+
+        ]);
     }
 
     /**
@@ -76,9 +87,12 @@ class Admin_DistrictController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, District $district)
     {
-        //
+        $district->name = $request->name;
+        $district->save();
+        return redirect()->route("admin.district.index")->with('success', "Updated Transport Fee for Province Id - {$district->id} Successfully");
+
     }
 
     /**

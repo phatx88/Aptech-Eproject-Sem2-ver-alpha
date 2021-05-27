@@ -18,9 +18,9 @@ class Admin_WardController extends Controller
      */
     public function index()
     {
-        if (!Gate::any(['view_order', 'view_product'])) {
-            abort(403);
-        }
+        // if (!Gate::any(['view_order', 'view_product'])) {
+        //     abort(403);
+        // }
         $shippings = Ward::get();
         return view('admin.shipping.ward.list_ward',[
             'shippings' => $shippings
@@ -34,14 +34,14 @@ class Admin_WardController extends Controller
      */
     public function create()
     {
-        if (!Gate::any(['create_order', 'create_product'])) {
-            abort(403);
-        }
-        $shippings = Ward::get();
-        $districts = District::get();
-        return view('admin.shipping.ward.add' , [
-            'districts' => $districts,
-        ]);
+        // if (!Gate::any(['create_order', 'create_product'])) {
+        //     abort(403);
+        // }
+        // $shippings = Ward::get();
+        // $districts = District::get();
+        // return view('admin.shipping.ward.add' , [
+        //     'districts' => $districts,
+        // ]);
     }
 
     /**
@@ -52,7 +52,11 @@ class Admin_WardController extends Controller
      */
     public function store(Request $request)
     {
-
+        $shippings = Ward::get();
+        $districts = District::get();
+        return view('admin.shipping.district.add' , [
+            'districts' => $districts,
+        ]);
     }
 
     /**
@@ -74,9 +78,9 @@ class Admin_WardController extends Controller
      */
     public function edit(Ward $ward)
     {
-        if (!Gate::any(['update_order', 'update_product'])) {
-            abort(403);
-        }
+        // if (!Gate::any(['update_order', 'update_product'])) {
+        //     abort(403);
+        // }
         $shippings = Ward::get();
         return view('admin.shipping.ward.edit' , [
             'shippings' => $shippings,
@@ -94,9 +98,9 @@ class Admin_WardController extends Controller
      */
     public function update(Request $request, Ward $ward)
     {
-        if (!Gate::any(['update_order', 'update_product'])) {
-            abort(403);
-        }
+        // if (!Gate::any(['update_order', 'update_product'])) {
+        //     abort(403);
+        // }
 
         $ward->name = $request->name;
         $ward->save();

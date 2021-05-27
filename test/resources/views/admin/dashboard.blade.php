@@ -179,8 +179,8 @@
                                               <td>{{ $order->created_date }}</td>
                                               <td>{{ $order->shipping_fee }}</td>
                                               <td>{{ $order->discount }}</td>
-                                              <td>${{ $order->total }}</td>
-                                              <td> 
+                                              <td>{{ $order->total }}</td>
+                                              <td>
                                                   <a type="button" href="{{ route('admin.order.edit' , ['order' => $order->order_id]) }}" value=""
                                                 class="btn btn-warning btn-sm">Edit</a>
                                             </td>
@@ -235,7 +235,7 @@
                     </div>
                 </div>
             </div>
-            
+
             {{-- Apex Chart - Visitors & Users --}}
 
             <div class="row mb-3">
@@ -306,7 +306,7 @@
 @endsection
 
 @section('scripts')
-    
+
 
     {{-- GOOGLE GEOCHART --}}
 
@@ -397,7 +397,7 @@
                 arrdata.push(data);
             });
 
-           
+
 
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Product Id');
@@ -489,7 +489,7 @@
                 title: 'End Tour!',
                 intro: 'Fast and easy button for exporting CSV files.'
             },
-            
+
             ]
             }).start();
         }
