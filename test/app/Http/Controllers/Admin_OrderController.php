@@ -260,16 +260,6 @@ class Admin_OrderController extends Controller
         if (!Gate::allows("delete-order")) {
             abort(403);
         }
-        // Hard DELETE
-        // try {
-        //     $order->forceDelete();
-        //     request()->session()->put('success', "Order ID : {$order->id} -- Created On : {$order->created_date} Deleted Successfully");
-        // } catch (QueryException $e) {
-        //     if ($e->getCode() == 23000) {
-        //         request()->session()->put('error', $e->getMessage());
-        //     }
-        // }
-        // return redirect()->route("admin.order.index");
 
         //SOFT DELETE
         try {
