@@ -16,7 +16,6 @@
             <!-- /form -->
             <form method="post" action="{{ route('admin.coupon.store') }}" enctype="multipart/form-data">
                 @csrf
-
                 <div class="form-group row">
                     <label class="col-md-12 control-label" for="name">Coupon</label>
                     <div class="col-md-9 col-lg-6">

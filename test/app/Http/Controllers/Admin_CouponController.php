@@ -52,6 +52,9 @@ class Admin_CouponController extends Controller
         if (!Gate::allows("create-order")) {
             abort(403);
         }
+        $request->validate([
+            'name' => 'required|unique:coupon|max:255',
+        ]);
         $coupon = new Coupon();
         $coupon->name = $request->name;
         $coupon->code = $request->code;

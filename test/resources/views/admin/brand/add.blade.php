@@ -12,13 +12,14 @@
          </li>
          <li class="breadcrumb-item active">Edit</li>
      </ol>
+     @include('errors.error')
        <!-- /form -->
        <form method="post" action="{{ route('admin.brand.store') }}" enctype="multipart/form-data">
         @csrf
           <div class="form-group row">
              <label class="col-md-12 control-label" for="name">BrandName</label>
              <div class="col-md-9 col-lg-6">
-                <input name="brand_name" id="name" type="text" value="" class="form-control">
+                <input name="name" id="name" type="text" value="" class="form-control">
              </div>
           </div>
           <div class="form-action">
