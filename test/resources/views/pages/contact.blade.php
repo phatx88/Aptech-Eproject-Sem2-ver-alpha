@@ -1,5 +1,89 @@
 @extends('main_layout')
 @section('content')
+    <style>
+        /* Styling for Autocomplete search bar */
+    #pac-card {
+      background-color: #fff;
+      border-radius: 2px 0 0 2px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      box-sizing: border-box;
+      font-family: Roboto;
+      margin: 10px 10px 0 0;
+      -moz-box-sizing: border-box;
+      outline: none;
+    }
+    
+    #pac-container {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      margin-right: 12px;
+    }
+    
+    #pac-input {
+      background-color: #fff;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      margin-left: 12px;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 400px;
+    }
+    
+    #pac-input:focus {
+      border-color: #4d90fe;
+    }
+    
+    #title {
+      color: #fff;
+      background-color: #acbcc9;
+      font-size: 18px;
+      font-weight: 400;
+      padding: 6px 12px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+
+    /* Styling for an info pane that slides out from the left. 
+     * Hidden by default. */
+    #panel {
+      height: 100%;
+      width: null;
+      background-color: white;
+      position: fixed;
+      z-index: 1;
+      overflow-x: hidden;
+      transition: all .2s ease-out;
+    }
+    
+    .open {
+      width: 250px;
+    }
+    
+    .place {
+      font-family: 'open sans', arial, sans-serif;
+      font-size: 1.2em;
+      font-weight: 500;
+      margin-block-end: 0px;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+    
+    .distanceText {
+      color: silver;
+      font-family: 'open sans', arial, sans-serif;
+      font-size: 1em;
+      font-weight: 400;
+      margin-block-start: 0.25em;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+  </style>
+    </style>
+
+
     <section class="hero-wrap hero-wrap-2" style="background-image: url('frontend/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
         <div class="overlay"></div>
         <div class="container">
@@ -59,10 +143,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row no-gutters">
-                            <div class="col-md-7">
-                                <div class="contact-wrap w-100 p-md-5 p-4">
-                                    <h3 class="mb-4">Contact Us</h3>
+                        <div class="row no-gutters" >
+                            <div class="col-12">
+                                <div id="map" class="map" style="height: 500px;"></div>
+                                {{-- <div class="contact-wrap w-100 h-100 p-md-5 p-4"> --}}
+                                    {{-- <h3 class="mb-4">Contact Us</h3>
                                     <form method="POST" id="contactForm" name="contactForm" class="contactForm">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -96,12 +181,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                    </form> --}}
+                                {{-- </div> --}}
                             </div>
-                            <div class="col-md-5 order-md-first d-flex align-items-stretch">
+                            {{-- <div class="col-md-5 order-md-first d-flex align-items-stretch">
                                 <div id="map" class="map"></div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -121,4 +206,9 @@
 
 
 
+@endsection
+@section('scripts')
+<script src="{{ asset('frontend/js/app.js') }}"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwww3EMQjptptBrloFxaIYJFGkQkuWLLE&libraries=places&callback=initMap">
+</script>
 @endsection

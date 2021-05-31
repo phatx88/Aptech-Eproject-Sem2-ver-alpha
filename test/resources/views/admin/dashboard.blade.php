@@ -372,7 +372,8 @@
     <script type="text/javascript">
         google.charts.load("current", {
             'packages': ["corechart"],
-            'mapsApiKey': 'AIzaSyDFfRF1akEo2X06xy_Vzvn6czOyKcraJKs'
+            // 'mapsApiKey': 'AIzaSyDFfRF1akEo2X06xy_Vzvn6czOyKcraJKs'
+            'mapsApiKey' : 'AIzaSyCwww3EMQjptptBrloFxaIYJFGkQkuWLLE'
         });
         google.charts.setOnLoadCallback(drawChart);
 

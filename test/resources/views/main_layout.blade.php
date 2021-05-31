@@ -465,9 +465,9 @@
     <script src="{{ asset('frontend/js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.animateNumber.min.js') }}"></script>
     <script src="{{ asset('frontend/js/scrollax.min.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false">
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwww3EMQjptptBrloFxaIYJFGkQkuWLLE&sensor=false">
     </script>
-    <script src="{{ asset('frontend/js/google-map.js') }}"></script>
+    <script src="{{ asset('frontend/js/google-map.js') }}"></script> --}}
     <script src="{{ asset('frontend/js/nouislider.min.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert.js') }}"></script>
     <script src="{{ asset('frontend/js/notyf.min.js') }}"></script>
