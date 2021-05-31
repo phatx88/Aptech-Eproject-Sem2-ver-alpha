@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Province;
-use Illuminate\Support\Facades\Gate;
+
 
 
 class Admin_ProvinceController extends Controller
@@ -17,9 +17,7 @@ class Admin_ProvinceController extends Controller
      */
     public function index()
     {
-        if (!Gate::any(['view_order', 'view_product'])) {
-            abort(403);
-        } 
+
         $shippings = Province::get();
         return view('admin.shipping.province.list_province',[
             'shippings' => $shippings
@@ -33,7 +31,10 @@ class Admin_ProvinceController extends Controller
      */
     public function create()
     {
-        //
+        // $provinces = Province::get();
+        // return view('admin.shipping.province.add' , [
+        //     'provinces' => $provinces
+        // ]);
     }
 
     /**
@@ -44,7 +45,10 @@ class Admin_ProvinceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $provinces = Province::get();
+        return view('admin.shipping.province.add' , [
+            'provinces' => $provinces,
+        ]);
     }
 
     /**
@@ -64,9 +68,14 @@ class Admin_ProvinceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Province $province)
     {
-        //
+        $shippings = Province::get();
+        return view('admin.shipping.province.edit' , [
+            'shippings' => $shippings,
+            'province' => $province
+
+        ]);
     }
 
     /**
@@ -76,9 +85,12 @@ class Admin_ProvinceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Province $province)
     {
-        //
+        $province->name = $request->name;
+        $province->save();
+        return redirect()->route("admin.province.index")->with('success', "Updated Transport Fee for Province Id - {$province->id} Successfully");
+
     }
 
     /**

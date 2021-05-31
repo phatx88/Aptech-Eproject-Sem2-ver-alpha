@@ -65,8 +65,8 @@
             <i class="fas fa-table"></i>
             Ward List
             <div class="float-right">
-                <a type="button" href="{{ route('admin.ward.create') }}" class="btn btn-primary btn-sm" value="Thêm"
-                name="add">Add</a>
+                {{-- <a type="button" href="{{ route('admin.ward.create') }}" class="btn btn-primary btn-sm" value="Thêm"
+                name="add">Add</a> --}}
                 <button type="button" onclick="location.reload(true);" class="btn btn-info btn-sm">Refresh</button>
                 <a href="{{ route('admin.order.export') }}" class="btn btn-success btn-sm">Export</a>
             </div>
