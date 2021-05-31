@@ -166,18 +166,6 @@ class Admin_ProductController extends Controller
         
         $categories = Category::orderby('name', 'ASC')->get();
         $brands = Brand::orderby('name', 'ASC')->get();
-
-        // $user = Auth::user();
-        // if($user->can("create" , Product::class)){
-        //     return view('admin.product.add', [
-        //         'categories' => $categories,
-        //         'brands' => $brands,
-        //     ]);
-        // }
-        // else {
-        //    abort(403);
-        // }
-
         
         return view('admin.product.add', [
             'categories' => $categories,
@@ -265,18 +253,6 @@ class Admin_ProductController extends Controller
 
         $categories = Category::orderby('name', 'ASC')->get();
         $brands = Brand::orderby('name', 'ASC')->get();
-
-        // $user = Auth::user();
-        // if($user->can("update" , Product::class)){
-        //     return view('admin.product.edit', [
-        //         'categories' => $categories,
-        //         'brands' => $brands,
-        //         'product' => $product,
-        //     ]);
-        // }
-        // else {
-        //    abort(403);
-        // }
 
         return view('admin.product.edit', [
             'categories' => $categories,
