@@ -13,3 +13,6 @@ Documetation include:
 2) Database source
 3) Documentation - Review 1-2-3-final
 4) Link to video demonstration: https://www.youtube.com/watch?v=zHHcgTbG25Q
+
+
+Notes: all source file is in the 'Test' Folder
