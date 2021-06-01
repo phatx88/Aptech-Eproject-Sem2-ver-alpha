@@ -9,7 +9,7 @@ Team members include:
 4)Nguyen Thanh Nhan - 1269157 - Dev
 
 Documetation include: 
-1- Intallation guide
-2- Database source
-3- Documentation - Review 1-2-3-final
-4- Link to video demonstration: https://www.youtube.com/watch?v=zHHcgTbG25Q
+1) Intallation guide
+2) Database source
+3) Documentation - Review 1-2-3-final
+4) Link to video demonstration: https://www.youtube.com/watch?v=zHHcgTbG25Q
