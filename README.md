@@ -3,6 +3,7 @@ Project semester 2 - FPT Aptech
 Teach used: PHP - Laravel - HTML/CSS/JS - AJAX - Bootstrap - Google Map Platform APis
 
 Team members include:
+
 1)Luong Xuan Phat - 126828 - project lead
 
 2)Le Truong Thinh - 1268780 - Dev
