@@ -122,6 +122,7 @@
 
                             notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
                         }
+                        $('.product_quantity_cart_' + id).val(1);
                     }
                 });
             });
@@ -159,7 +160,6 @@
 
                             notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
                         }
-                        $('.product_quantity_cart_' + id).val(0);
                     }
                 });
 
