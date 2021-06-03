@@ -61,7 +61,7 @@
                                 <div class="input-group col-md-6 d-flex mb-3">
                                     <input type="number" id="quantity" name="quantity"
                                         class="quantity form-control input-number product_quantity_cart_{{ $val->id }}"
-                                        value="1" min="1" max="100">
+                                        value="1" min="1" max="5">
                                 </div>
                                 <div class="w-100"></div>
                                 <div class="col-md-12">

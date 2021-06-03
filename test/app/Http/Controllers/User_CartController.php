@@ -38,7 +38,7 @@ class User_CartController extends Controller
         $cart = Session('cart');
         $output = '';
         if($qty >= $data['product_quantity']){
-        if($total_qty < 5){
+        if(($total_qty + $data['product_quantity']) <= 5){
             if($cart != null) {
                 $is_available = 0;
                 foreach($cart as $key => $val){
@@ -127,9 +127,19 @@ class User_CartController extends Controller
     public function update_cart_quantity(Request $request){
         $data = $request->all();
         $cart = Session('cart');
+        $b_product_quantity = 0;
         $total_qty = 0;
         if(session()->get('cart')){
-            foreach(session()->get('cart') as $item){
+            foreach($cart as $key => $item){
+                if($item["product_id"] === $data['id']){
+                    $b_product_quantity = $cart[$key]['product_quantity'];
+                    $cart[$key]['product_quantity'] = 0;
+                }
+
+            }
+        }
+        if(session()->get('cart')){
+            foreach($cart as $key => $item){
                 $total_qty += $item['product_quantity'];
             }
         }
@@ -138,7 +148,7 @@ class User_CartController extends Controller
         $product_inventory = Product::where('id', $data['id'])->first();
         if($product_inventory->inventory_qty >=  $data['quantity']){
             $cart_total = 0;
-            if($total_qty < 5){
+            if(($total_qty + $data['quantity']) <= 5){
                 if($cart){
                     foreach($cart as $key => $val){
                         if($val['product_id'] == $data['id']){
@@ -146,11 +156,22 @@ class User_CartController extends Controller
                         }
                         $cart_total += $val['product_quantity'] * $val['product_price'];
                     }
-
-
                 }
             }else{
+                foreach($cart as $key => $item){
+                    if($item["product_id"] === $data['id']){
+                        $cart[$key]['product_quantity'] = $b_product_quantity;
+                    }
+
+                }
                 $cart_total = -1;
+            }
+        }else{
+            foreach($cart as $key => $item){
+                if($item["product_id"] === $data['id']){
+                    $cart[$key]['product_quantity'] = $b_product_quantity;
+                }
+
             }
         }
         session()->put('cart', $cart);

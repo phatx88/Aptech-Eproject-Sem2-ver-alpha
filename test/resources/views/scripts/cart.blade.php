@@ -100,6 +100,7 @@
                 var product_quantity = $('.product_quantity_cart_' + id).val();
                 var product_image = $('.product_image_cart_' + id).val();
                 var _token = $('input[name="_token"]').val();
+
                 $.ajax({
                     url: '{{ url('/add-to-cart') }}',
                     method: "POST",
@@ -112,12 +113,14 @@
                         _token: _token
                     },
                     success: function(data) {
-                        if(data === "0"){
+                        if(data == ''){
                             notyf.error('This item is not enough quantity!!!');
-                        }else if(data === "1"){
-                            notyf.error('You just can cart 10 quantity!!!');
+                        }else if(data == 'You just can cart 5 item'){
+                            notyf.error(data);
                         }else{
-                            location.reload();
+                            fetch_btn();
+
+                            notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
                         }
                     }
                 });
@@ -126,45 +129,6 @@
 
          $(document).ready(function() {
             $(".add-to-cart").on('click',function() {
-                ////////////////////////////////////////////////////////////////
-                // var cart = $('#shopping-bag-shake');
-                //     // var img = $('.product_image_cart_'+id).val();
-                //     var imgtodrag = $(this).parents('.items-products').find("img").eq(0);
-                //     if (imgtodrag) {
-                //         var imgclone = imgtodrag.clone()
-                //             .offset({ top: imgtodrag.offset().top, left: imgtodrag.offset().left})
-                //             .css({
-                //             'opacity': '0.5',
-                //                 'position': 'absolute',
-                //                 'height': '150px',
-                //                 'width': '150px',
-                //                 'visibility': 'visible',
-                //                 'z-index': '100'
-                //             })
-                //             .appendTo($('body'))
-                //             .animate({
-                //             'top': cart.offset().top + 10,
-                //                 'left': cart.offset().left + 10,
-                //                 'width': 75,
-                //                 'height': 75,
-                //                 'visibility': 'visible'
-                //         }, 1000, 'easeInOutExpo');
-
-                //         setTimeout(function () {
-                //             cart.effect("shake", {
-                //                 times: 1
-                //             }, 200);
-                //         }, 1500);
-
-                //         imgclone.animate({
-                //             'width': 0,
-                //                 'height': 0
-
-                //         }, function () {
-                //             $(this).detach()
-                //         });
-                //     }
-                ////////////////////////////////////////////////////////////////
                 var id = $(this).data('id_product');
                 var product_name = $('.product_name_cart_' + id).val();
                 var product_price = $('.product_price_cart_' + id).val();
@@ -190,12 +154,12 @@
                         }else if(data == 'You just can cart 5 item'){
                             notyf.error(data);
                         }else{
-                            setTimeout(function () {
+
                                 fetch_btn();
-                            }, 1700);
+
                             notyf.success('Cart Updated <a href="{{ url('cart') }}" class="text-dark">View Cart</a>');
                         }
-
+                        $('.product_quantity_cart_' + id).val(0);
                     }
                 });
 
@@ -215,9 +179,9 @@
                         _token: _token
                     },
                     success: function(data) {
-                        if(data === "0"){
+                        if(data == "0"){
                             notyf.error('This item is not enough quantity!!!');
-                        }else if(data === "-1"){
+                        }else if(data == "-1"){
                             notyf.error('You just can cart 5 item!!!');
                         }else{
                             location.reload();
